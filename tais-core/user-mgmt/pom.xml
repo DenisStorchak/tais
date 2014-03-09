@@ -44,10 +44,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.google.java.contract</groupId>
-            <artifactId>cofoja</artifactId>
-        </dependency>
     </dependencies>
 
     <build>

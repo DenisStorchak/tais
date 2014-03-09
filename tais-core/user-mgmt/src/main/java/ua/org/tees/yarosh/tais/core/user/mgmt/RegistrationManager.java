@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt;
 
-import com.google.java.contract.Requires;
 import org.hibernate.validator.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -31,9 +30,6 @@ public class RegistrationManager implements RegistrantService {
     private RegistrantConverterFacade converter;
 
     @Override
-    @Requires({
-            "registrant != null"
-    })
     public Registrant createRegistration(Registrant registrant) {
         LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
@@ -45,10 +41,6 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-    @Requires({
-            "login != null",
-            "!login.isEmpty()"
-    })
     public Registrant getRegistration(String login) throws RegistrantNotFoundException {
         LOGGER.info("Profile [login: {}] requested", login);
         RegistrantEntity registrantEntity = registrantRepository.findOne(login);
@@ -59,9 +51,6 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-    @Requires({
-            "registrant != null"
-    })
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException {
         LOGGER.info("Registration updating for [login: {}] requested", registrant.getLogin());
         SimpleValidation.validate(registrant);
@@ -74,10 +63,6 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-    @Requires({
-            "login != null",
-            "!login.isEmpty()"
-    })
     public void deleteRegistration(@NotNull @NotBlank String login) {
         LOGGER.info("Registration [login: {}] deleting requested", login);
         registrantRepository.delete(login);

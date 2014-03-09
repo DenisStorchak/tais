@@ -65,7 +65,7 @@ public class RegistrationManagerTest {
         registrant.setLogin(LOGIN);
     }
 
-    @Test(enabled = false)
+    @Test(enabled = true, expectedExceptions = NullPointerException.class)
     public void testCreateNullRegistration() throws IllegalArgumentException {
         registrantService.createRegistration(null);
     }
