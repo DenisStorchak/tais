@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt;
 
-import org.hibernate.validator.constraints.NotBlank;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,8 +11,6 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.RegistrantReposito
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.core.user.mgmt.converters.RegistrantConverterFacade;
 import ua.org.tees.yarosh.tais.core.user.mgmt.models.RegistrantEntity;
-
-import javax.validation.constraints.NotNull;
 
 /**
  * @author Timur Yarosh
@@ -52,7 +49,10 @@ public class RegistrationManager implements RegistrantService {
 
     @Override
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException {
-        LOGGER.info("Registration updating for [login: {}] requested", registrant.getLogin());
+        LOGGER.info("Registration updating for [login: {}] requested", registrant);
+        if (registrant == null) {
+            throw new IllegalArgumentException();
+        }
         SimpleValidation.validate(registrant);
         if (registrantRepository.exists(registrant.getLogin())) {
             RegistrantEntity registrantEntity = converter.convert(registrant, RegistrantEntity.class);
@@ -63,8 +63,11 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-    public void deleteRegistration(@NotNull @NotBlank String login) {
+    public void deleteRegistration(String login) {
         LOGGER.info("Registration [login: {}] deleting requested", login);
+        if (login == null || login.isEmpty()) {
+            throw new IllegalArgumentException();
+        }
         registrantRepository.delete(login);
     }
 }
