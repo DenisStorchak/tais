@@ -31,6 +31,12 @@
 
     <dependencyManagement>
         <dependencies>
+            <!--javaee-->
+            <dependency>
+                <groupId>javax</groupId>
+                <artifactId>javaee-api</artifactId>
+                <version>${javaee.version}</version>
+            </dependency>
             <!--spring-->
             <dependency>
                 <groupId>org.springframework</groupId>
@@ -63,6 +69,18 @@
                 <version>${org.springframework.version}</version>
             </dependency>
 
+            <!--stuff-->
+            <dependency>
+                <groupId>javax.el</groupId>
+                <artifactId>javax.el-api</artifactId>
+                <version>${javax.el.api.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.glassfish.web</groupId>
+                <artifactId>javax.el</artifactId>
+                <version>${javax.el.api.version}</version>
+            </dependency>
+
             <!--caching-->
             <dependency>
                 <groupId>net.sf.ehcache</groupId>
@@ -77,11 +95,16 @@
                 <version>${jackson.version}</version>
             </dependency>
 
-            <!--validation-->
+            <!--validation and contracts-->
             <dependency>
                 <groupId>org.hibernate</groupId>
                 <artifactId>hibernate-validator</artifactId>
                 <version>${hibernate.validator.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.google.java.contract</groupId>
+                <artifactId>cofoja</artifactId>
+                <version>${cofoja.version}</version>
             </dependency>
 
             <!--persistence-->
@@ -130,6 +153,11 @@
                 <version>1.9.5</version>
                 <scope>test</scope>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>4.0.2.RELEASE</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -174,5 +202,7 @@
         <jdk.version>1.7</jdk.version>
         <src.encoding>UTF-8</src.encoding>
         <org.springframework.spring.data.jpa.version>1.4.4.RELEASE</org.springframework.spring.data.jpa.version>
+        <javax.el.api.version>2.2.4</javax.el.api.version>
+        <cofoja.version>1.1-r150</cofoja.version>
     </properties>
 </project>
