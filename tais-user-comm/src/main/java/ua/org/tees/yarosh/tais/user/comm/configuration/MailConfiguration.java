@@ -1,16 +1,14 @@
 package ua.org.tees.yarosh.tais.user.comm.configuration;
 
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.UrlResource;
-import org.springframework.jndi.support.SimpleJndiBeanFactory;
+import org.springframework.context.annotation.Import;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import ua.org.tees.yarosh.tais.core.common.configuration.ApplicationConfiguration;
+import ua.org.tees.yarosh.tais.core.common.configuration.MailProperties;
 
-import java.net.MalformedURLException;
-import java.net.URI;
 import java.util.Properties;
 
 /**
@@ -19,52 +17,32 @@ import java.util.Properties;
  *         Time: 22:42
  */
 @Configuration
+@Import(ApplicationConfiguration.class)
 public class MailConfiguration {
     private static final String MAIL_SMTP_AUTH_JMAIL_PROPERTY_NAME = "mail.smtp.auth";
     private static final String MAIL_SMTP_SSL_ENABLE_JMAIL_PROPERTY_NAME = "mail.smtp.ssl.enable";
-    private static final String MAIL_CONFIG_NAME = "mail.config";
-    @Value("${host}")
-    private String host;
-    @Value("${port}")
-    private int port;
-    @Value("${username}")
-    private String username;
-    @Value("${password}")
-    private String password;
-    @Value("${mail.smtp.auth}")
-    private String mailSmtpAuth;
-    @Value("${mail.smtp.ssl.enable}")
-    private String mailSmtpSslEnable;
 
+    @Autowired
+    private MailProperties mailProperties;
+
+    @Bean
     public JavaMailSenderImpl mailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setJavaMailProperties(new Properties());
 
-        mailSender.setHost(host);
-        mailSender.setPort(port);
-        mailSender.setUsername(username);
-        mailSender.setPassword(password);
-        mailSender.getJavaMailProperties().setProperty(MAIL_SMTP_AUTH_JMAIL_PROPERTY_NAME, mailSmtpAuth);
-        mailSender.getJavaMailProperties().setProperty(MAIL_SMTP_SSL_ENABLE_JMAIL_PROPERTY_NAME, mailSmtpSslEnable);
+        mailSender.setHost(mailProperties.getHost());
+        mailSender.setPort(mailProperties.getPort());
+        mailSender.setUsername(mailProperties.getUsername());
+        mailSender.setPassword(mailProperties.getPassword());
+        mailSender.getJavaMailProperties().setProperty(MAIL_SMTP_AUTH_JMAIL_PROPERTY_NAME, mailProperties.getMailSmtpAuth());
+        mailSender.getJavaMailProperties().setProperty(MAIL_SMTP_SSL_ENABLE_JMAIL_PROPERTY_NAME, mailProperties.getMailSmtpSslEnable());
         return mailSender;
     }
 
     @Bean
     public SimpleMailMessage preparedMailMessage() {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
-        simpleMailMessage.setFrom(username);
+        simpleMailMessage.setFrom(mailProperties.getUsername());
         return simpleMailMessage;
-    }
-
-    @Bean
-    public SimpleJndiBeanFactory simpleJndiBeanFactory() {
-        return new SimpleJndiBeanFactory();
-    }
-
-    @Bean
-    public PropertyPlaceholderConfigurer getConfigurer() throws MalformedURLException {
-        PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
-        configurer.setLocation(new UrlResource(simpleJndiBeanFactory().getBean(MAIL_CONFIG_NAME, URI.class)));
-        return configurer;
     }
 }

@@ -4,7 +4,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
-import ua.org.tees.yarosh.tais.core.common.configuration.BasePersistenceConfiguration;
+import ua.org.tees.yarosh.tais.core.common.configuration.ApplicationConfiguration;
 import ua.org.tees.yarosh.tais.core.user.mgmt.RegistrationManager;
 
 /**
@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.RegistrationManager;
  *         Time: 15:25
  */
 @Configuration
-@Import(BasePersistenceConfiguration.class)
+@Import(ApplicationConfiguration.class)
 @ComponentScan(basePackageClasses = {RegistrationManager.class})
 @EnableJpaRepositories(basePackages = {"ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence"})
 public class UserMgmtConfiguration {

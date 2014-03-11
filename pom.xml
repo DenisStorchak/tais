@@ -149,6 +149,18 @@
                 <version>${postgresql.version}</version>
             </dependency>
 
+            <!--amqp-->
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-amqp</artifactId>
+                <version>${spring.amqp.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.amqp</groupId>
+                <artifactId>spring-rabbit</artifactId>
+                <version>${spring.amqp.version}</version>
+            </dependency>
+
             <!--testing-->
             <dependency>
                 <groupId>com.h2database</groupId>
@@ -222,5 +234,6 @@
         <javax.mail.version>1.4.7</javax.mail.version>
         <jaf.activation.version>1.1.1</jaf.activation.version>
         <spring.integration.mail.version>3.0.1.RELEASE</spring.integration.mail.version>
+        <spring.amqp.version>1.2.1.RELEASE</spring.amqp.version>
     </properties>
 </project>

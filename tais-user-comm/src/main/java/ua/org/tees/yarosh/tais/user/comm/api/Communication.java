@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.user.comm.api;
 
-import ua.org.tees.yarosh.tais.core.common.dto.Message;
+import ua.org.tees.yarosh.tais.core.common.api.Message;
 
 /**
  * @author Timur Yarosh
