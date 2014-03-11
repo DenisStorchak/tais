@@ -22,6 +22,7 @@ import java.util.Properties;
 public class MailConfiguration {
     private static final String MAIL_SMTP_AUTH_JMAIL_PROPERTY_NAME = "mail.smtp.auth";
     private static final String MAIL_SMTP_SSL_ENABLE_JMAIL_PROPERTY_NAME = "mail.smtp.ssl.enable";
+    private static final String MAIL_CONFIG_NAME = "mail.config";
     @Value("${host}")
     private String host;
     @Value("${port}")
@@ -63,7 +64,7 @@ public class MailConfiguration {
     @Bean
     public PropertyPlaceholderConfigurer getConfigurer() throws MalformedURLException {
         PropertyPlaceholderConfigurer configurer = new PropertyPlaceholderConfigurer();
-        configurer.setLocation(new UrlResource(simpleJndiBeanFactory().getBean("mail.config", URI.class)));
+        configurer.setLocation(new UrlResource(simpleJndiBeanFactory().getBean(MAIL_CONFIG_NAME, URI.class)));
         return configurer;
     }
 }
