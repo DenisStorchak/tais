@@ -21,6 +21,7 @@ import java.util.Properties;
 public class MailConfiguration {
     private static final String MAIL_SMTP_AUTH_JMAIL_PROPERTY_NAME = "mail.smtp.auth";
     private static final String MAIL_SMTP_SSL_ENABLE_JMAIL_PROPERTY_NAME = "mail.smtp.ssl.enable";
+    private static final String DEFAULT_MAIL_SUBJECT = "TEES Automatic Interaction System";
 
     @Autowired
     private MailProperties mailProperties;
@@ -43,6 +44,7 @@ public class MailConfiguration {
     public SimpleMailMessage preparedMailMessage() {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
         simpleMailMessage.setFrom(mailProperties.getUsername());
+        simpleMailMessage.setSubject(DEFAULT_MAIL_SUBJECT);
         return simpleMailMessage;
     }
 }

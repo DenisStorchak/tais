@@ -23,7 +23,11 @@ public class EmailCommunicator implements Communicator {
     public void sendMessage(Message message) {
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage(templateMailMessage);
         simpleMailMessage.setTo(message.getTo());
-        simpleMailMessage.setText(message.getMessage());
+        simpleMailMessage.setText(formatMessage(message));
         mailSender.send(simpleMailMessage);
+    }
+
+    private String formatMessage(Message message) {
+        return String.format("%s\nОт: %s", message.getFrom());
     }
 }
