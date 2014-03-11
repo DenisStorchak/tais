@@ -13,6 +13,7 @@
         <module>tais-homework</module>
         <module>tais-attendance</module>
         <module>tais-user-comm</module>
+        <module>tais-ui</module>
     </modules>
 
     <dependencies>
