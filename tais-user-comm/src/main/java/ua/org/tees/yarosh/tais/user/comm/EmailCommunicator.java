@@ -5,7 +5,7 @@ import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.api.Message;
-import ua.org.tees.yarosh.tais.user.comm.api.Communication;
+import ua.org.tees.yarosh.tais.user.comm.api.Communicator;
 
 /**
  * @author Timur Yarosh
@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.user.comm.api.Communication;
  *         Time: 22:32
  */
 @Service
-public class EmailCommunication implements Communication {
+public class EmailCommunicator implements Communicator {
     @Autowired
     private MailSender mailSender;
     @Autowired

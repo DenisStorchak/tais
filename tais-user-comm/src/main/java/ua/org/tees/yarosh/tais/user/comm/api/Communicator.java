@@ -7,6 +7,6 @@ import ua.org.tees.yarosh.tais.core.common.api.Message;
  *         Date: 09.03.14
  *         Time: 22:29
  */
-public interface Communication {
+public interface Communicator {
     void sendMessage(Message message);
 }

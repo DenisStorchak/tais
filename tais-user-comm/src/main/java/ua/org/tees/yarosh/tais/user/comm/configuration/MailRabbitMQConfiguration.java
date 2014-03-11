@@ -18,7 +18,7 @@ import org.springframework.context.annotation.Import;
 import ua.org.tees.yarosh.tais.core.common.configuration.ApplicationConfiguration;
 import ua.org.tees.yarosh.tais.core.common.configuration.RabbitMQProperties;
 import ua.org.tees.yarosh.tais.core.common.dto.MailMessage;
-import ua.org.tees.yarosh.tais.user.comm.EmailCommunication;
+import ua.org.tees.yarosh.tais.user.comm.EmailCommunicator;
 import ua.org.tees.yarosh.tais.user.comm.MailMQService;
 
 @Configuration
@@ -29,7 +29,7 @@ public class MailRabbitMQConfiguration {
     @Autowired
     private RabbitMQProperties rabbitMQProperties;
     @Autowired
-    private EmailCommunication emailCommunication;
+    private EmailCommunicator emailCommunication;
 
     @Bean
     public ConnectionFactory connectionFactory() {
