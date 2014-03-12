@@ -6,6 +6,7 @@ package ua.org.tees.yarosh.tais.core.common.dto;
  *         Time: 22:17
  */
 public class PersonalTask {
+    private long id;
     private GeneralTask generalTask;
     private String grade;
 
@@ -23,5 +24,13 @@ public class PersonalTask {
 
     public void setGrade(String grade) {
         this.grade = grade;
+    }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
     }
 }

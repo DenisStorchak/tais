@@ -74,6 +74,11 @@
                 <artifactId>spring-integration-mail</artifactId>
                 <version>${spring.integration.mail.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
 
             <!--stuff-->
             <dependency>
@@ -160,6 +165,22 @@
                 <groupId>org.springframework.amqp</groupId>
                 <artifactId>spring-rabbit</artifactId>
                 <version>${spring.amqp.version}</version>
+            </dependency>
+            <!--ui-->
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-client-compiled</artifactId>
+                <version>7.1.8</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-server</artifactId>
+                <version>7.1.8</version>
+            </dependency>
+            <dependency>
+                <groupId>com.vaadin</groupId>
+                <artifactId>vaadin-themes</artifactId>
+                <version>7.1.8</version>
             </dependency>
 
             <!--testing-->
