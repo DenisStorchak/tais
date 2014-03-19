@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.homework.teacher;
+package ua.org.tees.yarosh.tais.homework;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
