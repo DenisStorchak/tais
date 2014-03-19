@@ -19,7 +19,6 @@ import ua.org.tees.yarosh.tais.core.common.configuration.ApplicationConfiguratio
 import ua.org.tees.yarosh.tais.core.common.configuration.RabbitMQProperties;
 import ua.org.tees.yarosh.tais.core.common.dto.MailMessage;
 import ua.org.tees.yarosh.tais.user.comm.EmailCommunicator;
-import ua.org.tees.yarosh.tais.user.comm.MailMQService;
 
 @Configuration
 @Import(ApplicationConfiguration.class)

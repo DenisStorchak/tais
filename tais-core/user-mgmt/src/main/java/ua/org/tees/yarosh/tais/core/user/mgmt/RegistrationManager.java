@@ -9,7 +9,6 @@ import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundExceptio
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.RegistrantRepository;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.core.user.mgmt.converters.RegistrantConverterFacade;
 
 /**
  * @author Timur Yarosh

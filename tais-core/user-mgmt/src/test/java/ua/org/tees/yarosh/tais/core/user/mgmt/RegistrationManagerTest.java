@@ -3,13 +3,12 @@ package ua.org.tees.yarosh.tais.core.user.mgmt;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.RegistrantRepository;
-import ua.org.tees.yarosh.tais.core.user.mgmt.converters.RegistrantConverterFacade;
-import ua.org.tees.yarosh.tais.core.user.mgmt.models.RegistrantEntity;
 
 import static org.mockito.Mockito.*;
 import static org.testng.Assert.assertEquals;
@@ -28,69 +27,57 @@ public class RegistrationManagerTest {
     private static final String LOGIN = "login";
     @Mock
     private RegistrantRepository registrantRepositoryMock;
-    @Mock
-    private RegistrantConverterFacade registrantConverterFacadeMock;
 
     @InjectMocks
     private RegistrationManager registrantService;
-    private Registrant registrant;
 
-    @BeforeMethod
+    @BeforeClass
     public void setUp() throws Exception {
         MockitoAnnotations.initMocks(this);
-        initTestContainers();
-        setupMockBehavior();
-    }
-
-    private void setupMockBehavior() {
-        RegistrantEntity registrantEntity = new RegistrantEntity();
-        registrantEntity.setName(NAME);
-        registrantEntity.setSurname(SURNAME);
-        registrantEntity.setPatronymic(PATRONYMIC);
-        registrantEntity.setPassword(PASSWORD);
-        registrantEntity.setLogin(LOGIN);
-
-        doReturn(registrantEntity).when(registrantConverterFacadeMock).convert(registrant, RegistrantEntity.class);
 
         doReturn(true).when(registrantRepositoryMock).exists(LOGIN);
-        doReturn(registrantEntity).when(registrantRepositoryMock).findOne(LOGIN);
+        doReturn(registrantProvider()[0][0]).when(registrantRepositoryMock).findOne(LOGIN);
     }
 
-    private void initTestContainers() {
-        registrant = new Registrant();
+    @DataProvider
+    public Object[][] registrantProvider() {
+        Registrant registrant = new Registrant();
         registrant.setName(NAME);
         registrant.setSurname(SURNAME);
         registrant.setPatronymic(PATRONYMIC);
         registrant.setPassword(PASSWORD);
         registrant.setLogin(LOGIN);
+        return new Object[][]{
+                {registrant}
+        };
     }
 
-    @Test(enabled = true, expectedExceptions = NullPointerException.class)
+    @Test(expectedExceptions = NullPointerException.class)
     public void testCreateNullRegistration() throws IllegalArgumentException {
         registrantService.createRegistration(null);
     }
 
-    @Test
-    public void testCreateRegistration() {
+    @Test(dataProvider = "registrantProvider")
+    public void testCreateRegistration(Registrant registrant) {
         Registrant registration = registrantService.createRegistration(registrant);
         assertEquals(registration, registrant);
-        verify(registrantRepositoryMock, times(1)).save(any(RegistrantEntity.class));
+        verify(registrantRepositoryMock, times(1)).save(any(Registrant.class));
     }
 
-    @Test
-    public void testGetRegistration() throws RegistrantNotFoundException {
+    @Test(dataProvider = "registrantProvider")
+    public void testGetRegistration(Registrant registrant) throws RegistrantNotFoundException {
         registrantService.getRegistration(registrant.getLogin());
         verify(registrantRepositoryMock, times(1)).findOne(registrant.getLogin());
     }
 
-    @Test
-    public void testUpdateRegistration() throws RegistrantNotFoundException {
+    @Test(dataProvider = "registrantProvider")
+    public void testUpdateRegistration(Registrant registrant) throws RegistrantNotFoundException {
         registrantService.updateRegistration(registrant);
-        verify(registrantRepositoryMock, times(1)).save(any(RegistrantEntity.class));
+        verify(registrantRepositoryMock, times(1)).save(any(Registrant.class));
     }
 
-    @Test
-    public void testDeleteRegistration() {
+    @Test(dataProvider = "registrantProvider")
+    public void testDeleteRegistration(Registrant registrant) {
         registrantService.deleteRegistration(registrant.getLogin());
         verify(registrantRepositoryMock, times(1)).delete(registrant.getLogin());
     }
