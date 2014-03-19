@@ -33,11 +33,6 @@ public class ApplicationConfiguration {
     }
 
     @Bean
-    public RabbitMQProperties rabbitMQProperties() {
-        return new RabbitMQProperties();
-    }
-
-    @Bean
     public SimpleJndiBeanFactory simpleJndiBeanFactory() {
         return new SimpleJndiBeanFactory();
     }

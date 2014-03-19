@@ -35,27 +35,27 @@
         <dependency>
             <groupId>ua.org.tees.yarosh</groupId>
             <artifactId>tais-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ua.org.tees.yarosh</groupId>
             <artifactId>tais-attendance</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ua.org.tees.yarosh</groupId>
             <artifactId>user-mgmt</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ua.org.tees.yarosh</groupId>
             <artifactId>tais-homework</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>ua.org.tees.yarosh</groupId>
             <artifactId>tais-user-comm</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
