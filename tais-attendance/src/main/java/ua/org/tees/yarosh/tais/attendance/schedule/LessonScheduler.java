@@ -13,8 +13,12 @@ import java.util.List;
 @Service
 public class LessonScheduler implements LessonsScheduleService {
 
-    @Autowired
     private LessonsRepository lessonsRepository;
+
+    @Autowired
+    public void setLessonsRepository(LessonsRepository lessonsRepository) {
+        this.lessonsRepository = lessonsRepository;
+    }
 
     @Override
     public void saveOrReplaceSchedule(List<Lesson> lessonList) {

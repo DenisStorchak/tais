@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 
 @Configuration
 @ComponentScan(basePackageClasses = AttendanceConfiguration.class)
-@EnableJpaRepositories(basePackages = "ua.org.tees.yarosh.tais.attendance.schedule.api")
+@EnableJpaRepositories(basePackages = "ua.org.tees.yarosh.tais.attendance")
 @EnableWebMvc
 public class AttendanceConfiguration {
 }
