@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.attendance.storchak;
+package ua.org.tees.yarosh.tais.attendance.storchak.fprint;
 
 /**
  * @author Timur Yarosh
