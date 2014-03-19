@@ -15,7 +15,12 @@
         <dependency>
             <groupId>ua.org.tees.yarosh</groupId>
             <artifactId>tais-common</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ua.org.tees.yarosh</groupId>
+            <artifactId>user-mgmt</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 

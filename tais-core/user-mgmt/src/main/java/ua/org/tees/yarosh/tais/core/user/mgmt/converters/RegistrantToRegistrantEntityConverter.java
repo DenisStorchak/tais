@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.core.user.mgmt.converters;
 
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.api.Converter;
-import ua.org.tees.yarosh.tais.core.common.dto.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.models.RegistrantEntity;
 
 /**

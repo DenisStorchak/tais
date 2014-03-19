@@ -5,7 +5,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
-import ua.org.tees.yarosh.tais.core.common.dto.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.RegistrantRepository;
 import ua.org.tees.yarosh.tais.core.user.mgmt.converters.RegistrantConverterFacade;

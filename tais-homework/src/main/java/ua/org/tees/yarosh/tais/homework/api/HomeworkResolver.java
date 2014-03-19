@@ -1,6 +1,6 @@
-package ua.org.tees.yarosh.tais.homework.student.api;
+package ua.org.tees.yarosh.tais.homework.api;
 
-import ua.org.tees.yarosh.tais.core.common.dto.PersonalTask;
+import ua.org.tees.yarosh.tais.core.common.models.PersonalTask;
 
 import java.nio.file.Path;
 

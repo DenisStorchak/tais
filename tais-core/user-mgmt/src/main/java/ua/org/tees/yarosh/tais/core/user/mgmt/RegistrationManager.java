@@ -5,12 +5,11 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.api.SimpleValidation;
-import ua.org.tees.yarosh.tais.core.common.dto.Registrant;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.RegistrantRepository;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.core.user.mgmt.converters.RegistrantConverterFacade;
-import ua.org.tees.yarosh.tais.core.user.mgmt.models.RegistrantEntity;
 
 /**
  * @author Timur Yarosh
@@ -23,16 +22,13 @@ public class RegistrationManager implements RegistrantService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationManager.class);
     @Autowired
     private RegistrantRepository registrantRepository;
-    @Autowired
-    private RegistrantConverterFacade converter;
 
     @Override
     public Registrant createRegistration(Registrant registrant) {
         LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
 
-        RegistrantEntity registrantEntity = converter.convert(registrant, RegistrantEntity.class);
-        registrantRepository.save(registrantEntity);
+        registrantRepository.save(registrant);
         LOGGER.info("[login: {}] registered successfully", registrant.getLogin());
         return registrant;
     }
@@ -40,24 +36,22 @@ public class RegistrationManager implements RegistrantService {
     @Override
     public Registrant getRegistration(String login) throws RegistrantNotFoundException {
         LOGGER.info("Profile [login: {}] requested", login);
-        RegistrantEntity registrantEntity = registrantRepository.findOne(login);
-        if (registrantEntity == null) {
-            throw new RegistrantNotFoundException(login);
+        Registrant registrant = registrantRepository.findOne(login);
+        if (registrant != null) {
+            return registrant;
         }
-        return converter.convert(registrantEntity, Registrant.class);
+        throw new RegistrantNotFoundException(String.format("Registrant [%s] not found", login));
     }
 
     @Override
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException {
         LOGGER.info("Registration updating for [login: {}] requested", registrant);
         if (registrant == null) {
-            throw new IllegalArgumentException();
+            throw new IllegalArgumentException(Registrant.class.getName() + " can't be null");
         }
         SimpleValidation.validate(registrant);
         if (registrantRepository.exists(registrant.getLogin())) {
-            RegistrantEntity registrantEntity = converter.convert(registrant, RegistrantEntity.class);
-            registrantRepository.save(registrantEntity);
-            return registrant;
+            return registrantRepository.saveAndFlush(registrant);
         }
         throw new RegistrantNotFoundException(registrant.getLogin());
     }

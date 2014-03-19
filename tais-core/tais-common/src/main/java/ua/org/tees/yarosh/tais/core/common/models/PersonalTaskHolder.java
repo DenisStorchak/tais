@@ -1,5 +1,6 @@
-package ua.org.tees.yarosh.tais.core.common.dto;
+package ua.org.tees.yarosh.tais.core.common.models;
 
+import javax.persistence.*;
 import java.util.List;
 
 /**
@@ -7,8 +8,15 @@ import java.util.List;
  *         Date: 09.03.14
  *         Time: 22:14
  */
+@Entity
 public class PersonalTaskHolder {
+    @Id
+    @GeneratedValue
+    private Long id;
+    @OneToOne
     private Registrant owner;
+    @OneToMany
+    @JoinColumn(name = "tasks")
     private List<PersonalTask> personalTaskList;
 
     public Registrant getOwner() {
@@ -25,5 +33,13 @@ public class PersonalTaskHolder {
 
     public void setPersonalTaskList(List<PersonalTask> personalTaskList) {
         this.personalTaskList = personalTaskList;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

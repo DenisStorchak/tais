@@ -1,22 +1,32 @@
-package ua.org.tees.yarosh.tais.core.common.dto;
+package ua.org.tees.yarosh.tais.core.common.models;
+
+import javax.persistence.*;
 
 /**
  * @author Timur Yarosh
  *         Date: 09.03.14
  *         Time: 22:12
  */
-public class GeneralTask {
-    private long id;
+@Entity
+public class GroupTask {
+    @Id
+    @GeneratedValue
+    private Long id;
     private String description;
+    @ManyToOne
+    @JoinColumn(name = "disciplineId")
     private Discipline discipline;
+    @ManyToOne
+    @JoinColumn(name = "studentGroupId")
     private StudentGroup studentGroup;
-    private boolean enabled;
+    private Boolean enabled;
+    private String payloadPath;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,11 +54,19 @@ public class GeneralTask {
         this.studentGroup = studentGroup;
     }
 
-    public boolean isEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
-    public void setEnabled(boolean enabled) {
+    public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public String getPayloadPath() {
+        return payloadPath;
+    }
+
+    public void setPayloadPath(String payloadPath) {
+        this.payloadPath = payloadPath;
     }
 }

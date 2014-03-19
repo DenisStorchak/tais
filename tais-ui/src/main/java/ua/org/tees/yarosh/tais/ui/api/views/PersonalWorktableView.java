@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.api.views;
 
 import com.vaadin.navigator.View;
-import ua.org.tees.yarosh.tais.core.common.dto.PersonalTask;
+import ua.org.tees.yarosh.tais.core.common.models.PersonalTask;
 
 import java.util.List;
 

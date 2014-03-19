@@ -1,18 +1,27 @@
-package ua.org.tees.yarosh.tais.core.common.dto;
+package ua.org.tees.yarosh.tais.core.common.models;
+
+import ua.org.tees.yarosh.tais.core.common.dto.Position;
+
+import javax.persistence.*;
 
 /**
  * @author Timur Yarosh
  *         Date: 09.03.14
  *         Time: 15:00
  */
+@Entity
 public class Registrant {
+    @Id
     private String login;
     private String password;
     private String name;
     private String patronymic;
     private String surname;
+    @ManyToOne
     private StudentGroup group;
+    @OneToOne
     private PersonalTaskHolder personalTaskHolder;
+    @Enumerated
     private Position position;
 
     public String getLogin() {

@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
-import ua.org.tees.yarosh.tais.core.user.mgmt.models.RegistrantEntity;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 /**
  * @author Timur Yarosh
@@ -10,5 +10,5 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.models.RegistrantEntity;
  *         Time: 14:38
  */
 @Repository
-public interface RegistrantRepository extends JpaRepository<RegistrantEntity, String> {
+public interface RegistrantRepository extends JpaRepository<Registrant, String> {
 }
