@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 import ua.org.tees.yarosh.tais.attendance.api.AttendanceService;
 import ua.org.tees.yarosh.tais.attendance.web.dto.FPrintRegistrationStatus;
+import ua.org.tees.yarosh.tais.attendance.web.dto.FprintScannerToken;
 import ua.org.tees.yarosh.tais.attendance.web.dto.RecognizedRegistrant;
 
 /**
@@ -26,8 +27,8 @@ public class AttendanceWebController {
     }
 
     @RequestMapping(value = "token", method = RequestMethod.GET)
-    public String getToken() {
-        return attendanceService.createAccessToken();
+    public FprintScannerToken getToken() {
+        return attendanceService.createAndSaveAccessToken();
     }
 
     @RequestMapping(value = "fprint", method = RequestMethod.PUT)

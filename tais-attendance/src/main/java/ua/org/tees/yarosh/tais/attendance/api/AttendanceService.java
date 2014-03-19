@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.attendance.api;
 
 import ua.org.tees.yarosh.tais.attendance.web.dto.FPrintRegistrationStatus;
+import ua.org.tees.yarosh.tais.attendance.web.dto.FprintScannerToken;
 import ua.org.tees.yarosh.tais.attendance.web.dto.RecognizedRegistrant;
 
 /**
@@ -9,7 +10,7 @@ import ua.org.tees.yarosh.tais.attendance.web.dto.RecognizedRegistrant;
  *         Time: 23:46
  */
 public interface AttendanceService {
-    String createAccessToken();
+    FprintScannerToken createAndSaveAccessToken();
 
     FPrintRegistrationStatus appendPrint(String print);
 

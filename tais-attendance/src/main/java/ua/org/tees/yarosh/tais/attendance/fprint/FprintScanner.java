@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.attendance.fprint;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 
 /**
  * @author Timur Yarosh
@@ -9,9 +10,17 @@ import javax.persistence.Entity;
  */
 @Entity
 public class FprintScanner {
-    private Long id;
+    @Id
     private String auditory;
     private String accessToken;
+
+    public FprintScanner() {
+    }
+
+    public FprintScanner(String auditory, String accessToken) {
+        this.auditory = auditory;
+        this.accessToken = accessToken;
+    }
 
     public String getAuditory() {
         return auditory;
@@ -27,13 +36,5 @@ public class FprintScanner {
 
     public void setAccessToken(String accessToken) {
         this.accessToken = accessToken;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 }

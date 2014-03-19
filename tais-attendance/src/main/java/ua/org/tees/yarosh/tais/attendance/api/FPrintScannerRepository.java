@@ -10,5 +10,5 @@ import ua.org.tees.yarosh.tais.attendance.fprint.FprintScanner;
  *         Time: 23:59
  */
 @Repository
-public interface FPrintScannerRepository extends JpaRepository<FprintScanner, Long> {
+public interface FPrintScannerRepository extends JpaRepository<FprintScanner, String> {
 }

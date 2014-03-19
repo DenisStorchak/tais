@@ -5,8 +5,8 @@ package ua.org.tees.yarosh.tais.attendance.fprint;
  *         Date: 20.03.14
  *         Time: 0:12
  */
-public class PipeAlreadyExpectingException extends Exception {
-    public PipeAlreadyExpectingException(String message) {
+public class ExpectationEnabledException extends Exception {
+    public ExpectationEnabledException(String message) {
         super(message);
     }
 }

@@ -11,18 +11,18 @@ import org.springframework.stereotype.Service;
 @Service
 @Scope("singleton")
 public class FPrintScannerExpectationHolder {
-    private static final String ALREADY_EXPECTING_MESSAGE = "Pipe already expecting fprint scanner in %s auditory. " +
-            "You must reset pipe before add new expectation";
+    private static final String ALREADY_EXPECTING_MESSAGE = "Holder already expecting fprint scanner in %s auditory. " +
+            "You must reset holder before add new expectation";
     private volatile boolean expects;
     private volatile String auditory;
 
-    public boolean expect(String auditory) throws PipeAlreadyExpectingException {
+    public boolean expect(String auditory) throws ExpectationEnabledException {
         if (!expects) {
             expects = true;
             this.auditory = auditory;
             return true;
         }
-        throw new PipeAlreadyExpectingException(String.format(ALREADY_EXPECTING_MESSAGE, auditory));
+        throw new ExpectationEnabledException(String.format(ALREADY_EXPECTING_MESSAGE, auditory));
     }
 
     public String getExpectingScannerAuditory() {
