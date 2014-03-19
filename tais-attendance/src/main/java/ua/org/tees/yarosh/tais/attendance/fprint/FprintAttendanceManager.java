@@ -53,11 +53,11 @@ public class FprintAttendanceManager implements AttendanceService {
 
     @Override
     public FPrintRegistrationStatus appendPrint(String print) {
-        return null;
+        return null;         // todo append print to registrant profile
     }
 
     @Override
     public RecognizedRegistrant recognizeAndAttend(String print) {
-        return null;
+        return null; // todo mark current lesson as visited by print owner
     }
 }
