@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.core.common.configuration;
+package ua.org.tees.yarosh.tais.core.common.properties;
 
 import org.springframework.beans.factory.annotation.Value;
 
