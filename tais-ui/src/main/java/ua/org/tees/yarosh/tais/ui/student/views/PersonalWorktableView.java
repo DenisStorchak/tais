@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.api.views;
+package ua.org.tees.yarosh.tais.ui.student.views;
 
 import com.vaadin.navigator.View;
 import ua.org.tees.yarosh.tais.core.common.models.PersonalTask;
