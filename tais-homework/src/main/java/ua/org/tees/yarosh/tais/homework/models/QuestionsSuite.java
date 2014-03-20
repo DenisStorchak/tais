@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class QuestionSuite {
+public class QuestionsSuite {
     @Id
     @GeneratedValue
     private Long id;

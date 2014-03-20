@@ -3,21 +3,21 @@ package ua.org.tees.yarosh.tais.homework;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.models.Answer;
 import ua.org.tees.yarosh.tais.homework.models.Question;
-import ua.org.tees.yarosh.tais.homework.models.QuestionSuite;
+import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 
 import java.util.Map;
 
 public class QuestionsSuiteResult {
-    private QuestionSuite questionSuite;
+    private QuestionsSuite questionsSuite;
     private Map<Question, Answer> answers;
     private Registrant owner;
 
-    public QuestionSuite getQuestionSuite() {
-        return questionSuite;
+    public QuestionsSuite getQuestionsSuite() {
+        return questionsSuite;
     }
 
-    public void setQuestionSuite(QuestionSuite questionSuite) {
-        this.questionSuite = questionSuite;
+    public void setQuestionsSuite(QuestionsSuite questionsSuite) {
+        this.questionsSuite = questionsSuite;
     }
 
     public Map<Question, Answer> getAnswers() {

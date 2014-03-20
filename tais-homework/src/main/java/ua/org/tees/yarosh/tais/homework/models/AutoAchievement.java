@@ -9,7 +9,7 @@ public class AutoAchievement {
     private Long id;
     @OneToOne
     @JoinColumn(name = "questionSuiteId")
-    private QuestionSuite questionSuite;
+    private QuestionsSuite questionsSuite;
     private Integer grade;
 
     public Long getId() {
@@ -20,12 +20,12 @@ public class AutoAchievement {
         this.id = id;
     }
 
-    public QuestionSuite getQuestionSuite() {
-        return questionSuite;
+    public QuestionsSuite getQuestionsSuite() {
+        return questionsSuite;
     }
 
-    public void setQuestionSuite(QuestionSuite questionSuite) {
-        this.questionSuite = questionSuite;
+    public void setQuestionsSuite(QuestionsSuite questionsSuite) {
+        this.questionsSuite = questionsSuite;
     }
 
     public Integer getGrade() {

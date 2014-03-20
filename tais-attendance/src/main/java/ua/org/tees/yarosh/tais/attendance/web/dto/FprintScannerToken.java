@@ -12,7 +12,6 @@ public class FprintScannerToken {
     }
 
     public FprintScannerToken(String accessToken) {
-
         this.accessToken = accessToken;
     }
 }
