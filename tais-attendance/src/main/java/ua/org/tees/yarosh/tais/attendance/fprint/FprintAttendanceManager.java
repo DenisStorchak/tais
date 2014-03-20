@@ -55,6 +55,7 @@ public class FprintAttendanceManager implements AttendanceService {
             persistedScanner.setAccessToken(accessToken);
             scannerRepository.saveAndFlush(persistedScanner);
         }
+        expectationHolder.reset();
         return converter.convert(accessToken);
     }
 
