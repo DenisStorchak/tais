@@ -1,10 +1,7 @@
 package ua.org.tees.yarosh.tais.attendance.web;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import ua.org.tees.yarosh.tais.attendance.api.AttendanceService;
 import ua.org.tees.yarosh.tais.attendance.web.dto.FPrintRegistrationStatus;
 import ua.org.tees.yarosh.tais.attendance.web.dto.FprintScannerToken;
@@ -31,13 +28,13 @@ public class AttendanceWebController {
         return attendanceService.createAndSaveAccessToken();
     }
 
-    @RequestMapping(value = "fprint", method = RequestMethod.PUT)
-    public FPrintRegistrationStatus appendFprint(@RequestBody String fprint) {
-        return attendanceService.appendPrint(fprint);
+    @RequestMapping(value = "fprint/{accessToken}", method = RequestMethod.PUT)
+    public FPrintRegistrationStatus appendFprint(@RequestBody String fprint, @PathVariable("accessToken") String accessToken) {
+        return attendanceService.appendPrint(fprint, accessToken);
     }
 
-    @RequestMapping(value = "visit", method = RequestMethod.POST)
-    public RecognizedRegistrant recognizeAndAttend(@RequestBody String fprint) {
-        return attendanceService.recognizeAndAttend(fprint);
+    @RequestMapping(value = "visit/{accessToken}", method = RequestMethod.POST)
+    public RecognizedRegistrant recognizeAndAttend(@RequestBody String fprint, @PathVariable("accessToken") String accessToken) {
+        return attendanceService.recognizeAndAttend(fprint, accessToken);
     }
 }

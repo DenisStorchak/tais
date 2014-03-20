@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.attendance.web.dto.RecognizedRegistrant;
 public interface AttendanceService {
     FprintScannerToken createAndSaveAccessToken();
 
-    FPrintRegistrationStatus appendPrint(String print);
+    FPrintRegistrationStatus appendPrint(String print, String accessToken);
 
-    RecognizedRegistrant recognizeAndAttend(String print);
+    RecognizedRegistrant recognizeAndAttend(String print, String accessToken);
 }
