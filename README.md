@@ -1,4 +1,4 @@
 tais
 ====
 
-TEES Automactic Interaction System between student and teacher
+TEES Automactic Interaction System
