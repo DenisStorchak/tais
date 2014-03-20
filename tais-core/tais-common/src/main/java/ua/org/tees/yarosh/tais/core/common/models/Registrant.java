@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.core.common.models;
 import ua.org.tees.yarosh.tais.core.common.dto.Position;
 
 import javax.persistence.*;
+import java.io.Serializable;
 
 /**
  * @author Timur Yarosh
@@ -10,7 +11,7 @@ import javax.persistence.*;
  *         Time: 15:00
  */
 @Entity
-public class Registrant {
+public class Registrant implements Serializable {
     @Id
     private String login;
     private String password;

@@ -8,6 +8,8 @@ import java.util.List;
 @Entity
 public class AchievementDiary {
     @Id
+    @GeneratedValue
+    private Long id;
     @OneToOne
     @JoinColumn(name = "ownerId")
     private Registrant owner;
@@ -17,6 +19,14 @@ public class AchievementDiary {
     @OneToMany
     @JoinColumn(name = "manualAchievementsID")
     private List<ManualAchievement> manualAchievements;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public Registrant getOwner() {
         return owner;
