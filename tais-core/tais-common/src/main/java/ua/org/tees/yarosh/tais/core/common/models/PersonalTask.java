@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.core.common.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author Timur Yarosh
@@ -17,6 +18,8 @@ public class PersonalTask {
     private GroupTask groupTask;
     private String grade;
     private String payloadPath;
+    @Temporal(TemporalType.DATE)
+    private Date deadline;
 
     public PersonalTask() {
     }
@@ -56,5 +59,13 @@ public class PersonalTask {
 
     public void setPayloadPath(String payloadPath) {
         this.payloadPath = payloadPath;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 }

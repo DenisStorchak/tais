@@ -4,6 +4,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -21,6 +22,8 @@ public class QuestionsSuite {
     @OneToMany
     @JoinColumn(name = "questionsId")
     private List<Question> questions;
+    @Temporal(TemporalType.DATE)
+    private Date deadline;
 
     public Long getId() {
         return id;
@@ -60,5 +63,13 @@ public class QuestionsSuite {
 
     public void setQuestions(List<Question> questions) {
         this.questions = questions;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 }
