@@ -13,9 +13,9 @@ import java.util.List;
 @Repository
 public interface LessonsRepository extends JpaRepository<Lesson, Long> {
     @Query("select l from Lesson l where l.studentGroup = :studentGroup and l.date between :periodFrom and :periodTo")
-    List<Lesson> findLessonsByPeriod(@Param("periodFrom") Date periodFrom,
-                                     @Param("periodTo") Date periodTo,
-                                     @Param("studentGroup") StudentGroup studentGroup);
+    List<Lesson> findLessonsWithinPeriod(@Param("periodFrom") Date periodFrom,
+                                         @Param("periodTo") Date periodTo,
+                                         @Param("studentGroup") StudentGroup studentGroup);
 
     @Query("delete from Lesson l where l.studentGroup = :studentGroup")
     void deleteSchedule(@Param("studentGroup") StudentGroup studentGroup);

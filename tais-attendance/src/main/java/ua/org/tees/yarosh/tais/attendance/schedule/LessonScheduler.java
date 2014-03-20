@@ -35,6 +35,6 @@ public class LessonScheduler implements LessonsScheduleService {
 
     @Override
     public List<Lesson> findSchedule(Date periodFrom, Date periodTo, StudentGroup studentGroup) {
-        return lessonsRepository.findLessonsByPeriod(periodFrom, periodTo, studentGroup);
+        return lessonsRepository.findLessonsWithinPeriod(periodFrom, periodTo, studentGroup);
     }
 }
