@@ -16,8 +16,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ua.org.tees.yarosh.tais.homework.TimeUtils.minusDays;
-
 @Service
 public class DefaultHomeworkManager implements HomeworkManager {
 
@@ -111,10 +109,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Override
     public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBefore) {
         PersonalTaskHolder personalTaskHolder = personalTaskHolderRepository.findOne(registrant);
-        AchievementDiary diary = achievementDiaryRepository.findOne(registrant);
         return personalTaskHolder.getManualTaskList().stream()
-                .filter(m -> m.getDeadline().before(minusDays(m.getDeadline(), daysBefore)))
-                .filter(m -> !TaskUtils.isRated(m, diary.getManualAchievements()))
+                .filter(t -> manualTaskResultRepository.findOne(t, registrant) == null)
                 .collect(Collectors.toList());
     }
 
