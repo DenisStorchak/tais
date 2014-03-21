@@ -2,10 +2,7 @@ package ua.org.tees.yarosh.tais.ui.roles.teacher;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.LayoutPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.TeacherPanel;
@@ -34,6 +31,7 @@ public class TeacherDashboardView extends VerticalLayout implements View {
         setExpandRatio(dash, 1.5f);
 
         LayoutPanel panelLeft = new LayoutPanel();
+        panelLeft.addComponent(new Table("Непроверенные отчеты"));
         LayoutPanel panelRight = new LayoutPanel();
         dash.addComponent(panelLeft);
         dash.addComponent(panelRight);
