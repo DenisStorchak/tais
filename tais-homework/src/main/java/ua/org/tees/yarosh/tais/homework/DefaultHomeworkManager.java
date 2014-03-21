@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.homework.models.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ua.org.tees.yarosh.tais.homework.TaskUtils.*;
+import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 
 @Service
 public class DefaultHomeworkManager implements HomeworkManager {

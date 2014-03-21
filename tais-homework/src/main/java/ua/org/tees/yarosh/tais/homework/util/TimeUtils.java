@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.homework;
+package ua.org.tees.yarosh.tais.homework.util;
 
 import java.time.Instant;
 import java.time.LocalDate;
