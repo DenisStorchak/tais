@@ -1,10 +1,12 @@
 package ua.org.tees.yarosh.tais.attendance.schedule.models;
 
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 public class Lesson {
@@ -19,6 +21,9 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "studentGroupId")
     private StudentGroup studentGroup;
+    @OneToMany
+    @JoinColumn(name = "visitersId")
+    private List<Registrant> visiters;
 
     public Lesson() {
     }
@@ -61,5 +66,13 @@ public class Lesson {
 
     public void setStudentGroup(StudentGroup studentGroup) {
         this.studentGroup = studentGroup;
+    }
+
+    public List<Registrant> getVisiters() {
+        return visiters;
+    }
+
+    public void setVisiters(List<Registrant> visiters) {
+        this.visiters = visiters;
     }
 }
