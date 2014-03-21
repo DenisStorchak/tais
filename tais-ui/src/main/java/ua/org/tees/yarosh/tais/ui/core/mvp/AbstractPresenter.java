@@ -10,17 +10,17 @@ import java.util.logging.Logger;
 /**
  * @author Timur Yarosh
  */
-public abstract class AbstractPresenter<T extends View> {
+public abstract class AbstractPresenter {
     private static final Logger log = Logger.getLogger(AbstractPresenter.class.getName());
-    private T view;
+    private View view;
 
     public AbstractPresenter(View view) {
         log.info("AbstractPresenter instance created, view will be initialized now");
-        this.view = (T) view;
+        this.view = view;
         initView();
     }
 
-    public T getView() {
+    public View getView() {
         return view;
     }
 
