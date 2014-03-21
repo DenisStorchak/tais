@@ -16,6 +16,9 @@ import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ua.org.tees.yarosh.tais.homework.TaskUtils.isDeadlineAfter;
+import static ua.org.tees.yarosh.tais.homework.TaskUtils.isTaskOverdue;
+
 @Service
 public class DefaultHomeworkManager implements HomeworkManager {
 
@@ -110,13 +113,15 @@ public class DefaultHomeworkManager implements HomeworkManager {
     public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBefore) {
         PersonalTaskHolder personalTaskHolder = personalTaskHolderRepository.findOne(registrant);
         return personalTaskHolder.getManualTaskList().stream()
+                .filter(t -> isDeadlineAfter(t, daysBefore))
+                .filter(t -> !isTaskOverdue(t))
                 .filter(t -> manualTaskResultRepository.findOne(t, registrant) == null)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ManualTask> findUnratedManualTasks(Discipline discipline, boolean onlyResolved) {
-        // fixme use java 8 stream api
+    public List<ManualTask> findUnratedManualTaskResults(Discipline discipline, boolean onlyResolved) {
+
         return Collections.emptyList();
     }
 
