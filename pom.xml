@@ -249,7 +249,7 @@
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
         <h2.version>1.${commons.lang3.version}60</h2.version>
         <postgresql.version>9.3-1100-jdbc41</postgresql.version>
-        <jdk.version>1.7</jdk.version>
+        <jdk.version>1.8</jdk.version>
         <src.encoding>UTF-8</src.encoding>
         <org.springframework.spring.data.jpa.version>1.4.4.RELEASE</org.springframework.spring.data.jpa.version>
         <javax.el.api.version>2.2.4</javax.el.api.version>
