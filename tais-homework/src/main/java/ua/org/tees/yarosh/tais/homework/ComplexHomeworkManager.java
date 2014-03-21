@@ -14,9 +14,9 @@ import ua.org.tees.yarosh.tais.homework.models.*;
 import java.util.List;
 
 @Service
-public class TeacherHomeworkManager implements HomeworkManager {
+public class ComplexHomeworkManager implements HomeworkManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(TeacherHomeworkManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ComplexHomeworkManager.class);
     @Autowired
     private ManualTaskRepository manualTaskRepository;
     @Autowired
