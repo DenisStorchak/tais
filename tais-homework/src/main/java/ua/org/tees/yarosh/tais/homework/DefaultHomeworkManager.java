@@ -14,6 +14,9 @@ import ua.org.tees.yarosh.tais.homework.models.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
+
+import static ua.org.tees.yarosh.tais.homework.TimeUtils.minusDays;
 
 @Service
 public class DefaultHomeworkManager implements HomeworkManager {
@@ -100,18 +103,19 @@ public class DefaultHomeworkManager implements HomeworkManager {
         ManualAchievement manualAchievement = new ManualAchievement();
         manualAchievement.setExaminer(examiner);
         manualAchievement.setGrade(grade);
-        manualAchievement.setPersonalTask(manualTaskResult.getTask());
+        manualAchievement.setManualTask(manualTaskResult.getTask());
         diary.getManualAchievements().add(manualAchievement);
         achievementDiaryRepository.saveAndFlush(diary);
     }
 
     @Override
-    public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline) {
+    public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBefore) {
         PersonalTaskHolder personalTaskHolder = personalTaskHolderRepository.findOne(registrant);
         AchievementDiary diary = achievementDiaryRepository.findOne(registrant);
-
-        // fixme use java 8 stream api
-        return Collections.emptyList();
+        return personalTaskHolder.getManualTaskList().stream()
+                .filter(m -> m.getDeadline().before(minusDays(m.getDeadline(), daysBefore)))
+                .filter(m -> !TaskUtils.isRated(m, diary.getManualAchievements()))
+                .collect(Collectors.toList());
     }
 
     @Override

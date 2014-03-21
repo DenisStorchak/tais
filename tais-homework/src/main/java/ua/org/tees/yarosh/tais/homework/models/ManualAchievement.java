@@ -11,7 +11,7 @@ public class ManualAchievement {
     private Long id;
     @OneToOne
     @JoinColumn(name = "manualTaskId")
-    private ManualTask personalTask;
+    private ManualTask manualTask;
     private Integer grade;
     @ManyToOne
     @JoinColumn(name = "examinerId")
@@ -25,12 +25,12 @@ public class ManualAchievement {
         this.id = id;
     }
 
-    public ManualTask getPersonalTask() {
-        return personalTask;
+    public ManualTask getManualTask() {
+        return manualTask;
     }
 
-    public void setPersonalTask(ManualTask personalTask) {
-        this.personalTask = personalTask;
+    public void setManualTask(ManualTask personalTask) {
+        this.manualTask = personalTask;
     }
 
     public Integer getGrade() {
