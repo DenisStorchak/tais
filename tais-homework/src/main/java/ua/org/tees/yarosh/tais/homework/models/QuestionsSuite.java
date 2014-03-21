@@ -24,6 +24,7 @@ public class QuestionsSuite {
     private List<Question> questions;
     @Temporal(TemporalType.DATE)
     private Date deadline;
+    private Boolean enabled;
 
     public Long getId() {
         return id;
@@ -71,5 +72,13 @@ public class QuestionsSuite {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Boolean getEnabled() {
+        return enabled;
+    }
+
+    public void setEnabled(Boolean enabled) {
+        this.enabled = enabled;
     }
 }

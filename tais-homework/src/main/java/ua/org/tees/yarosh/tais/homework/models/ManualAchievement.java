@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
-import ua.org.tees.yarosh.tais.core.common.models.PersonalTask;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 import javax.persistence.*;
@@ -11,8 +10,8 @@ public class ManualAchievement {
     @GeneratedValue
     private Long id;
     @OneToOne
-    @JoinColumn(name = "personalTaskId")
-    private PersonalTask personalTask;
+    @JoinColumn(name = "manualTaskId")
+    private ManualTask personalTask;
     private Integer grade;
     @ManyToOne
     @JoinColumn(name = "examinerId")
@@ -26,11 +25,11 @@ public class ManualAchievement {
         this.id = id;
     }
 
-    public PersonalTask getPersonalTask() {
+    public ManualTask getPersonalTask() {
         return personalTask;
     }
 
-    public void setPersonalTask(PersonalTask personalTask) {
+    public void setPersonalTask(ManualTask personalTask) {
         this.personalTask = personalTask;
     }
 

@@ -2,34 +2,34 @@ package ua.org.tees.yarosh.tais.homework;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.core.common.models.PersonalTask;
-import ua.org.tees.yarosh.tais.homework.api.AutoExamResolver;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkResolver;
-import ua.org.tees.yarosh.tais.homework.api.PersonalTaskResolver;
+import ua.org.tees.yarosh.tais.homework.api.ManualTaskResolver;
+import ua.org.tees.yarosh.tais.homework.api.QuestionsSuiteResolver;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskResult;
 
 @Service
 public class StudentHomeworkResolver implements HomeworkResolver {
 
-    private AutoExamResolver autoExamResolver;
-    private PersonalTaskResolver personalTaskResolver;
+    private QuestionsSuiteResolver questionsSuiteResolver;
+    private ManualTaskResolver manualTaskResolver;
 
     @Autowired
-    public void setAutoExamResolver(AutoExamResolver autoExamResolver) {
-        this.autoExamResolver = autoExamResolver;
+    public void setQuestionsSuiteResolver(QuestionsSuiteResolver questionsSuiteResolver) {
+        this.questionsSuiteResolver = questionsSuiteResolver;
     }
 
     @Autowired
-    public void setPersonalTaskResolver(PersonalTaskResolver personalTaskResolver) {
-        this.personalTaskResolver = personalTaskResolver;
+    public void setManualTaskResolver(ManualTaskResolver manualTaskResolver) {
+        this.manualTaskResolver = manualTaskResolver;
     }
 
     @Override
     public void resolve(QuestionsSuiteResult result) {
-        autoExamResolver.resolve(result);
+        questionsSuiteResolver.resolve(result);
     }
 
     @Override
-    public void resolve(PersonalTask task) {
-        personalTaskResolver.resolve(task);
+    public void resolve(ManualTaskResult task) {
+        manualTaskResolver.resolve(task);
     }
 }

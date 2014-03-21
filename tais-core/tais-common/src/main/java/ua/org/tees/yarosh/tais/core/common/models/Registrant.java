@@ -2,7 +2,10 @@ package ua.org.tees.yarosh.tais.core.common.models;
 
 import ua.org.tees.yarosh.tais.core.common.dto.Position;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Enumerated;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -20,8 +23,6 @@ public class Registrant implements Serializable {
     private String surname;
     @ManyToOne
     private StudentGroup group;
-    @OneToOne
-    private PersonalTaskHolder personalTaskHolder;
     @Enumerated
     private Position position;
 
@@ -63,14 +64,6 @@ public class Registrant implements Serializable {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public PersonalTaskHolder getPersonalTaskHolder() {
-        return personalTaskHolder;
-    }
-
-    public void setPersonalTaskHolder(PersonalTaskHolder personalTaskHolder) {
-        this.personalTaskHolder = personalTaskHolder;
     }
 
     public StudentGroup getGroup() {

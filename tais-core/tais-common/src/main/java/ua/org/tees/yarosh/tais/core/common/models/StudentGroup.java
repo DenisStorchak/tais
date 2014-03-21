@@ -15,8 +15,6 @@ public class StudentGroup {
     @Id
     private Integer id;
     @OneToMany
-    private List<GroupTask> groupTaskList;
-    @OneToMany
     private List<Registrant> students;
 
     public Integer getId() {
@@ -25,14 +23,6 @@ public class StudentGroup {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public List<GroupTask> getGroupTaskList() {
-        return groupTaskList;
-    }
-
-    public void setGroupTaskList(List<GroupTask> groupTaskList) {
-        this.groupTaskList = groupTaskList;
     }
 
     public List<Registrant> getStudents() {

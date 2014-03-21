@@ -1,6 +1,10 @@
-package ua.org.tees.yarosh.tais.core.common.models;
+package ua.org.tees.yarosh.tais.homework.models;
+
+import ua.org.tees.yarosh.tais.core.common.models.Discipline;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import javax.persistence.*;
+import java.util.Date;
 
 /**
  * @author Timur Yarosh
@@ -8,7 +12,7 @@ import javax.persistence.*;
  *         Time: 22:12
  */
 @Entity
-public class GroupTask {
+public class ManualTask {
     @Id
     @GeneratedValue
     private Long id;
@@ -21,6 +25,8 @@ public class GroupTask {
     private StudentGroup studentGroup;
     private Boolean enabled;
     private String payloadPath;
+    @Temporal(TemporalType.DATE)
+    private Date deadline;
 
     public Long getId() {
         return id;
@@ -68,5 +74,13 @@ public class GroupTask {
 
     public void setPayloadPath(String payloadPath) {
         this.payloadPath = payloadPath;
+    }
+
+    public Date getDeadline() {
+        return deadline;
+    }
+
+    public void setDeadline(Date deadline) {
+        this.deadline = deadline;
     }
 }

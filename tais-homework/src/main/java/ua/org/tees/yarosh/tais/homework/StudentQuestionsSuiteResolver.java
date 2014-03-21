@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.homework;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.homework.api.AutoExamResolver;
+import ua.org.tees.yarosh.tais.homework.api.QuestionsSuiteResolver;
 import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryRepository;
 import ua.org.tees.yarosh.tais.homework.models.AchievementDiary;
 import ua.org.tees.yarosh.tais.homework.models.Answer;
@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualAchievement;
 import java.util.ArrayList;
 
 @Service
-public class StudentAutoExamResolver implements AutoExamResolver {
+public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
 
     private static final int MAX_GRADE = 100;
     private static final int MIN_GRADE = 0;
