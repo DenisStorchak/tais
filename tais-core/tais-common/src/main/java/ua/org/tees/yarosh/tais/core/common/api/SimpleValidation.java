@@ -10,7 +10,7 @@ import java.util.Set;
  *         Date: 09.03.14
  *         Time: 16:54
  */
-public class SimpleValidation {
+public abstract class SimpleValidation {
 
     private static Validator validator = Validation.buildDefaultValidatorFactory().getValidator();
 
