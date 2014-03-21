@@ -4,6 +4,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.StudentGroupRepository;
@@ -11,12 +12,13 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
+import java.util.Collections;
 import java.util.List;
 
 @Service
-public class ComplexHomeworkManager implements HomeworkManager {
+public class DefaultHomeworkManager implements HomeworkManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ComplexHomeworkManager.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHomeworkManager.class);
     @Autowired
     private ManualTaskRepository manualTaskRepository;
     @Autowired
@@ -101,6 +103,27 @@ public class ComplexHomeworkManager implements HomeworkManager {
         manualAchievement.setPersonalTask(manualTaskResult.getTask());
         diary.getManualAchievements().add(manualAchievement);
         achievementDiaryRepository.saveAndFlush(diary);
+    }
+
+    @Override
+    public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline) {
+        PersonalTaskHolder personalTaskHolder = personalTaskHolderRepository.findOne(registrant);
+        AchievementDiary diary = achievementDiaryRepository.findOne(registrant);
+
+        // fixme use java 8 stream api
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<ManualTask> findUnratedManualTasks(Discipline discipline, boolean onlyResolved) {
+        // fixme use java 8 stream api
+        return Collections.emptyList();
+    }
+
+    @Override
+    public List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline) {
+        // fixme use java 8 stream api
+        return Collections.emptyList();
     }
 
     @Override

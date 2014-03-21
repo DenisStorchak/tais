@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.homework.api;
 
+import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
@@ -28,4 +29,10 @@ public interface HomeworkManager {
     ManualTaskResult getManualTaskResult(Registrant registrant, ManualTask manualTask);
 
     void rate(ManualTaskResult manualTaskResult, Registrant examiner, int grade);
+
+    List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
+
+    List<ManualTask> findUnratedManualTasks(Discipline discipline, boolean onlyResolved);
+
+    List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 }
