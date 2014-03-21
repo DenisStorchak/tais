@@ -2,7 +2,6 @@ package ua.org.tees.yarosh.tais.ui.roles;
 
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -11,19 +10,13 @@ import com.vaadin.ui.VerticalLayout;
  *         Date: 21.03.14
  *         Time: 21:36
  */
-public class Sidebar extends HorizontalLayout {
+public class Sidebar extends VerticalLayout {
 
     public Sidebar() {
-        setSizeFull();
-        addStyleName("main-view");
-        addComponent(new VerticalLayout() {
-            {
-                addStyleName("sidebar");
-                setWidth(null);
-                setHeight("100%");
-                addComponent(new SidebarLogo());
-            }
-        });
+        addStyleName("sidebar");
+        setWidth(null);
+        setHeight("100%");
+        addComponent(new SidebarLogo());
     }
 
     public static class SidebarLogo extends CssLayout {

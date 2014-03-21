@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.roles.teacher.windows;
+package ua.org.tees.yarosh.tais.ui.core.components.windows;
 
 import com.vaadin.ui.*;
 

@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core.components.buttons;
 
 import com.vaadin.ui.Button;
 import ua.org.tees.yarosh.tais.ui.core.Messages;
-import ua.org.tees.yarosh.tais.ui.roles.teacher.windows.CreateTaskWindow;
+import ua.org.tees.yarosh.tais.ui.core.components.windows.CreateTaskWindow;
 
 /**
  * @author Timur Yarosh
