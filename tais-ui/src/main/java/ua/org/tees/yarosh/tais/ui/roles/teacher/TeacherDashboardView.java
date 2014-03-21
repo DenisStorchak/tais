@@ -2,10 +2,14 @@ package ua.org.tees.yarosh.tais.ui.roles.teacher;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.*;
-import ua.org.tees.yarosh.tais.ui.core.Messages;
-import ua.org.tees.yarosh.tais.ui.roles.teacher.windows.CreateTaskWindow;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
+import ua.org.tees.yarosh.tais.ui.core.components.Dash;
+import ua.org.tees.yarosh.tais.ui.core.components.LayoutPanel;
+import ua.org.tees.yarosh.tais.ui.core.components.TeacherPanel;
+import ua.org.tees.yarosh.tais.ui.core.components.buttons.CreateTaskButton;
 
 
 /**
@@ -18,56 +22,21 @@ public class TeacherDashboardView extends VerticalLayout implements View {
     public TeacherDashboardView() {
         setSizeFull();
         addStyleName("dashboard-view");
-        HorizontalLayout top = new HorizontalLayout();
-        top.setWidth("100%");
-        top.setSpacing(true);
-        top.addStyleName("toolbar");
+        HorizontalLayout top = new TeacherPanel("Панель преподавателя");
         addComponent(top);
-        Label title = new Label("Панель преподавателя");
-        title.setSizeUndefined();
-        title.addStyleName("h1");
-        top.addComponent(title);
-        top.setComponentAlignment(title, Alignment.MIDDLE_LEFT);
-        top.setExpandRatio(title, 1);
 
-        Button createTask = new Button();
-        createTask.addStyleName("icon-edit");
-        createTask.addStyleName("icon-only");
-        createTask.setDescription(Messages.CREATE_TASK_BUTTON_DESCRIPTION);
-        createTask.addClickListener(clickEvent -> getUI().addWindow(new CreateTaskWindow()));
+        Button createTask = new CreateTaskButton();
         top.addComponent(createTask);
         top.setComponentAlignment(createTask, Alignment.MIDDLE_LEFT);
 
-        HorizontalLayout row = new HorizontalLayout();
-        row.setSizeFull();
-        row.setMargin(new MarginInfo(true, true, false, true));
-        row.setSpacing(true);
-        addComponent(row);
-        setExpandRatio(row, 1.5f);
+        HorizontalLayout dash = new Dash();
+        addComponent(dash);
+        setExpandRatio(dash, 1.5f);
 
-        row.addComponent(createPanel());
-    }
-
-    private CssLayout createPanel() {
-        CssLayout panel = new CssLayout();
-        panel.addStyleName("layout-panel");
-        panel.setSizeFull();
-
-        Button configure = new Button();
-        configure.addStyleName("configure");
-        configure.addStyleName("icon-cog");
-        configure.addStyleName("icon-only");
-        configure.addStyleName("borderless");
-        configure.setDescription("Configure");
-        configure.addStyleName("small");
-        configure.addClickListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                Notification.show("Not implemented in this demo");
-            }
-        });
-        panel.addComponent(configure);
-        return panel;
+        LayoutPanel panelLeft = new LayoutPanel();
+        LayoutPanel panelRight = new LayoutPanel();
+        dash.addComponent(panelLeft);
+        dash.addComponent(panelRight);
     }
 
     @Override
