@@ -10,6 +10,6 @@ import org.springframework.context.annotation.Import;
  */
 @Configuration
 @Import(CommonPersistenceConfiguration.class)
-public class CoreConfiguration {
+public class CommonConfiguration {
 
 }

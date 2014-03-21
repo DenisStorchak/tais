@@ -2,10 +2,11 @@ package ua.org.tees.yarosh.tais.homework;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.context.annotation.Import;
+import ua.org.tees.yarosh.tais.core.common.CommonConfiguration;
 
 @Configuration
+@Import(CommonConfiguration.class)
 @ComponentScan(basePackageClasses = HomeworkConfiguration.class)
-@EnableJpaRepositories(basePackages = "ua.org.tees.yarosh.tais.homework.api.persistence")
 public class HomeworkConfiguration {
 }
