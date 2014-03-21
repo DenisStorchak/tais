@@ -30,13 +30,13 @@ public class PersonalWorktablePresenter extends AbstractPresenter implements Per
     }
 
     @Override
-    public List<ManualTask> listRegistrantTasks() {
+    public List<ManualTask> listActualUnresolvedTasks() {
         String registrantId = (String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID);
         Registrant registrant;
         try {
             registrant = registrantService.getRegistration(registrantId);
         } catch (RegistrantNotFoundException e) {
-            e.printStackTrace();
+            info(e.getMessage());
         }
         return null;
     }

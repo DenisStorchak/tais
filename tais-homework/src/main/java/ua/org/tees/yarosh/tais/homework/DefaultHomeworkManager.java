@@ -117,6 +117,14 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    public List<ManualTask> findUnresolvedActualManualTasks(Registrant registrant) {
+        return personalTaskHolderRepository.findOne(registrant).getManualTaskList().stream()
+                .filter(t -> !isTaskOverdue(t))
+                .filter(t -> manualTaskResultRepository.findOne(t, registrant) == null)
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public List<ManualTaskResult> findUnratedManualTaskResults(Discipline discipline) {
         return manualTaskResultRepository.findByDiscipline(discipline).stream()
                 .filter(r -> !isRated(r.getTask(), diaryRepository.findOne(r.getOwner()).getManualAchievements()))
@@ -124,9 +132,17 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBefore) {
+    public List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline) {
         return personalTaskHolderRepository.findOne(registrant).getQuestionsSuiteList().stream()
-                .filter(q -> isDeadlineAfter(q, daysBefore))
+                .filter(q -> isDeadlineAfter(q, daysBeforeDeadline))
+                .filter(q -> !isTaskOverdue(q))
+                .filter(q -> !isRated(q, diaryRepository.findOne(registrant).getAutoAchievements()))
+                .collect(Collectors.toList());
+    }
+
+    @Override
+    public List<QuestionsSuite> findUnresolvedActualQuestionsSuite(Registrant registrant) {
+        return personalTaskHolderRepository.findOne(registrant).getQuestionsSuiteList().stream()
                 .filter(q -> !isTaskOverdue(q))
                 .filter(q -> !isRated(q, diaryRepository.findOne(registrant).getAutoAchievements()))
                 .collect(Collectors.toList());

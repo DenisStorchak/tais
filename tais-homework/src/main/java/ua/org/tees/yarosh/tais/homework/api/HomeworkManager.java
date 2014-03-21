@@ -32,7 +32,11 @@ public interface HomeworkManager {
 
     List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 
+    List<ManualTask> findUnresolvedActualManualTasks(Registrant registrant);
+
     List<ManualTaskResult> findUnratedManualTaskResults(Discipline discipline);
 
     List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
+
+    List<QuestionsSuite> findUnresolvedActualQuestionsSuite(Registrant registrant);
 }

@@ -9,7 +9,7 @@ public interface PersonalWorktableView extends View {
     String VIEW_NAME = "mainView";
 
     interface PersonalWorktableListener {
-        List<ManualTask> listRegistrantTasks();
+        List<ManualTask> listActualUnresolvedTasks();
     }
 
     void addListener(PersonalWorktableListener listener);
