@@ -27,12 +27,4 @@ public class AutoAchievement {
     public void setQuestionsSuite(QuestionsSuite questionsSuite) {
         this.questionsSuite = questionsSuite;
     }
-
-    public Integer getGrade() {
-        return grade;
-    }
-
-    public void setGrade(Integer grade) {
-        this.grade = grade;
-    }
 }

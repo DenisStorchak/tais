@@ -12,12 +12,10 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ua.org.tees.yarosh.tais.homework.TaskUtils.isDeadlineAfter;
-import static ua.org.tees.yarosh.tais.homework.TaskUtils.isTaskOverdue;
+import static ua.org.tees.yarosh.tais.homework.TaskUtils.*;
 
 @Service
 public class DefaultHomeworkManager implements HomeworkManager {
@@ -36,7 +34,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Autowired
     private ManualTaskResultRepository manualTaskResultRepository;
     @Autowired
-    private AchievementDiaryRepository achievementDiaryRepository;
+    private AchievementDiaryRepository diaryRepository;
 
     @Override
     public long createGeneralTask(ManualTask task) {
@@ -100,19 +98,18 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     public void rate(ManualTaskResult manualTaskResult, Registrant examiner, int grade) {
-        AchievementDiary diary = achievementDiaryRepository.findOne(manualTaskResult.getOwner());
+        AchievementDiary diary = diaryRepository.findOne(manualTaskResult.getOwner());
         ManualAchievement manualAchievement = new ManualAchievement();
         manualAchievement.setExaminer(examiner);
         manualAchievement.setGrade(grade);
         manualAchievement.setManualTask(manualTaskResult.getTask());
         diary.getManualAchievements().add(manualAchievement);
-        achievementDiaryRepository.saveAndFlush(diary);
+        diaryRepository.saveAndFlush(diary);
     }
 
     @Override
     public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBefore) {
-        PersonalTaskHolder personalTaskHolder = personalTaskHolderRepository.findOne(registrant);
-        return personalTaskHolder.getManualTaskList().stream()
+        return personalTaskHolderRepository.findOne(registrant).getManualTaskList().stream()
                 .filter(t -> isDeadlineAfter(t, daysBefore))
                 .filter(t -> !isTaskOverdue(t))
                 .filter(t -> manualTaskResultRepository.findOne(t, registrant) == null)
@@ -120,15 +117,19 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public List<ManualTask> findUnratedManualTaskResults(Discipline discipline, boolean onlyResolved) {
-
-        return Collections.emptyList();
+    public List<ManualTaskResult> findUnratedManualTaskResults(Discipline discipline) {
+        return manualTaskResultRepository.findByDiscipline(discipline).stream()
+                .filter(r -> !isRated(r.getTask(), diaryRepository.findOne(r.getOwner()).getManualAchievements()))
+                .collect(Collectors.toList());
     }
 
     @Override
-    public List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline) {
-        // fixme use java 8 stream api
-        return Collections.emptyList();
+    public List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBefore) {
+        return personalTaskHolderRepository.findOne(registrant).getQuestionsSuiteList().stream()
+                .filter(q -> isDeadlineAfter(q, daysBefore))
+                .filter(q -> !isTaskOverdue(q))
+                .filter(q -> !isRated(q, diaryRepository.findOne(registrant).getAutoAchievements()))
+                .collect(Collectors.toList());
     }
 
     @Override
