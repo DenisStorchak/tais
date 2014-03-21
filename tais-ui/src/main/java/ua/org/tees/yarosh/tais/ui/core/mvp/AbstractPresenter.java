@@ -4,7 +4,7 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.SessionAttributes;
+import ua.org.tees.yarosh.tais.ui.core.SessionAttributes;
 
 /**
  * @author Timur Yarosh

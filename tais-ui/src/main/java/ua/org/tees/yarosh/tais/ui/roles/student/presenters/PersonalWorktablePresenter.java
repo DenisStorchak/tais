@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.roles.student.api.PersonalWorktableView;
 
 import java.util.List;
 
-import static ua.org.tees.yarosh.tais.ui.SessionAttributes.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.SessionAttributes.REGISTRANT_ID;
 
 @Service
 public class PersonalWorktablePresenter extends AbstractPresenter implements PersonalWorktableView.PersonalWorktableListener {
