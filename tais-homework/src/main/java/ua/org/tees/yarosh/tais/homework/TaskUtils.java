@@ -12,7 +12,7 @@ import java.util.List;
 import static ua.org.tees.yarosh.tais.homework.TimeUtils.minusDays;
 import static ua.org.tees.yarosh.tais.homework.TimeUtils.toDate;
 
-public class TaskUtils {
+public abstract class TaskUtils {
     public static boolean isRated(ManualTask manualTask, List<ManualAchievement> manualAchievements) {
         return manualAchievements.stream().anyMatch(a -> a.getManualTask().getId().equals(manualTask.getId()));
     }

@@ -5,7 +5,7 @@ import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.Date;
 
-public class TimeUtils {
+public abstract class TimeUtils {
     public static LocalDate toLocalDate(Date date) {
         return LocalDate.from(Instant.ofEpochMilli(date.getTime()));
     }

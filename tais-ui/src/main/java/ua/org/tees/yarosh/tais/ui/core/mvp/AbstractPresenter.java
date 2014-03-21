@@ -1,26 +1,26 @@
 package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.Navigator;
-import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.SessionAttributes;
+import ua.org.tees.yarosh.tais.ui.student.views.api.TaisView;
 
 /**
  * @author Timur Yarosh
  */
 public abstract class AbstractPresenter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPresenter.class);
-    private View view;
+    private TaisView view;
 
-    public AbstractPresenter(View view) {
+    public AbstractPresenter(TaisView view) {
         LOGGER.info("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         initView();
     }
 
-    public View getView() {
+    public TaisView getView() {
         return view;
     }
 

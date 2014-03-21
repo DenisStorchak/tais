@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.ui.student.views.presenters;
 
-import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +9,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.student.views.api.PersonalWorktableView;
+import ua.org.tees.yarosh.tais.ui.student.views.api.TaisView;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ public class PersonalWorktablePresenter extends AbstractPresenter implements Per
 
     private RegistrantService registrantService;
 
-    public PersonalWorktablePresenter(View view) {
+    public PersonalWorktablePresenter(TaisView view) {
         super(view);
     }
 
@@ -43,6 +43,6 @@ public class PersonalWorktablePresenter extends AbstractPresenter implements Per
 
     @Override
     protected void initView() {
-
+        getView().addPresenter(this);
     }
 }
