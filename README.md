@@ -7,7 +7,8 @@ build
 =====
 ####Build needs:
 1. <b>jdk</b> >= 1.8<br />
-2. <b>maven</b> >= 3
+2. <b>maven</b> >= 3<br />
+3. internet connection (other dependencies will fetch from external repositories)
 
 ####Steps:
 1. <b>mvn</b> clean<br />
