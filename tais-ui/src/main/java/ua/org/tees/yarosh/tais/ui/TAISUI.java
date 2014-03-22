@@ -5,16 +5,15 @@ import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
+import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
+import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
 import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
 import ua.org.tees.yarosh.tais.ui.roles.HelpOverlay;
 import ua.org.tees.yarosh.tais.ui.roles.MyConverterFactory;
-import ua.org.tees.yarosh.tais.ui.roles.Sidebar;
 import ua.org.tees.yarosh.tais.ui.roles.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.ui.core.Messages.WELCOME_MESSAGE;
@@ -60,7 +59,20 @@ public class TAISUI extends UI {
             {
                 setSizeFull();
                 addStyleName("main-view");
-                addComponent(new Sidebar());
+                Sidebar sidebar = new Sidebar();
+                SidebarMenu menu = new SidebarMenu();
+
+                NativeButton teacherPanelButton = new NativeButton("Панель преподавателя");
+                teacherPanelButton.addStyleName("icon-dashboard");
+                menu.addComponent(teacherPanelButton);
+
+                NativeButton studentsListButton = new NativeButton("Студенты");
+                studentsListButton.addStyleName("icon-users");
+                menu.addComponent(studentsListButton);
+
+                sidebar.setSidebarMenu(menu);
+                sidebar.setUserMenu(new UserMenu("Тимур", "Ярош"));
+                addComponent(sidebar);
                 addComponent(content);
                 content.setSizeFull();
                 content.addStyleName("view-content");

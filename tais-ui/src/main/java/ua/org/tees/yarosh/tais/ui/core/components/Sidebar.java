@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.roles;
+package ua.org.tees.yarosh.tais.ui.core.components;
 
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;
@@ -17,6 +17,15 @@ public class Sidebar extends VerticalLayout {
         setWidth(null);
         setHeight("100%");
         addComponent(new SidebarLogo());
+    }
+
+    public void setSidebarMenu(SidebarMenu sidebarMenu) {
+        addComponent(sidebarMenu);
+        setExpandRatio(sidebarMenu, 1);
+    }
+
+    public void setUserMenu(UserMenu userMenu) {
+        addComponent(userMenu);
     }
 
     public static class SidebarLogo extends CssLayout {
