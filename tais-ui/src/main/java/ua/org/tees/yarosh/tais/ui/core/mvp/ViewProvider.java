@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
+import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;
@@ -13,6 +14,7 @@ import java.util.logging.Logger;
 public class ViewProvider extends Navigator.ClassBasedViewProvider {
 
     private static Logger log = Logger.getLogger(ViewProvider.class.getName());
+    private HelpManager helpManager;
 
     /**
      * Create a new view provider which creates new view instances based on
@@ -21,8 +23,9 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
      * @param viewName  name of the views to create (not null)
      * @param viewClass
      */
-    public ViewProvider(String viewName, Class<? extends TaisView> viewClass) {
+    public ViewProvider(String viewName, Class<? extends View> viewClass, HelpManager helpManager) {
         super(viewName, viewClass);
+        this.helpManager = helpManager;
     }
 
     public View getView(String viewName) {
@@ -37,7 +40,7 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
                 log.log(Level.WARNING, "Presenter for {0} view not found, empty view will be returned...", viewName);
                 return view;
             }
-            presenterType.getConstructor(TaisView.class).newInstance(view);
+            presenterType.getConstructor(TaisView.class, HelpManager.class).newInstance(view, helpManager);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             log.log(Level.SEVERE, "Presenter can't set up the view\n{0}", e.getMessage());
         }

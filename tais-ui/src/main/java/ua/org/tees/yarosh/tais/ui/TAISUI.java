@@ -59,7 +59,7 @@ public class TAISUI extends UI {
         root.addComponent(new MainView(content));
 
         nav = new Navigator(this, content);
-        nav.addProvider(new ViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
+        nav.addProvider(new ViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class, helpManager));
         nav.navigateTo(TEACHER_DASHBOARD);
     }
 }

@@ -9,6 +9,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.core.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
+import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
 
 /**
  * @author Timur Yarosh
@@ -17,13 +18,14 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
  */
 public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardTaisView.TeacherDashboardPresenter {
 
-    public TeacherDashboardListener(TaisView view) {
-        super(view);
+    public TeacherDashboardListener(TaisView view, HelpManager helpManager) {
+        super(view, helpManager);
     }
 
     @Override
     protected void initView() {
         getView().addPresenter(this);
+        getHelpManager().closeAll();
     }
 
     @Override

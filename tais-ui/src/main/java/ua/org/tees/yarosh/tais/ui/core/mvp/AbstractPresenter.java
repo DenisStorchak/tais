@@ -5,6 +5,7 @@ import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.core.SessionAttributes;
+import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
 
 /**
  * @author Timur Yarosh
@@ -12,10 +13,16 @@ import ua.org.tees.yarosh.tais.ui.core.SessionAttributes;
 public abstract class AbstractPresenter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPresenter.class);
     private TaisView view;
+    private HelpManager helpManager;
 
-    public AbstractPresenter(TaisView view) {
+    public HelpManager getHelpManager() {
+        return helpManager;
+    }
+
+    public AbstractPresenter(TaisView view, HelpManager helpManager) {
         LOGGER.info("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
+        this.helpManager = helpManager;
         initView();
     }
 
