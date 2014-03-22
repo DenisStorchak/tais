@@ -1,7 +1,7 @@
 tais
 ====
 
-TEES Automactic Interaction System
+TEES Automatic Interaction System
 
 build
 =====
