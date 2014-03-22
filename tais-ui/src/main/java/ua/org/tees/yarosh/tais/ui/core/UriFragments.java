@@ -6,6 +6,9 @@ package ua.org.tees.yarosh.tais.ui.core;
  *         Time: 20:23
  */
 public abstract class UriFragments {
+
+    public static final String AUTH = "auth";
+
     public abstract class Teacher {
         private static final String PREFIX = "teacher/";
         public static final String TEACHER_DASHBOARD = PREFIX + "dashboard";

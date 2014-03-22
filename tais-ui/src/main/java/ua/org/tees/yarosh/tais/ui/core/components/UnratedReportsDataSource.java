@@ -31,6 +31,7 @@ public class UnratedReportsDataSource extends IndexedContainer {
         Integer studentGroup = taskReport.getOwner().getGroup().getId();
         String student = taskReport.getOwner().getName() + " " + taskReport.getOwner().getSurname();
         Button open = new NativeButton("Подробнее", clickEvent -> Notification.show("Not implemented yet"));
+        open.addStyleName("default");
 
         Item item = addItem(taskReport.getId());
         item.getItemProperty(DISCIPLINE_KEY).setValue(discipline);

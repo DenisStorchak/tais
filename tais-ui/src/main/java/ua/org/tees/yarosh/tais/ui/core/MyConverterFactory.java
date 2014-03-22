@@ -8,7 +8,7 @@
  *
  */
 
-package ua.org.tees.yarosh.tais.ui.roles;
+package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.data.util.converter.Converter;
 import com.vaadin.data.util.converter.DefaultConverterFactory;

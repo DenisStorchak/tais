@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
+import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 
 import java.lang.reflect.InvocationTargetException;
 import java.util.logging.Level;

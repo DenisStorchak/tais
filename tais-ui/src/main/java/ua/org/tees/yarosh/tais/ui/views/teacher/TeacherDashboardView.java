@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.roles.teacher;
+package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;

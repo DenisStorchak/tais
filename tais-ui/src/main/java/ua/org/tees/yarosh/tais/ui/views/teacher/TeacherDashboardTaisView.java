@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.roles.teacher;
+package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.data.Container;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;

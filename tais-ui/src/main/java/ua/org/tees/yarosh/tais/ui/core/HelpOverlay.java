@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.roles;
+package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;

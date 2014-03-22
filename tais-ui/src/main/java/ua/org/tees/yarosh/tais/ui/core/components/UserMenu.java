@@ -1,7 +1,11 @@
 package ua.org.tees.yarosh.tais.ui.core.components;
 
 import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import ua.org.tees.yarosh.tais.ui.core.UriFragments;
+
+import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
 
 
 /**
@@ -33,6 +37,10 @@ public class UserMenu extends VerticalLayout {
         Button signOut = new NativeButton("Sign Out");
         signOut.addStyleName("icon-cancel");
         signOut.setDescription("Выход");
+        signOut.addClickListener(event -> {
+            VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, null);
+            getUI().getNavigator().navigateTo(UriFragments.AUTH);
+        });
         addComponent(signOut);
     }
 }

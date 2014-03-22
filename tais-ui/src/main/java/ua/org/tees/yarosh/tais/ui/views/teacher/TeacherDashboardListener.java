@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.roles.teacher;
+package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.data.Container;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
@@ -6,10 +6,10 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
+import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
 
 /**
  * @author Timur Yarosh

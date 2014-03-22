@@ -4,8 +4,8 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.core.SessionAttributes;
-import ua.org.tees.yarosh.tais.ui.roles.HelpManager;
+import ua.org.tees.yarosh.tais.ui.core.HelpManager;
+import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
 
 /**
  * @author Timur Yarosh
@@ -31,7 +31,7 @@ public abstract class AbstractPresenter {
     }
 
     public void navigateBack(Navigator navigator) {
-        navigator.navigateTo((String) VaadinSession.getCurrent().getAttribute(SessionAttributes.LAST_VIEW));
+        navigator.navigateTo((String) VaadinSession.getCurrent().getAttribute(SessionKeys.LAST_VIEW));
     }
 
     protected void info(String message, Object... params) {

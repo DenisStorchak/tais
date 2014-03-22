@@ -8,7 +8,7 @@
  *
  */
 
-package ua.org.tees.yarosh.tais.ui.roles;
+package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.label.ContentMode;
