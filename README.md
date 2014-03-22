@@ -19,4 +19,4 @@ last phase<br />
 
 run
 ===
-To run you need apache tomcat >= 7.0.52. Installation described <a href="http://tomcat.apache.org/tomcat-7.0-doc/appdev/installation.html">here</a>. Next you need to deploy tais *.war package to tomcat. Deployment described <a href="https://tomcat.apache.org/tomcat-7.0-doc/appdev/deployment.html">here</a>.
+To run you need apache tomcat >= 7.0.52. Installation described <a href="http://tomcat.apache.org/tomcat-7.0-doc/appdev/installation.html">here</a>. Next you need to deploy tais *.war package to tomcat. Deployment described <a href="https://tomcat.apache.org/tomcat-7.0-doc/appdev/deployment.html">here</a>. Also you need postgresql >= 9.3.
