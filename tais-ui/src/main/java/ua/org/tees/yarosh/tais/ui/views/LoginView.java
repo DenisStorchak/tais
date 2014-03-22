@@ -104,7 +104,7 @@ public class LoginView extends VerticalLayout implements TaisView {
             };
 
             Label error = new Label(
-                    "Wrong username or password. <span>Hint: try \"teacher\" values</span>",
+                    "Неправильное имя пользователя или пароль. <span>Hint: try \"teacher\" values</span>", // todo delete hint!!!
                     ContentMode.HTML);
 
             signIn.addClickListener(event -> {
