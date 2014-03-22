@@ -3,7 +3,6 @@ package ua.org.tees.yarosh.tais.ui.core.components;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 
@@ -30,8 +29,9 @@ public class UnratedReportsDataSource extends IndexedContainer {
         String discipline = taskReport.getTask().getDiscipline().getName();
         Integer studentGroup = taskReport.getOwner().getGroup().getId();
         String student = taskReport.getOwner().getName() + " " + taskReport.getOwner().getSurname();
-        Button open = new NativeButton("Подробнее", clickEvent -> Notification.show("Not implemented yet"));
-        open.addStyleName("default");
+        Button open = new Button("Подробнее", clickEvent -> Notification.show("Not implemented yet"));
+        open.addStyleName("icon-eye");
+        open.addStyleName("icon-only");
 
         Item item = addItem(taskReport.getId());
         item.getItemProperty(DISCIPLINE_KEY).setValue(discipline);

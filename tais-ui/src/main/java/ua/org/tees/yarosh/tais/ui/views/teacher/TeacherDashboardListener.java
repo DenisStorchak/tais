@@ -31,11 +31,13 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
     @Override
     public Container getUnratedManualReports() {
         UnratedReportsDataSource unratedReports = new UnratedReportsDataSource();
-        unratedReports.addReport(createSampleReport());
+        for (long i = 0; i < 100; i++) {
+            unratedReports.addReport(createSampleReport(i));
+        }
         return unratedReports;
     }
 
-    private ManualTaskReport createSampleReport() {
+    private ManualTaskReport createSampleReport(long i) {
         StudentGroup studentGroup = new StudentGroup();
         studentGroup.setId(4321);
 
@@ -53,7 +55,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
         manualTask.setStudentGroup(studentGroup);
 
         ManualTaskReport taskReport = new ManualTaskReport();
-        taskReport.setId(0L);
+        taskReport.setId(i);
         taskReport.setOwner(owner);
         taskReport.setTask(manualTask);
         return taskReport;

@@ -28,7 +28,6 @@ import static ua.org.tees.yarosh.tais.ui.core.Messages.WELCOME_MESSAGE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
-import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 
 /**
  * @author Timur Yarosh
@@ -64,13 +63,15 @@ public class TAISUI extends UI {
                 super.addView(viewName, view);
             }
 
-            public void addProvider(ClassBasedViewProvider provider) {
-                viewResolver.register(provider.getViewClass(), provider.getViewName());
+            @Override
+            public void addProvider(com.vaadin.navigator.ViewProvider provider) {
+                ClassBasedViewProvider classBasedViewProvider = (ClassBasedViewProvider) provider;
+                viewResolver.register(classBasedViewProvider.getViewClass(), classBasedViewProvider.getViewName());
                 super.addProvider(provider);
             }
         };
         nav.addProvider(new ViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class, helpManager));
-        nav.addView(AUTH, new LoginView());
+        nav.addView(AUTH, LoginView.class);
         nav.addViewChangeListener(new SidebarManager());
 
         getSession().setConverterFactory(new MyConverterFactory());
@@ -88,6 +89,8 @@ public class TAISUI extends UI {
 
         if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
             nav.navigateTo(AUTH);
+        } else {
+            nav.navigateTo(TEACHER_DASHBOARD);
         }
     }
 
@@ -112,7 +115,7 @@ public class TAISUI extends UI {
         public boolean beforeViewChange(ViewChangeEvent event) {
             if (event.getViewName().equals(AUTH)) {
                 commonComponent.removeComponent(sidebar);
-            } else if (resolveView(event.getOldView().getClass()).equals(AUTH)) {
+            } else {
                 commonComponent.addComponentAsFirst(sidebar);
             }
             return true;
