@@ -6,7 +6,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "taskId")})
-public class ManualTaskResult {
+public class ManualTaskReport {
     @Id
     @GeneratedValue
     private Long id;

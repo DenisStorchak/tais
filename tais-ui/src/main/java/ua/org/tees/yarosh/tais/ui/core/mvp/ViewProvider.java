@@ -21,7 +21,7 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
      * @param viewName  name of the views to create (not null)
      * @param viewClass
      */
-    public ViewProvider(String viewName, Class<? extends View> viewClass) {
+    public ViewProvider(String viewName, Class<? extends TaisView> viewClass) {
         super(viewName, viewClass);
     }
 
@@ -37,7 +37,7 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
                 log.log(Level.WARNING, "Presenter for {0} view not found, empty view will be returned...", viewName);
                 return view;
             }
-            presenterType.getConstructor(View.class).newInstance(view);
+            presenterType.getConstructor(TaisView.class).newInstance(view);
         } catch (NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
             log.log(Level.SEVERE, "Presenter can't set up the view\n{0}", e.getMessage());
         }

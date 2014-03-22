@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkResolver;
 import ua.org.tees.yarosh.tais.homework.api.ManualTaskResolver;
 import ua.org.tees.yarosh.tais.homework.api.QuestionsSuiteResolver;
-import ua.org.tees.yarosh.tais.homework.models.ManualTaskResult;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 
 @Service
 public class StudentHomeworkResolver implements HomeworkResolver {
@@ -29,7 +29,7 @@ public class StudentHomeworkResolver implements HomeworkResolver {
     }
 
     @Override
-    public void resolve(ManualTaskResult task) {
+    public void resolve(ManualTaskReport task) {
         manualTaskResolver.resolve(task);
     }
 }

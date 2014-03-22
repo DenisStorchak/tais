@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.homework.api;
 
-import ua.org.tees.yarosh.tais.homework.models.ManualTaskResult;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 
 public interface ManualTaskResolver {
-    void resolve(ManualTaskResult result);
+    void resolve(ManualTaskReport result);
 }

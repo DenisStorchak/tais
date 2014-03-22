@@ -4,7 +4,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
-import ua.org.tees.yarosh.tais.homework.models.ManualTaskResult;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 
 import java.util.List;
@@ -26,15 +26,15 @@ public interface HomeworkManager {
 
     List<QuestionsSuite> findQuestionsSuites(StudentGroup studentGroup);
 
-    ManualTaskResult getManualTaskResult(Registrant registrant, ManualTask manualTask);
+    ManualTaskReport getManualTaskResult(Registrant registrant, ManualTask manualTask);
 
-    void rate(ManualTaskResult manualTaskResult, Registrant examiner, int grade);
+    void rate(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
 
     List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 
     List<ManualTask> findUnresolvedActualManualTasks(Registrant registrant);
 
-    List<ManualTaskResult> findUnratedManualTaskResults(Discipline discipline);
+    List<ManualTaskReport> findUnratedManualTaskResults(Discipline discipline);
 
     List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 

@@ -92,17 +92,17 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public ManualTaskResult getManualTaskResult(Registrant registrant, ManualTask manualTask) {
+    public ManualTaskReport getManualTaskResult(Registrant registrant, ManualTask manualTask) {
         return manualTaskResultRepository.findOne(manualTask, registrant);
     }
 
     @Override
-    public void rate(ManualTaskResult manualTaskResult, Registrant examiner, int grade) {
-        AchievementDiary diary = diaryRepository.findOne(manualTaskResult.getOwner());
+    public void rate(ManualTaskReport manualTaskReport, Registrant examiner, int grade) {
+        AchievementDiary diary = diaryRepository.findOne(manualTaskReport.getOwner());
         ManualAchievement manualAchievement = new ManualAchievement();
         manualAchievement.setExaminer(examiner);
         manualAchievement.setGrade(grade);
-        manualAchievement.setManualTask(manualTaskResult.getTask());
+        manualAchievement.setManualTask(manualTaskReport.getTask());
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
     }
@@ -125,7 +125,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public List<ManualTaskResult> findUnratedManualTaskResults(Discipline discipline) {
+    public List<ManualTaskReport> findUnratedManualTaskResults(Discipline discipline) {
         return manualTaskResultRepository.findByDiscipline(discipline).stream()
                 .filter(r -> !isRated(r.getTask(), diaryRepository.findOne(r.getOwner()).getManualAchievements()))
                 .collect(Collectors.toList());

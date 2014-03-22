@@ -7,15 +7,15 @@ import org.springframework.stereotype.Repository;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
-import ua.org.tees.yarosh.tais.homework.models.ManualTaskResult;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 
 import java.util.List;
 
 @Repository
-public interface ManualTaskResultRepository extends JpaRepository<ManualTaskResult, Long> {
+public interface ManualTaskResultRepository extends JpaRepository<ManualTaskReport, Long> {
     @Query("select m from ManualTaskResult m where m.task = :manualTask and m.owner = :registrant")
-    ManualTaskResult findOne(@Param("manualTask") ManualTask manualTask, @Param("registrant") Registrant registrant);
+    ManualTaskReport findOne(@Param("manualTask") ManualTask manualTask, @Param("registrant") Registrant registrant);
 
     @Query("select m from ManualTaskResult m where m.task.discipline = :discipline")
-    List<ManualTaskResult> findByDiscipline(@Param("discipline") Discipline discipline);
+    List<ManualTaskReport> findByDiscipline(@Param("discipline") Discipline discipline);
 }

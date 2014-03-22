@@ -1,12 +1,16 @@
 package ua.org.tees.yarosh.tais.ui.roles.teacher;
 
-import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.LayoutPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.TeacherPanel;
+import ua.org.tees.yarosh.tais.ui.core.components.UnratedReportsTable;
 import ua.org.tees.yarosh.tais.ui.core.components.buttons.CreateTaskButton;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
+
+import java.util.LinkedList;
 
 
 /**
@@ -14,12 +18,16 @@ import ua.org.tees.yarosh.tais.ui.core.components.buttons.CreateTaskButton;
  *         Date: 21.03.14
  *         Time: 19:57
  */
-public class TeacherDashboardView extends VerticalLayout implements View {
+@PresenterClass(TeacherDashboardListener.class)
+public class TeacherDashboardView extends VerticalLayout implements TeacherDashboardTaisView {
+
+    private LinkedList<TeacherDashboardPresenter> presenters = new LinkedList<>();
+    private Table unratedReports;
 
     public TeacherDashboardView() {
         setSizeFull();
         addStyleName("dashboard-view");
-        HorizontalLayout top = new TeacherPanel("Панель преподавателя");
+        HorizontalLayout top = new TeacherPanel("Задания");
         addComponent(top);
 
         Button createTask = new CreateTaskButton();
@@ -31,7 +39,9 @@ public class TeacherDashboardView extends VerticalLayout implements View {
         setExpandRatio(dash, 1.5f);
 
         LayoutPanel panelLeft = new LayoutPanel();
-        panelLeft.addComponent(new Table("Непроверенные отчеты"));
+
+        unratedReports = new UnratedReportsTable();
+        panelLeft.addComponent(unratedReports);
         LayoutPanel panelRight = new LayoutPanel();
         dash.addComponent(panelLeft);
         dash.addComponent(panelRight);
@@ -39,6 +49,11 @@ public class TeacherDashboardView extends VerticalLayout implements View {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+        unratedReports.setContainerDataSource(presenters.getFirst().getUnratedManualReports());
+    }
 
+    @Override
+    public void addPresenter(AbstractPresenter presenter) {
+        presenters.add((TeacherDashboardPresenter) presenter);
     }
 }
