@@ -6,8 +6,8 @@ TEES Automactic Interaction System
 build
 =====
 ####Build needs:
-1. <b>jdk</b> min version 1.8<br />
-2. <b>maven</b> 3
+1. <b>jdk</b> >= 1.8<br />
+2. <b>maven</b> >= 3
 
 ####Steps:
 1. <b>mvn</b> clean<br />
