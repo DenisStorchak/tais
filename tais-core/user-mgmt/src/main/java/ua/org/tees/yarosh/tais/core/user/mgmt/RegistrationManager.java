@@ -27,9 +27,9 @@ public class RegistrationManager implements RegistrantService {
         LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
 
-        registrantRepository.save(registrant);
+        Registrant persistedRegistrant = registrantRepository.save(registrant);
         LOGGER.info("[login: {}] registered successfully", registrant.getLogin());
-        return registrant;
+        return persistedRegistrant;
     }
 
     @Override

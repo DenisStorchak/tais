@@ -7,8 +7,6 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 
-import static ua.org.tees.yarosh.tais.ui.configuration.ContextNames.WEB_CONTEXT;
-
 public class TaisWebInitializer implements WebApplicationInitializer {
     @Override
     public void onStartup(ServletContext servletContext) throws ServletException {
@@ -16,6 +14,6 @@ public class TaisWebInitializer implements WebApplicationInitializer {
         ctx.register(TaisConfiguration.class);
         servletContext.addListener(new ContextLoaderListener(ctx));
 
-        ContextAccessor.addContext(WEB_CONTEXT, ctx);
+        ContextAccessor.addContext(TaisConfiguration.class, ctx);
     }
 }

@@ -11,17 +11,17 @@ import java.util.Map;
  *         Time: 2:24
  */
 public class ContextAccessor {
-    private static final Map<String, ApplicationContext> contextPool = new HashMap<>();
+    private static final Map<Class<?>, ApplicationContext> contextPool = new HashMap<>();
 
-    public static void addContext(String contextName, ApplicationContext context) {
-        contextPool.put(contextName, context);
+    public static void addContext(Class<?> clazz, ApplicationContext context) {
+        contextPool.put(clazz, context);
     }
 
-    public static ApplicationContext getContext(String contextName) {
-        return contextPool.get(contextName);
+    public static ApplicationContext getContext(Class<?> clazz) {
+        return contextPool.get(clazz);
     }
 
-    public static void deleteContext(String contextName) {
-        contextPool.remove(contextName);
+    public static void deleteContext(Class<?> clazz) {
+        contextPool.remove(clazz);
     }
 }

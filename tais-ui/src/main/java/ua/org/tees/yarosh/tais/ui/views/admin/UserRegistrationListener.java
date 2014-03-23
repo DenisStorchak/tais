@@ -6,12 +6,12 @@ import org.apache.commons.codec.digest.DigestUtils;
 import ua.org.tees.yarosh.tais.core.common.dto.Position;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.configuration.TaisConfiguration;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 
 import static ua.org.tees.yarosh.tais.ui.configuration.ContextAccessor.getContext;
-import static ua.org.tees.yarosh.tais.ui.configuration.ContextNames.WEB_CONTEXT;
 import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
@@ -21,7 +21,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.Us
  */
 public class UserRegistrationListener extends AbstractPresenter implements UserRegistrationPresenter {
 
-    private RegistrantService registrantService = getContext(WEB_CONTEXT).getBean(RegistrantService.class);
+    private RegistrantService registrantService = getContext(TaisConfiguration.class).getBean(RegistrantService.class);
 
     public void setRegistrantService(RegistrantService registrantService) {
         this.registrantService = registrantService;
