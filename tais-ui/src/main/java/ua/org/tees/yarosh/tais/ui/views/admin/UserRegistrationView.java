@@ -2,6 +2,9 @@ package ua.org.tees.yarosh.tais.ui.views.admin;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
@@ -10,12 +13,17 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 
 import java.util.LinkedList;
 
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
+
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
  *         Time: 20:44
  */
 @PresenterClass(UserRegistrationListener.class)
+@Service
+@Qualifier(USER_REGISTRATION)
+@Scope("prototype")
 public class UserRegistrationView extends VerticalLayout implements UserRegistrationTaisView {
 
     private static final int MIN_PASSWORD_LENGTH = 6;

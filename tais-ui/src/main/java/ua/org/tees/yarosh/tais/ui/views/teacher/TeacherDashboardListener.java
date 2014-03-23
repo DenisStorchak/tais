@@ -1,6 +1,10 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.data.Container;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -11,14 +15,19 @@ import ua.org.tees.yarosh.tais.ui.core.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
+
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
  *         Time: 12:41
  */
+@Service
+@Scope("prototype")
 public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardTaisView.TeacherDashboardPresenter {
 
-    public TeacherDashboardListener(TaisView view, HelpManager helpManager) {
+    @Autowired
+    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) TaisView view, HelpManager helpManager) {
         super(view, helpManager);
     }
 

@@ -61,7 +61,7 @@ public class TAISUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         LOGGER.info("Session locale is [{}]", VaadinSession.getCurrent().getLocale());
-        HelpManager helpManager = new HelpManager(this);
+        HelpManager helpManager = new HelpManager();
         commonComponent = new CommonComponent(content);
 
         sidebar = createSidebar();

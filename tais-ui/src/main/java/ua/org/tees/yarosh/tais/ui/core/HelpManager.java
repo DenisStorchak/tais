@@ -13,19 +13,15 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.UI;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@Service
 public class HelpManager {
 
-    private UI ui;
     private List<HelpOverlay> overlays = new ArrayList<HelpOverlay>();
-
-    public HelpManager(UI ui) {
-        this.ui = ui;
-    }
 
     public void closeAll() {
         for (HelpOverlay overlay : overlays) {

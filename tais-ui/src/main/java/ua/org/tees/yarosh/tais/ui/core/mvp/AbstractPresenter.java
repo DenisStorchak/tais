@@ -26,7 +26,7 @@ public abstract class AbstractPresenter {
         processView();
     }
 
-    private TaisView getView() {
+    public TaisView getView() {
         return view;
     }
 

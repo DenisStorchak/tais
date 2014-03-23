@@ -2,6 +2,9 @@ package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
@@ -12,6 +15,8 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 
 import java.util.LinkedList;
 
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
+
 
 /**
  * @author Timur Yarosh
@@ -19,6 +24,9 @@ import java.util.LinkedList;
  *         Time: 19:57
  */
 @PresenterClass(TeacherDashboardListener.class)
+@Service
+@Qualifier(TEACHER_DASHBOARD)
+@Scope("prototype")
 public class TeacherDashboardView extends VerticalLayout implements TeacherDashboardTaisView {
 
     private LinkedList<TeacherDashboardPresenter> presenters = new LinkedList<>();

@@ -13,7 +13,5 @@ public class TaisWebInitializer implements WebApplicationInitializer {
         AnnotationConfigWebApplicationContext ctx = new AnnotationConfigWebApplicationContext();
         ctx.register(TaisConfiguration.class);
         servletContext.addListener(new ContextLoaderListener(ctx));
-
-        ContextAccessor.addContext(TaisConfiguration.class, ctx);
     }
 }
