@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.ui.core.components.windows.CreateTaskWindow;
 public class CreateTaskButton extends Button {
     public CreateTaskButton() {
         addStyleName("icon-edit");
-        addStyleName("icon-only");
+        addStyleName("icon-doc-new");
         setDescription(Messages.CREATE_TASK_BUTTON_DESCRIPTION);
         addClickListener(clickEvent -> getUI().addWindow(new CreateTaskWindow()));
     }

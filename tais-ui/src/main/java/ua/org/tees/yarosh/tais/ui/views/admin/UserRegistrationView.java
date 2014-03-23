@@ -28,10 +28,6 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATI
 @Scope("prototype")
 public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationListener> {
 
-    private static final int MIN_PASSWORD_LENGTH = 6;
-    private static final String STYLE_ATTENTION = "icon-attention";
-    private static final String STYLE_OK = "icon-ok";
-    private static final int MIN_LOGIN_LENGTH = 5;
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
     private PasswordField repeatePassword = new PasswordField();
@@ -62,7 +58,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         formPanel.setSizeUndefined();
 
         formPanel.addComponents(createRegistrationForms(), createControls());
-        formPanel.setWidth(30, Unit.PERCENTAGE);
+        formPanel.setWidth(50, Unit.PERCENTAGE);
         dash.setComponentAlignment(formPanel, Alignment.MIDDLE_CENTER);
     }
 

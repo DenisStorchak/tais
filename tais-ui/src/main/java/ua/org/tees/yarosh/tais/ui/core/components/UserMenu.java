@@ -29,13 +29,13 @@ public class UserMenu extends VerticalLayout {
         MenuBar.Command notImplementedCommand = menuItem -> Notification.show("Not implemented yet");
         MenuBar settings = new MenuBar();
         MenuBar.MenuItem settingsMenu = settings.addItem("", null);
-        settingsMenu.setStyleName("icon-cog");
+        settingsMenu.setStyleName("icon-cog-alt");
         settingsMenu.addItem("Профиль", notImplementedCommand);
         settingsMenu.addItem("Настройки профиля", notImplementedCommand);
         addComponent(settings);
 
         Button signOut = new NativeButton("Sign Out");
-        signOut.addStyleName("icon-cancel");
+        signOut.addStyleName("icon-logout");
         signOut.setDescription("Выход");
         signOut.addClickListener(event -> {
             VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, null);

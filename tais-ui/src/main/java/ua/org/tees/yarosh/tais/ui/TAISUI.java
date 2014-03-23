@@ -43,7 +43,6 @@ public class TAISUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        LOGGER.info("Session locale is [{}]", VaadinSession.getCurrent().getLocale());
         HelpManager helpManager = new HelpManager();
         CommonComponent commonComponent = new CommonComponent(content);
 
@@ -73,9 +72,6 @@ public class TAISUI extends UI {
         sidebarManager.registerSidebar(UriFragments.Admin.PREFIX, createAdminSidebar());
 
         nav.addViewChangeListener(sidebarManager);
-
-        getSession().setConverterFactory(new MyConverterFactory());
-        setLocale(VaadinSession.getCurrent().getLocale());
 
         setContent(root);
         root.addStyleName("root");
@@ -107,7 +103,7 @@ public class TAISUI extends UI {
         SidebarMenu teacherMenu = new SidebarMenu();
 
         NativeButton dashboardButton = new NativeButton("Задания");
-        dashboardButton.addStyleName("icon-dashboard");
+        dashboardButton.addStyleName("icon-columns");
         teacherMenu.addComponent(dashboardButton);
 
         NativeButton studentListButton = new NativeButton("Студенты");
@@ -132,7 +128,7 @@ public class TAISUI extends UI {
         adminMenu.addComponent(createRegistrationButton);
 
         NativeButton editRegistrantButton = new NativeButton("Пользователи");
-        editRegistrantButton.addStyleName("icon-th");
+        editRegistrantButton.addStyleName("icon-users");
         adminMenu.addComponent(editRegistrantButton);
 
         NativeButton fprintScannerSettingsButton = new NativeButton("Сканеры отпечатков");
@@ -140,7 +136,7 @@ public class TAISUI extends UI {
         adminMenu.addComponent(fprintScannerSettingsButton);
 
         NativeButton viewConfigButton = new NativeButton("Настройки");
-        viewConfigButton.addStyleName("icon-cog");
+        viewConfigButton.addStyleName("icon-cog-alt");
         adminMenu.addComponent(viewConfigButton);
 
         return adminMenu;
