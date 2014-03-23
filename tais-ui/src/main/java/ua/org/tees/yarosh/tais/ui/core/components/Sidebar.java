@@ -12,6 +12,9 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class Sidebar extends VerticalLayout {
 
+    private SidebarMenu sidebarMenu;
+    private UserMenu userMenu;
+
     public Sidebar() {
         addStyleName("sidebar");
         setWidth(null);
@@ -20,12 +23,29 @@ public class Sidebar extends VerticalLayout {
     }
 
     public void setSidebarMenu(SidebarMenu sidebarMenu) {
-        addComponent(sidebarMenu);
-        setExpandRatio(sidebarMenu, 1);
+        if (this.sidebarMenu != null && sidebarMenu != null) {
+            replaceComponent(this.sidebarMenu, sidebarMenu);
+            setExpandRatio(sidebarMenu, 1);
+            this.sidebarMenu = sidebarMenu;
+        } else if (this.sidebarMenu != null) {
+            this.sidebarMenu.setVisible(false);
+        } else if (sidebarMenu != null) {
+            addComponent(sidebarMenu);
+            setExpandRatio(sidebarMenu, 1);
+            this.sidebarMenu = sidebarMenu;
+        }
     }
 
     public void setUserMenu(UserMenu userMenu) {
-        addComponent(userMenu);
+        if (this.userMenu != null && userMenu != null) {
+            replaceComponent(this.userMenu, userMenu);
+            this.userMenu = userMenu;
+        } else if (this.userMenu != null) {
+            this.userMenu.setVisible(false);
+        } else if (userMenu != null) {
+            addComponent(userMenu);
+            this.userMenu = userMenu;
+        }
     }
 
     public static class SidebarLogo extends CssLayout {

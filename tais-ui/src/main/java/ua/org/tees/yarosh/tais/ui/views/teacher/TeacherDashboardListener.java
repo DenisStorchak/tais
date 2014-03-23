@@ -11,9 +11,9 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
+import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
 
@@ -27,12 +27,12 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHB
 public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardTaisView.TeacherDashboardPresenter {
 
     @Autowired
-    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) TaisView view, HelpManager helpManager) {
+    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) PresenterBasedView view, HelpManager helpManager) {
         super(view, helpManager);
     }
 
     @Override
-    protected void initView(TaisView view) {
+    protected void initView(PresenterBasedView view) {
         getHelpManager().closeAll();
     }
 

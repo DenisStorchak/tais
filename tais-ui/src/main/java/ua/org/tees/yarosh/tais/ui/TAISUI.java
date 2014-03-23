@@ -17,7 +17,7 @@ import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ViewProvider;
-import ua.org.tees.yarosh.tais.ui.views.LoginView;
+import ua.org.tees.yarosh.tais.ui.views.LoginPresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
@@ -40,9 +40,6 @@ public class TAISUI extends UI {
 
     private CssLayout root = new CssLayout();
     private CssLayout content = new CssLayout();
-    private CommonComponent commonComponent;
-    private Sidebar sidebar;
-    private SidebarMenu teacherMenu = createTeacherMenu();
 
     private SidebarMenu createTeacherMenu() {
         SidebarMenu teacherMenu = new SidebarMenu();
@@ -62,9 +59,9 @@ public class TAISUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         LOGGER.info("Session locale is [{}]", VaadinSession.getCurrent().getLocale());
         HelpManager helpManager = new HelpManager();
-        commonComponent = new CommonComponent(content);
+        CommonComponent commonComponent = new CommonComponent(content);
 
-        sidebar = createSidebar();
+        Sidebar sidebar = createSidebar();
 
         Navigator nav = new Navigator(this, content) {
 
@@ -85,8 +82,12 @@ public class TAISUI extends UI {
         };
         nav.addProvider(new ViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class, helpManager));
         nav.addProvider(new ViewProvider(USER_REGISTRATION, UserRegistrationView.class, helpManager));
-        nav.addView(AUTH, LoginView.class);
-        nav.addViewChangeListener(new SidebarManager(commonComponent, sidebar));
+        nav.addView(AUTH, LoginPresenterBasedView.class);
+
+        SidebarManager sidebarManager = new SidebarManager(commonComponent, sidebar);
+        sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createSidebar());
+
+        nav.addViewChangeListener(sidebarManager);
 
         getSession().setConverterFactory(new MyConverterFactory());
         setLocale(VaadinSession.getCurrent().getLocale());
@@ -110,7 +111,7 @@ public class TAISUI extends UI {
 
     private Sidebar createSidebar() {
         Sidebar sidebar = new Sidebar();
-        sidebar.setSidebarMenu(teacherMenu);
+        sidebar.setSidebarMenu(createTeacherMenu());
         sidebar.setUserMenu(new UserMenu("Тимур", "Ярош"));
         return sidebar;
     }

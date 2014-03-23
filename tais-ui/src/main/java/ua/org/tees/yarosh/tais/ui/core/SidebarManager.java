@@ -3,8 +3,11 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.navigator.ViewChangeListener;
 import ua.org.tees.yarosh.tais.ui.core.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
+import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
 
 /**
  * @author Timur Yarosh
@@ -15,20 +18,55 @@ public class SidebarManager implements ViewChangeListener {
 
     private CommonComponent commonComponent;
     private Sidebar sidebar;
+    private Map<String, SidebarMenu> menus = new HashMap<>();
+    private Map<String, Sidebar> sidebarPool = new HashMap<>();
 
     public SidebarManager(CommonComponent commonComponent, Sidebar sidebar) {
         this.commonComponent = commonComponent;
         this.sidebar = sidebar;
     }
 
+    public void registerMenu(String viewPrefix, SidebarMenu menu) {
+        menus.put(viewPrefix, menu);
+    }
+
+    public void registerSidebar(String viewPrefix, Sidebar sidebar) {
+        sidebarPool.put(viewPrefix, sidebar);
+    }
+
     @Override
     public boolean beforeViewChange(ViewChangeEvent event) {
-        if (event.getViewName().equals(AUTH)) {
-            commonComponent.removeComponent(sidebar);
-        } else {
-            commonComponent.addComponentAsFirst(sidebar);
-        }
+        resolveOrHideSidebar(event);
         return true;
+    }
+
+    private void resolveOrHideSidebar(ViewChangeEvent event) {
+        Sidebar resolvedSidebar = localResolveSidebar(event.getViewName());
+        if (resolvedSidebar == null && this.sidebar != null) {
+            commonComponent.removeComponent(sidebar);
+        } else if (resolvedSidebar != null) {
+            commonComponent.addComponentAsFirst(resolvedSidebar);
+        }
+        this.sidebar = resolvedSidebar;
+    }
+
+    @Deprecated
+    private SidebarMenu resolveMenu(String viewPattern) {
+        Optional<String> first = menus.keySet().stream().filter(viewPattern::startsWith).findFirst();
+        if (first.isPresent()) {
+            String properlyKey = first.get();
+            return menus.get(properlyKey);
+        }
+        return null;
+    }
+
+    private Sidebar localResolveSidebar(String viewPattern) {
+        Optional<String> first = sidebarPool.keySet().stream().filter(viewPattern::startsWith).findFirst();
+        if (first.isPresent()) {
+            String properlyKey = first.get();
+            return sidebarPool.get(properlyKey);
+        }
+        return null;
     }
 
     @Override

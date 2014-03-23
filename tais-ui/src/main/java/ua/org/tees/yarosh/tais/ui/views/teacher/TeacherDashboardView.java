@@ -1,7 +1,10 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -10,10 +13,8 @@ import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.components.buttons.CreateTaskButton;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
-
-import java.util.LinkedList;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
 
@@ -27,9 +28,8 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHB
 @Service
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")
-public class TeacherDashboardView extends VerticalLayout implements TeacherDashboardTaisView {
+public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<TeacherDashboardListener> {
 
-    private LinkedList<TeacherDashboardPresenter> presenters = new LinkedList<>();
     private Table unratedReports;
 
     public TeacherDashboardView() {
@@ -57,11 +57,6 @@ public class TeacherDashboardView extends VerticalLayout implements TeacherDashb
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        unratedReports.setContainerDataSource(presenters.getFirst().getUnratedManualReports());
-    }
-
-    @Override
-    public void addPresenter(AbstractPresenter presenter) {
-        presenters.add((TeacherDashboardPresenter) presenter);
+        unratedReports.setContainerDataSource(primaryPresenter().getUnratedManualReports());
     }
 }

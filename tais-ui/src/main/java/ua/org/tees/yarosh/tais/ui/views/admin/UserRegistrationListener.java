@@ -1,5 +1,8 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
+import com.vaadin.data.Validator;
+import com.vaadin.ui.AbstractTextField;
+import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -9,10 +12,11 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.dto.Position;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
+import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
@@ -34,7 +38,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     }
 
     @Autowired
-    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) TaisView view, HelpManager helpManager) {
+    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) PresenterBasedView view, HelpManager helpManager) {
         super(view, helpManager);
     }
 
@@ -49,15 +53,34 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
                                       TextField name,
                                       TextField surname,
                                       TextField patronymic,
-                                      TextField position,
+                                      ComboBox position,
                                       TextField studentGroup) {
+        fieldsValid(login, password, name, surname, patronymic, studentGroup);
+
         Registrant registrant = new Registrant();
         registrant.setLogin(login.getValue());
         registrant.setPassword(DigestUtils.sha256Hex(password.getValue()));
         registrant.setName(name.getValue());
         registrant.setSurname(surname.getValue());
         registrant.setPatronymic(patronymic.getValue());
-        registrant.setPosition(Position.valueOf(position.getValue().toUpperCase()));
+        registrant.setPosition(Position.valueOf(((String) position.getValue()).
+
+                        toUpperCase()
+        ));
+        StudentGroup group = new StudentGroup();
+        group.setId(Integer.valueOf(studentGroup.getValue()));
+        registrant.setGroup(group);
         return registrantService.createRegistration(registrant) != null;
+    }
+
+    private void fieldsValid(AbstractTextField... fields) {
+        for (AbstractTextField field : fields) {
+            try {
+                field.validate();
+            } catch (Validator.InvalidValueException e) {
+                field.focus();
+                throw e;
+            }
+        }
     }
 }

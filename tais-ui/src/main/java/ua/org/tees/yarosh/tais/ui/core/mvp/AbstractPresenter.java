@@ -6,27 +6,28 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
+import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 
 /**
  * @author Timur Yarosh
  */
 public abstract class AbstractPresenter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPresenter.class);
-    private TaisView view;
+    private PresenterBasedView view;
     private HelpManager helpManager;
 
     public HelpManager getHelpManager() {
         return helpManager;
     }
 
-    public AbstractPresenter(TaisView view, HelpManager helpManager) {
+    public AbstractPresenter(PresenterBasedView view, HelpManager helpManager) {
         LOGGER.info("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         this.helpManager = helpManager;
         processView();
     }
 
-    public TaisView getView() {
+    public PresenterBasedView getView() {
         return view;
     }
 
@@ -39,10 +40,10 @@ public abstract class AbstractPresenter {
     }
 
     private void processView() {
-        getView().addPresenter(this);
+        getView().setPrimaryPresenter(this);
         initView(getView());
     }
 
-    protected void initView(TaisView view) {
+    protected void initView(PresenterBasedView view) {
     }
 }

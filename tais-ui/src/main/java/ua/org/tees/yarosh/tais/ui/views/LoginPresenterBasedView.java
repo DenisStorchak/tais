@@ -8,8 +8,8 @@ import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.core.UriFragments;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
+import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.Messages.*;
@@ -20,13 +20,13 @@ import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
  *         Date: 22.03.14
  *         Time: 13:15
  */
-public class LoginView extends VerticalLayout implements TaisView {
+public class LoginPresenterBasedView extends PresenterBasedVerticalLayoutView implements PresenterBasedView {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(LoginPresenterBasedView.class);
     private TextField username;
     private PasswordField password;
 
-    public LoginView() {
+    public LoginPresenterBasedView() {
         setSizeFull();
         addStyleName("login-layout");
         addStyleName("login-bg");
@@ -34,11 +34,6 @@ public class LoginView extends VerticalLayout implements TaisView {
         LoginPanel loginPanel = new LoginPanel();
         addComponent(loginPanel);
         setComponentAlignment(loginPanel, Alignment.MIDDLE_CENTER);
-    }
-
-    @Override
-    public void addPresenter(AbstractPresenter presenter) {
-
     }
 
     @Override
