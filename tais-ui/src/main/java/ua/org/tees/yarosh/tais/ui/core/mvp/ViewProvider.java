@@ -31,7 +31,8 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
 
     public View getView(String viewName) {
         if (!viewName.equals(getViewName())) {
-            throw new IllegalArgumentException(String.format("Requested view is %s but this provider provides %s", viewName, getViewName()));
+            throw new IllegalArgumentException(String.format("Requested view is %s but this provider provides %s",
+                    viewName, getViewName()));
         }
         try {
             AbstractPresenter presenter;
@@ -40,7 +41,6 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
                 log.log(Level.WARNING, "Presenter for {0} view not found, empty view will be returned...", viewName);
                 return getViewClass().newInstance();
             }
-//            presenterType.getConstructor(TaisView.class, HelpManager.class).newInstance(view, helpManager);
             presenter = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext()).getBean(presenterType);
             return presenter.getView();
         } catch (InstantiationException | IllegalAccessException e) {
