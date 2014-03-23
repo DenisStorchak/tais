@@ -2,6 +2,9 @@ package ua.org.tees.yarosh.tais.core.user.mgmt.api.service;
 
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+
+import java.util.List;
 
 /**
  * @author Timur Yarosh
@@ -18,4 +21,12 @@ public interface RegistrantService {
     public void deleteRegistration(String login);
 
     public boolean loginExists(String login);
+
+    public List<StudentGroup> listStudentGroups();
+
+    public boolean isStudentGroupExists(int id);
+
+    public StudentGroup addStudentGroup(StudentGroup studentGroup);
+
+    public StudentGroup findStudentGroup(int id);
 }

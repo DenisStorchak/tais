@@ -17,6 +17,14 @@ public class StudentGroup {
     @OneToMany
     private List<Registrant> students;
 
+    public StudentGroup() {
+    }
+
+    public StudentGroup(Integer integer, List<Registrant> students) {
+        id = integer;
+        this.students = students;
+    }
+
     public Integer getId() {
         return id;
     }

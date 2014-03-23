@@ -3,14 +3,16 @@ package ua.org.tees.yarosh.tais.ui.views.admin;
 import com.vaadin.data.Validator;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.core.common.dto.Position;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.core.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
@@ -26,7 +28,8 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATI
 @Service
 @Qualifier(USER_REGISTRATION)
 @Scope("prototype")
-public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationListener> {
+public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationListener>
+        implements UserRegistrationTaisView {
 
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
@@ -34,13 +37,19 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
     private TextField name = new TextField();
     private TextField surname = new TextField();
     private TextField patronymic = new TextField();
-    private TextField studentGroup = new TextField();
+    private ComboBox studentGroup = new ComboBox();
     private ComboBox position = new ComboBox();
 
     public UserRegistrationView() {
-        for (Position pos : Position.values()) {
-            position.addItem(pos.toString());
-        }
+        studentGroup.addItem("Новая группа");
+        studentGroup.addValueChangeListener(event -> {
+            Logger logger = LoggerFactory.getLogger(this.getClass());
+            logger.info("Value changed");
+            if (event.getProperty().getValue().equals("Новая группа")) {
+                logger.info("CreateGroupWindow will be created new");
+                getUI().addWindow(new CreateGroupWindow());
+            }
+        });
         login.focus();
         setUpValidators();
         setSizeFull();
@@ -93,7 +102,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
                 if (!success) {
                     Notification.show("Ошибка регистрации");
                 } else {
-                    clearFields(login, password, repeatePassword, name, surname, patronymic, studentGroup);
+                    clearFields(login, password, repeatePassword, name, surname, patronymic);
                     login.focus();
                 }
             } catch (Validator.InvalidValueException e) {
@@ -114,7 +123,6 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
 
     private VerticalLayout createRegistrationForms() {
         VerticalLayout registrationDataLayout = new VerticalLayout();
-//        registrationDataLayout.setCaption("Все поля являются обязательными для заполнения");
 
         HorizontalLayout loginLayout = createSingleFormLayout(new Label("Логин"), login);
         HorizontalLayout passwordLayout = createSingleFormLayout(new Label("Пароль"), password);
@@ -148,5 +156,15 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         layout.addComponents(description, textField);
         layout.setComponentAlignment(textField, Alignment.TOP_RIGHT);
         return layout;
+    }
+
+    @Override
+    public void setStudentGroupsComboBox(ComboBox studentGroupsComboBox) {
+        studentGroupsComboBox.getItemIds().forEach(studentGroup::addItem);
+    }
+
+    @Override
+    public void setRolesComboBox(ComboBox rolesComboBox) {
+        rolesComboBox.getItemIds().forEach(position::addItem);
     }
 }

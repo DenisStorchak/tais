@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.core.common.models;
 
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import ua.org.tees.yarosh.tais.core.common.dto.Position;
+import ua.org.tees.yarosh.tais.core.common.dto.Role;
 
 import javax.persistence.Entity;
 import javax.persistence.Enumerated;
@@ -38,7 +38,7 @@ public class Registrant implements Serializable {
     private StudentGroup group;
     @Enumerated
     @NotNull
-    private Position position;
+    private Role role;
 
     public String getLogin() {
         return login;
@@ -88,11 +88,11 @@ public class Registrant implements Serializable {
         this.group = group;
     }
 
-    public Position getPosition() {
-        return position;
+    public Role getRole() {
+        return role;
     }
 
-    public void setPosition(Position position) {
-        this.position = position;
+    public void setRole(Role role) {
+        this.role = role;
     }
 }

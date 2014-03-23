@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,6 +30,10 @@ public abstract class AbstractPresenter {
 
     public PresenterBasedView getView() {
         return view;
+    }
+
+    public <V extends View> V getView(Class<V> viewClazz) {
+        return (V) getView();
     }
 
     public void navigateBack(Navigator navigator) {

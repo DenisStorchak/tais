@@ -5,6 +5,8 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 
+import java.util.List;
+
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
@@ -20,6 +22,14 @@ public interface UserRegistrationTaisView extends PresenterBasedView<UserRegistr
                                    TextField surname,
                                    TextField patronymic,
                                    ComboBox position,
-                                   TextField studentGroup);
+                                   ComboBox studentGroup);
+
+        List<String> listStudentGroups();
+
+        List<String> listRoles();
     }
+
+    void setStudentGroupsComboBox(ComboBox studentGroupsComboBox);
+
+    void setRolesComboBox(ComboBox rolesComboBox);
 }

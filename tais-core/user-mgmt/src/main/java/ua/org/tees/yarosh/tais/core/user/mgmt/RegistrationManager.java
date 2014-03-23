@@ -7,8 +7,12 @@ import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.api.SimpleValidation;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.RegistrantRepository;
+import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.StudentGroupRepository;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+
+import java.util.List;
 
 /**
  * @author Timur Yarosh
@@ -21,6 +25,8 @@ public class RegistrationManager implements RegistrantService {
     private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationManager.class);
     @Autowired
     private RegistrantRepository registrantRepository;
+    @Autowired
+    private StudentGroupRepository studentGroupRepository;
 
     @Override
     public Registrant createRegistration(Registrant registrant) {
@@ -67,5 +73,25 @@ public class RegistrationManager implements RegistrantService {
     @Override
     public boolean loginExists(String login) {
         return registrantRepository.exists(login);
+    }
+
+    @Override
+    public List<StudentGroup> listStudentGroups() {
+        return studentGroupRepository.findAll();
+    }
+
+    @Override
+    public boolean isStudentGroupExists(int id) {
+        return studentGroupRepository.exists(id);
+    }
+
+    @Override
+    public StudentGroup addStudentGroup(StudentGroup studentGroup) {
+        return studentGroupRepository.save(studentGroup);
+    }
+
+    @Override
+    public StudentGroup findStudentGroup(int id) {
+        return studentGroupRepository.findOne(id);
     }
 }

@@ -5,6 +5,6 @@ package ua.org.tees.yarosh.tais.core.common.dto;
  *         Date: 09.03.14
  *         Time: 22:25
  */
-public enum Position {
+public enum Role {
     STUDENT, TEACHER, GOD
 }
