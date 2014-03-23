@@ -89,8 +89,6 @@ public class TAISUI extends UI {
 
         if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
             nav.navigateTo(AUTH);
-        } else {
-            nav.navigateTo(TEACHER_DASHBOARD);
         }
     }
 
