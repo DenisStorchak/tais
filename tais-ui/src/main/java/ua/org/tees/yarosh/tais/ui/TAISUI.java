@@ -41,27 +41,11 @@ public class TAISUI extends UI {
     private CssLayout root = new CssLayout();
     private CssLayout content = new CssLayout();
 
-    private SidebarMenu createTeacherMenu() {
-        SidebarMenu teacherMenu = new SidebarMenu();
-
-        NativeButton teacherPanelButton = new NativeButton("Задания");
-        teacherPanelButton.addStyleName("icon-dashboard");
-        teacherMenu.addComponent(teacherPanelButton);
-
-        NativeButton studentsListButton = new NativeButton("Студенты");
-        studentsListButton.addStyleName("icon-users");
-        teacherMenu.addComponent(studentsListButton);
-
-        return teacherMenu;
-    }
-
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         LOGGER.info("Session locale is [{}]", VaadinSession.getCurrent().getLocale());
         HelpManager helpManager = new HelpManager();
         CommonComponent commonComponent = new CommonComponent(content);
-
-        Sidebar sidebar = createSidebar();
 
         Navigator nav = new Navigator(this, content) {
 
@@ -84,8 +68,9 @@ public class TAISUI extends UI {
         nav.addProvider(new ViewProvider(USER_REGISTRATION, UserRegistrationView.class, helpManager));
         nav.addView(AUTH, LoginPresenterBasedView.class);
 
-        SidebarManager sidebarManager = new SidebarManager(commonComponent, sidebar);
-        sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createSidebar());
+        SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
+        sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());
+        sidebarManager.registerSidebar(UriFragments.Admin.PREFIX, createAdminSidebar());
 
         nav.addViewChangeListener(sidebarManager);
 
@@ -109,10 +94,57 @@ public class TAISUI extends UI {
         }
     }
 
-    private Sidebar createSidebar() {
+    private Sidebar createTeacherSidebar() {
         Sidebar sidebar = new Sidebar();
         sidebar.setSidebarMenu(createTeacherMenu());
-        sidebar.setUserMenu(new UserMenu("Тимур", "Ярош"));
+        sidebar.setUserMenu(createUserMenu());
         return sidebar;
+    }
+
+    private UserMenu createUserMenu() {
+        return new UserMenu("Тимур", "Ярош");
+    }
+
+    private SidebarMenu createTeacherMenu() {
+        SidebarMenu teacherMenu = new SidebarMenu();
+
+        NativeButton dashboardButton = new NativeButton("Задания");
+        dashboardButton.addStyleName("icon-dashboard");
+        teacherMenu.addComponent(dashboardButton);
+
+        NativeButton studentListButton = new NativeButton("Студенты");
+        studentListButton.addStyleName("icon-users");
+        teacherMenu.addComponent(studentListButton);
+
+        return teacherMenu;
+    }
+
+    private Sidebar createAdminSidebar() {
+        Sidebar sidebar = new Sidebar();
+        sidebar.setSidebarMenu(createAdminMenu());
+        sidebar.setUserMenu(createUserMenu());
+        return sidebar;
+    }
+
+    private SidebarMenu createAdminMenu() {
+        SidebarMenu adminMenu = new SidebarMenu();
+
+        NativeButton viewConfigButton = new NativeButton("Актуальные настройки");
+        viewConfigButton.addStyleName("icon-cog");
+        adminMenu.addComponent(viewConfigButton);
+
+        NativeButton createRegistrationButton = new NativeButton("Регистрация пользователей");
+        createRegistrationButton.addStyleName("icon-user-add");
+        adminMenu.addComponent(createRegistrationButton);
+
+        NativeButton editRegistrantButton = new NativeButton("Изменение профилей");
+        editRegistrantButton.addStyleName("icon-th");
+        adminMenu.addComponent(editRegistrantButton);
+
+        NativeButton fprintScannerSettingsButton = new NativeButton("Сканеры отпечатков пальцев");
+        fprintScannerSettingsButton.addStyleName("icon-fingerprint_picture");
+        adminMenu.addComponent(fprintScannerSettingsButton);
+
+        return adminMenu;
     }
 }
