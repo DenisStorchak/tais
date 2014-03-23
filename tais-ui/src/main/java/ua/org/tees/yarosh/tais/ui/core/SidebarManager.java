@@ -42,9 +42,12 @@ public class SidebarManager implements ViewChangeListener {
 
     private void resolveOrHideSidebar(ViewChangeEvent event) {
         Sidebar resolvedSidebar = localResolveSidebar(event.getViewName());
-        if (resolvedSidebar == null && this.sidebar != null) {
+        if (resolvedSidebar == null && sidebar != null) {
             commonComponent.removeComponent(sidebar);
-        } else if (resolvedSidebar != null) {
+        } else if (resolvedSidebar != null && sidebar != null && !resolvedSidebar.equals(sidebar)) {
+            commonComponent.removeComponent(sidebar);
+        }
+        if (resolvedSidebar != null) {
             commonComponent.addComponentAsFirst(resolvedSidebar);
         }
         this.sidebar = resolvedSidebar;

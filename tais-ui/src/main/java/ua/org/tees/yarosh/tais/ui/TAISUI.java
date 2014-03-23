@@ -129,21 +129,21 @@ public class TAISUI extends UI {
     private SidebarMenu createAdminMenu() {
         SidebarMenu adminMenu = new SidebarMenu();
 
-        NativeButton viewConfigButton = new NativeButton("Актуальные настройки");
-        viewConfigButton.addStyleName("icon-cog");
-        adminMenu.addComponent(viewConfigButton);
-
-        NativeButton createRegistrationButton = new NativeButton("Регистрация пользователей");
+        NativeButton createRegistrationButton = new NativeButton("Регистрация");
         createRegistrationButton.addStyleName("icon-user-add");
         adminMenu.addComponent(createRegistrationButton);
 
-        NativeButton editRegistrantButton = new NativeButton("Изменение профилей");
+        NativeButton editRegistrantButton = new NativeButton("Пользователи");
         editRegistrantButton.addStyleName("icon-th");
         adminMenu.addComponent(editRegistrantButton);
 
-        NativeButton fprintScannerSettingsButton = new NativeButton("Сканеры отпечатков пальцев");
+        NativeButton fprintScannerSettingsButton = new NativeButton("Сканеры отпечатков");
         fprintScannerSettingsButton.addStyleName("icon-fingerprint_picture");
         adminMenu.addComponent(fprintScannerSettingsButton);
+
+        NativeButton viewConfigButton = new NativeButton("Настройки");
+        viewConfigButton.addStyleName("icon-cog");
+        adminMenu.addComponent(viewConfigButton);
 
         return adminMenu;
     }
