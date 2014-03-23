@@ -57,6 +57,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         setExpandRatio(dash, 1.5f);
 
         DashPanel formPanel = new DashPanel();
+        formPanel.setCaption("Все поля являются обязательными для заполнения");
         dash.addComponent(formPanel);
         formPanel.setSizeUndefined();
 
@@ -117,7 +118,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
 
     private VerticalLayout createRegistrationForms() {
         VerticalLayout registrationDataLayout = new VerticalLayout();
-        registrationDataLayout.setCaption("Все поля являются обязательными для заполнения");
+//        registrationDataLayout.setCaption("Все поля являются обязательными для заполнения");
 
         HorizontalLayout loginLayout = createSingleFormLayout(new Label("Логин"), login);
         HorizontalLayout passwordLayout = createSingleFormLayout(new Label("Пароль"), password);
