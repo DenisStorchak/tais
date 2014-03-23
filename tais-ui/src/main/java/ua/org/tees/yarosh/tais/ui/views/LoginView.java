@@ -109,15 +109,15 @@ public class LoginView extends VerticalLayout implements TaisView {
 
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
-                        && username.getValue().equals("teacher")
+                        && username.getValue().equals("")
                         && password.getValue() != null
-                        && password.getValue().equals("teacher")) {
+                        && password.getValue().equals("")) {
 //                    signIn.removeShortcutListener(enterListener);
                     removeComponent(error);
                     LOGGER.info("Authorization success, navigating to teacher dashboard");
 
-                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, "teacher");
-                    getUI().getNavigator().navigateTo(UriFragments.Teacher.TEACHER_DASHBOARD);
+                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, "");
+                    getUI().getNavigator().navigateTo(UriFragments.Admin.USER_REGISTRATION);
                 } else {
                     if (getComponentCount() > 2) {
                         // Remove the previous error message

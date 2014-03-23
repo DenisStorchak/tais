@@ -9,8 +9,8 @@ import com.vaadin.ui.Label;
  *         Date: 22.03.14
  *         Time: 0:14
  */
-public class TeacherPanel extends HorizontalLayout {
-    public TeacherPanel(String title) {
+public class BgPanel extends HorizontalLayout {
+    public BgPanel(String title) {
         setWidth("100%");
         setSpacing(true);
         addStyleName("toolbar");

@@ -7,8 +7,8 @@ import com.vaadin.ui.CssLayout;
  *         Date: 22.03.14
  *         Time: 0:04
  */
-public class LayoutPanel extends CssLayout {
-    public LayoutPanel() {
+public class DashPanel extends CssLayout {
+    public DashPanel() {
         addStyleName("layout-panel");
         setSizeFull();
 

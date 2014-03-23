@@ -2,10 +2,10 @@ package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
-import ua.org.tees.yarosh.tais.ui.core.components.LayoutPanel;
-import ua.org.tees.yarosh.tais.ui.core.components.TeacherPanel;
-import ua.org.tees.yarosh.tais.ui.core.components.UnratedReportsTable;
+import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.core.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
@@ -27,7 +27,7 @@ public class TeacherDashboardView extends VerticalLayout implements TeacherDashb
     public TeacherDashboardView() {
         setSizeFull();
         addStyleName("dashboard-view");
-        HorizontalLayout top = new TeacherPanel("Задания");
+        HorizontalLayout top = new BgPanel("Задания");
         addComponent(top);
 
         Button createTask = new CreateTaskButton();
@@ -38,11 +38,11 @@ public class TeacherDashboardView extends VerticalLayout implements TeacherDashb
         addComponent(dash);
         setExpandRatio(dash, 1.5f);
 
-        LayoutPanel panelLeft = new LayoutPanel();
+        DashPanel panelLeft = new DashPanel();
 
-        unratedReports = new UnratedReportsTable();
+        unratedReports = new PlainBorderlessTable("Непроверенные отчеты");
         panelLeft.addComponent(unratedReports);
-        LayoutPanel panelRight = new LayoutPanel();
+        DashPanel panelRight = new DashPanel();
         dash.addComponent(panelLeft);
         dash.addComponent(panelRight);
     }

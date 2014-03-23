@@ -7,9 +7,9 @@ import com.vaadin.ui.Table;
  *         Date: 22.03.14
  *         Time: 11:55
  */
-public class UnratedReportsTable extends Table {
-    public UnratedReportsTable() {
-        setCaption("Непроверенные отчеты");
+public class PlainBorderlessTable extends Table {
+    public PlainBorderlessTable(String caption) {
+        setCaption(caption);
         setWidth("100%");
         setPageLength(0);
         addStyleName("plain");

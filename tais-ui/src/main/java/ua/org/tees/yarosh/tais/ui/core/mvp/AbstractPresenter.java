@@ -23,10 +23,10 @@ public abstract class AbstractPresenter {
         LOGGER.info("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         this.helpManager = helpManager;
-        initView();
+        processView();
     }
 
-    public TaisView getView() {
+    private TaisView getView() {
         return view;
     }
 
@@ -38,5 +38,11 @@ public abstract class AbstractPresenter {
         LOGGER.info(message, params);
     }
 
-    protected abstract void initView();
+    private void processView() {
+        getView().addPresenter(this);
+        initView(getView());
+    }
+
+    protected void initView(TaisView view) {
+    }
 }

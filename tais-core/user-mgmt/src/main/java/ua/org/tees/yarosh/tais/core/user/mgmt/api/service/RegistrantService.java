@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt.api.service;
 
-import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 /**
  * @author Timur Yarosh
@@ -16,4 +16,6 @@ public interface RegistrantService {
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException;
 
     public void deleteRegistration(String login);
+
+    public boolean loginExists(String login);
 }

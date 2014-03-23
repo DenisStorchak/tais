@@ -23,8 +23,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
     }
 
     @Override
-    protected void initView() {
-        getView().addPresenter(this);
+    protected void initView(TaisView view) {
         getHelpManager().closeAll();
     }
 

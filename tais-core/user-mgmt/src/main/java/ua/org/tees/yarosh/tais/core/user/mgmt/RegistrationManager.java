@@ -63,4 +63,9 @@ public class RegistrationManager implements RegistrantService {
         }
         registrantRepository.delete(login);
     }
+
+    @Override
+    public boolean loginExists(String login) {
+        return registrantRepository.exists(login);
+    }
 }
