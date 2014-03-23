@@ -56,6 +56,11 @@ public class CommonPersistenceConfiguration {
     }
 
     @Bean
+    JpaTransactionManager transactionManager() {
+        return jpaTransactionManager();
+    }
+
+    @Bean
     public LocalContainerEntityManagerFactoryBean entityManagerFactory() {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());

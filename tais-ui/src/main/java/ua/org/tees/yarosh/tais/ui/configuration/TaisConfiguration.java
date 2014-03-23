@@ -9,6 +9,6 @@ import ua.org.tees.yarosh.tais.user.comm.configuration.UserCommConfiguration;
 
 @Configuration
 @Import({UserMgmtConfiguration.class, UserCommConfiguration.class,
-        AttendanceConfiguration.class, CommonConfiguration.class})
+        AttendanceConfiguration.class, CommonConfiguration.class, UIConfiguration.class})
 public class TaisConfiguration {
 }
