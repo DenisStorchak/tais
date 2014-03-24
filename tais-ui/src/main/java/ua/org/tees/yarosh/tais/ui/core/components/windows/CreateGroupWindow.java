@@ -45,15 +45,18 @@ public class CreateGroupWindow extends Window {
 
                     TextField groupId = new TextField("№ группы");
                     addComponent(groupId);
+                    setComponentAlignment(groupId, Alignment.TOP_LEFT);
+                    setExpandRatio(groupId, 1);
 
                     Button ok = new Button("Создать");
                     addComponent(ok);
+                    setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
                     ok.addClickListener(clickEvent -> {
                         RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                         StudentGroup studentGroup = new StudentGroup(valueOf(groupId.getValue()), new ArrayList<>());
                         registrantService.addStudentGroup(studentGroup);
                         window.close();
-                    }); //todo suite creation window
+                    });
                     ok.addStyleName("wide");
                     ok.addStyleName("default");
                     ok.setClickShortcut(ENTER, null);
