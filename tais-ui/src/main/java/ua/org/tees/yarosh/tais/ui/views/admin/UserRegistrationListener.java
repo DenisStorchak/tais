@@ -1,7 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
 import com.vaadin.data.Validator;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;
@@ -15,7 +14,6 @@ import ua.org.tees.yarosh.tais.core.common.dto.Role;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -39,11 +37,14 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     private RegistrantService registrantService;
 
     @Autowired
-    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) PresenterBasedView view,
-                                    HelpManager helpManager,
-                                    RegistrantService registrantService) {
-        super(view, helpManager);
+    public void setRegistrantService(RegistrantService registrantService) {
         this.registrantService = registrantService;
+    }
+
+    @Autowired
+    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) PresenterBasedView view,
+                                    HelpManager helpManager) {
+        super(view, helpManager);
     }
 
     @Override
@@ -73,8 +74,6 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
             group = new StudentGroup();
             group.setId(Integer.valueOf(studentGroup.getValue().toString()));
             group.setStudents(Arrays.asList(registrant));
-        } else {
-//            group.getStudents().add(registrant);
         }
         registrant.setGroup(group);
         return registrantService.createRegistration(registrant) != null;
@@ -82,8 +81,6 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
 
     @Override
     public List<String> listStudentGroups() {
-        SpringContextHelper ctx = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
-        RegistrantService registrantService = ctx.getBean(RegistrantService.class);       // fixme ugly code
         return registrantService.listStudentGroups().stream().map(s -> s.getId().toString()).collect(toList());
     }
 
@@ -93,7 +90,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     }
 
     @Override
-    protected void initView(PresenterBasedView view) {
+    public void initView() {
         ComboBox studentGroup = new ComboBox();
         listStudentGroups().forEach(studentGroup::addItem);
         getView(UserRegistrationView.class).setStudentGroupsComboBox(studentGroup);

@@ -32,7 +32,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
     }
 
     @Override
-    protected void initView(PresenterBasedView view) {
+    public void initView() {
         getHelpManager().closeAll();
     }
 

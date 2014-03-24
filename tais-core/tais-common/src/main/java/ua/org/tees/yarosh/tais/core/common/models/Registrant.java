@@ -1,5 +1,7 @@
 package ua.org.tees.yarosh.tais.core.common.models;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import ua.org.tees.yarosh.tais.core.common.dto.Role;
@@ -33,8 +35,9 @@ public class Registrant implements Serializable {
     @NotBlank
     @NotNull
     private String surname;
-    @ManyToOne
     @NotNull
+    @ManyToOne
+    @Cascade(CascadeType.ALL)
     private StudentGroup group;
     @Enumerated
     @NotNull

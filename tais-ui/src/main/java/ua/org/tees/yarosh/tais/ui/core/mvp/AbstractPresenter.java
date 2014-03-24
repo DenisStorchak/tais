@@ -25,7 +25,7 @@ public abstract class AbstractPresenter {
         LOGGER.info("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         this.helpManager = helpManager;
-        processView();
+        getView().setPrimaryPresenter(this);
     }
 
     public PresenterBasedView getView() {
@@ -44,11 +44,5 @@ public abstract class AbstractPresenter {
         LOGGER.info(message, params);
     }
 
-    private void processView() {
-        getView().setPrimaryPresenter(this);
-        initView(getView());
-    }
-
-    protected void initView(PresenterBasedView view) {
-    }
+    public void initView() { /*NOP*/ }
 }
