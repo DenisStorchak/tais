@@ -64,6 +64,15 @@ public class TAISUI extends UI {
                 viewResolver.register(classBasedViewProvider.getViewClass(), classBasedViewProvider.getViewName());
                 super.addProvider(provider);
             }
+
+            @Override
+            public void navigateTo(String navigationState) {
+                if (!getState().equals(navigationState)) {
+                    super.navigateTo(navigationState);
+                }
+                LOGGER.info("Registrant [{}] requested [{}] view which is already active, nothing to do",
+                        VaadinSession.getCurrent().getAttribute(REGISTRANT_ID), getState());
+            }
         };
         nav.addProvider(new SpringManagedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
         nav.addProvider(new SpringManagedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
