@@ -129,10 +129,12 @@ public class TAISUI extends UI {
         NativeButton registrationButton = new NativeButton("Регистрация");
         registrationButton.addStyleName("icon-user-add");
         adminMenu.addMenuButton(UserRegistrationView.class, registrationButton);
+        registrationButton.addClickListener(event -> getNavigator().navigateTo(USER_REGISTRATION));
 
         NativeButton profilesButton = new NativeButton("Пользователи");
         profilesButton.addStyleName("icon-users");
-        adminMenu.addMenuButton(UserManagementView.class, profilesButton); // todo set related view class
+        adminMenu.addMenuButton(UserManagementView.class, profilesButton);
+        profilesButton.addClickListener(event -> getNavigator().navigateTo(USER_MANAGEMENT));
 
         NativeButton scheduleButton = new NativeButton("Расписание");
         scheduleButton.addStyleName("icon-clock");

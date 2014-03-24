@@ -53,7 +53,7 @@ public class UserManagementListener extends AbstractPresenter implements UserLis
             item.getItemProperty(KEY_SURNAME).setValue(r.getSurname());
             item.getItemProperty(KEY_NAME).setValue(r.getName());
             item.getItemProperty(KEY_PATRONYMIC).setValue(r.getPatronymic());
-            item.getItemProperty(KEY_GROUP).setValue(r.getGroup());
+            item.getItemProperty(KEY_GROUP).setValue(String.valueOf(r.getGroup().getId()));
             item.getItemProperty(KEY_INTERACT_BUTTON).setValue(new Button("Редактировать"));
         });
         return registrantsContainer;
