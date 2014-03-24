@@ -22,7 +22,7 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT
 @Qualifier(USER_MANAGEMENT)
 @Scope("prototype")
 public class UserManagementView extends PresenterBasedVerticalLayoutView<UserManagementListener>
-        implements UserListTaisView {
+        implements UserManagementTaisView {
 
     private Table registrants;
 
