@@ -12,7 +12,6 @@ import java.util.ArrayList;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
-import static java.lang.Integer.valueOf;
 
 /**
  * @author Timur Yarosh
@@ -67,8 +66,8 @@ public class CreateGroupWindow extends Window {
                         if (groupId.isValid()) {
                             createdGroup = groupId.getValue();
                             RegistrantService registrantService = ctx.getBean(RegistrantService.class);
-                            StudentGroup studentGroup = new StudentGroup(valueOf(groupId.getValue()), new ArrayList<>());
-                            registrantService.addStudentGroup(studentGroup);
+                            StudentGroup studentGroup = new StudentGroup(groupId.getValue(), new ArrayList<>());
+                            registrantService.createStudentGroup(studentGroup);
                             userRegistrationListener.initView();
                             window.close();
                         } else {

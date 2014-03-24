@@ -26,9 +26,9 @@ public interface RegistrantService {
 
     public List<StudentGroup> listStudentGroups();
 
-    public boolean isStudentGroupExists(int id);
+    public boolean isStudentGroupExists(String id);
 
-    public StudentGroup addStudentGroup(StudentGroup studentGroup);
+    public StudentGroup createStudentGroup(StudentGroup studentGroup);
 
-    public StudentGroup findStudentGroup(int id);
+    public StudentGroup findStudentGroup(String id);
 }

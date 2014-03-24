@@ -87,17 +87,19 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-    public boolean isStudentGroupExists(int id) {
+    public boolean isStudentGroupExists(String id) {
         return studentGroupRepository.exists(id);
     }
 
     @Override
-    public StudentGroup addStudentGroup(StudentGroup studentGroup) {
-        return studentGroupRepository.save(studentGroup);
+    public StudentGroup createStudentGroup(StudentGroup studentGroup) {
+        return studentGroupRepository.exists(studentGroup.getId()) ?
+                studentGroupRepository.findOne(studentGroup.getId()) :
+                studentGroupRepository.save(studentGroup);
     }
 
     @Override
-    public StudentGroup findStudentGroup(int id) {
+    public StudentGroup findStudentGroup(String id) {
         return studentGroupRepository.findOne(id);
     }
 }

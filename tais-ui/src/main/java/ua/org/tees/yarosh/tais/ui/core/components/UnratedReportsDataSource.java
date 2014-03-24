@@ -20,14 +20,14 @@ public class UnratedReportsDataSource extends IndexedContainer {
 
     public UnratedReportsDataSource() {
         addContainerProperty(DISCIPLINE_KEY, String.class, "Unknown discipline");
-        addContainerProperty(STUDENT_GROUP_KEY, Integer.class, "Unknown student group");
+        addContainerProperty(STUDENT_GROUP_KEY, String.class, "Unknown student group");
         addContainerProperty(STUDENT_KEY, String.class, "Inknowk owner");
         addContainerProperty(INTERACTION_KEY, Button.class, null);
     }
 
     public void addReport(ManualTaskReport taskReport) {
         String discipline = taskReport.getTask().getDiscipline().getName();
-        Integer studentGroup = taskReport.getOwner().getGroup().getId();
+        String studentGroup = taskReport.getOwner().getGroup().getId();
         String student = taskReport.getOwner().getName() + " " + taskReport.getOwner().getSurname();
         Button open = new Button("Подробнее", clickEvent -> Notification.show("Not implemented yet"));
         open.addStyleName("icon-article-alt");
