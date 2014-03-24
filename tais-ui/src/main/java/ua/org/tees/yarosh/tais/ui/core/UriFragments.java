@@ -11,7 +11,8 @@ public abstract class UriFragments {
 
     public abstract class Admin {
         public static final String PREFIX = "admin/";
-        public static final String USER_REGISTRATION = PREFIX + "registration/user";
+        public static final String USER_REGISTRATION = PREFIX + "registration";
+        public static final String USER_MANAGEMENT = PREFIX + "usermgmt";
     }
 
     public abstract class Teacher {

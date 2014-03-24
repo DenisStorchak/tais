@@ -17,13 +17,15 @@ import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ViewProvider;
-import ua.org.tees.yarosh.tais.ui.views.LoginPresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.views.LoginView;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.ui.core.Messages.WELCOME_MESSAGE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
 
@@ -65,7 +67,8 @@ public class TAISUI extends UI {
         };
         nav.addProvider(new ViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class, helpManager));
         nav.addProvider(new ViewProvider(USER_REGISTRATION, UserRegistrationView.class, helpManager));
-        nav.addView(AUTH, LoginPresenterBasedView.class);
+        nav.addProvider(new ViewProvider(USER_MANAGEMENT, UserManagementView.class, helpManager));
+        nav.addView(AUTH, LoginView.class);
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());
@@ -129,7 +132,7 @@ public class TAISUI extends UI {
 
         NativeButton profilesButton = new NativeButton("Пользователи");
         profilesButton.addStyleName("icon-users");
-        adminMenu.addMenuButton(null, profilesButton); // todo set related view class
+        adminMenu.addMenuButton(UserManagementView.class, profilesButton); // todo set related view class
 
         NativeButton scheduleButton = new NativeButton("Расписание");
         scheduleButton.addStyleName("icon-clock");

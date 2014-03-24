@@ -20,13 +20,13 @@ import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
  *         Date: 22.03.14
  *         Time: 13:15
  */
-public class LoginPresenterBasedView extends PresenterBasedVerticalLayoutView implements PresenterBasedView {
+public class LoginView extends PresenterBasedVerticalLayoutView implements PresenterBasedView {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(LoginPresenterBasedView.class);
+    public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
     private TextField username;
     private PasswordField password;
 
-    public LoginPresenterBasedView() {
+    public LoginView() {
         setSizeFull();
         addStyleName("login-layout");
         addStyleName("login-bg");

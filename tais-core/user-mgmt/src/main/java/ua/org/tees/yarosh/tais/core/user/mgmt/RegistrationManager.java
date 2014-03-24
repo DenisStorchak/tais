@@ -72,6 +72,11 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
+    public List<Registrant> listAllRegistrants() {
+        return registrantRepository.findAll();
+    }
+
+    @Override
     public boolean loginExists(String login) {
         return registrantRepository.exists(login);
     }

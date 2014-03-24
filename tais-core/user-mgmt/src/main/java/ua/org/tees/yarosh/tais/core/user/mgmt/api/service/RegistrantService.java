@@ -20,6 +20,8 @@ public interface RegistrantService {
 
     public void deleteRegistration(String login);
 
+    public List<Registrant> listAllRegistrants();
+
     public boolean loginExists(String login);
 
     public List<StudentGroup> listStudentGroups();
