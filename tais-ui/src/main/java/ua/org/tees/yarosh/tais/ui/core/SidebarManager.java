@@ -51,6 +51,9 @@ public class SidebarManager implements ViewChangeListener {
             commonComponent.addComponentAsFirst(resolvedSidebar);
         }
         this.sidebar = resolvedSidebar;
+        if (sidebar != null) {
+            sidebar.getSidebarMenu().selectButton(event.getNewView().getClass());
+        }
     }
 
     @Deprecated

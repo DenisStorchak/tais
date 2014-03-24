@@ -30,7 +30,7 @@ public class UnratedReportsDataSource extends IndexedContainer {
         Integer studentGroup = taskReport.getOwner().getGroup().getId();
         String student = taskReport.getOwner().getName() + " " + taskReport.getOwner().getSurname();
         Button open = new Button("Подробнее", clickEvent -> Notification.show("Not implemented yet"));
-        open.addStyleName("icon-wrench");
+        open.addStyleName("icon-article-alt");
         open.addStyleName("icon-only");
 
         Item item = addItem(taskReport.getId());

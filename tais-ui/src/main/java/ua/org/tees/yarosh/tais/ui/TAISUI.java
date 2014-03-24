@@ -104,11 +104,11 @@ public class TAISUI extends UI {
 
         NativeButton dashboardButton = new NativeButton("Задания");
         dashboardButton.addStyleName("icon-columns");
-        teacherMenu.addComponent(dashboardButton);
+        teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
 
         NativeButton studentListButton = new NativeButton("Студенты");
         studentListButton.addStyleName("icon-users");
-        teacherMenu.addComponent(studentListButton);
+        teacherMenu.addMenuButton(null, studentListButton); // todo set related view class
 
         return teacherMenu;
     }
@@ -125,19 +125,19 @@ public class TAISUI extends UI {
 
         NativeButton createRegistrationButton = new NativeButton("Регистрация");
         createRegistrationButton.addStyleName("icon-user-add");
-        adminMenu.addComponent(createRegistrationButton);
+        adminMenu.addMenuButton(UserRegistrationView.class, createRegistrationButton);
 
         NativeButton editRegistrantButton = new NativeButton("Пользователи");
         editRegistrantButton.addStyleName("icon-users");
-        adminMenu.addComponent(editRegistrantButton);
+        adminMenu.addMenuButton(null, editRegistrantButton); // todo set related view class
 
         NativeButton fprintScannerSettingsButton = new NativeButton("Сканеры отпечатков");
         fprintScannerSettingsButton.addStyleName("icon-fingerprint_picture");
-        adminMenu.addComponent(fprintScannerSettingsButton);
+        adminMenu.addMenuButton(null, fprintScannerSettingsButton); // todo set related view class
 
         NativeButton viewConfigButton = new NativeButton("Настройки");
         viewConfigButton.addStyleName("icon-cog-alt");
-        adminMenu.addComponent(viewConfigButton);
+        adminMenu.addMenuButton(null, viewConfigButton); // todo set related view class
 
         return adminMenu;
     }
