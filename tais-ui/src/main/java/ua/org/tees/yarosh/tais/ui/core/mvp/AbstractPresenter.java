@@ -26,6 +26,7 @@ public abstract class AbstractPresenter {
         this.view = view;
         this.helpManager = helpManager;
         getView().setPrimaryPresenter(this);
+        getHelpManager().closeAll();
     }
 
     public PresenterBasedView getView() {

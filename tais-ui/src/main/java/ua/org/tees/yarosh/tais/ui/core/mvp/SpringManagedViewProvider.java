@@ -4,7 +4,6 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinServlet;
 import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
-import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -12,10 +11,9 @@ import java.util.logging.Logger;
 /**
  * @author Timur Yarosh
  */
-public class ViewProvider extends Navigator.ClassBasedViewProvider {
+public class SpringManagedViewProvider extends Navigator.ClassBasedViewProvider {
 
-    private static Logger log = Logger.getLogger(ViewProvider.class.getName());
-    private HelpManager helpManager;
+    private static Logger log = Logger.getLogger(SpringManagedViewProvider.class.getName());
 
     /**
      * Create a new view provider which creates new view instances based on
@@ -24,9 +22,8 @@ public class ViewProvider extends Navigator.ClassBasedViewProvider {
      * @param viewName  name of the views to create (not null)
      * @param viewClass
      */
-    public ViewProvider(String viewName, Class<? extends View> viewClass, HelpManager helpManager) {
+    public SpringManagedViewProvider(String viewName, Class<? extends View> viewClass) {
         super(viewName, viewClass);
-        this.helpManager = helpManager;
     }
 
     public View getView(String viewName) {

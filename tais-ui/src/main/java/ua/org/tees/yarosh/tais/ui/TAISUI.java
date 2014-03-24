@@ -11,18 +11,19 @@ import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.core.*;
+import ua.org.tees.yarosh.tais.ui.core.SidebarManager;
+import ua.org.tees.yarosh.tais.ui.core.UriFragments;
+import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
-import ua.org.tees.yarosh.tais.ui.core.mvp.ViewProvider;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
-import static ua.org.tees.yarosh.tais.ui.core.Messages.WELCOME_MESSAGE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT;
@@ -45,7 +46,6 @@ public class TAISUI extends UI {
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        HelpManager helpManager = new HelpManager();
         CommonComponent commonComponent = new CommonComponent(content);
 
         Navigator nav = new Navigator(this, content) {
@@ -65,10 +65,10 @@ public class TAISUI extends UI {
                 super.addProvider(provider);
             }
         };
-        nav.addProvider(new ViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class, helpManager));
-        nav.addProvider(new ViewProvider(USER_REGISTRATION, UserRegistrationView.class, helpManager));
-        nav.addProvider(new ViewProvider(USER_MANAGEMENT, UserManagementView.class, helpManager));
-        nav.addView(AUTH, LoginView.class);
+        nav.addProvider(new SpringManagedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
+        nav.addProvider(new SpringManagedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
+        nav.addProvider(new SpringManagedViewProvider(USER_MANAGEMENT, UserManagementView.class));
+        nav.addProvider(new SpringManagedViewProvider(AUTH, LoginView.class));
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());
@@ -79,11 +79,6 @@ public class TAISUI extends UI {
         setContent(root);
         root.addStyleName("root");
         root.setSizeFull();
-
-        HelpOverlay helpOverlay = helpManager.addOverlay("TAIS", WELCOME_MESSAGE, "login");
-        helpOverlay.center();
-        addWindow(helpOverlay);
-
         root.addComponent(commonComponent);
 
         if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {

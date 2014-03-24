@@ -13,15 +13,18 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.UI;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
+@Scope("singleton")
 public class HelpManager {
 
-    private List<HelpOverlay> overlays = new ArrayList<HelpOverlay>();
+    private List<HelpOverlay> overlays = new ArrayList<>();
 
     public void closeAll() {
         for (HelpOverlay overlay : overlays) {
@@ -68,13 +71,14 @@ public class HelpManager {
         // }
     }
 
-    public HelpOverlay addOverlay(String caption, String text, String style) {
+    public HelpOverlay addOverlay(String caption, String text, String style, UI ui) {
         HelpOverlay o = new HelpOverlay();
         o.setCaption(caption);
         o.addComponent(new Label(text, ContentMode.HTML));
         o.setStyleName(style);
-        // ui.addWindow(o);
+        ui.addWindow(o);
         overlays.add(o);
+        o.center();
         return o;
     }
 

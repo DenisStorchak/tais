@@ -7,19 +7,28 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.UriFragments;
 import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
 
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
  *         Time: 13:15
  */
+@PresenterClass(LoginListener.class)
+@Service
+@Qualifier(AUTH)
+@Scope("prototype")
 public class LoginView extends PresenterBasedVerticalLayoutView implements PresenterBasedView {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
@@ -38,6 +47,7 @@ public class LoginView extends PresenterBasedVerticalLayoutView implements Prese
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
+        primaryPresenter().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
         clearValue(username);
         clearValue(password);
         if (username != null) {
