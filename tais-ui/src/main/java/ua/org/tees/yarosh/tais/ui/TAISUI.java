@@ -123,21 +123,25 @@ public class TAISUI extends UI {
     private SidebarMenu createAdminMenu() {
         SidebarMenu adminMenu = new SidebarMenu();
 
-        NativeButton createRegistrationButton = new NativeButton("Регистрация");
-        createRegistrationButton.addStyleName("icon-user-add");
-        adminMenu.addMenuButton(UserRegistrationView.class, createRegistrationButton);
+        NativeButton registrationButton = new NativeButton("Регистрация");
+        registrationButton.addStyleName("icon-user-add");
+        adminMenu.addMenuButton(UserRegistrationView.class, registrationButton);
 
-        NativeButton editRegistrantButton = new NativeButton("Пользователи");
-        editRegistrantButton.addStyleName("icon-users");
-        adminMenu.addMenuButton(null, editRegistrantButton); // todo set related view class
+        NativeButton profilesButton = new NativeButton("Пользователи");
+        profilesButton.addStyleName("icon-users");
+        adminMenu.addMenuButton(null, profilesButton); // todo set related view class
 
-        NativeButton fprintScannerSettingsButton = new NativeButton("Сканеры отпечатков");
-        fprintScannerSettingsButton.addStyleName("icon-fingerprint_picture");
-        adminMenu.addMenuButton(null, fprintScannerSettingsButton); // todo set related view class
+        NativeButton scheduleButton = new NativeButton("Расписание");
+        scheduleButton.addStyleName("icon-clock");
+        adminMenu.addMenuButton(null, scheduleButton); // todo set related view class
 
-        NativeButton viewConfigButton = new NativeButton("Настройки");
-        viewConfigButton.addStyleName("icon-cog-alt");
-        adminMenu.addMenuButton(null, viewConfigButton); // todo set related view class
+        NativeButton fprintScannerButton = new NativeButton("Сканеры отпечатков");
+        fprintScannerButton.addStyleName("icon-fingerprint_picture");
+        adminMenu.addMenuButton(null, fprintScannerButton); // todo set related view class
+
+        NativeButton configButton = new NativeButton("Настройки");
+        configButton.addStyleName("icon-cog-alt");
+        adminMenu.addMenuButton(null, configButton); // todo set related view class
 
         return adminMenu;
     }
