@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.core.common;
 
 import com.jolbox.bonecp.BoneCPDataSource;
-import org.hibernate.ejb.HibernatePersistence;
+import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -65,7 +65,7 @@ public class CommonPersistenceConfiguration {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
         entityManagerFactoryBean.setDataSource(dataSource());
         entityManagerFactoryBean.setPackagesToScan("ua.org.tees.yarosh.tais");
-        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistence.class);
+        entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
         Properties jpaProterties = new Properties();
         jpaProterties.put("hibernate.dialect", hibernateProperties.getHibernateDialect());
         jpaProterties.put("hibernate.hbm2ddl.auto", hibernateProperties.getHibernateHbm2ddlAuto());
