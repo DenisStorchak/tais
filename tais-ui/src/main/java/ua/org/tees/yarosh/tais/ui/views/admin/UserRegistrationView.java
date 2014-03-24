@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
+import com.vaadin.data.Validatable;
 import com.vaadin.data.Validator;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.ui.*;
@@ -14,6 +15,7 @@ import ua.org.tees.yarosh.tais.ui.core.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
+import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
 
@@ -35,7 +37,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
     private TextField name = new TextField();
     private TextField surname = new TextField();
     private TextField patronymic = new TextField();
-    private ComboBox studentGroup = new ComboBox();
+    private ComboBox studentGroupComboBox = new ComboBox();
     private ComboBox position = new ComboBox();
 
     public UserRegistrationView() {
@@ -50,7 +52,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         createGroup.addStyleName("icon-only");
         createGroup.addStyleName("icon-doc-new"); // todo set correct icon
         createGroup.setDescription("Создать новую группу");
-        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow()));
+        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow(primaryPresenter())));
         top.addComponent(createGroup);
         top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
 
@@ -81,6 +83,10 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         surname.setValidationVisible(false);
         patronymic.addValidator(new BeanValidator(Registrant.class, "patronymic"));
         patronymic.setValidationVisible(false);
+        studentGroupComboBox.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
+        studentGroupComboBox.setValidationVisible(false);
+        position.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
+        position.setValidationVisible(false);
     }
 
     private HorizontalLayout createControls() {
@@ -94,13 +100,17 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         Button signUpButton = new Button("Зарегистрировать");
         signUpButton.addClickListener(event -> {
             try {
-                boolean success = primaryPresenter().createRegistration(login, password,
-                        name, surname, patronymic, position, studentGroup);
-                if (!success) {
-                    Notification.show("Ошибка регистрации");
+                if (isValid(login, password, repeatePassword, name, surname, patronymic, position, studentGroupComboBox)) {
+                    boolean success = primaryPresenter().createRegistration(login, password,
+                            name, surname, patronymic, position, studentGroupComboBox);
+                    if (!success) {
+                        Notification.show("Ошибка регистрации");
+                    } else {
+                        clearFields(login, password, repeatePassword, name, surname, patronymic);
+                        login.focus();
+                    }
                 } else {
-                    clearFields(login, password, repeatePassword, name, surname, patronymic);
-                    login.focus();
+                    Notification.show("Не все поля правильно заполнены");
                 }
             } catch (Validator.InvalidValueException e) {
                 Notification.show(e.getLocalizedMessage());
@@ -110,6 +120,16 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         controlsLayout.addComponent(signUpButton);
         controlsLayout.setComponentAlignment(signUpButton, Alignment.BOTTOM_RIGHT);
         return controlsLayout;
+    }
+
+    private boolean isValid(Validatable... validatables) {
+        for (Validatable validatable : validatables) {
+            if (!validatable.isValid()) {
+                ((Focusable) validatable).focus();
+                return false;
+            }
+        }
+        return true;
     }
 
     private void clearFields(AbstractTextField... fields) {
@@ -127,7 +147,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         HorizontalLayout nameLayout = createSingleFormLayout(new Label("Имя"), name);
         HorizontalLayout surnameLayout = createSingleFormLayout(new Label("Фамилия"), surname);
         HorizontalLayout patronymicLayout = createSingleFormLayout(new Label("Отчество"), patronymic);
-        HorizontalLayout studentGroupLayout = createSingleFormLayout(new Label("Группа"), studentGroup);
+        HorizontalLayout studentGroupLayout = createSingleFormLayout(new Label("Группа"), studentGroupComboBox);
         HorizontalLayout positionLayout = createSingleFormLayout(new Label("Набор прав"), position);
 
         registrationDataLayout.addComponents(
@@ -157,7 +177,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
 
     @Override
     public void setStudentGroupsComboBox(ComboBox studentGroupsComboBox) {
-        studentGroupsComboBox.getItemIds().forEach(studentGroup::addItem);
+        studentGroupsComboBox.getItemIds().forEach(studentGroupComboBox::addItem);
     }
 
     @Override

@@ -1,7 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
-import com.vaadin.data.Validator;
-import com.vaadin.ui.*;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Notification;
+import com.vaadin.ui.PasswordField;
+import com.vaadin.ui.TextField;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -57,8 +59,6 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
                                       TextField patronymic,
                                       ComboBox position,
                                       ComboBox studentGroup) {
-        fieldsValid(login, password, name, surname, patronymic);
-
         Registrant registrant = new Registrant();
         registrant.setLogin(login.getValue());
         registrant.setPassword(DigestUtils.sha256Hex(password.getValue()));
@@ -96,16 +96,5 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         ComboBox roles = new ComboBox();
         listRoles().forEach(roles::addItem);
         getView(UserRegistrationView.class).setRolesComboBox(roles);
-    }
-
-    private void fieldsValid(AbstractTextField... fields) {
-        for (AbstractTextField field : fields) {
-            try {
-                field.validate();
-            } catch (Validator.InvalidValueException e) {
-                field.focus();
-                throw e;
-            }
-        }
     }
 }

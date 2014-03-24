@@ -5,6 +5,7 @@ import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationListener;
 
 import java.util.ArrayList;
 
@@ -19,10 +20,11 @@ import static java.lang.Integer.valueOf;
  */
 public class CreateGroupWindow extends Window {
 
+    private final UserRegistrationListener userRegistrationListener;
     private CreateGroupWindow window;
     private String createdGroup;
 
-    public CreateGroupWindow() {
+    public CreateGroupWindow(UserRegistrationListener userRegistrationListener) {
         super("Новая группа");
         window = this;
         setModal(true);
@@ -30,6 +32,7 @@ public class CreateGroupWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
+        this.userRegistrationListener = userRegistrationListener;
     }
 
     public String getCreatedGroup() {
@@ -52,6 +55,7 @@ public class CreateGroupWindow extends Window {
                     addComponent(groupId);
                     setComponentAlignment(groupId, Alignment.TOP_LEFT);
                     setExpandRatio(groupId, 1);
+                    groupId.focus();
 
                     Button ok = new Button("Создать");
                     addComponent(ok);
@@ -61,6 +65,7 @@ public class CreateGroupWindow extends Window {
                         RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                         StudentGroup studentGroup = new StudentGroup(valueOf(groupId.getValue()), new ArrayList<>());
                         registrantService.addStudentGroup(studentGroup);
+                        userRegistrationListener.initView();
                         window.close();
                     });
                     ok.addStyleName("wide");
