@@ -32,6 +32,7 @@ public class RegistrationManager implements RegistrantService {
     public Registrant createRegistration(Registrant registrant) {
         LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
+        registrant.getGroup().getStudents().add(registrant);
 
         Registrant persistedRegistrant = registrantRepository.save(registrant);
         LOGGER.info("[login: {}] registered successfully", registrant.getLogin());

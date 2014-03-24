@@ -6,10 +6,7 @@ import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 import ua.org.tees.yarosh.tais.core.common.dto.Role;
 
-import javax.persistence.Entity;
-import javax.persistence.Enumerated;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -36,7 +33,7 @@ public class Registrant implements Serializable {
     @NotNull
     private String surname;
     @NotNull
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @Cascade(CascadeType.ALL)
     private StudentGroup group;
     @Enumerated

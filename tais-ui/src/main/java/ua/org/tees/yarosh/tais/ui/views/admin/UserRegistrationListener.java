@@ -1,7 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
 import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Notification;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -67,12 +66,6 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         registrant.setPatronymic(patronymic.getValue());
         registrant.setRole(Role.valueOf(((String) position.getValue()).toUpperCase()));
         StudentGroup group = registrantService.findStudentGroup(Integer.valueOf(studentGroup.getValue().toString()));
-        if (group == null) {
-            group = new StudentGroup();
-            group.setId(Integer.valueOf(studentGroup.getValue().toString()));
-            group.setStudents(Arrays.asList(registrant));
-            Notification.show(String.format("Создана новая группа %d", group.getId()));
-        }
         registrant.setGroup(group);
         return registrantService.createRegistration(registrant) != null;
     }

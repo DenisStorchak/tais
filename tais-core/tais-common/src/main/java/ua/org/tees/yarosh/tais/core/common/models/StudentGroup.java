@@ -4,6 +4,7 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
@@ -18,7 +19,7 @@ public class StudentGroup {
     @Id
     private Integer id;
     @Cascade(CascadeType.ALL)
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     private List<Registrant> students;
 
     public StudentGroup() {
