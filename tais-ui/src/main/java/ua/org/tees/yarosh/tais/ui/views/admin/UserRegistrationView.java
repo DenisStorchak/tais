@@ -3,8 +3,6 @@ package ua.org.tees.yarosh.tais.ui.views.admin;
 import com.vaadin.data.Validator;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.ui.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -41,21 +39,20 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
     private ComboBox position = new ComboBox();
 
     public UserRegistrationView() {
-        studentGroup.addItem("Новая группа");
-        studentGroup.addValueChangeListener(event -> {
-            Logger logger = LoggerFactory.getLogger(this.getClass());
-            logger.info("Value changed");
-            if (event.getProperty().getValue().equals("Новая группа")) {
-                logger.info("CreateGroupWindow will be created new");
-                getUI().addWindow(new CreateGroupWindow());
-            }
-        });
         login.focus();
         setUpValidators();
         setSizeFull();
         addStyleName("dashboard-view");
         HorizontalLayout top = new BgPanel("Регистрация нового пользователя");
         addComponent(top);
+
+        Button createGroup = new Button("Новая группа");
+        createGroup.addStyleName("icon-only");
+        createGroup.addStyleName("icon-doc-new"); // todo set correct icon
+        createGroup.setDescription("Создать новую группу");
+        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow()));
+        top.addComponent(createGroup);
+        top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
 
         HorizontalLayout dash = new Dash();
         addComponent(dash);

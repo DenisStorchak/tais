@@ -20,6 +20,7 @@ import static java.lang.Integer.valueOf;
 public class CreateGroupWindow extends Window {
 
     private CreateGroupWindow window;
+    private String createdGroup;
 
     public CreateGroupWindow() {
         super("Новая группа");
@@ -29,6 +30,10 @@ public class CreateGroupWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
+    }
+
+    public String getCreatedGroup() {
+        return createdGroup;
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {
@@ -52,6 +57,7 @@ public class CreateGroupWindow extends Window {
                     addComponent(ok);
                     setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
                     ok.addClickListener(clickEvent -> {
+                        createdGroup = groupId.getValue();
                         RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                         StudentGroup studentGroup = new StudentGroup(valueOf(groupId.getValue()), new ArrayList<>());
                         registrantService.addStudentGroup(studentGroup);

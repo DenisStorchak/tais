@@ -1,10 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
 import com.vaadin.data.Validator;
-import com.vaadin.ui.AbstractTextField;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
+import com.vaadin.ui.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -74,6 +71,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
             group = new StudentGroup();
             group.setId(Integer.valueOf(studentGroup.getValue().toString()));
             group.setStudents(Arrays.asList(registrant));
+            Notification.show(String.format("Создана новая группа %d", group.getId()));
         }
         registrant.setGroup(group);
         return registrantService.createRegistration(registrant) != null;
