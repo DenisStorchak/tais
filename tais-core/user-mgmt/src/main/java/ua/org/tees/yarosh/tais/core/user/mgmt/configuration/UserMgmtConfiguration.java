@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.RegistrationManager;
  *         Time: 15:25
  */
 @Configuration
-@Import(CommonConfiguration.class)
+@Import({CommonConfiguration.class, CachingConfiguration.class})
 @ComponentScan(basePackageClasses = {RegistrationManager.class})
 public class UserMgmtConfiguration {
 }
