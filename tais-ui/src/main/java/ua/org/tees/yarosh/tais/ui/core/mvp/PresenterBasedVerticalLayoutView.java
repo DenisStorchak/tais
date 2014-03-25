@@ -11,7 +11,7 @@ import java.util.LinkedList;
  *         Date: 23.03.14
  *         Time: 13:15
  */
-public class PresenterBasedVerticalLayoutView<P extends AbstractPresenter> extends VerticalLayout
+public class PresenterBasedVerticalLayoutView<P extends Presenter> extends VerticalLayout
         implements PresenterBasedView<P> {
 
     private LinkedList<P> presenters = new LinkedList<>();

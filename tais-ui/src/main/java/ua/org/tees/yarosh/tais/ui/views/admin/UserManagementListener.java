@@ -17,7 +17,7 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT
 
 @Service
 @Scope("prototype")
-public class UserManagementListener extends AbstractPresenter implements UserManagementTaisView.UserListPresenter {
+public class UserManagementListener extends AbstractPresenter implements UserManagementTaisView.UserManagementPresenter {
 
     private static final String KEY_LOGIN = "Логин";
     private static final String KEY_SURNAME = "Фамилия";

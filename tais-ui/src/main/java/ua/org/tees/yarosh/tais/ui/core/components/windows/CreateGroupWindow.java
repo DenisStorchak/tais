@@ -6,12 +6,12 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationListener;
 
 import java.util.ArrayList;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
+import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh
@@ -20,11 +20,11 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
  */
 public class CreateGroupWindow extends Window {
 
-    private final UserRegistrationListener userRegistrationListener;
+    private final UserRegistrationPresenter userRegistrationListener;
     private CreateGroupWindow window;
     private String createdGroup;
 
-    public CreateGroupWindow(UserRegistrationListener userRegistrationListener) {
+    public CreateGroupWindow(UserRegistrationPresenter userRegistrationListener) {
         super("Новая группа");
         window = this;
         setModal(true);

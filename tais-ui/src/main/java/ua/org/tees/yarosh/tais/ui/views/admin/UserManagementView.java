@@ -15,13 +15,14 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.views.admin.UserManagementTaisView.UserManagementPresenter;
 
 
 @PresenterClass(UserManagementListener.class)
 @Service
 @Qualifier(USER_MANAGEMENT)
 @Scope("prototype")
-public class UserManagementView extends PresenterBasedVerticalLayoutView<UserManagementListener>
+public class UserManagementView extends PresenterBasedVerticalLayoutView<UserManagementPresenter>
         implements UserManagementTaisView {
 
     private Table registrants;

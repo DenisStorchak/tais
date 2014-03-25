@@ -18,6 +18,7 @@ import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
+import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh
@@ -28,7 +29,7 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATI
 @Service
 @Qualifier(USER_REGISTRATION)
 @Scope("prototype")
-public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationListener>
+public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationPresenter>
         implements UserRegistrationTaisView {
 
     private TextField login = new TextField();

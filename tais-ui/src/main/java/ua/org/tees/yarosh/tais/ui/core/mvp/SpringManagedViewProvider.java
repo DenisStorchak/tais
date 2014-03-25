@@ -32,8 +32,8 @@ public class SpringManagedViewProvider extends Navigator.ClassBasedViewProvider 
                     viewName, getViewName()));
         }
         try {
-            AbstractPresenter presenter;
-            Class<? extends AbstractPresenter> presenterType = getViewClass().getAnnotation(PresenterClass.class).value();
+            Presenter presenter;
+            Class<? extends Presenter> presenterType = getViewClass().getAnnotation(PresenterClass.class).value();
             if (presenterType == null) {
                 log.log(Level.WARNING, "Presenter for {0} view not found, empty view will be returned...", viewName);
                 return getViewClass().newInstance();

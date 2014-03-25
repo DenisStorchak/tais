@@ -2,12 +2,13 @@ package ua.org.tees.yarosh.tais.ui.views.admin;
 
 import com.vaadin.data.Container;
 import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
-public interface UserManagementTaisView extends PresenterBasedView<UserManagementListener> {
+public interface UserManagementTaisView extends PresenterBasedView<UserManagementTaisView.UserManagementPresenter> {
 
     void setRegistrantsDataSource(Container registrantsDataSource);
 
-    interface UserListPresenter {
+    interface UserManagementPresenter extends Presenter {
         Container getAllRegistrants();
     }
 }

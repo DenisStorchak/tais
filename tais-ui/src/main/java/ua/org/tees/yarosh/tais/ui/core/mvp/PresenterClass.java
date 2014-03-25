@@ -11,5 +11,5 @@ import java.lang.annotation.Target;
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
 public @interface PresenterClass {
-    Class<? extends AbstractPresenter> value();
+    Class<? extends Presenter> value();
 }

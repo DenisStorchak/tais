@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.core.components;
 
+import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 
 /**
@@ -11,15 +12,14 @@ public class DashPanel extends CssLayout {
     public DashPanel() {
         addStyleName("layout-panel");
         setSizeFull();
+    }
 
-//        Button configure = new Button();
-//        configure.addStyleName("configure");
-//        configure.addStyleName("icon-cog");
-//        configure.addStyleName("icon-only");
-//        configure.addStyleName("borderless");
-//        configure.setDescription("Configure");
-//        configure.addStyleName("small");
-//        configure.addClickListener(event -> Notification.show("Not implemented in this demo"));
-//        addComponent(configure);
+    public DashPanel(Button button) {
+        super();
+        button.addStyleName("configure");
+        button.addStyleName("icon-only");
+        button.addStyleName("borderless");
+        button.addStyleName("small");
+        addComponent(button);
     }
 }
