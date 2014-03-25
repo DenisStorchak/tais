@@ -42,7 +42,7 @@ public class Registrant implements Serializable {
 
     @Override
     public String toString() {
-        return surname.concat(" ").concat(name).concat(" ").concat(patronymic);
+        return String.format("%s %s %s", surname, name, patronymic);
     }
 
     public String getLogin() {
