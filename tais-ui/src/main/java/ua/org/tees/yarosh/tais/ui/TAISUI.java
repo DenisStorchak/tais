@@ -4,7 +4,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
@@ -21,6 +20,7 @@ import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
 import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
+import ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
@@ -71,29 +71,13 @@ public class TAISUI extends UI {
         nav.addProvider(new SpringManagedViewProvider(USER_MANAGEMENT, UserManagementView.class));
         nav.addProvider(new SpringManagedViewProvider(AUTH, LoginView.class));
         nav.addProvider(new SpringManagedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
+        nav.addProvider(new SpringManagedViewProvider(CREATE_SCHEDULE, CreateScheduleView.class));
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());
         sidebarManager.registerSidebar(UriFragments.Admin.PREFIX, createAdminSidebar());
 
         nav.addViewChangeListener(sidebarManager);
-        nav.addViewChangeListener(new ViewChangeListener() {
-            @Override
-            public boolean beforeViewChange(ViewChangeEvent event) {
-                if (event.getOldView() == null || event.getNewView() == null) {
-                    return true;
-                } else if (!event.getOldView().getClass().equals(event.getNewView().getClass())) {
-                    return true;
-                }
-                LOGGER.info("View already active, request skipped");
-                return false;
-            }
-
-            @Override
-            public void afterViewChange(ViewChangeEvent event) {
-
-            }
-        });
 
         setContent(root);
         root.addStyleName("root");

@@ -23,6 +23,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.CREATE_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePresenter;
 
@@ -74,6 +75,8 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePrese
         scheduleOwners.addValidator(new NotBlankValidator("Поле не должно быть пустым"));
         scheduleOwners.setValidationVisible(false);
         scheduleOwners.focus();
+
+        addScheduleButton.addClickListener(event -> getUI().getNavigator().navigateTo(CREATE_SCHEDULE));
 
         searchLessonsButton.addClickListener(event -> {
             if (scheduleOwners.isValid()) {

@@ -14,6 +14,7 @@ public abstract class UriFragments {
         public static final String USER_REGISTRATION = PREFIX + "registration";
         public static final String USER_MANAGEMENT = PREFIX + "usermgmt";
         public static final String MANAGED_SCHEDULE = PREFIX + "schedule";
+        public static final String CREATE_SCHEDULE = PREFIX + "schedule/create";
     }
 
     public abstract class Teacher {
