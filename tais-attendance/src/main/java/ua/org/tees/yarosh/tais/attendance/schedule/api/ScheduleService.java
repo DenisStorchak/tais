@@ -6,7 +6,7 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import java.util.Date;
 import java.util.List;
 
-public interface LessonsScheduleService {
+public interface ScheduleService {
     /**
      * Save new or replace old schedule for one student group
      * Accepts List with lessons for only one student group.

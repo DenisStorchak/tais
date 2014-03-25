@@ -5,6 +5,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import java.util.Date;
@@ -16,6 +17,9 @@ public interface LessonsRepository extends JpaRepository<Lesson, Long> {
     List<Lesson> findLessonsWithinPeriod(@Param("periodFrom") Date periodFrom,
                                          @Param("periodTo") Date periodTo,
                                          @Param("studentGroup") StudentGroup studentGroup);
+
+    @Query("select l from Lesson l where l.teacher = :teacher")
+    List<Lesson> findLessonsByTeacher(@Param("teacher") Registrant teacher);
 
     @Query("delete from Lesson l where l.studentGroup = :studentGroup")
     void deleteSchedule(@Param("studentGroup") StudentGroup studentGroup);

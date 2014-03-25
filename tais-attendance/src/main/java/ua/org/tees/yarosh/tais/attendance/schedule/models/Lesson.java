@@ -24,6 +24,9 @@ public class Lesson {
     @OneToMany
     @JoinColumn(name = "visitersId")
     private List<Registrant> visiters;
+    @ManyToOne
+    @JoinColumn(name = "teacherId")
+    private Registrant teacher;
 
     public Lesson() {
     }
@@ -74,5 +77,13 @@ public class Lesson {
 
     public void setVisiters(List<Registrant> visiters) {
         this.visiters = visiters;
+    }
+
+    public Registrant getTeacher() {
+        return teacher;
+    }
+
+    public void setTeacher(Registrant teacher) {
+        this.teacher = teacher;
     }
 }
