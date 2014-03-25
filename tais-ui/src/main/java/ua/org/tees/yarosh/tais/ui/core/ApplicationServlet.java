@@ -6,12 +6,12 @@ import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebInitParam;
 import javax.servlet.annotation.WebServlet;
 
+import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.VIEW_FACTORY;
 
 @WebServlet(urlPatterns = "/*", initParams = {
@@ -28,8 +28,7 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
 
     @Override
     public void sessionInit(SessionInitEvent event) throws ServiceException {
-        SpringContextHelper ctx = new SpringContextHelper(getServletContext());
-        ViewFactory viewFactory = ctx.getBean(ViewFactory.class);
+        ViewFactory viewFactory = new LazyViewFactory(getRequiredWebApplicationContext(getServletContext()));
         LOGGER.info("ViewFactory created for session {}", event.getSession().getSession().getId());
         event.getSession().setAttribute(VIEW_FACTORY, viewFactory);
     }
