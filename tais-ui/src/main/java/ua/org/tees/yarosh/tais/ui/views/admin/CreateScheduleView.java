@@ -42,7 +42,6 @@ public class CreateScheduleView extends PresenterBasedVerticalLayoutView<CreateS
 
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
-        controls.setWidth(100, Unit.PERCENTAGE);
         controls.addComponents(groups, periodFrom, periodTo, createDayScheduleButton);
 
         dash.addComponent(controls);

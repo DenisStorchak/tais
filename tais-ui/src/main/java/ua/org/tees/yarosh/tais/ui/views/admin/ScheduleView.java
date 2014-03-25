@@ -100,7 +100,6 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePrese
 
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
-        controls.setWidth(100, Unit.PERCENTAGE);
         controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
         controls.setExpandRatio(scheduleOwners, 1.5f);
         controls.setExpandRatio(periodFrom, 1.5f);
