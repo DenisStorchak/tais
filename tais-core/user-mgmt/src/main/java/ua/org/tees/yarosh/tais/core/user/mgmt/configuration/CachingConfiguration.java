@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 
+import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.GROUP;
 import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.REGISTRATION;
 
 @Configuration
@@ -24,6 +25,7 @@ public class CachingConfiguration implements CachingConfigurer {
         cacheManager.setCaches(caches);
 
         caches.add(new ConcurrentMapCache(REGISTRATION));
+        caches.add(new ConcurrentMapCache(GROUP));
 
         return cacheManager;
     }
