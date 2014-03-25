@@ -12,7 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.UriFragments;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
+import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.Messages.*;
@@ -25,7 +25,7 @@ import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
  *         Date: 22.03.14
  *         Time: 13:15
  */
-@PresenterClass(LoginListener.class)
+@ProducedBy(LoginListener.class)
 @Service
 @Qualifier(AUTH)
 @Scope("prototype")

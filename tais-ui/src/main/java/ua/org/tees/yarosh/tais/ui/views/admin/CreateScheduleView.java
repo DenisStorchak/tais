@@ -10,14 +10,14 @@ import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
+import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.CREATE_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleTaisView.CreateSchedulePresenter;
 
-@PresenterClass(CreateScheduleListener.class)
+@ProducedBy(CreateScheduleListener.class)
 @Service
 @Qualifier(CREATE_SCHEDULE)
 @Scope("prototype")

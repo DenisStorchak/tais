@@ -14,7 +14,7 @@ import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
+import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import java.text.SimpleDateFormat;
@@ -27,7 +27,7 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.CREATE_SCHEDULE
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePresenter;
 
-@PresenterClass(ScheduleListener.class)
+@ProducedBy(ScheduleListener.class)
 @Service
 @Qualifier(MANAGED_SCHEDULE)
 @Scope("prototype")

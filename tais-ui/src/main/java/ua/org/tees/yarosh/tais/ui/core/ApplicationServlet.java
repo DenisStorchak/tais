@@ -30,7 +30,6 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
 
     @Override
     public void sessionInit(SessionInitEvent event) throws ServiceException {
-//        ViewFactory viewFactory = new LazyViewFactory(getRequiredWebApplicationContext(getServletContext()));
         ViewFactory viewFactory = SimpleViewFactory.createFactory(getRequiredWebApplicationContext(getServletContext()));
         LOGGER.info("ViewFactory created for session {}", event.getSession().getSession().getId());
         event.getSession().setAttribute(VIEW_FACTORY, viewFactory);

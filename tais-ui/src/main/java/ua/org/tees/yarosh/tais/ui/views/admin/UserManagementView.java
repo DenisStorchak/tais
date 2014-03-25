@@ -12,13 +12,13 @@ import ua.org.tees.yarosh.tais.ui.core.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.core.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
+import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT;
 import static ua.org.tees.yarosh.tais.ui.views.admin.UserManagementTaisView.UserManagementPresenter;
 
 
-@PresenterClass(UserManagementListener.class)
+@ProducedBy(UserManagementListener.class)
 @Service
 @Qualifier(USER_MANAGEMENT)
 @Scope("prototype")

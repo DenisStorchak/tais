@@ -31,7 +31,7 @@ public class SimpleViewFactory implements ViewFactory {
     public <V extends View> V getView(Class<V> viewClazz) {
         if (!viewPool.containsKey(viewClazz)) {
             LOGGER.info("View [{}] will be created now", viewClazz.getName());
-            Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(PresenterClass.class).value();
+            Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(ProducedBy.class).value();
             Presenter presenter = ctx.getBean(presenterClazz);
             V view = presenter.getView(viewClazz);
             viewPool.put(viewClazz, view);
