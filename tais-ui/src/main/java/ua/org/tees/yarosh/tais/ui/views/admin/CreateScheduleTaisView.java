@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
+import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
@@ -10,6 +11,9 @@ public interface CreateScheduleTaisView extends PresenterBasedView<CreateSchedul
     void setGroups(List<String> groups);
 
     interface CreateSchedulePresenter extends Presenter {
+        void addLesson(Lesson lesson);
+
+        void removeLesson(Lesson lesson);
 
     }
 }
