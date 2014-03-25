@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Import;
  *         Time: 15:51
  */
 @Configuration
-@Import({CommonPersistenceConfiguration.class, CachingConfiguration.class})
+@Import({CommonPersistenceConfiguration.class})
 public class CommonConfiguration {
 
 }

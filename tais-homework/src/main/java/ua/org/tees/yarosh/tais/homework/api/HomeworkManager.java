@@ -10,11 +10,11 @@ import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import java.util.List;
 
 public interface HomeworkManager {
-    long createManualTask(ManualTask task);
+    long createGeneralTask(ManualTask task);
 
-    void enableManualTask(long id);
+    void enableGroupTask(long id);
 
-    void disableManualTask(long id);
+    void disableGroupTask(long id);
 
     long createQuestionsSuite(QuestionsSuite questionsSuite);
 
