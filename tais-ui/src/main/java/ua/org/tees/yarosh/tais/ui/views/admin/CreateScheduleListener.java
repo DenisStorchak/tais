@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -18,5 +19,15 @@ public class CreateScheduleListener extends AbstractPresenter implements CreateS
     @Autowired
     public CreateScheduleListener(@Qualifier(CREATE_SCHEDULE) PresenterBasedView view, HelpManager helpManager) {
         super(view, helpManager);
+    }
+
+    @Override
+    public void addLesson(Lesson lesson) {
+
+    }
+
+    @Override
+    public void removeLesson(Lesson lesson) {
+
     }
 }

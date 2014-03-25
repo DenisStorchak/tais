@@ -11,7 +11,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.UriFragments;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterClass;
 
@@ -19,6 +18,7 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 
 /**
  * @author Timur Yarosh
@@ -29,7 +29,7 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
 @Service
 @Qualifier(AUTH)
 @Scope("prototype")
-public class LoginView extends PresenterBasedVerticalLayoutView implements PresenterBasedView {
+public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> implements LoginTaisView {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
     private TextField username;
