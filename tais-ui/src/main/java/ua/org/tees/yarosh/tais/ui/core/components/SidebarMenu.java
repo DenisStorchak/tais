@@ -30,7 +30,9 @@ public class SidebarMenu extends CssLayout {
     }
 
     public void selectButton(Class<? extends View> clazz) {
-        buttons.values().forEach(b -> b.removeStyleName(SELECTED_BUTTON_STYLE));
-        buttons.get(clazz).addStyleName(SELECTED_BUTTON_STYLE);
+        if (buttons.containsKey(clazz)) {
+            buttons.values().forEach(b -> b.removeStyleName(SELECTED_BUTTON_STYLE));
+            buttons.get(clazz).addStyleName(SELECTED_BUTTON_STYLE);
+        }
     }
 }

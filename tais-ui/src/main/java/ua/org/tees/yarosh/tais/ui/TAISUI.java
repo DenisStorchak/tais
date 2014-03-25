@@ -21,14 +21,14 @@ import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
 import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
+import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.*;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 /**
@@ -70,6 +70,7 @@ public class TAISUI extends UI {
         nav.addProvider(new SpringManagedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
         nav.addProvider(new SpringManagedViewProvider(USER_MANAGEMENT, UserManagementView.class));
         nav.addProvider(new SpringManagedViewProvider(AUTH, LoginView.class));
+        nav.addProvider(new SpringManagedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());
@@ -151,7 +152,8 @@ public class TAISUI extends UI {
 
         NativeButton scheduleButton = new NativeButton("Расписание");
         scheduleButton.addStyleName("icon-clock");
-        adminMenu.addMenuButton(null, scheduleButton); // todo set related view class
+        adminMenu.addMenuButton(ScheduleView.class, scheduleButton);
+        scheduleButton.addClickListener(event -> getNavigator().navigateTo(MANAGED_SCHEDULE));
 
         NativeButton fprintScannerButton = new NativeButton("Сканеры отпечатков");
         fprintScannerButton.addStyleName("icon-fingerprint_picture");

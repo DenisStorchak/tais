@@ -40,6 +40,11 @@ public class Registrant implements Serializable {
     @NotNull
     private Role role;
 
+    @Override
+    public String toString() {
+        return surname.concat(" ").concat(name).concat(" ").concat(patronymic);
+    }
+
     public String getLogin() {
         return login;
     }

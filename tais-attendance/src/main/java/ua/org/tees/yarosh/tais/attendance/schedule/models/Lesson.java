@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.attendance.schedule.models;
 
+import ua.org.tees.yarosh.tais.attendance.schedule.LessonType;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -27,6 +28,13 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "teacherId")
     private Registrant teacher;
+
+    @OneToOne
+    @JoinColumn(name = "classroom")
+    private Classroom classroom;
+
+    @Enumerated
+    private LessonType lessonType;
 
     public Lesson() {
     }
@@ -85,5 +93,21 @@ public class Lesson {
 
     public void setTeacher(Registrant teacher) {
         this.teacher = teacher;
+    }
+
+    public Classroom getClassroom() {
+        return classroom;
+    }
+
+    public void setClassroom(Classroom classroom) {
+        this.classroom = classroom;
+    }
+
+    public LessonType getLessonType() {
+        return lessonType;
+    }
+
+    public void setLessonType(LessonType lessonType) {
+        this.lessonType = lessonType;
     }
 }

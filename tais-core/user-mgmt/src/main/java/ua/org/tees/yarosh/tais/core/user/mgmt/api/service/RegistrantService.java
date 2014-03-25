@@ -14,7 +14,7 @@ import java.util.List;
 public interface RegistrantService {
     public Registrant createRegistration(Registrant registrant);
 
-    public Registrant getRegistration(String login) throws RegistrantNotFoundException;
+    public Registrant getRegistration(String login);
 
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException;
 

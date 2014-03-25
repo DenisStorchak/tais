@@ -40,13 +40,9 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-    public Registrant getRegistration(String login) throws RegistrantNotFoundException {
+    public Registrant getRegistration(String login) {
         LOGGER.info("Profile [login: {}] requested", login);
-        Registrant registrant = registrantRepository.findOne(login);
-        if (registrant != null) {
-            return registrant;
-        }
-        throw new RegistrantNotFoundException(String.format("Registrant [%s] not found", login));
+        return registrantRepository.findOne(login);
     }
 
     @Override
