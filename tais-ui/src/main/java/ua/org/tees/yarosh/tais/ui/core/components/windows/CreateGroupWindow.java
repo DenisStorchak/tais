@@ -5,13 +5,13 @@ import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
+import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationListener;
 
 import java.util.ArrayList;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
-import static java.lang.Integer.valueOf;
 
 /**
  * @author Timur Yarosh
@@ -52,6 +52,8 @@ public class CreateGroupWindow extends Window {
                     SpringContextHelper ctx = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
 
                     TextField groupId = new TextField("№ группы");
+                    groupId.addValidator(new NotBlankValidator("Поле не может быть пустым"));
+                    groupId.setValidationVisible(false);
                     addComponent(groupId);
                     setComponentAlignment(groupId, Alignment.TOP_LEFT);
                     setExpandRatio(groupId, 1);
@@ -61,12 +63,17 @@ public class CreateGroupWindow extends Window {
                     addComponent(ok);
                     setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
                     ok.addClickListener(clickEvent -> {
-                        createdGroup = groupId.getValue();
-                        RegistrantService registrantService = ctx.getBean(RegistrantService.class);
-                        StudentGroup studentGroup = new StudentGroup(valueOf(groupId.getValue()), new ArrayList<>());
-                        registrantService.addStudentGroup(studentGroup);
-                        userRegistrationListener.initView();
-                        window.close();
+                        if (groupId.isValid()) {
+                            createdGroup = groupId.getValue();
+                            RegistrantService registrantService = ctx.getBean(RegistrantService.class);
+                            StudentGroup studentGroup = new StudentGroup(groupId.getValue(), new ArrayList<>());
+                            registrantService.createStudentGroup(studentGroup);
+                            userRegistrationListener.initView();
+                            window.close();
+                        } else {
+                            Notification.show("Неправильное значение");
+                            groupId.focus();
+                        }
                     });
                     ok.addStyleName("wide");
                     ok.addStyleName("default");

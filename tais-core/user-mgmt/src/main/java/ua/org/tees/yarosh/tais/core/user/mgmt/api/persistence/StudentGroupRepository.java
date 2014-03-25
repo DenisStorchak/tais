@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 @Repository
-public interface StudentGroupRepository extends JpaRepository<StudentGroup, Integer> {
+public interface StudentGroupRepository extends JpaRepository<StudentGroup, String> {
 }

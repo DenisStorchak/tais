@@ -17,7 +17,7 @@ import java.util.List;
 @Entity
 public class StudentGroup {
     @Id
-    private Integer id;
+    private String id;
     @Cascade(CascadeType.ALL)
     @OneToMany(fetch = FetchType.EAGER)
     private List<Registrant> students;
@@ -25,16 +25,16 @@ public class StudentGroup {
     public StudentGroup() {
     }
 
-    public StudentGroup(Integer integer, List<Registrant> students) {
-        id = integer;
+    public StudentGroup(String id, List<Registrant> students) {
+        this.id = id;
         this.students = students;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(String id) {
         this.id = id;
     }
 

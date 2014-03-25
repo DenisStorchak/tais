@@ -4,6 +4,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
@@ -75,6 +76,23 @@ public class TAISUI extends UI {
         sidebarManager.registerSidebar(UriFragments.Admin.PREFIX, createAdminSidebar());
 
         nav.addViewChangeListener(sidebarManager);
+        nav.addViewChangeListener(new ViewChangeListener() {
+            @Override
+            public boolean beforeViewChange(ViewChangeEvent event) {
+                if (event.getOldView() == null || event.getNewView() == null) {
+                    return true;
+                } else if (!event.getOldView().getClass().equals(event.getNewView().getClass())) {
+                    return true;
+                }
+                LOGGER.info("View already active, request skipped");
+                return false;
+            }
+
+            @Override
+            public void afterViewChange(ViewChangeEvent event) {
+
+            }
+        });
 
         setContent(root);
         root.addStyleName("root");

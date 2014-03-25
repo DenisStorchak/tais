@@ -47,7 +47,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
 
     private ManualTaskReport createSampleReport(long i) {
         StudentGroup studentGroup = new StudentGroup();
-        studentGroup.setId(4321);
+        studentGroup.setId(String.valueOf(4321));
 
         Registrant owner = new Registrant();
         owner.setName("Тимур");
