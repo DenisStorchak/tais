@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static ua.org.tees.yarosh.tais.attendance.configuration.CacheNames.SCHEDULE;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.SCHEDULE;
 
 @Service
 public class ScheduleTeacherService implements ScheduleService, TeacherService {

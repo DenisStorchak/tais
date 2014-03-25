@@ -16,8 +16,8 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 
 import java.util.List;
 
-import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.GROUP;
-import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.REGISTRATION;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.GROUP;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.REGISTRATION;
 
 /**
  * @author Timur Yarosh

@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.homework.api.ManualTaskResolver;
 import ua.org.tees.yarosh.tais.homework.api.persistence.ManualTaskResultRepository;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.MANUAL_TASK;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.MANUAL_TASK;
 
 @Service
 public class StudentManualTaskResolver implements ManualTaskResolver {

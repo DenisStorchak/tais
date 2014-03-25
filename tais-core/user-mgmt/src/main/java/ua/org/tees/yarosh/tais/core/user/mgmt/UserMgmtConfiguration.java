@@ -1,10 +1,9 @@
-package ua.org.tees.yarosh.tais.core.user.mgmt.configuration;
+package ua.org.tees.yarosh.tais.core.user.mgmt;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import ua.org.tees.yarosh.tais.core.common.CommonConfiguration;
-import ua.org.tees.yarosh.tais.core.user.mgmt.RegistrationManager;
 
 /**
  * @author Timur Yarosh
@@ -12,7 +11,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.RegistrationManager;
  *         Time: 15:25
  */
 @Configuration
-@Import({CommonConfiguration.class, UserMgmtCachingConfiguration.class})
+@Import({CommonConfiguration.class})
 @ComponentScan(basePackageClasses = {RegistrationManager.class})
 public class UserMgmtConfiguration {
 }

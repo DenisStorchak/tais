@@ -8,8 +8,8 @@ import ua.org.tees.yarosh.tais.homework.api.ManualTaskResolver;
 import ua.org.tees.yarosh.tais.homework.api.QuestionsSuiteResolver;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.MANUAL_TASK;
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.QUESTIONS_SUITE;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.MANUAL_TASK;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.QUESTIONS_SUITE;
 
 @Service
 public class StudentHomeworkResolver implements HomeworkResolver {

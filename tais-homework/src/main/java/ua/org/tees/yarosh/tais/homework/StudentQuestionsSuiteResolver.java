@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualAchievement;
 
 import java.util.ArrayList;
 
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.QUESTIONS_SUITE;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.QUESTIONS_SUITE;
 
 @Service
 public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {

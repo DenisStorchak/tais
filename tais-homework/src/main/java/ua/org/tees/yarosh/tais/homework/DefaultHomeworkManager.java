@@ -17,8 +17,8 @@ import ua.org.tees.yarosh.tais.homework.models.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.MANUAL_TASK;
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.QUESTIONS_SUITE;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.MANUAL_TASK;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 
 @Service
