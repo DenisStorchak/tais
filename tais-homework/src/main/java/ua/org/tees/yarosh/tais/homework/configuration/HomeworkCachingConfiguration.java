@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.core.user.mgmt.configuration;
+package ua.org.tees.yarosh.tais.homework.configuration;
 
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -12,20 +12,20 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 
-import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.GROUP;
-import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.REGISTRATION;
+import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.MANUAL_TASK;
+import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.QUESTIONS_SUITE;
 
 @Configuration
 @EnableCaching
-public class CachingConfiguration implements CachingConfigurer {
+public class HomeworkCachingConfiguration implements CachingConfigurer {
     @Override
     public CacheManager cacheManager() {
         ArrayList<Cache> caches = new ArrayList<>();
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(caches);
 
-        caches.add(new ConcurrentMapCache(REGISTRATION));
-        caches.add(new ConcurrentMapCache(GROUP));
+        caches.add(new ConcurrentMapCache(MANUAL_TASK));
+        caches.add(new ConcurrentMapCache(QUESTIONS_SUITE));
 
         return cacheManager;
     }

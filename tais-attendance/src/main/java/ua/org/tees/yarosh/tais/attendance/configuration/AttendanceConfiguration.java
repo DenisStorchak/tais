@@ -8,7 +8,7 @@ import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import ua.org.tees.yarosh.tais.core.common.CommonConfiguration;
 
 @Configuration
-@Import({CommonConfiguration.class, CachingConfiguration.class})
+@Import({CommonConfiguration.class, AttendanceCachingConfiguration.class})
 @ComponentScan(basePackageClasses = AttendanceConfiguration.class)
 @EnableJpaRepositories(basePackages = "ua.org.tees.yarosh.tais.attendance")
 @EnableWebMvc

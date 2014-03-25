@@ -6,7 +6,7 @@ import org.springframework.context.annotation.Import;
 import ua.org.tees.yarosh.tais.core.common.CommonConfiguration;
 
 @Configuration
-@Import({CommonConfiguration.class, CachingConfiguration.class})
+@Import({CommonConfiguration.class, HomeworkCachingConfiguration.class})
 @ComponentScan(basePackageClasses = HomeworkConfiguration.class)
 public class HomeworkConfiguration {
 }

@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.attendance.configuration;
+package ua.org.tees.yarosh.tais.core.user.mgmt.configuration;
 
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -12,18 +12,20 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 
-import static ua.org.tees.yarosh.tais.attendance.configuration.CacheNames.SCHEDULE;
+import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.GROUP;
+import static ua.org.tees.yarosh.tais.core.user.mgmt.configuration.CacheNames.REGISTRATION;
 
 @Configuration
 @EnableCaching
-public class CachingConfiguration implements CachingConfigurer {
+public class UserMgmtCachingConfiguration implements CachingConfigurer {
     @Override
     public CacheManager cacheManager() {
         ArrayList<Cache> caches = new ArrayList<>();
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(caches);
 
-        caches.add(new ConcurrentMapCache(SCHEDULE));
+        caches.add(new ConcurrentMapCache(REGISTRATION));
+        caches.add(new ConcurrentMapCache(GROUP));
 
         return cacheManager;
     }

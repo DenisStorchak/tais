@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.homework.configuration;
+package ua.org.tees.yarosh.tais.attendance.configuration;
 
 import org.springframework.cache.Cache;
 import org.springframework.cache.CacheManager;
@@ -12,20 +12,18 @@ import org.springframework.context.annotation.Configuration;
 
 import java.util.ArrayList;
 
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.MANUAL_TASK;
-import static ua.org.tees.yarosh.tais.homework.configuration.CacheNames.QUESTIONS_SUITE;
+import static ua.org.tees.yarosh.tais.attendance.configuration.CacheNames.SCHEDULE;
 
 @Configuration
 @EnableCaching
-public class CachingConfiguration implements CachingConfigurer {
+public class AttendanceCachingConfiguration implements CachingConfigurer {
     @Override
     public CacheManager cacheManager() {
         ArrayList<Cache> caches = new ArrayList<>();
         SimpleCacheManager cacheManager = new SimpleCacheManager();
         cacheManager.setCaches(caches);
 
-        caches.add(new ConcurrentMapCache(MANUAL_TASK));
-        caches.add(new ConcurrentMapCache(QUESTIONS_SUITE));
+        caches.add(new ConcurrentMapCache(SCHEDULE));
 
         return cacheManager;
     }
