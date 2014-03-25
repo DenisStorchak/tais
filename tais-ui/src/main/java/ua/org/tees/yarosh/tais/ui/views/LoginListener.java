@@ -5,8 +5,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;

@@ -1,9 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.ViewChangeListener;
-import ua.org.tees.yarosh.tais.ui.core.components.CommonComponent;
-import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
-import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
+import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
+import ua.org.tees.yarosh.tais.ui.components.Sidebar;
+import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 
 import java.util.HashMap;
 import java.util.Map;

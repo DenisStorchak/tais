@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.components;
+package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;

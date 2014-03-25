@@ -2,7 +2,6 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.VerticalLayout;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 
 import java.util.LinkedList;
 

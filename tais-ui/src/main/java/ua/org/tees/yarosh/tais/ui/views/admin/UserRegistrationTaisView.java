@@ -3,8 +3,8 @@ package ua.org.tees.yarosh.tais.ui.views.admin;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import java.util.List;
 

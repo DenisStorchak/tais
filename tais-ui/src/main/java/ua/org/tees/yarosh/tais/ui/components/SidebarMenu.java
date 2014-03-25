@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.components;
+package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Button;

@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.components;
+package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.CssLayout;

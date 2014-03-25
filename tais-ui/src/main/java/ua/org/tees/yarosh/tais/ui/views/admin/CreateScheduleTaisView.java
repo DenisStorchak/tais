@@ -1,8 +1,8 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
 import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import java.util.List;
 

@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 
 /**
  * @author Timur Yarosh

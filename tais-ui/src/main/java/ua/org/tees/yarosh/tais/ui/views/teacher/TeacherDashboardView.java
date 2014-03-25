@@ -8,11 +8,11 @@ import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
-import ua.org.tees.yarosh.tais.ui.core.components.Dash;
-import ua.org.tees.yarosh.tais.ui.core.components.DashPanel;
-import ua.org.tees.yarosh.tais.ui.core.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.core.components.buttons.CreateTaskButton;
+import ua.org.tees.yarosh.tais.ui.components.BgPanel;
+import ua.org.tees.yarosh.tais.ui.components.Dash;
+import ua.org.tees.yarosh.tais.ui.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
+import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 

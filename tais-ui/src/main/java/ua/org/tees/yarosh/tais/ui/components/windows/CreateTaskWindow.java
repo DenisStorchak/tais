@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.components.windows;
+package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.ui.*;
 

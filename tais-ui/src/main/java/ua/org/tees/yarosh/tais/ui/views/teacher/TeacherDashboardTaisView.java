@@ -1,9 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher;
 
 import com.vaadin.data.Container;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 /**
  * @author Timur Yarosh

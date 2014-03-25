@@ -13,8 +13,8 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
-import ua.org.tees.yarosh.tais.ui.core.components.PresenterBasedView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import java.util.Arrays;
 import java.util.List;

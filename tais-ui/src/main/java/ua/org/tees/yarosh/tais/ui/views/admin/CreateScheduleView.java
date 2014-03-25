@@ -7,8 +7,8 @@ import com.vaadin.ui.HorizontalLayout;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.ui.core.components.BgPanel;
-import ua.org.tees.yarosh.tais.ui.core.components.Dash;
+import ua.org.tees.yarosh.tais.ui.components.BgPanel;
+import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 

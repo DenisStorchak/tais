@@ -1,8 +1,8 @@
-package ua.org.tees.yarosh.tais.ui.core.components.buttons;
+package ua.org.tees.yarosh.tais.ui.components.buttons;
 
 import com.vaadin.ui.Button;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateTaskWindow;
 import ua.org.tees.yarosh.tais.ui.core.Messages;
-import ua.org.tees.yarosh.tais.ui.core.components.windows.CreateTaskWindow;
 
 /**
  * @author Timur Yarosh
