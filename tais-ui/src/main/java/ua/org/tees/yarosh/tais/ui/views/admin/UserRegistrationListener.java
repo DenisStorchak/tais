@@ -81,7 +81,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     }
 
     @Override
-    public void initView() {
+    public void updateData() {
         ComboBox studentGroup = new ComboBox();
         listStudentGroups().forEach(studentGroup::addItem);
         getView(UserRegistrationView.class).setStudentGroupsComboBox(studentGroup);

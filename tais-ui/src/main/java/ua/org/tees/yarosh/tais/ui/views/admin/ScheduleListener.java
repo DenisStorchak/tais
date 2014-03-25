@@ -36,7 +36,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     @Override
-    public void initView() {
+    public void updateData() {
         ScheduleTaisView view = getView(ScheduleTaisView.class);
         view.setGroups(getGroups());
         view.setRegistrants(getRegistrants());

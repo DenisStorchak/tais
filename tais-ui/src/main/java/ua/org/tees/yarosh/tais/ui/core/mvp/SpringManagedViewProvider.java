@@ -39,7 +39,7 @@ public class SpringManagedViewProvider extends Navigator.ClassBasedViewProvider 
                 return getViewClass().newInstance();
             }
             presenter = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext()).getBean(presenterType);
-            presenter.initView();
+            presenter.updateData();
             return presenter.getView();
         } catch (InstantiationException | IllegalAccessException e) {
             log.log(Level.SEVERE, "Presenter can't set up the view\n{0}", e.getMessage());

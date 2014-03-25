@@ -37,5 +37,7 @@ public class PresenterBasedVerticalLayoutView<P extends Presenter> extends Verti
     }
 
     @Override
-    public void enter(ViewChangeListener.ViewChangeEvent event) { /*NOP*/ }
+    public void enter(ViewChangeListener.ViewChangeEvent event) {
+        primaryPresenter().updateData();
+    }
 }

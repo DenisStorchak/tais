@@ -68,7 +68,7 @@ public class CreateGroupWindow extends Window {
                             RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                             StudentGroup studentGroup = new StudentGroup(groupId.getValue(), new ArrayList<>());
                             registrantService.createStudentGroup(studentGroup);
-                            userRegistrationListener.initView();
+                            userRegistrationListener.updateData();
                             window.close();
                         } else {
                             Notification.show("Неправильное значение");

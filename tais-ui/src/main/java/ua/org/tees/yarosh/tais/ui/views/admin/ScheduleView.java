@@ -141,7 +141,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePrese
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        getPresenters().forEach(SchedulePresenter::initView);
+        getPresenters().forEach(SchedulePresenter::updateData);
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
     }

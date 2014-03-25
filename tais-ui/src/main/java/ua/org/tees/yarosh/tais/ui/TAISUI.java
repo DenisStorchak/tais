@@ -18,7 +18,7 @@ import ua.org.tees.yarosh.tais.ui.core.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.core.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.core.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.components.UserMenu;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SessionScopedViewProvider;
+import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
 import ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
@@ -67,12 +67,12 @@ public class TAISUI extends UI {
             }
         };
 
-        nav.addProvider(new SessionScopedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
-        nav.addProvider(new SessionScopedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
-        nav.addProvider(new SessionScopedViewProvider(USER_MANAGEMENT, UserManagementView.class));
-        nav.addProvider(new SessionScopedViewProvider(AUTH, LoginView.class));
-        nav.addProvider(new SessionScopedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
-        nav.addProvider(new SessionScopedViewProvider(CREATE_SCHEDULE, CreateScheduleView.class));
+        nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
+        nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
+        nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
+        nav.addProvider(new FactoryBasedViewProvider(AUTH, LoginView.class));
+        nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
+        nav.addProvider(new FactoryBasedViewProvider(CREATE_SCHEDULE, CreateScheduleView.class));
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());

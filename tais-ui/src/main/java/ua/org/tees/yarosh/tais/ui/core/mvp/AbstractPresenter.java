@@ -50,5 +50,5 @@ public abstract class AbstractPresenter implements Presenter {
     }
 
     @Override
-    public void initView() { /*NOP*/ }
+    public void updateData() { /*NOP*/ }
 }
