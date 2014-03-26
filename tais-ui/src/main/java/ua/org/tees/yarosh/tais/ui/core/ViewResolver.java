@@ -21,6 +21,10 @@ public class ViewResolver {
         throw new IllegalArgumentException("View not found");
     }
 
+    public static boolean viewRegistered(String name) {
+        return resolverMap.containsValue(name);
+    }
+
     public void register(Class<? extends View> clazz, String name) {
         resolverMap.put(clazz, name);
     }

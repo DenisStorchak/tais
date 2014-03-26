@@ -68,7 +68,7 @@ public class SidebarManager implements ViewChangeListener {
 
     private Sidebar localResolveSidebar(String viewPattern) {
         Optional<String> first = sidebarPool.keySet().stream().filter(viewPattern::startsWith).findFirst();
-        if (first.isPresent()) {
+        if (first.isPresent() && ViewResolver.viewRegistered(viewPattern)) {
             String properlyKey = first.get();
             return sidebarPool.get(properlyKey);
         }
