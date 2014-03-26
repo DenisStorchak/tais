@@ -34,10 +34,13 @@ public class RegistrationManager implements RegistrantService {
     private StudentGroupRepository studentGroupRepository;
 
     @Override
-    @CacheEvict(REGISTRANTS)
+    @CacheEvict(value = REGISTRANTS, allEntries = true)
     public Registrant createRegistration(Registrant registrant) {
         LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
+        if (registrantRepository.exists(registrant.getLogin())) {
+            return null;
+        }
         registrant.getGroup().getStudents().add(registrant);
 
         Registrant persistedRegistrant = registrantRepository.save(registrant);

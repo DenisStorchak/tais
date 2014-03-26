@@ -105,7 +105,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
                     boolean success = primaryPresenter().createRegistration(login, password,
                             name, surname, patronymic, position, studentGroupComboBox);
                     if (!success) {
-                        Notification.show("Ошибка регистрации");
+                        Notification.show("Логин занят");
                     } else {
                         clearFields(login, password, repeatePassword, name, surname, patronymic);
                         login.focus();
