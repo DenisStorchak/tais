@@ -92,10 +92,19 @@
                     <execution>
                         <configuration>
                         </configuration>
+                        <phase>compile</phase>
                         <goals>
                             <goal>resources</goal>
                             <goal>update-widgetset</goal>
                             <goal>compile</goal>
+                            <goal>compile-theme</goal>
+                        </goals>
+                    </execution>
+                    <execution>
+                        <id>clean</id>
+                        <phase>clean</phase>
+                        <goals>
+                            <goal>clean</goal>
                         </goals>
                     </execution>
                 </executions>
