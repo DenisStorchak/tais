@@ -7,6 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -15,7 +16,7 @@ import java.util.List;
  *         Time: 22:20
  */
 @Entity
-public class StudentGroup {
+public class StudentGroup implements Serializable {
     @Id
     private String id;
     @Cascade(CascadeType.ALL)

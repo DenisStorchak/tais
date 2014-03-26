@@ -31,6 +31,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePr
 @Service
 @Qualifier(MANAGED_SCHEDULE)
 @Scope("prototype")
+@SuppressWarnings("unchecked")
 public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePresenter> implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";

@@ -3,6 +3,8 @@ package ua.org.tees.yarosh.tais.core.user.mgmt;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.api.SimpleValidation;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
@@ -13,6 +15,9 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.StudentGroupReposi
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 
 import java.util.List;
+
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.GROUPS;
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.REGISTRANTS;
 
 /**
  * @author Timur Yarosh
@@ -29,6 +34,7 @@ public class RegistrationManager implements RegistrantService {
     private StudentGroupRepository studentGroupRepository;
 
     @Override
+    @CacheEvict(REGISTRANTS)
     public Registrant createRegistration(Registrant registrant) {
         LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
@@ -40,12 +46,15 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
+    @Cacheable(REGISTRANTS)
     public Registrant getRegistration(String login) {
         LOGGER.info("Profile [login: {}] requested", login);
         return registrantRepository.findOne(login);
     }
 
     @Override
+//    @CachePut(value = REGISTRANTS, key = "#registrant.login")
+    @CacheEvict(value = REGISTRANTS, allEntries = true)
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException {
         LOGGER.info("Registration updating for [login: {}] requested", registrant);
         if (registrant == null) {
@@ -59,6 +68,7 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
+    @CacheEvict(value = REGISTRANTS, allEntries = true)
     public void deleteRegistration(String login) {
         LOGGER.info("Registration [login: {}] deleting requested", login);
         if (login == null || login.isEmpty()) {
@@ -68,26 +78,32 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
+    @Cacheable(REGISTRANTS)
     public List<Registrant> listAllRegistrants() {
         return registrantRepository.findAll();
     }
 
     @Override
+    @Cacheable(REGISTRANTS)
     public boolean loginExists(String login) {
         return registrantRepository.exists(login);
     }
 
     @Override
+    @Cacheable(GROUPS)
     public List<StudentGroup> listStudentGroups() {
+        LOGGER.info("all groups retrieving");
         return studentGroupRepository.findAll();
     }
 
     @Override
+    @Cacheable(GROUPS)
     public boolean isStudentGroupExists(String id) {
         return studentGroupRepository.exists(id);
     }
 
     @Override
+    @CacheEvict(value = GROUPS, allEntries = true)
     public StudentGroup createStudentGroup(StudentGroup studentGroup) {
         return studentGroupRepository.exists(studentGroup.getId()) ?
                 studentGroupRepository.findOne(studentGroup.getId()) :
@@ -95,6 +111,7 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
+    @Cacheable(GROUPS)
     public StudentGroup findStudentGroup(String id) {
         return studentGroupRepository.findOne(id);
     }

@@ -11,6 +11,7 @@ import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
 /**
  * @author Timur Yarosh
  */
+@SuppressWarnings("unchecked")
 public abstract class AbstractPresenter implements Presenter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPresenter.class);
     private PresenterBasedView view;

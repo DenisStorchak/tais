@@ -8,6 +8,7 @@ import org.springframework.jndi.support.SimpleJndiBeanFactory;
 import ua.org.tees.yarosh.tais.core.common.properties.HibernateProperties;
 import ua.org.tees.yarosh.tais.core.common.properties.JdbcProperties;
 import ua.org.tees.yarosh.tais.core.common.properties.MailProperties;
+import ua.org.tees.yarosh.tais.core.common.properties.RedisProperties;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -37,6 +38,11 @@ public class ExternalConfiguration {
     @Bean
     public SimpleJndiBeanFactory simpleJndiBeanFactory() {
         return new SimpleJndiBeanFactory();
+    }
+
+    @Bean
+    public RedisProperties redisProperties() {
+        return new RedisProperties();
     }
 
     @Bean

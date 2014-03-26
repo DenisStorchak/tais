@@ -119,6 +119,19 @@
                 <version>${ehcache.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>org.springframework.data</groupId>
+                <artifactId>spring-data-redis</artifactId>
+                <version>${spring.data.redis.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>redis.clients</groupId>
+                <artifactId>jedis</artifactId>
+                <version>${jedis.version}</version>
+                <type>jar</type>
+                <scope>compile</scope>
+            </dependency>
+
             <!--json serializing-->
             <dependency>
                 <groupId>com.fasterxml.jackson.core</groupId>
@@ -213,6 +226,30 @@
                 <artifactId>spring-test</artifactId>
                 <version>${org.springframework.version}</version>
             </dependency>
+
+            <!-- AOP -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${org.springframework.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjrt</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.aspectj</groupId>
+                <artifactId>aspectjweaver</artifactId>
+                <version>${aspectj.version}</version>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -269,5 +306,9 @@
         <commons.codec.version>1.8</commons.codec.version>
         <commons.lang3.version>3.1</commons.lang3.version>
         <ehcache.version>2.8.0</ehcache.version>
+        <imcache.version>0.5.0</imcache.version>
+        <aspectj.version>1.6.11</aspectj.version>
+        <spring.data.redis.version>1.2.0.RELEASE</spring.data.redis.version>
+        <jedis.version>2.4.2</jedis.version>
     </properties>
 </project>
