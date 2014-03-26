@@ -24,7 +24,7 @@ public class StudentHomeworkResolver implements HomeworkResolver {
     }
 
     @Override
-    public void resolve(QuestionsSuiteResult result) {
+    public void resolve(QuestionsSuiteReport result) {
         questionsSuiteResolver.resolve(result);
     }
 

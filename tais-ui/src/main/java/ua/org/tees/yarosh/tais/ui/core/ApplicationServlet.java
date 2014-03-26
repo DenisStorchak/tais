@@ -6,7 +6,7 @@ import com.vaadin.server.SessionInitListener;
 import com.vaadin.server.VaadinServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SimpleViewFactory;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedViewFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ViewFactory;
 
 import javax.servlet.ServletException;
@@ -30,7 +30,7 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
 
     @Override
     public void sessionInit(SessionInitEvent event) throws ServiceException {
-        ViewFactory viewFactory = SimpleViewFactory.createFactory(getRequiredWebApplicationContext(getServletContext()));
+        ViewFactory viewFactory = SpringManagedViewFactory.createFactory(getRequiredWebApplicationContext(getServletContext()));
         LOGGER.info("ViewFactory created for session {}", event.getSession().getSession().getId());
         event.getSession().setAttribute(VIEW_FACTORY, viewFactory);
     }

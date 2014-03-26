@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 
 import java.util.Map;
 
-public class QuestionsSuiteResult {
+public class QuestionsSuiteReport {
     private QuestionsSuite questionsSuite;
     private Map<Question, Answer> answers;
     private Registrant owner;

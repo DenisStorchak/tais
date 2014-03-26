@@ -12,10 +12,10 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import java.util.List;
 
 @Repository
-public interface ManualTaskResultRepository extends JpaRepository<ManualTaskReport, Long> {
-    @Query("select m from ManualTaskResult m where m.task = :manualTask and m.owner = :registrant")
+public interface ManualTaskReportRepository extends JpaRepository<ManualTaskReport, Long> {
+    @Query("select m from ManualTaskReport m where m.task = :manualTask and m.owner = :registrant")
     ManualTaskReport findOne(@Param("manualTask") ManualTask manualTask, @Param("registrant") Registrant registrant);
 
-    @Query("select m from ManualTaskResult m where m.task.discipline = :discipline")
+    @Query("select m from ManualTaskReport m where m.task.discipline = :discipline")
     List<ManualTaskReport> findByDiscipline(@Param("discipline") Discipline discipline);
 }

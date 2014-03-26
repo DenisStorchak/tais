@@ -1,7 +1,9 @@
 package ua.org.tees.yarosh.tais.homework;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.core.common.CacheNames;
 import ua.org.tees.yarosh.tais.homework.api.QuestionsSuiteResolver;
 import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryRepository;
 import ua.org.tees.yarosh.tais.homework.models.AchievementDiary;
@@ -24,7 +26,8 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
     }
 
     @Override
-    public void resolve(QuestionsSuiteResult result) {
+    @CacheEvict(value = CacheNames.QUESTION_SUITES_RESULTS, key = "result.id")
+    public void resolve(QuestionsSuiteReport result) {
         AchievementDiary diary = diaryRepository.findOne(result.getOwner().getLogin());
         if (diary == null) {
             diary = new AchievementDiary();
@@ -36,7 +39,7 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
         diaryRepository.saveAndFlush(diary);
     }
 
-    private AutoAchievement calculate(QuestionsSuiteResult result) {
+    private AutoAchievement calculate(QuestionsSuiteReport result) {
         int grade = MIN_GRADE;
         int answerWeight = MAX_GRADE / result.getQuestionsSuite().getQuestions().size();
 

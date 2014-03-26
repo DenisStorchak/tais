@@ -3,6 +3,9 @@ package ua.org.tees.yarosh.tais.homework;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
@@ -15,6 +18,7 @@ import ua.org.tees.yarosh.tais.homework.models.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import static ua.org.tees.yarosh.tais.core.common.CacheNames.*;
 import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 
 @Service
@@ -32,18 +36,20 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Autowired
     private QuestionsSuiteRepository questionsSuiteRepository;
     @Autowired
-    private ManualTaskResultRepository manualTaskResultRepository;
+    private ManualTaskReportRepository manualTaskReportRepository;
     @Autowired
     private AchievementDiaryRepository diaryRepository;
 
     @Override
-    public long createGeneralTask(ManualTask task) {
+    @CacheEvict(MANUAL_TASKS)
+    public long createManualTask(ManualTask task) {
         LOGGER.info("Try to create manual task [{}]", task.getDescription());
         switchManualTaskState(task, true);
         return task.getId();
     }
 
     @Override
+    @CacheEvict(QUESTION_SUITES)
     public long createQuestionsSuite(QuestionsSuite questionsSuite) {
         LOGGER.info("Try to create questions suite [{}]", questionsSuite.getTheme());
         switchQuestionsSuiteState(questionsSuite, true);
@@ -51,6 +57,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @CachePut(QUESTION_SUITES)
     public void enableQuestionsSuite(long id) {
         QuestionsSuite questionsSuite = questionsSuiteRepository.findOne(id);
         if (!questionsSuite.getEnabled()) {
@@ -59,6 +66,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @CachePut(QUESTION_SUITES)
     public void disableQuestionsSuite(long id) {
         QuestionsSuite questionsSuite = questionsSuiteRepository.findOne(id);
         if (!questionsSuite.getEnabled()) {
@@ -82,21 +90,24 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @Cacheable(MANUAL_TASKS)
     public List<ManualTask> findManualTasks(StudentGroup studentGroup) {
         return manualTaskRepository.findByStudentGroup(studentGroup);
     }
 
     @Override
+    @Cacheable(QUESTION_SUITES)
     public List<QuestionsSuite> findQuestionsSuites(StudentGroup studentGroup) {
         return questionsSuiteRepository.findOne(studentGroup);
     }
 
     @Override
-    public ManualTaskReport getManualTaskResult(Registrant registrant, ManualTask manualTask) {
-        return manualTaskResultRepository.findOne(manualTask, registrant);
+    @Cacheable(MANUAL_TASK_RESULTS)
+    public ManualTaskReport getManualTaskReport(Registrant registrant, ManualTask manualTask) {
+        return manualTaskReportRepository.findOne(manualTask, registrant);
     }
 
-    @Override
+    @Override // todo evict diary cache
     public void rate(ManualTaskReport manualTaskReport, Registrant examiner, int grade) {
         AchievementDiary diary = diaryRepository.findOne(manualTaskReport.getOwner());
         ManualAchievement manualAchievement = new ManualAchievement();
@@ -108,30 +119,34 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @Cacheable(MANUAL_TASKS)
     public List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBefore) {
         return personalTaskHolderRepository.findOne(registrant).getManualTaskList().stream()
                 .filter(t -> isDeadlineAfter(t, daysBefore))
                 .filter(t -> !isTaskOverdue(t))
-                .filter(t -> manualTaskResultRepository.findOne(t, registrant) == null)
+                .filter(t -> manualTaskReportRepository.findOne(t, registrant) == null)
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable(MANUAL_TASKS)
     public List<ManualTask> findUnresolvedActualManualTasks(Registrant registrant) {
         return personalTaskHolderRepository.findOne(registrant).getManualTaskList().stream()
                 .filter(t -> !isTaskOverdue(t))
-                .filter(t -> manualTaskResultRepository.findOne(t, registrant) == null)
+                .filter(t -> manualTaskReportRepository.findOne(t, registrant) == null)
                 .collect(Collectors.toList());
     }
 
     @Override
-    public List<ManualTaskReport> findUnratedManualTaskResults(Discipline discipline) {
-        return manualTaskResultRepository.findByDiscipline(discipline).stream()
+    @Cacheable(MANUAL_TASK_RESULTS)
+    public List<ManualTaskReport> findUnratedManualTaskReports(Discipline discipline) {
+        return manualTaskReportRepository.findByDiscipline(discipline).stream()
                 .filter(r -> !isRated(r.getTask(), diaryRepository.findOne(r.getOwner()).getManualAchievements()))
                 .collect(Collectors.toList());
     }
 
     @Override
+    @Cacheable(QUESTION_SUITES)
     public List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline) {
         return personalTaskHolderRepository.findOne(registrant).getQuestionsSuiteList().stream()
                 .filter(q -> isDeadlineAfter(q, daysBeforeDeadline))
@@ -141,6 +156,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @Cacheable(QUESTION_SUITES)
     public List<QuestionsSuite> findUnresolvedActualQuestionsSuite(Registrant registrant) {
         return personalTaskHolderRepository.findOne(registrant).getQuestionsSuiteList().stream()
                 .filter(q -> !isTaskOverdue(q))
@@ -149,6 +165,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @CacheEvict(value = MANUAL_TASKS, key = "#id")
     public void enableGroupTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (manualTask.isEnabled()) {
@@ -157,6 +174,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    @CacheEvict(value = MANUAL_TASKS, key = "#id")
     public void disableGroupTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (!manualTask.isEnabled()) {

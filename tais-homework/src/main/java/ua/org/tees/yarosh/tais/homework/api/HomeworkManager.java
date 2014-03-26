@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import java.util.List;
 
 public interface HomeworkManager {
-    long createGeneralTask(ManualTask task);
+    long createManualTask(ManualTask task);
 
     void enableGroupTask(long id);
 
@@ -26,7 +26,7 @@ public interface HomeworkManager {
 
     List<QuestionsSuite> findQuestionsSuites(StudentGroup studentGroup);
 
-    ManualTaskReport getManualTaskResult(Registrant registrant, ManualTask manualTask);
+    ManualTaskReport getManualTaskReport(Registrant registrant, ManualTask manualTask);
 
     void rate(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
 
@@ -34,7 +34,7 @@ public interface HomeworkManager {
 
     List<ManualTask> findUnresolvedActualManualTasks(Registrant registrant);
 
-    List<ManualTaskReport> findUnratedManualTaskResults(Discipline discipline);
+    List<ManualTaskReport> findUnratedManualTaskReports(Discipline discipline);
 
     List<QuestionsSuite> findUnresolvedQuestionsSuiteBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 
