@@ -15,7 +15,7 @@ public class PageNotFoundView extends VerticalLayout implements View {
         addStyleName("login-bg");
 
         Label pageNotFoundLabel =
-                new Label("<center><h1>Страница не найдена, возможно вы опечатались в наборе URL?</h1></center>",
+                new Label("<center><h1>Страница не найдена, возможно вы опечатались при наборе URL?</h1></center>",
                         ContentMode.HTML);
         addComponent(pageNotFoundLabel);
         setComponentAlignment(pageNotFoundLabel, Alignment.MIDDLE_CENTER);
