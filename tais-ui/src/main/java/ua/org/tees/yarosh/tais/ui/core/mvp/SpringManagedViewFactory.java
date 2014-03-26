@@ -13,6 +13,7 @@ import java.util.Map;
  *         Date: 25.03.14
  *         Time: 21:49
  */
+@SuppressWarnings("unchecked")
 public class SpringManagedViewFactory implements ViewFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringManagedViewFactory.class);

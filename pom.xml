@@ -84,6 +84,16 @@
                 <artifactId>spring-tx</artifactId>
                 <version>${org.springframework.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-web</artifactId>
+                <version>${org.springframework.security.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework.security</groupId>
+                <artifactId>spring-security-config</artifactId>
+                <version>${org.springframework.security.version}</version>
+            </dependency>
 
             <!--stuff-->
             <dependency>
@@ -310,5 +320,6 @@
         <aspectj.version>1.6.11</aspectj.version>
         <spring.data.redis.version>1.2.0.RELEASE</spring.data.redis.version>
         <jedis.version>2.4.2</jedis.version>
+        <org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
     </properties>
 </project>
