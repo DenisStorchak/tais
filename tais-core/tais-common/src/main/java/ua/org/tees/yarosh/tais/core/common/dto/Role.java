@@ -6,5 +6,20 @@ package ua.org.tees.yarosh.tais.core.common.dto;
  *         Time: 22:25
  */
 public enum Role {
-    STUDENT, TEACHER, GOD
+    STUDENT {
+        @Override
+        public String toString() {
+            return "Студент";
+        }
+    }, TEACHER {
+        @Override
+        public String toString() {
+            return "Преподаватель";
+        }
+    }, ADMIN {
+        @Override
+        public String toString() {
+            return "Администратор";
+        }
+    }
 }

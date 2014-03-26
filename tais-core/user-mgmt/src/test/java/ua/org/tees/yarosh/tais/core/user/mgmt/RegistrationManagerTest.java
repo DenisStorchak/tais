@@ -34,7 +34,7 @@ public class RegistrationManagerTest {
 //        registrant.setPatronymic(PATRONYMIC);
 //        registrant.setPassword(PASSWORD);
 //        registrant.setLogin(LOGIN);
-//        registrant.setRole(Role.GOD);
+//        registrant.setRole(Role.ADMIN);
 //        StudentGroup group = new StudentGroup();
 //        group.setStudents(Arrays.asList(registrant));
 //        group.setId("012");

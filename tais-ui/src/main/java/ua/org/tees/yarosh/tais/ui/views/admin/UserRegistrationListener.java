@@ -78,7 +78,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
 
     @Override
     public List<String> listRoles() {
-        return Arrays.asList(Role.GOD.toString(), Role.TEACHER.toString(), Role.STUDENT.toString());
+        return Arrays.asList(Role.ADMIN.toString(), Role.TEACHER.toString(), Role.STUDENT.toString());
     }
 
     @Override
