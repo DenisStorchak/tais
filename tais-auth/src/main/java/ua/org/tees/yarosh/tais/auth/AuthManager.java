@@ -7,26 +7,32 @@ import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 
 import java.util.Arrays;
 import java.util.Map;
+import java.util.Optional;
+import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
 public class AuthManager {
 
     private static final Map<String, UserDetails> AUTHORIZATIONS = new ConcurrentHashMap<>();
+    private static final Vector<UserRepositoryAdapter> DAO_ADAPTERS = new Vector<>();
     private static Logger LOGGER = LoggerFactory.getLogger(AuthManager.class);
+    private static volatile boolean acceptEmptyStrings = false;
 
-    private static AuthDao dao;
-
-    public static void setDao(AuthDao authDao) {
-        dao = authDao;
+    public static void addDao(UserRepositoryAdapter userRepositoryAdapter) {
+        DAO_ADAPTERS.add(userRepositoryAdapter);
     }
 
     public static boolean login(String username, String password) {
-        UserDetails userDetails = dao.getUserDetails(username);
-        if (userDetails != null && userDetails.getPassword().equals(password)) {
-            AUTHORIZATIONS.put(username, userDetails);
-            LOGGER.info("Registrant [{}] logged in", username);
-            return true;
+        Optional<UserRepositoryAdapter> dao = DAO_ADAPTERS.stream().filter(d -> d.contains(username)).findFirst();
+        if (dao.isPresent()) {
+            UserDetails userDetails = dao.get().getUserDetails(username);
+            if (userDetails != null && userDetails.getPassword().equals(password)) {
+                AUTHORIZATIONS.put(username, userDetails);
+                LOGGER.info("Registrant [{}] logged in", username);
+                return true;
+            }
         }
+        LOGGER.info("Username [{}] not presented inside of any registered dao adapter", username);
         return false;
     }
 
@@ -51,5 +57,13 @@ public class AuthManager {
             return true;
         }
         return false;
+    }
+
+    public static boolean acceptsEmptyStrings() {
+        return acceptEmptyStrings;
+    }
+
+    public static void setAcceptsEmptyStrings(boolean enable) {
+        acceptEmptyStrings = enable;
     }
 }

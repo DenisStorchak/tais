@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.core.common.dto.Role;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
@@ -20,6 +19,8 @@ import java.util.Arrays;
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.*;
+import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
 
@@ -64,7 +65,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         registrant.setName(name.getValue());
         registrant.setSurname(surname.getValue());
         registrant.setPatronymic(patronymic.getValue());
-        registrant.setRole((String) position.getValue());
+        registrant.setRole(translate((String) position.getValue()));
         StudentGroup group = registrantService.findStudentGroup(studentGroup.getValue().toString());
         registrant.setGroup(group);
         return registrantService.createRegistration(registrant) != null;
@@ -78,7 +79,10 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
 
     @Override
     public List<String> listRoles() {
-        return Arrays.asList(Role.ADMIN, Role.TEACHER, Role.STUDENT);
+        return Arrays.asList(
+                translate(ADMIN),
+                translate(TEACHER),
+                translate(STUDENT));
     }
 
     @Override

@@ -5,10 +5,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.UrlResource;
 import org.springframework.jndi.support.SimpleJndiBeanFactory;
-import ua.org.tees.yarosh.tais.core.common.properties.HibernateProperties;
-import ua.org.tees.yarosh.tais.core.common.properties.JdbcProperties;
-import ua.org.tees.yarosh.tais.core.common.properties.MailProperties;
-import ua.org.tees.yarosh.tais.core.common.properties.RedisProperties;
+import ua.org.tees.yarosh.tais.core.common.properties.*;
 
 import java.net.MalformedURLException;
 import java.net.URI;
@@ -43,6 +40,11 @@ public class ExternalConfiguration {
     @Bean
     public RedisProperties redisProperties() {
         return new RedisProperties();
+    }
+
+    @Bean
+    public DefaultUserProperties defaultUserProperties() {
+        return new DefaultUserProperties();
     }
 
     @Bean

@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.auth;
 
-public interface AuthDao {
+public interface UserRepositoryAdapter {
     /**
      * Retrieve user details from somewhere
      *
@@ -8,4 +8,6 @@ public interface AuthDao {
      * @return UserDetails instance if success or null if failure
      */
     UserDetails getUserDetails(String login);
+
+    boolean contains(String login);
 }

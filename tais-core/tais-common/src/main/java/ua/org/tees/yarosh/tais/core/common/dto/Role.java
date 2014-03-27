@@ -5,8 +5,8 @@ package ua.org.tees.yarosh.tais.core.common.dto;
  *         Date: 09.03.14
  *         Time: 22:25
  */
-public interface Role {
-    String STUDENT = "Студент";
-    String TEACHER = "Преподаватель";
-    String ADMIN = "Администратор";
+public abstract class Role {
+    public static final String STUDENT = "Student";
+    public static final String TEACHER = "Teacher";
+    public static final String ADMIN = "Administrator";
 }
