@@ -287,7 +287,7 @@
                     <configuration>
                         <source>${jdk.version}</source>
                         <target>${jdk.version}</target>
-                        <encoding>${src.encoding}</encoding>
+                        <encoding>${project.build.sourceEncoding}</encoding>
                     </configuration>
                 </plugin>
             </plugins>
@@ -308,7 +308,6 @@
         <h2.version>1.${commons.lang3.version}60</h2.version>
         <postgresql.version>9.3-1100-jdbc41</postgresql.version>
         <jdk.version>1.8</jdk.version>
-        <src.encoding>UTF-8</src.encoding>
         <org.springframework.spring.data.jpa.version>1.4.4.RELEASE</org.springframework.spring.data.jpa.version>
         <javax.el.api.version>2.2.4</javax.el.api.version>
         <cofoja.version>1.1-r150</cofoja.version>
@@ -327,5 +326,6 @@
         <spring.data.redis.version>1.2.0.RELEASE</spring.data.redis.version>
         <jedis.version>2.4.2</jedis.version>
         <org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
 </project>
