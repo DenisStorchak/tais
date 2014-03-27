@@ -15,7 +15,7 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
-import static ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys.VIEW_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.VIEW_FACTORY;
 
 @WebServlet(urlPatterns = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)

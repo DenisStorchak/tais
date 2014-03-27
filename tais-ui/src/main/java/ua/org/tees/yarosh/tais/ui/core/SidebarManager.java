@@ -10,7 +10,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
-import static ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 
 /**
  * @author Timur Yarosh

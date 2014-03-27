@@ -4,10 +4,10 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.ui.core.constants.UriFragments;
+import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 
 import static java.lang.String.format;
-import static ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 
 
 /**

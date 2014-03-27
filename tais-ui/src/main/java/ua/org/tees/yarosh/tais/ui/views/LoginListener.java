@@ -9,7 +9,7 @@ import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
-import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 
 @Service

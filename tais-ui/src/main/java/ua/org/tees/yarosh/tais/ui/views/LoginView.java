@@ -11,14 +11,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
-import ua.org.tees.yarosh.tais.ui.core.constants.UriFragments;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
+import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
-import static ua.org.tees.yarosh.tais.ui.core.constants.Messages.*;
-import static ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.text.Messages.*;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 
 /**

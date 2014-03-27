@@ -16,7 +16,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 import java.util.*;
 
 import static java.util.stream.Collectors.toList;
-import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
 
 @Service
 @Scope("prototype")

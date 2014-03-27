@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.constants;
+package ua.org.tees.yarosh.tais.ui.core.text;
 
 /**
  * @author Timur Yarosh

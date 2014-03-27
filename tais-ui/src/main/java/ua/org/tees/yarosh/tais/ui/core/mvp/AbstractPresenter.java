@@ -6,7 +6,7 @@ import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
-import ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys;
+import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 
 /**
  * @author Timur Yarosh
