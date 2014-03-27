@@ -15,6 +15,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import java.util.List;
 
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.CREATE_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleTaisView.CreateSchedulePresenter;
 
@@ -22,7 +23,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleTaisView.Crea
 @Service
 @Qualifier(CREATE_SCHEDULE)
 @Scope("prototype")
-@PermitRoles("GOD")
+@PermitRoles(ADMIN)
 public class CreateScheduleView extends PresenterBasedVerticalLayoutView<CreateSchedulePresenter>
         implements CreateScheduleTaisView {
 

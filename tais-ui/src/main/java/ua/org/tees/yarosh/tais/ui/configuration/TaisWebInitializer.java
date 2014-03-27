@@ -41,7 +41,7 @@ public class TaisWebInitializer implements WebApplicationInitializer {
             UserDetails userDetails = new UserDetails();
             userDetails.setUsername("admin");
             userDetails.setPassword("admin");
-            userDetails.setRole(Role.GOD.toString());
+            userDetails.setRole(Role.ADMIN);
             return userDetails;
         });
     }

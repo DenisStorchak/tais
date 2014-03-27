@@ -27,13 +27,14 @@ public class SidebarFactory {
         this.ui = ui;
     }
 
-    public Sidebar createSidebar(Role role) {
-        if (role == Role.GOD) {
-            return createAdminSidebar();
-        } else if (role == Role.TEACHER) {
-            return createTeacherSidebar();
+    public Sidebar createSidebar(String role) {
+        switch (role) {
+            case Role.ADMIN:
+                return createAdminSidebar();
+            case Role.TEACHER:
+                return createTeacherSidebar();
         }
-        throw new IllegalArgumentException(String.format("Sidebar for role [%s] not found", role.toString()));
+        throw new IllegalArgumentException(String.format("Sidebar for role [%s] not found", role));
     }
 
     private Sidebar createTeacherSidebar() {

@@ -64,7 +64,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         registrant.setName(name.getValue());
         registrant.setSurname(surname.getValue());
         registrant.setPatronymic(patronymic.getValue());
-        registrant.setRole(Role.valueOf(((String) position.getValue()).toUpperCase()));
+        registrant.setRole((String) position.getValue());
         StudentGroup group = registrantService.findStudentGroup(studentGroup.getValue().toString());
         registrant.setGroup(group);
         return registrantService.createRegistration(registrant) != null;
@@ -78,7 +78,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
 
     @Override
     public List<String> listRoles() {
-        return Arrays.asList(Role.ADMIN.toString(), Role.TEACHER.toString(), Role.STUDENT.toString());
+        return Arrays.asList(Role.ADMIN, Role.TEACHER, Role.STUDENT);
     }
 
     @Override

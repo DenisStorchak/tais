@@ -25,7 +25,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
-import static ua.org.tees.yarosh.tais.core.common.dto.Role.GOD;
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.ACCESS_DENIED;
@@ -78,7 +78,7 @@ public class TAISUI extends UI {
     private SidebarManager configureSidebarManager(SidebarManager sidebarManager) {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
         sidebarManager.registerSidebar(Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
-        sidebarManager.registerSidebar(Admin.PREFIX, sidebarFactory.createSidebar(GOD));
+        sidebarManager.registerSidebar(Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
         return sidebarManager;
     }
 }

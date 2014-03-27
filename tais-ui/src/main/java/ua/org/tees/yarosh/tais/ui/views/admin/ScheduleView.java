@@ -24,6 +24,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.CREATE_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePresenter;
@@ -32,7 +33,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePr
 @Service
 @Qualifier(MANAGED_SCHEDULE)
 @Scope("prototype")
-@PermitRoles("GOD")
+@PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
 public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePresenter> implements ScheduleTaisView {
 

@@ -4,9 +4,11 @@ import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
-import ua.org.tees.yarosh.tais.core.common.dto.Role;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
@@ -36,9 +38,8 @@ public class Registrant implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @Cascade(CascadeType.ALL)
     private StudentGroup group;
-    @Enumerated
     @NotNull
-    private Role role;
+    private String role;
 
     @Override
     public String toString() {
@@ -93,11 +94,11 @@ public class Registrant implements Serializable {
         this.group = group;
     }
 
-    public Role getRole() {
+    public String getRole() {
         return role;
     }
 
-    public void setRole(Role role) {
+    public void setRole(String role) {
         this.role = role;
     }
 }

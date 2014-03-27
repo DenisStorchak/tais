@@ -18,6 +18,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
 
@@ -29,7 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.Us
 @ProducedBy(UserRegistrationListener.class)
 @Service
 @Qualifier(USER_REGISTRATION)
-@PermitRoles("GOD")
+@PermitRoles(ADMIN)
 @Scope("prototype")
 public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationPresenter>
         implements UserRegistrationTaisView {

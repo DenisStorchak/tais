@@ -8,7 +8,9 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 
-@PermitRoles({"GOD", "TEACHER", "STUDENT"})
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.*;
+
+@PermitRoles({ADMIN, TEACHER, STUDENT})
 public class PageNotFoundView extends VerticalLayout implements View {
     public PageNotFoundView() {
         setSizeFull();

@@ -17,6 +17,7 @@ import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 
@@ -29,7 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_
 @Service
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")
-@PermitRoles("TEACHER")
+@PermitRoles(TEACHER)
 public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<TeacherDashboardListener> {
 
     private Table unratedReports;

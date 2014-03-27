@@ -11,6 +11,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
  *         Date: 22.03.14
  *         Time: 12:02
  */
+@SuppressWarnings("unchecked")
 public class UnratedReportsDataSource extends IndexedContainer {
 
     private static final String DISCIPLINE_KEY = "Дисциплина";
