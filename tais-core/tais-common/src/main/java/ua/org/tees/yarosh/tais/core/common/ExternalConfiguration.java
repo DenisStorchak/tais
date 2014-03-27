@@ -43,6 +43,11 @@ public class ExternalConfiguration {
     }
 
     @Bean
+    public CacheProperties cacheProperties() {
+        return new CacheProperties();
+    }
+
+    @Bean
     public DefaultUserProperties defaultUserProperties() {
         return new DefaultUserProperties();
     }

@@ -11,7 +11,7 @@ public class RedisProperties {
     private Boolean usePool;
     @Value("${redis.password}")
     private String password;
-    @Value("${redis.enabled}")
+    @Value("${redis.enable}")
     private Boolean enabled;
 
     public String getHost() {
@@ -46,7 +46,7 @@ public class RedisProperties {
         this.password = password;
     }
 
-    public Boolean getEnabled() {
+    public Boolean isEnabled() {
         return enabled;
     }
 
