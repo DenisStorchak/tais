@@ -33,7 +33,7 @@ public class AuthManager {
     public static boolean isAuthorized(String username, Class<?> clazz) {
         if (clazz.getAnnotation(PermitAll.class) != null) {
             return true;
-        } else {
+        } else if (AUTHORIZATIONS.containsKey(username)) {
             PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
             UserDetails auth = AUTHORIZATIONS.get(username);
             if (auth != null && permitRoles != null) {

@@ -23,7 +23,7 @@ public abstract class AbstractPresenter implements Presenter {
     }
 
     public AbstractPresenter(PresenterBasedView view, HelpManager helpManager) {
-        LOGGER.info("AbstractPresenter instance created, view will be initialized now");
+        LOGGER.debug("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         this.helpManager = helpManager;
         getView().setPrimaryPresenter(this);
