@@ -44,6 +44,11 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
         </dependency>
+        <dependency>
+            <groupId>ua.org.tees.yarosh</groupId>
+            <artifactId>tais-auth</artifactId>
+            <version>${project.version}</version>
+        </dependency>
     </dependencies>
 
     <build>

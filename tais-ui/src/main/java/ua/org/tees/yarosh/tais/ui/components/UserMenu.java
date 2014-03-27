@@ -3,9 +3,11 @@ package ua.org.tees.yarosh.tais.ui.components;
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
-import ua.org.tees.yarosh.tais.ui.core.UriFragments;
+import ua.org.tees.yarosh.tais.auth.AuthManager;
+import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 
-import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
+import static java.lang.String.format;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 
 
 /**
@@ -14,7 +16,14 @@ import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
  *         Time: 11:13
  */
 public class UserMenu extends VerticalLayout {
+
+    private Label username;
+
     public UserMenu(String name, String surname) {
+        this(format("%s %s", name, surname));
+    }
+
+    public UserMenu(String registrantId) {
         setSizeUndefined();
         addStyleName("user");
 
@@ -22,7 +31,7 @@ public class UserMenu extends VerticalLayout {
         profilePicture.setWidth("34px");
         addComponent(profilePicture);
 
-        Label username = new Label(name + " " + surname);
+        username = new Label(registrantId);
         username.setSizeUndefined();
         addComponent(username);
 
@@ -38,9 +47,14 @@ public class UserMenu extends VerticalLayout {
         signOut.addStyleName("icon-logout");
         signOut.setDescription("Выход");
         signOut.addClickListener(event -> {
+            AuthManager.logout(username.getValue());
             VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, null);
             getUI().getNavigator().navigateTo(UriFragments.AUTH);
         });
         addComponent(signOut);
+    }
+
+    public void setUsername(String username) {
+        this.username.setValue(username);
     }
 }

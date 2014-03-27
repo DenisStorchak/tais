@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
@@ -23,14 +24,15 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.CREATE_SCHEDULE;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.CREATE_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePresenter;
 
 @ProducedBy(ScheduleListener.class)
 @Service
 @Qualifier(MANAGED_SCHEDULE)
 @Scope("prototype")
+@PermitRoles("GOD")
 @SuppressWarnings("unchecked")
 public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePresenter> implements ScheduleTaisView {
 

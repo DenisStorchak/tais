@@ -10,14 +10,15 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.ui.core.UriFragments;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
+import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
-import static ua.org.tees.yarosh.tais.ui.core.Messages.*;
-import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.text.Messages.*;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 
 /**
@@ -29,6 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 @Service
 @Qualifier(AUTH)
 @Scope("prototype")
+@PermitAll
 public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> implements LoginTaisView {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
@@ -109,30 +111,24 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
             };
 
             Label error = new Label(
-                    "Неправильное имя пользователя или пароль. <span>Hint: try \"teacher\" values</span>", // todo delete hint!!!
+                    "<center>Неправильное имя пользователя или пароль.<br />" +
+                            "За регистрацией обращайтесь на кафедру ТЭЭС</center>",
                     ContentMode.HTML);
 
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
-                        && username.getValue().equals("")
                         && password.getValue() != null
-                        && password.getValue().equals("")) {
-//                    signIn.removeShortcutListener(enterListener);
+                        && primaryPresenter().login(username.getValue(), password.getValue())) {
                     removeComponent(error);
-                    LOGGER.info("Authorization success, navigating to teacher dashboard");
-
-                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, "");
+                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
                     getUI().getNavigator().navigateTo(UriFragments.Admin.USER_REGISTRATION);
                 } else {
                     if (getComponentCount() > 2) {
-                        // Remove the previous error message
                         removeComponent(getComponent(2));
                     }
-                    // Add new error message
                     error.addStyleName("error");
                     error.setSizeUndefined();
                     error.addStyleName("light");
-                    // Add animation
                     error.addStyleName("v-animate-reveal");
                     addComponent(error);
                     username.focus();

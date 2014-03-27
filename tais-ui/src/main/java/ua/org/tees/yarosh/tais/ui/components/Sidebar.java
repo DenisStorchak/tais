@@ -40,6 +40,10 @@ public class Sidebar extends VerticalLayout {
         return sidebarMenu;
     }
 
+    public UserMenu getUserMenu() {
+        return userMenu;
+    }
+
     public void setUserMenu(UserMenu userMenu) {
         if (this.userMenu != null && userMenu != null) {
             replaceComponent(this.userMenu, userMenu);

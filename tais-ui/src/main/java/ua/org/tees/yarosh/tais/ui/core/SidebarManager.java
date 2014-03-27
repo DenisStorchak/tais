@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.server.VaadinSession;
 import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
@@ -8,6 +9,8 @@ import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 
 /**
  * @author Timur Yarosh
@@ -70,7 +73,9 @@ public class SidebarManager implements ViewChangeListener {
         Optional<String> first = sidebarPool.keySet().stream().filter(viewPattern::startsWith).findFirst();
         if (first.isPresent() && ViewResolver.viewRegistered(viewPattern)) {
             String properlyKey = first.get();
-            return sidebarPool.get(properlyKey);
+            Sidebar relativeSidebar = sidebarPool.get(properlyKey);
+            relativeSidebar.getUserMenu().setUsername((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID));
+            return relativeSidebar;
         }
         return null;
     }

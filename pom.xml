@@ -14,6 +14,7 @@
         <module>tais-attendance</module>
         <module>tais-user-comm</module>
         <module>tais-ui</module>
+        <module>tais-auth</module>
     </modules>
 
     <dependencies>
@@ -186,6 +187,11 @@
                 <groupId>org.postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-jdbc</artifactId>
+                <version>${org.springframework.version}</version>
             </dependency>
 
             <!--time-->

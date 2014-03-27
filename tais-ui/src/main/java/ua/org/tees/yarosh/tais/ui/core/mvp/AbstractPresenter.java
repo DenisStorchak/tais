@@ -6,7 +6,7 @@ import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
-import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
+import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 
 /**
  * @author Timur Yarosh
@@ -23,7 +23,7 @@ public abstract class AbstractPresenter implements Presenter {
     }
 
     public AbstractPresenter(PresenterBasedView view, HelpManager helpManager) {
-        LOGGER.info("AbstractPresenter instance created, view will be initialized now");
+        LOGGER.debug("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         this.helpManager = helpManager;
         getView().setPrimaryPresenter(this);

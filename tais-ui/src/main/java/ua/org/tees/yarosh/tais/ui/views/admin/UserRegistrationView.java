@@ -7,6 +7,7 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
@@ -17,7 +18,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_REGISTRATION;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
@@ -28,6 +29,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.Us
 @ProducedBy(UserRegistrationListener.class)
 @Service
 @Qualifier(USER_REGISTRATION)
+@PermitRoles("GOD")
 @Scope("prototype")
 public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationPresenter>
         implements UserRegistrationTaisView {

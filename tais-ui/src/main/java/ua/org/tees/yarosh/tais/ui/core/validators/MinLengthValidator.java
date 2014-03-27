@@ -2,8 +2,8 @@ package ua.org.tees.yarosh.tais.ui.core.validators;
 
 import com.vaadin.data.validator.AbstractStringValidator;
 
-import static ua.org.tees.yarosh.tais.ui.core.ErrorMessages.VALUE_TOO_SHORT;
-import static ua.org.tees.yarosh.tais.ui.core.ErrorMessages.getFormattedMessage;
+import static ua.org.tees.yarosh.tais.ui.core.text.ErrorMessages.VALUE_TOO_SHORT;
+import static ua.org.tees.yarosh.tais.ui.core.text.ErrorMessages.getFormattedMessage;
 
 /**
  * @author Timur Yarosh

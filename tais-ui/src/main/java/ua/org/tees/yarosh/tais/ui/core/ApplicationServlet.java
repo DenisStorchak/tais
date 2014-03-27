@@ -15,11 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
-import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.VIEW_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.VIEW_FACTORY;
 
-//@WebServlet(urlPatterns = "/*", initParams = {
-//        @WebInitParam(name = "UI", value = "ua.org.tees.yarosh.tais.ui.TAISUI")
-//})
 @WebServlet(urlPatterns = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)
 public class ApplicationServlet extends VaadinServlet implements SessionInitListener {
@@ -34,7 +31,7 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
     @Override
     public void sessionInit(SessionInitEvent event) throws ServiceException {
         ViewFactory viewFactory = SpringManagedViewFactory.createFactory(getRequiredWebApplicationContext(getServletContext()));
-        LOGGER.info("ViewFactory created for session {}", event.getSession().getSession().getId());
+        LOGGER.debug("ViewFactory created for session {}", event.getSession().getSession().getId());
         event.getSession().setAttribute(VIEW_FACTORY, viewFactory);
     }
 }

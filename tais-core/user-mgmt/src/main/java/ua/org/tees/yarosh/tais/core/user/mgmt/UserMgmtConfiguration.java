@@ -11,7 +11,7 @@ import ua.org.tees.yarosh.tais.core.common.CommonConfiguration;
  *         Time: 15:25
  */
 @Configuration
-@Import(CommonConfiguration.class)
+@Import({CommonConfiguration.class, TaisAuthConfiguration.class})
 @ComponentScan(basePackageClasses = {RegistrationManager.class})
 public class UserMgmtConfiguration {
 }

@@ -13,10 +13,11 @@ import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;
 
 @Service
 @Scope("prototype")
+@SuppressWarnings("unchecked")
 public class UserManagementListener extends AbstractPresenter implements UserManagementTaisView.UserManagementPresenter {
 
     private static final String KEY_LOGIN = "Логин";

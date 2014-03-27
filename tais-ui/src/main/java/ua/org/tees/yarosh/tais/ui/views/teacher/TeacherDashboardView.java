@@ -8,6 +8,7 @@ import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
@@ -16,7 +17,7 @@ import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 
 /**
@@ -28,6 +29,7 @@ import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHB
 @Service
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")
+@PermitRoles("TEACHER")
 public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<TeacherDashboardListener> {
 
     private Table unratedReports;
