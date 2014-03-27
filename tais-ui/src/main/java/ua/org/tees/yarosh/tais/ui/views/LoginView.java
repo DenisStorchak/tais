@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.ui.core.UriFragments;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
@@ -29,6 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 @Service
 @Qualifier(AUTH)
 @Scope("prototype")
+@PermitAll
 public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> implements LoginTaisView {
 
     public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
@@ -114,14 +116,17 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
 
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
-                        && username.getValue().equals("")
                         && password.getValue() != null
-                        && password.getValue().equals("")) {
+                        && primaryPresenter().login(username.getValue(), password.getValue())) {
+//                    ------
+
+
+                    // ------
 //                    signIn.removeShortcutListener(enterListener);
                     removeComponent(error);
                     LOGGER.info("Authorization success, navigating to teacher dashboard");
 
-                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, "");
+                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
                     getUI().getNavigator().navigateTo(UriFragments.Admin.USER_REGISTRATION);
                 } else {
                     if (getComponentCount() > 2) {

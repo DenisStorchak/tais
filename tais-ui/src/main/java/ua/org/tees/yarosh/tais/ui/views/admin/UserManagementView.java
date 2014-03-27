@@ -7,6 +7,7 @@ import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
@@ -22,6 +23,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.UserManagementTaisView.User
 @Service
 @Qualifier(USER_MANAGEMENT)
 @Scope("prototype")
+@PermitRoles("GOD")
 public class UserManagementView extends PresenterBasedVerticalLayoutView<UserManagementPresenter>
         implements UserManagementTaisView {
 

@@ -7,6 +7,7 @@ import com.vaadin.ui.HorizontalLayout;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
@@ -21,6 +22,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleTaisView.Crea
 @Service
 @Qualifier(CREATE_SCHEDULE)
 @Scope("prototype")
+@PermitRoles("GOD")
 public class CreateScheduleView extends PresenterBasedVerticalLayoutView<CreateSchedulePresenter>
         implements CreateScheduleTaisView {
 

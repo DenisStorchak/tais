@@ -8,6 +8,7 @@ package ua.org.tees.yarosh.tais.ui.core;
 public abstract class UriFragments {
 
     public static final String AUTH = "auth";
+    public static final String ACCESS_DENIED = "403";
 
     public abstract class Admin {
         public static final String PREFIX = "admin/";

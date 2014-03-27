@@ -5,6 +5,7 @@ import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.UI;
@@ -14,10 +15,12 @@ import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.UserMenu;
+import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.core.SidebarManager;
 import ua.org.tees.yarosh.tais.ui.core.UriFragments;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
+import ua.org.tees.yarosh.tais.ui.views.AccessDeniedView;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
 import ua.org.tees.yarosh.tais.ui.views.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleView;
@@ -26,6 +29,8 @@ import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
+import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.UriFragments.ACCESS_DENIED;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.*;
 import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
@@ -60,12 +65,15 @@ public class TAISUI extends UI {
 
             @Override
             public void addProvider(com.vaadin.navigator.ViewProvider provider) {
-                ClassBasedViewProvider classBasedViewProvider = (ClassBasedViewProvider) provider;
-                viewResolver.register(classBasedViewProvider.getViewClass(), classBasedViewProvider.getViewName());
+                if (provider instanceof ClassBasedViewProvider) {
+                    ClassBasedViewProvider classBasedViewProvider = (ClassBasedViewProvider) provider;
+                    viewResolver.register(classBasedViewProvider.getViewClass(), classBasedViewProvider.getViewName());
+                }
                 super.addProvider(provider);
             }
         };
 
+        nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
@@ -73,6 +81,8 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
         nav.addProvider(new FactoryBasedViewProvider(CREATE_SCHEDULE, CreateScheduleView.class));
         nav.setErrorView(new PageNotFoundView());
+
+        nav.addViewChangeListener(new AuthListener());
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         sidebarManager.registerSidebar(UriFragments.Teacher.PREFIX, createTeacherSidebar());
@@ -85,9 +95,9 @@ public class TAISUI extends UI {
         root.setSizeFull();
         root.addComponent(commonComponent);
 
-//        if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
-//            nav.navigateTo(AUTH);
-//        }
+        if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
+            nav.navigateTo(AUTH);
+        }
     }
 
     private Sidebar createTeacherSidebar() {
@@ -98,7 +108,7 @@ public class TAISUI extends UI {
     }
 
     private UserMenu createUserMenu() {
-        return new UserMenu("Тимур", "Ярош");
+        return new UserMenu((String) VaadinSession.getCurrent().getAttribute(SessionKeys.REGISTRANT_ID));
     }
 
     private SidebarMenu createTeacherMenu() {
