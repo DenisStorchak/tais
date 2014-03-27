@@ -47,8 +47,8 @@ public class UserMenu extends VerticalLayout {
         signOut.addStyleName("icon-logout");
         signOut.setDescription("Выход");
         signOut.addClickListener(event -> {
+            AuthManager.logout(username.getValue());
             VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, null);
-            AuthManager.logout(REGISTRANT_ID);
             getUI().getNavigator().navigateTo(UriFragments.AUTH);
         });
         addComponent(signOut);

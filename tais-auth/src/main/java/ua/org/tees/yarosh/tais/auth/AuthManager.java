@@ -52,6 +52,4 @@ public class AuthManager {
         }
         return false;
     }
-
-
 }

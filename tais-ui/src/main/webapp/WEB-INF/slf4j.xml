@@ -1,2 +1,0 @@
-<!--  No Tomcat debug logs -->
-<logger name="org.apache.catalina.core" level="INFO"/>
