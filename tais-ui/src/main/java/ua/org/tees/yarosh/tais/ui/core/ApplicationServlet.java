@@ -15,11 +15,8 @@ import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
-import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.VIEW_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys.VIEW_FACTORY;
 
-//@WebServlet(urlPatterns = "/*", initParams = {
-//        @WebInitParam(name = "UI", value = "ua.org.tees.yarosh.tais.ui.TAISUI")
-//})
 @WebServlet(urlPatterns = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)
 public class ApplicationServlet extends VaadinServlet implements SessionInitListener {

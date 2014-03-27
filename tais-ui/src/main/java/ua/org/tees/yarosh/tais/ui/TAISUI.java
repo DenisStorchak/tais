@@ -13,8 +13,8 @@ import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
 import ua.org.tees.yarosh.tais.ui.core.SidebarManager;
 import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
-import ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin;
-import ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher;
+import ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin;
+import ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Teacher;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.AccessDeniedView;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
@@ -27,11 +27,11 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.GOD;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.ACCESS_DENIED;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.*;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.ACCESS_DENIED;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 /**
  * @author Timur Yarosh

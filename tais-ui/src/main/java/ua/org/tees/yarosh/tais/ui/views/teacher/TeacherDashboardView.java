@@ -17,7 +17,7 @@ import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 
 /**

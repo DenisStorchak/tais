@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.core.constants;
 
 public abstract class SessionKeys {
     public static final String LAST_VIEW = "lastView";

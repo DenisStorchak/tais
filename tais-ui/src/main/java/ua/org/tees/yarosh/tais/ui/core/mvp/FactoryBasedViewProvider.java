@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
-import ua.org.tees.yarosh.tais.ui.core.SessionKeys;
+import ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys;
 
 import static com.vaadin.navigator.Navigator.ClassBasedViewProvider;
 

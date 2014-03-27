@@ -7,12 +7,13 @@ import ua.org.tees.yarosh.tais.core.common.dto.Role;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.UserMenu;
+import ua.org.tees.yarosh.tais.ui.core.constants.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin.*;
 
 public class SidebarFactory {
 

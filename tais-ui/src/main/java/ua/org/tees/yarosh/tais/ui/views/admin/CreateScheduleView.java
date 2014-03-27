@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import java.util.List;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.CREATE_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin.CREATE_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleTaisView.CreateSchedulePresenter;
 
 @ProducedBy(CreateScheduleListener.class)

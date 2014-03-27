@@ -24,8 +24,8 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.CREATE_SCHEDULE;
-import static ua.org.tees.yarosh.tais.ui.core.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin.CREATE_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.constants.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePresenter;
 
 @ProducedBy(ScheduleListener.class)
