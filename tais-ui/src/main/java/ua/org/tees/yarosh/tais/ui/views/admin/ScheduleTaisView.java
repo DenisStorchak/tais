@@ -1,14 +1,14 @@
 package ua.org.tees.yarosh.tais.ui.views.admin;
 
+import com.vaadin.navigator.View;
 import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public interface ScheduleTaisView extends PresenterBasedView {
+public interface ScheduleTaisView extends View {
 
     public void setRegistrants(List<String> registrants);
 

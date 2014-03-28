@@ -34,7 +34,8 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SC
 @Scope("prototype")
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends PresenterBasedVerticalLayoutView implements ScheduleTaisView {
+public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisView.SchedulePresenter>
+        implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";

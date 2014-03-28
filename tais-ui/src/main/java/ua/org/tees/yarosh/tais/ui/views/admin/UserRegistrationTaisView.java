@@ -4,7 +4,6 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import java.util.List;
 
@@ -13,7 +12,7 @@ import java.util.List;
  *         Date: 22.03.14
  *         Time: 20:48
  */
-public interface UserRegistrationTaisView extends PresenterBasedView<UserRegistrationTaisView.UserRegistrationPresenter> {
+public interface UserRegistrationTaisView {
     interface UserRegistrationPresenter extends Presenter {
         boolean isLoginExists(String login);
 

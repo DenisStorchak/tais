@@ -56,7 +56,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         createGroup.addStyleName("icon-only");
         createGroup.addStyleName("icon-doc-new"); // todo set correct icon
         createGroup.setDescription("Создать новую группу");
-        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow(primaryPresenter())));
+        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow(presenter())));
         top.addComponent(createGroup);
         top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
 
@@ -105,7 +105,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         signUpButton.addClickListener(event -> {
             try {
                 if (isValid(login, password, repeatePassword, name, surname, patronymic, position, studentGroupComboBox)) {
-                    boolean success = primaryPresenter().createRegistration(login, password,
+                    boolean success = presenter().createRegistration(login, password,
                             name, surname, patronymic, position, studentGroupComboBox);
                     if (!success) {
                         Notification.show("Логин занят");

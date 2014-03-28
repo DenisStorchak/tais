@@ -31,7 +31,8 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")
 @PermitRoles(TEACHER)
-public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<TeacherDashboardListener> {
+public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<TeacherDashboardListener>
+        implements TeacherDashboardTaisView {
 
     private Table unratedReports;
 
@@ -60,6 +61,6 @@ public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<Teach
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        unratedReports.setContainerDataSource(primaryPresenter().getUnratedManualReports());
+        unratedReports.setContainerDataSource(presenter().getUnratedManualReports());
     }
 }

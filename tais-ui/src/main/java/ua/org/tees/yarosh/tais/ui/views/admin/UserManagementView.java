@@ -24,7 +24,7 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAG
 @Qualifier(USER_MANAGEMENT)
 @Scope("prototype")
 @PermitRoles(ADMIN)
-public class UserManagementView extends PresenterBasedVerticalLayoutView
+public class UserManagementView extends PresenterBasedVerticalLayoutView<UserManagementListener>
         implements UserManagementTaisView {
 
     private Table registrants;

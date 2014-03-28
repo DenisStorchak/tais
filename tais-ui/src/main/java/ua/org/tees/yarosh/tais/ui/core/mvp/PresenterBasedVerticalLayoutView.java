@@ -8,18 +8,18 @@ import com.vaadin.ui.VerticalLayout;
  *         Date: 23.03.14
  *         Time: 13:15
  */
-public class PresenterBasedVerticalLayoutView extends VerticalLayout
-        implements PresenterBasedView {
+public class PresenterBasedVerticalLayoutView<P extends Presenter> extends VerticalLayout
+        implements PresenterBasedView<P> {
 
-    private Presenter presenter = null;
+    private P presenter = null;
 
     @Override
-    public void setPresenter(Presenter presenter) {
+    public void setPresenter(P presenter) {
         this.presenter = presenter;
     }
 
     @Override
-    public Presenter presenter() {
+    public P presenter() {
         return presenter;
     }
 

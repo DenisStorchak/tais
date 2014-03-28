@@ -16,6 +16,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 /**
  * @author Timur Yarosh
@@ -24,7 +25,7 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_
  */
 @Service
 @Scope("prototype")
-public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardTaisView.TeacherDashboardPresenter {
+public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardPresenter {
 
     @Autowired
     public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) PresenterBasedView view, HelpManager helpManager) {

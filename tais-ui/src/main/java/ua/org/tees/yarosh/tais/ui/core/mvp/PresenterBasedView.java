@@ -2,8 +2,8 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.View;
 
-public interface PresenterBasedView extends View {
-    public void setPresenter(Presenter presenter);
+public interface PresenterBasedView<P extends Presenter> extends View {
+    public void setPresenter(P presenter);
 
-    public Presenter presenter();
+    public P presenter();
 }

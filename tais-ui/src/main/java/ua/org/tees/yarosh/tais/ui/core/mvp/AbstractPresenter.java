@@ -26,7 +26,7 @@ public abstract class AbstractPresenter implements Presenter {
         LOGGER.debug("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
         this.helpManager = helpManager;
-        getView().setPrimaryPresenter(this);
+        getView().setPresenter(this);
         getHelpManager().closeAll();
     }
 

@@ -49,7 +49,7 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        primaryPresenter().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
+        presenter().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
         clearValue(username);
         clearValue(password);
         if (username != null) {
@@ -119,7 +119,7 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
                         && password.getValue() != null
-                        && primaryPresenter().login(username.getValue(), password.getValue())) {
+                        && presenter().login(username.getValue(), password.getValue())) {
                     removeComponent(error);
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
                     getUI().getNavigator().navigateTo(UriFragments.Admin.USER_REGISTRATION);
