@@ -37,12 +37,11 @@ public class AuthManager {
     }
 
     public static boolean isAuthorized(String username, Class<?> clazz) {
-        if (username == null || clazz == null) {
-            LOGGER.warn("null username or clazz taken, null returns");
-            return false;
-        }
         if (clazz.getAnnotation(PermitAll.class) != null) {
             return true;
+        } else if (username == null || clazz == null) {
+            LOGGER.warn("null username or clazz taken, null returns");
+            return false;
         } else if (AUTHORIZATIONS.containsKey(username)) {
             PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
             UserDetails auth = AUTHORIZATIONS.get(username);
