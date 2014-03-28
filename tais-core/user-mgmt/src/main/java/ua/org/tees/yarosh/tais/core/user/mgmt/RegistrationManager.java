@@ -82,7 +82,7 @@ public class RegistrationManager implements RegistrantService {
 
     @Override
     @Cacheable(REGISTRANTS)
-    public List<Registrant> listAllRegistrants() {
+    public List<Registrant> findAllRegistrants() {
         return registrantRepository.findAll();
     }
 

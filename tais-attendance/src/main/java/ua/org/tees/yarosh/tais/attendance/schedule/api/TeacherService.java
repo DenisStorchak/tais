@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.attendance.api;
+package ua.org.tees.yarosh.tais.attendance.schedule.api;
 
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;

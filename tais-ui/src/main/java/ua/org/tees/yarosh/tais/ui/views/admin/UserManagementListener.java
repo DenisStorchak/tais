@@ -48,7 +48,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
         registrantsContainer.addContainerProperty(KEY_GROUP, String.class, null);
         registrantsContainer.addContainerProperty(KEY_INTERACT_BUTTON, Button.class, null);
 
-        registrantService.listAllRegistrants().forEach(r -> {
+        registrantService.findAllRegistrants().forEach(r -> {
             Item item = registrantsContainer.addItem(r.getLogin());
             item.getItemProperty(KEY_LOGIN).setValue(r.getLogin());
             item.getItemProperty(KEY_SURNAME).setValue(r.getSurname());

@@ -12,7 +12,7 @@ import java.util.Date;
 import java.util.List;
 
 @Repository
-public interface LessonsRepository extends JpaRepository<Lesson, Long> {
+public interface LessonRepository extends JpaRepository<Lesson, Long> {
     @Query("select l from Lesson l where l.studentGroup = :studentGroup and l.date between :periodFrom and :periodTo")
     List<Lesson> findLessonsWithinPeriod(@Param("periodFrom") Date periodFrom,
                                          @Param("periodTo") Date periodTo,

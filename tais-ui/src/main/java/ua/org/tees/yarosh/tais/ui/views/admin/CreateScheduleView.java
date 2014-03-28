@@ -10,6 +10,7 @@ import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateLessonWindow;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
@@ -34,6 +35,7 @@ public class CreateScheduleView extends PresenterBasedVerticalLayoutView<CreateS
 
     public CreateScheduleView() {
         createDayScheduleButton.setDescription("Добавить расписание на 1 день");
+        createDayScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow()));
         setSizeFull();
         addStyleName("dashboard-view");
         HorizontalLayout top = new BgPanel("Создание расписания");

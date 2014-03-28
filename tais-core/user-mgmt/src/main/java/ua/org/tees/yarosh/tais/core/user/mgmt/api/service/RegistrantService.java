@@ -20,7 +20,7 @@ public interface RegistrantService {
 
     public void deleteRegistration(String login);
 
-    public List<Registrant> listAllRegistrants();
+    public List<Registrant> findAllRegistrants();
 
     public boolean loginExists(String login);
 

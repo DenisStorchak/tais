@@ -47,7 +47,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     private List<String> getRegistrants() {
-        return registrantService.listAllRegistrants().stream().map(Registrant::toString).collect(toList());
+        return registrantService.findAllRegistrants().stream().map(Registrant::toString).collect(toList());
     }
 
     @Autowired

@@ -15,4 +15,9 @@ public class Classroom {
     public void setId(String id) {
         this.id = id;
     }
+
+    @Override
+    public String toString() {
+        return id;
+    }
 }
