@@ -32,7 +32,7 @@ public class SpringManagedViewFactory implements ViewFactory {
     public <V extends View> V getView(Class<V> viewClazz) {
         if (!viewPool.containsKey(viewClazz)) {
             LOGGER.debug("View [{}] will be created now", viewClazz.getName());
-            Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(ProducedBy.class).value();
+            Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(PresentedBy.class).value();
             Presenter presenter = ctx.getBean(presenterClazz);
             V view = presenter.getView(viewClazz);
             viewPool.put(viewClazz, view);

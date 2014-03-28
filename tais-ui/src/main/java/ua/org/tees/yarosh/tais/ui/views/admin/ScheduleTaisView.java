@@ -8,7 +8,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public interface ScheduleTaisView extends PresenterBasedView<ScheduleTaisView.SchedulePresenter> {
+public interface ScheduleTaisView extends PresenterBasedView {
 
     public void setRegistrants(List<String> registrants);
 

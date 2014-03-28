@@ -10,6 +10,6 @@ import java.lang.annotation.Target;
  */
 @Retention(value = RetentionPolicy.RUNTIME)
 @Target({ElementType.TYPE})
-public @interface ProducedBy {
+public @interface PresentedBy {
     Class<? extends Presenter> value();
 }

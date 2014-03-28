@@ -13,8 +13,8 @@ import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
@@ -27,7 +27,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.Us
  *         Date: 22.03.14
  *         Time: 20:44
  */
-@ProducedBy(UserRegistrationListener.class)
+@PresentedBy(UserRegistrationListener.class)
 @Service
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)

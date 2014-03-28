@@ -11,8 +11,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
@@ -26,7 +26,7 @@ import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
  *         Date: 22.03.14
  *         Time: 13:15
  */
-@ProducedBy(LoginListener.class)
+@PresentedBy(LoginListener.class)
 @Service
 @Qualifier(AUTH)
 @Scope("prototype")
@@ -113,7 +113,8 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
             Label error = new Label(
                     "<center>Неправильное имя пользователя или пароль.<br />" +
                             "За регистрацией обращайтесь на кафедру ТЭЭС</center>",
-                    ContentMode.HTML);
+                    ContentMode.HTML
+            );
 
             signIn.addClickListener(event -> {
                 if (username.getValue() != null

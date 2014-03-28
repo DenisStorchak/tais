@@ -4,7 +4,10 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.PopupDateField;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -13,46 +16,60 @@ import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
-import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Map;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.CREATE_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
-import static ua.org.tees.yarosh.tais.ui.views.admin.ScheduleTaisView.SchedulePresenter;
 
-@ProducedBy(ScheduleListener.class)
+@PresentedBy(ScheduleListener.class)
 @Service
 @Qualifier(MANAGED_SCHEDULE)
 @Scope("prototype")
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePresenter> implements ScheduleTaisView {
+public class ScheduleView extends PresenterBasedVerticalLayoutView implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
     private static final String KEY_TEACHER = "Преподаватель";
     private static final String KEY_CLASSROOM = "Аудитория";
     private static final String KEY_START_TIME = "Начало";
+    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy',' EEEEEE", Locale.forLanguageTag("ru"));
+    private static final SimpleDateFormat onlyTimeSdf = new SimpleDateFormat("hh:mm");
+    private static final String EDIT_SCHEDULE_TITLE = "Редактировать расписание";
     private List<String> registrants;
-    private List<String> groups;
 
+    private List<String> groups;
     private ComboBox scheduleOwners = new ComboBox();
     private PopupDateField periodFrom = new PopupDateField();
     private PopupDateField periodTo = new PopupDateField();
     private Button searchLessonsButton = new Button("Поиск");
     private Button addScheduleButton = new Button("Добавить расписание");
 
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy',' EEEEEE", Locale.forLanguageTag("ru"));
-    private static final SimpleDateFormat onlyTimeSdf = new SimpleDateFormat("hh:mm");
+    private Button editMondayButton = new Button(EDIT_SCHEDULE_TITLE);
+    private DashPanel mondaySchedule = new DashPanel(editMondayButton);
+
+    private Button editTuesdayButton = new Button(EDIT_SCHEDULE_TITLE);
+    private DashPanel tuesdaySchedule = new DashPanel(editTuesdayButton);
+
+    private Button editWednesdayButton = new Button(EDIT_SCHEDULE_TITLE);
+    private DashPanel wednesdaySchedule = new DashPanel(editWednesdayButton);
+
+    private Button editThursdayButton = new Button(EDIT_SCHEDULE_TITLE);
+    private DashPanel thursdaySchedule = new DashPanel(editThursdayButton);
+
+    private Button editFridayButton = new Button(EDIT_SCHEDULE_TITLE);
+    private DashPanel fridaySchedule = new DashPanel(editFridayButton);
+
+    private Button editSaturdayButton = new Button(EDIT_SCHEDULE_TITLE);
+    private DashPanel saturdaySchedule = new DashPanel(editSaturdayButton);
 
     @Override
     public void setRegistrants(List<String> registrants) {
@@ -79,28 +96,6 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePrese
         scheduleOwners.addValidator(new NotBlankValidator("Поле не должно быть пустым"));
         scheduleOwners.setValidationVisible(false);
         scheduleOwners.focus();
-
-        addScheduleButton.addClickListener(event -> getUI().getNavigator().navigateTo(CREATE_SCHEDULE));
-
-        searchLessonsButton.addClickListener(event -> {
-            if (scheduleOwners.isValid()) {
-                Map<? extends Date, ? extends List<Lesson>> schedule = primaryPresenter().getSchedule(
-                        (String) scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
-                if (schedule.isEmpty()) {
-                    Notification.show("Расписание не найдено");
-                }
-                for (Date date : schedule.keySet()) {
-                    DashPanel dayPanel = new DashPanel();
-                    dash.addComponent(dayPanel);
-                    PlainBorderlessTable scheduleTable = new PlainBorderlessTable(sdf.format(date));
-                    dayPanel.addComponent(scheduleTable);
-                    scheduleTable.setContainerDataSource(createDataSource(schedule.get(date)));
-                }
-            } else {
-                Notification.show("Выберите пользователя расписания");
-                scheduleOwners.focus();
-            }
-        });
 
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
@@ -145,7 +140,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<SchedulePrese
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        getPresenters().forEach(SchedulePresenter::updateData);
+        presenter().updateData();
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
     }

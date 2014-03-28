@@ -19,7 +19,6 @@ import ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher;
 import ua.org.tees.yarosh.tais.ui.views.AccessDeniedView;
 import ua.org.tees.yarosh.tais.ui.views.LoginView;
 import ua.org.tees.yarosh.tais.ui.views.PageNotFoundView;
-import ua.org.tees.yarosh.tais.ui.views.admin.CreateScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
@@ -57,7 +56,6 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
         nav.addProvider(new FactoryBasedViewProvider(AUTH, LoginView.class));
         nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
-        nav.addProvider(new FactoryBasedViewProvider(CREATE_SCHEDULE, CreateScheduleView.class));
         nav.setErrorView(new PageNotFoundView());
         nav.addViewChangeListener(new AuthListener());
 

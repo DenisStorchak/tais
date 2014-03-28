@@ -14,8 +14,8 @@ import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
@@ -26,7 +26,7 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_
  *         Date: 21.03.14
  *         Time: 19:57
  */
-@ProducedBy(TeacherDashboardListener.class)
+@PresentedBy(TeacherDashboardListener.class)
 @Service
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")

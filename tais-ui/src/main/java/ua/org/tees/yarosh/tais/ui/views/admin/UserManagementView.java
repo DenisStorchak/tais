@@ -12,20 +12,19 @@ import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
-import ua.org.tees.yarosh.tais.ui.core.mvp.ProducedBy;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;
-import static ua.org.tees.yarosh.tais.ui.views.admin.UserManagementTaisView.UserManagementPresenter;
 
 
-@ProducedBy(UserManagementListener.class)
+@PresentedBy(UserManagementListener.class)
 @Service
 @Qualifier(USER_MANAGEMENT)
 @Scope("prototype")
 @PermitRoles(ADMIN)
-public class UserManagementView extends PresenterBasedVerticalLayoutView<UserManagementPresenter>
+public class UserManagementView extends PresenterBasedVerticalLayoutView
         implements UserManagementTaisView {
 
     private Table registrants;
@@ -48,7 +47,7 @@ public class UserManagementView extends PresenterBasedVerticalLayoutView<UserMan
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        setRegistrantsDataSource(primaryPresenter().getAllRegistrants());
+        setRegistrantsDataSource(presenter().getAllRegistrants());
     }
 
     @Override
