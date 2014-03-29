@@ -54,7 +54,7 @@ user.role=Administrator #possible values: Administrator / Teacher / Student
 ####Notes:
 <b>hibernate</b> — Hibernate ORM properties. Do not change them if you don't know anything about ORM and Hibernate.<br />
 <b>hibernate.hbm2ddl.auto=create-drop</b> means that database will be deleted after redeploy and should be used only for development.
-Change this value to <b>validate</b>.<br>
+Switch this value to <b>validate</b>.<br>
 <b>jdbc</b> — database connection settings. By default configured for local postgresql with database name <b>tais</b> and credentials <i>postgres</i><br />
 <b>mail</b> — mail server settings
 <b>cache.enable</b> you can use cache to optimize database requests. <b>true</b> value is strong recommended if application do not use all of your's server RAM.<br />
