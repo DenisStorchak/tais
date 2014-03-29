@@ -21,7 +21,7 @@ To run you need apache tomcat >= 7.0.52. Installation described <a href="http://
 5. Configure user access to tomcat manager (described <a href=http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html>here</a>)<br />
 6. Start tomcat<br />
 7. Open tomcat manager (<a href=http://localhost:8080/manager>http://localhost:8080/manager</a> default url) and deploy <b>tais.war</b> with context path <b>/</b><br />
-8. Open <a href=localhost:8080>localhost:8080</a> — new tais url<br />
+8. Open <a href=http://localhost:8080>http://localhost:8080</a> — new tais url<br />
 
 Configuration file
 ==================
