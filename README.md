@@ -26,7 +26,7 @@ To run you need apache tomcat >= 7.0.52. Installation described <a href="http://
 Configuration file
 ==================
 <pre>
-hibernate.hbm2ddl.auto=create-drop #do not use 'create-drop' value in production. It deletes all the database!!! Recommended value is 'validate'
+hibernate.hbm2ddl.auto=validate #do not use 'create-drop' value in production. It deletes all the database!!! Recommended value is 'validate'
 hibernate.show_sql=true
 hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
@@ -56,7 +56,7 @@ user.role=Administrator #possible values: Administrator / Teacher / Student
 
 ####Notes:
 <b>hibernate</b> — Hibernate ORM properties. Do not change them if you don't know anything about ORM and Hibernate.<br />
-<b>hibernate.hbm2ddl.auto=create-drop</b> means that database will be deleted after redeploy and should use only for development.
+<b>hibernate.hbm2ddl.auto=create-drop</b> means that database will be deleted after redeploy and should be used only for development.
 Change this value to <b>validate</b>.<br>
 <b>jdbc</b> — database connection settings. By default configured for local postgresql with database name <b>tais</b> and credentials <i>postgres</i><br />
 <b>mail</b> — mail server settings
