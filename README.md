@@ -56,7 +56,7 @@ user.role=Administrator #possible values: Administrator / Teacher / Student
 <b>hibernate.hbm2ddl.auto=create-drop</b> means that database will be deleted after redeploy and should be used only for development.
 Switch this value to <b>validate</b>.<br>
 <b>jdbc</b> — database connection settings. By default configured for local postgresql with database name <b>tais</b> and credentials <i>postgres</i><br />
-<b>mail</b> — mail server settings
+<b>mail</b> — mail server settings<br />
 <b>cache.enable</b> you can use cache to optimize database requests. <b>true</b> value is strong recommended if application do not use all of your's server RAM.<br />
 <b>redis</b> — you can use <a href=http://redis.io/>redis</a> as cache server. You have to install redis-server and configure redis.* properties if <i>redis.enable</i> and <i>cache.enable</i> values set to <b>true</b>. However I <b>recommend to use redis for cache.</b><br />
 <b>user</b> — default user for application. Stored only in RAM and don't shown next to other registrants. Used only for first authorization. Administrator has to clear this properties' values and restart tomcat after his own profile registration will be completed.
