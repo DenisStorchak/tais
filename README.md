@@ -23,8 +23,8 @@ To run you need apache tomcat >= 7.0.52. Installation described <a href="http://
 8. Open tomcat manager (<a href=http://localhost:8080/manager>http://localhost:8080/manager</a> default url) and deploy <b>tais.war</b> with context path <b>/</b><br />
 9. Open <a href=http://localhost:8080>http://localhost:8080</a> — new tais url<br />
 
-Configuration file
-==================
+tais.properties
+===============
 <pre>
 hibernate.hbm2ddl.auto=validate #do not use 'create-drop' value in production. It deletes all the database!!! Recommended value is 'validate'
 hibernate.show_sql=true
