@@ -3,15 +3,13 @@ TAIS
 
 TEES Automatic Interaction System
 
-Installation
-============
-####Build needs:
+#Installation
+##Build needs:
 1. <b>jdk</b> >= 1.8<br />
 2. <b>maven</b> >= 3<br />
 3. internet connection (other dependencies will fetch from external repositories)
 
-Build and run
-===
+##Build and run
 To run you need apache tomcat >= 7.0.52. Installation described <a href="http://tomcat.apache.org/tomcat-7.0-doc/appdev/installation.html">here</a>. Next you need to deploy tais *.war package to tomcat. Deployment described <a href="https://tomcat.apache.org/tomcat-7.0-doc/appdev/deployment.html">here</a>. Also you need postgresql >= 9.3 and redis-server >= 2.6.13 (optional).<br />
 1. Go to tais root directory (that contains <b>pom.xml</b> and <b>tais.properties</b>)<br />
 2. type <b>mvn clean install</b><br />
@@ -23,8 +21,7 @@ To run you need apache tomcat >= 7.0.52. Installation described <a href="http://
 8. Open tomcat manager (<a href=http://localhost:8080/manager>http://localhost:8080/manager</a> default url) and deploy <b>tais.war</b> with context path <b>/</b><br />
 9. Open <a href=http://localhost:8080>http://localhost:8080</a> — new tais url<br />
 
-tais.properties
-===============
+##tais.properties
 <pre>
 hibernate.hbm2ddl.auto=validate #do not use 'create-drop' value in production. It deletes all the database!!! Recommended value is 'validate'
 hibernate.show_sql=true
