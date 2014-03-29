@@ -4,18 +4,16 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
-import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
+import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
@@ -56,23 +54,23 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     private Button searchLessonsButton = new Button("Поиск");
     private Button addScheduleButton = new Button("Добавить расписание");
 
-    private Button editMondayButton = new Button(EDIT_SCHEDULE_TITLE);
-    private DashPanel mondaySchedule = new DashPanel(editMondayButton);
+    private Button editMondayButton = createEditScheduleButton();
+    private DashPanel mondaySchedule = createPanel(new Table("Понедельник"), editMondayButton);
 
-    private Button editTuesdayButton = new Button(EDIT_SCHEDULE_TITLE);
-    private DashPanel tuesdaySchedule = new DashPanel(editTuesdayButton);
+    private Button editTuesdayButton = createEditScheduleButton();
+    private DashPanel tuesdaySchedule = createPanel(new Table("Вторник"), editTuesdayButton);
 
-    private Button editWednesdayButton = new Button(EDIT_SCHEDULE_TITLE);
-    private DashPanel wednesdaySchedule = new DashPanel(editWednesdayButton);
+    private Button editWednesdayButton = createEditScheduleButton();
+    private DashPanel wednesdaySchedule = createPanel(new Table("Среда"), editWednesdayButton);
 
-    private Button editThursdayButton = new Button(EDIT_SCHEDULE_TITLE);
-    private DashPanel thursdaySchedule = new DashPanel(editThursdayButton);
+    private Button editThursdayButton = createEditScheduleButton();
+    private DashPanel thursdaySchedule = createPanel(new Table("Четверг"), editThursdayButton);
 
-    private Button editFridayButton = new Button(EDIT_SCHEDULE_TITLE);
-    private DashPanel fridaySchedule = new DashPanel(editFridayButton);
+    private Button editFridayButton = createEditScheduleButton();
+    private DashPanel fridaySchedule = createPanel(new Table("Пятница"), editFridayButton);
 
-    private Button editSaturdayButton = new Button(EDIT_SCHEDULE_TITLE);
-    private DashPanel saturdaySchedule = new DashPanel(editSaturdayButton);
+    private Button editSaturdayButton = createEditScheduleButton();
+    private DashPanel saturdaySchedule = createPanel(new Table("Суббота"), editSaturdayButton);
 
     @Override
     public void setRegistrants(List<String> registrants) {
@@ -87,19 +85,30 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     public ScheduleView() {
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
-        setSizeFull();
+
+        scheduleOwners.addValidator(new NotBlankValidator("Поле не должно быть пустым"));
+        VaadinUtils.setValidationVisible(false, scheduleOwners);
+        scheduleOwners.focus();
+
+        VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
+
+        VaadinUtils.setSizeFull(this);
         addStyleName("dashboard-view");
         HorizontalLayout top = new BgPanel("Расписание занятий");
         addComponent(top);
 
-        HorizontalLayout dash = new Dash();
+        VerticalLayout dash = new VerticalDash();
         addComponent(dash);
         setExpandRatio(dash, 1.5f);
 
-        scheduleOwners.addValidator(new NotBlankValidator("Поле не должно быть пустым"));
-        scheduleOwners.setValidationVisible(false);
-        scheduleOwners.focus();
+        dash.addComponent(createControlsLayout());
+        dash.addComponents(
+                createStage(mondaySchedule, tuesdaySchedule),
+                createStage(wednesdaySchedule, thursdaySchedule),
+                createStage(fridaySchedule, saturdaySchedule));
+    }
 
+    private HorizontalLayout createControlsLayout() {
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
         controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
@@ -109,14 +118,14 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         controls.setExpandRatio(searchLessonsButton, 1.5f);
         controls.setExpandRatio(addScheduleButton, 1.5f);
         controls.setSpacing(true);
+        return controls;
+    }
 
-        scheduleOwners.setSizeUndefined();
-        periodFrom.setSizeUndefined();
-        periodTo.setSizeUndefined();
-        searchLessonsButton.setSizeUndefined();
-
-        dash.addComponent(controls);
-        dash.setSpacing(true);
+    private HorizontalLayout createStage(Component... components) {
+        HorizontalLayout stage = new HorizontalLayout(components);
+        stage.setWidth(100, Unit.PERCENTAGE);
+        stage.setSpacing(true);
+        return stage;
     }
 
     private Container createDataSource(List<Lesson> lessons) {
@@ -146,5 +155,26 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         presenter().updateData();
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
+    }
+
+    private DashPanel createPanel(Component content, Button configure) {
+        DashPanel schedulePanel = new DashPanel();
+        schedulePanel.addComponent(configure);
+        schedulePanel.addComponent(content);
+        return schedulePanel;
+    }
+
+    private Button createEditScheduleButton() {
+        Button configure = new Button();
+        configure.addStyleName("configure");
+        configure.addStyleName("icon-doc-new");
+        configure.addStyleName("icon-only");
+        configure.addStyleName("borderless");
+        configure.setDescription(EDIT_SCHEDULE_TITLE);
+        configure.addStyleName("small");
+        configure.addClickListener(event -> {
+            Notification.show("Not implemented yet");
+        });
+        return configure;
     }
 }

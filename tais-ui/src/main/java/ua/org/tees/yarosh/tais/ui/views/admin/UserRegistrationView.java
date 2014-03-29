@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
-import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
@@ -62,7 +62,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         top.addComponent(createGroup);
         top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
 
-        HorizontalLayout dash = new Dash();
+        HorizontalLayout dash = new HorizontalDash();
         addComponent(dash);
         setExpandRatio(dash, 1.5f);
 

@@ -1,15 +1,15 @@
 package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.shared.ui.MarginInfo;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
  *         Time: 0:09
  */
-public class Dash extends HorizontalLayout {
-    public Dash() {
+public class VerticalDash extends VerticalLayout {
+    public VerticalDash() {
         setSizeFull();
         setMargin(new MarginInfo(true, true, false, true));
         setSpacing(true);

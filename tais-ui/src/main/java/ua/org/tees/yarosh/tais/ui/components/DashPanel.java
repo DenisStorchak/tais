@@ -17,6 +17,7 @@ public class DashPanel extends CssLayout {
     public DashPanel(Button button) {
         super();
         button.addStyleName("configure");
+        button.addStyleName("icon-cog");
         button.addStyleName("icon-only");
         button.addStyleName("borderless");
         button.addStyleName("small");

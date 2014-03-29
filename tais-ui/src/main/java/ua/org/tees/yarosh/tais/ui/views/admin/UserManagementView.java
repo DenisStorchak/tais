@@ -9,8 +9,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
-import ua.org.tees.yarosh.tais.ui.components.Dash;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
@@ -37,7 +37,7 @@ public class UserManagementView extends PresenterBasedVerticalLayoutView<UserMan
         HorizontalLayout top = new BgPanel("Настройка профилей");
         addComponent(top);
 
-        HorizontalLayout dash = new Dash();
+        HorizontalLayout dash = new HorizontalDash();
         addComponent(dash);
         setExpandRatio(dash, 1.5f);
 
