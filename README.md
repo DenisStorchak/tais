@@ -15,13 +15,13 @@ Build and run
 To run you need apache tomcat >= 7.0.52. Installation described <a href="http://tomcat.apache.org/tomcat-7.0-doc/appdev/installation.html">here</a>. Next you need to deploy tais *.war package to tomcat. Deployment described <a href="https://tomcat.apache.org/tomcat-7.0-doc/appdev/deployment.html">here</a>. Also you need postgresql >= 9.3 and redis-server >= 2.6.13 (optional).<br />
 1. Go to tais root directory (that contains <b>pom.xml</b> and <b>tais.properties</b>)<br />
 2. type <b>mvn clean install</b><br />
-2. Place tais configuration file (<b>tais.properties</b>) into tomcat <b>conf</b> directory<br />
-3. Edit and save <b>tais.properties</b> file<br />
-4. Open tomcat <b>conf/context.xml</b> and insert line <i><Environment name="tais.config" value="file:///${catalina.home}/conf/tais.properties" type="java.net.URI"/></i> between <Context> and </Context> tags. Note: <i>file:///${catalina.home}/conf/tais.properties</i> — URL to tais configuration file. Save <b>context.xml</b><br />
-5. Configure user access to tomcat manager (described <a href=http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html>here</a>)<br />
-6. Start tomcat<br />
-7. Open tomcat manager (<a href=http://localhost:8080/manager>http://localhost:8080/manager</a> default url) and deploy <b>tais.war</b> with context path <b>/</b><br />
-8. Open <a href=http://localhost:8080>http://localhost:8080</a> — new tais url<br />
+3. Place tais configuration file (<b>tais.properties</b>) into tomcat <b>conf</b> directory<br />
+4. Edit and save <b>tais.properties</b> file<br />
+5. Open tomcat <b>conf/context.xml</b> and insert line <i><Environment name="tais.config" value="file:///${catalina.home}/conf/tais.properties" type="java.net.URI"/></i> between <Context> and </Context> tags. Note: <i>file:///${catalina.home}/conf/tais.properties</i> — URL to tais configuration file. Save <b>context.xml</b><br />
+6. Configure user access to tomcat manager (described <a href=http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html>here</a>)<br />
+7. Start tomcat<br />
+8. Open tomcat manager (<a href=http://localhost:8080/manager>http://localhost:8080/manager</a> default url) and deploy <b>tais.war</b> with context path <b>/</b><br />
+9. Open <a href=http://localhost:8080>http://localhost:8080</a> — new tais url<br />
 
 Configuration file
 ==================
