@@ -1,8 +1,12 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
+import com.vaadin.data.Container;
+import com.vaadin.data.Item;
+import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import ua.org.tees.yarosh.tais.attendance.schedule.LessonType;
 import ua.org.tees.yarosh.tais.attendance.schedule.api.ClassroomService;
 import ua.org.tees.yarosh.tais.attendance.schedule.api.DisciplineService;
@@ -11,12 +15,14 @@ import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
+import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
 
 /**
@@ -24,87 +30,188 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
  *         Date: 21.03.14
  *         Time: 20:40
  */
+@SuppressWarnings("unchecked")
 public class CreateLessonWindow extends Window {
 
+    private static final String DISCIPLINE = "Дисциплина";
+    private static final String LESSON_TYPE = "Тип занятия";
+    private static final String CLASSROOM = "Аудитория";
+    private static final String TEACHER = "Преподаватель";
+    private static final String TIME = "Начало";
     private CreateLessonWindow window;
-    private Lesson lesson;
+    private List<Lesson> lessons = new ArrayList<>();
 
-    public Lesson getLesson() {
-        return lesson;
+    private Container scheduleContainer;
+    private PlainBorderlessTable schedule;
+
+    private SpringContextHelper ctx = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+    private DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
+    private ClassroomService classroomService = ctx.getBean(ClassroomService.class);
+    private RegistrantService registrantService = ctx.getBean(RegistrantService.class);
+
+
+    public List<Lesson> getLessons() {
+        return lessons;
     }
 
-    public CreateLessonWindow() {
-        super("Новая пара");
+    public CreateLessonWindow(Container scheduleContainer) {
+        super("Редактировать расписание");
         window = this;
+        this.scheduleContainer = scheduleContainer;
         setModal(true);
         setClosable(true);
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
+        setSizeUndefined();
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {
 
-        private ComboBox registrants = new ComboBox("Преподаватель");
-        private ComboBox disciplines = new ComboBox("Дисциплина");
-        private ComboBox classrooms = new ComboBox("Аудитория");
-        private ComboBox lessonTypes = new ComboBox("Тип занятия");
-        private DateField startLessonDateTime = new DateField("Дата и время начала");
+        private Button saveChangesButton = new Button("Сохранить изменения");
+        private Button addLessonButton = new Button("Добавить запись");
 
         public CreateTaskWindowContent() {
-            addComponent(new HorizontalLayout() {
+
+            setMargin(true);
+            setSpacing(true);
+            addStyleName("footer");
+            setCloseShortcut(ESCAPE);
+            setSizeUndefined();
+
+            schedule = new PlainBorderlessTable("") {
                 {
-                    startLessonDateTime.setResolution(Resolution.MINUTE);
-
-                    SpringContextHelper ctx = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
-                    RegistrantService registrantService = ctx.getBean(RegistrantService.class);
-                    DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
-                    ClassroomService classroomService = ctx.getBean(ClassroomService.class);
-
-                    List<Registrant> allRegistrants = registrantService.findAllRegistrants();
-                    allRegistrants.forEach(registrants::addItem);
-                    List<Discipline> allDisciplines = disciplineService.findAllDisciplines();
-                    allDisciplines.forEach(disciplines::addItem);
-                    List<Classroom> allClassrooms = classroomService.findAllClassrooms();
-                    allClassrooms.forEach(classrooms::addItem);
-                    for (LessonType lessonType : LessonType.values()) {
-                        lessonTypes.addItem(lessonType);
-                    }
-
-                    setMargin(true);
-                    setSpacing(true);
-                    addStyleName("footer");
-                    setWidth("100%");
-                    setCloseShortcut(ESCAPE);
-
-                    Button ok = new Button("Создать");
-                    ok.addClickListener(event -> {
-                        String teacher = (String) registrants.getValue();
-                        String discipline = (String) disciplines.getValue();
-                        String classroom = (String) classrooms.getValue();
-                        String lessonType = (String) lessonTypes.getValue();
-                        Date startLesson = startLessonDateTime.getValue();
-
-                        Lesson newLesson = new Lesson();
-                        newLesson.setTeacher(registrantService.getRegistration(teacher));
-                        newLesson.setDiscipline(disciplineService.findDisciplineByName(discipline));
-                        newLesson.setClassroom(classroomService.findClassroom(classroom));
-                        newLesson.setLessonType(LessonType.valueOf(lessonType));
-                        newLesson.setDate(startLesson);
-                        lesson = newLesson;
-                        window.close();
-                    });
-
-                    ok.addStyleName("wide");
-                    ok.addStyleName("default");
-                    ok.setClickShortcut(ENTER);
-                    VerticalLayout inputs = new VerticalLayout();
-                    inputs.addComponents(registrants, disciplines, classrooms, lessonTypes, startLessonDateTime, ok);
-                    inputs.setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
-                    inputs.setSpacing(true);
-                    addComponents(inputs);
+                    setEditable(true);
+                    setContainerDataSource(convertEditable(scheduleContainer));
                 }
+            };
+            schedule.setSizeUndefined();
+            addComponent(schedule);
+
+            saveChangesButton.addClickListener(event -> {
+                Container dataSource = schedule.getContainerDataSource();
+                for (int i = 0; i < dataSource.getItemIds().size(); i++) {
+                    Item item = dataSource.getItem(i);
+                    ComboBox disciplines = (ComboBox) item.getItemProperty(DISCIPLINE).getValue();
+                    Discipline discipline = (Discipline) disciplines.getValue();
+
+                    ComboBox lessonTypes = ((ComboBox) item.getItemProperty(LESSON_TYPE).getValue());
+                    String lessonType = (String) lessonTypes.getValue();
+
+                    ComboBox classrooms = (ComboBox) item.getItemProperty(CLASSROOM);
+                    Classroom classroom = (Classroom) classrooms.getValue();
+
+                    ComboBox teachers = (ComboBox) item.getItemProperty(TEACHER);
+                    Registrant teacher = (Registrant) teachers.getValue();
+
+                    DateField lessonDate = (DateField) item.getItemProperty(TIME);
+                    Date date = lessonDate.getValue();
+
+                    Lesson lesson = new Lesson();
+                    lesson.setDiscipline(discipline);
+                    lesson.setLessonType(LessonType.valueOf(LessonTypeTranslator.translate(lessonType).toUpperCase()));
+                    lesson.setClassroom(classroom);
+                    lesson.setTeacher(teacher);
+                    lesson.setDate(date);
+                    lessons.add(lesson);
+                }
+                window.close();
             });
+            saveChangesButton.addStyleName("default");
+            addLessonButton.addClickListener(event -> {
+                Item item = schedule.addItem(RandomStringUtils.random(5));
+                item.getItemProperty(DISCIPLINE).setValue(createDisciplines(disciplineService));
+                item.getItemProperty(LESSON_TYPE).setValue(createLessonTypes());
+                item.getItemProperty(CLASSROOM).setValue(createClassrooms(classroomService));
+                item.getItemProperty(TEACHER).setValue(createTeachers(registrantService));
+                item.getItemProperty(TIME).setValue(createDateField());
+            });
+            HorizontalLayout controls = new HorizontalLayout(addLessonButton, saveChangesButton);
+            controls.setSpacing(true);
+            addComponent(controls);
+            setComponentAlignment(controls, Alignment.BOTTOM_RIGHT);
         }
+
+        private Container convertEditable(Container scheduleContainer) {
+            Container editable = new IndexedContainer();
+            editable.addContainerProperty(DISCIPLINE, ComboBox.class, null);
+            editable.addContainerProperty(LESSON_TYPE, ComboBox.class, null);
+            editable.addContainerProperty(CLASSROOM, ComboBox.class, null);
+            editable.addContainerProperty(TEACHER, ComboBox.class, null);
+            editable.addContainerProperty(TIME, DateField.class, null);
+
+            for (Integer i = 0; i < scheduleContainer.getItemIds().size(); i++) {
+                Item sourceItem = scheduleContainer.getItem(scheduleContainer.getItemIds().toArray()[i]);
+                Item editableItem = editable.addItem(i);
+                convertEditable(disciplineService, classroomService, registrantService, sourceItem, editableItem);
+            }
+            return editable;
+        }
+
+        private void convertEditable(DisciplineService disciplineService,
+                                     ClassroomService classroomService,
+                                     RegistrantService registrantService,
+                                     Item sourceItem,
+                                     Item editableItem) {
+
+            String discipline = (String) sourceItem.getItemProperty(DISCIPLINE).getValue();
+            ComboBox disciplines = createDisciplines(disciplineService);
+            disciplines.setValue(discipline);
+            editableItem.getItemProperty(DISCIPLINE).setValue(disciplines);
+
+            String lessonType = (String) sourceItem.getItemProperty(LESSON_TYPE).getValue();
+            ComboBox lessonTypes = createLessonTypes();
+            lessonTypes.setValue(lessonType);
+            editableItem.getItemProperty(LESSON_TYPE).setValue(lessonTypes);
+
+            String classroom = (String) sourceItem.getItemProperty(CLASSROOM).getValue();
+            ComboBox classrooms = createClassrooms(classroomService);
+            classrooms.setValue(classroom);
+            editableItem.getItemProperty(CLASSROOM).setValue(classrooms);
+
+            String teacher = (String) sourceItem.getItemProperty(TEACHER).getValue();
+            ComboBox teachers = createTeachers(registrantService);
+            teachers.setValue(teacher);
+            editableItem.getItemProperty(TEACHER).setValue(teachers);
+
+            Date date = (Date) sourceItem.getItemProperty(TIME).getValue();
+            DateField dateField = createDateField();
+            dateField.setResolution(Resolution.MINUTE);
+            dateField.setValue(date);
+            editableItem.getItemProperty(TIME).setValue(dateField);
+        }
+    }
+
+    private DateField createDateField() {
+        DateField dateField = new DateField();
+        dateField.setResolution(Resolution.MINUTE);
+        return dateField;
+    }
+
+    private ComboBox createDisciplines(DisciplineService disciplineService) {
+        ComboBox disciplines = new ComboBox();
+        disciplineService.findAllDisciplines().forEach(disciplines::addItem);
+        return disciplines;
+    }
+
+    private ComboBox createTeachers(RegistrantService registrantService) {
+        ComboBox teachers = new ComboBox();
+        registrantService.findAllRegistrants().forEach(teachers::addItem);
+        return teachers;
+    }
+
+    private ComboBox createClassrooms(ClassroomService classroomService) {
+        ComboBox classrooms = new ComboBox();
+        classroomService.findAllClassrooms().forEach(classrooms::addItem);
+        return classrooms;
+    }
+
+    private ComboBox createLessonTypes() {
+        ComboBox lessonTypes = new ComboBox();
+        for (LessonType type : LessonType.values()) {
+            lessonTypes.addItem(LessonTypeTranslator.translate(type.toString()));
+        }
+        lessonTypes.setWidth(100, Unit.PERCENTAGE);
+        return lessonTypes;
     }
 }

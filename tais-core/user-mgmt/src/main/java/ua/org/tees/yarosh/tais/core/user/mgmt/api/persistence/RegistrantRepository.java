@@ -1,7 +1,11 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+
+import java.util.List;
 
 /**
  * @author Timur Yarosh
@@ -9,4 +13,6 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
  *         Time: 14:38
  */
 public interface RegistrantRepository extends JpaRepository<Registrant, String> {
+    @Query("select r from Registrant r where r.role = :role")
+    public List<Registrant> findAllByRole(@Param("role") String role);
 }

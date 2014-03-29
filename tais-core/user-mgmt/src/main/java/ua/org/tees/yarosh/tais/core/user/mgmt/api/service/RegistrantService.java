@@ -22,6 +22,8 @@ public interface RegistrantService {
 
     public List<Registrant> findAllRegistrants();
 
+    public List<Registrant> findAllTeachers();
+
     public boolean loginExists(String login);
 
     public List<StudentGroup> listStudentGroups();

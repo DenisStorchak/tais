@@ -12,7 +12,9 @@ import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateLessonWindow;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
@@ -52,25 +54,29 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     private PopupDateField periodFrom = new PopupDateField();
     private PopupDateField periodTo = new PopupDateField();
     private Button searchLessonsButton = new Button("Поиск");
-    private Button addScheduleButton = new Button("Добавить расписание");
-
     private Button editMondayButton = createEditScheduleButton();
-    private DashPanel mondaySchedule = createPanel(new Table("Понедельник"), editMondayButton);
+    private Table mondayContent = new PlainBorderlessTable("Понедельник");
+    private DashPanel mondaySchedule = createPanel(mondayContent, editMondayButton);
 
     private Button editTuesdayButton = createEditScheduleButton();
-    private DashPanel tuesdaySchedule = createPanel(new Table("Вторник"), editTuesdayButton);
+    private Table tuesdayContent = new PlainBorderlessTable("Вторник");
+    private DashPanel tuesdaySchedule = createPanel(tuesdayContent, editTuesdayButton);
 
     private Button editWednesdayButton = createEditScheduleButton();
-    private DashPanel wednesdaySchedule = createPanel(new Table("Среда"), editWednesdayButton);
+    private Table wednesdayContent = new PlainBorderlessTable("Среда");
+    private DashPanel wednesdaySchedule = createPanel(wednesdayContent, editWednesdayButton);
 
     private Button editThursdayButton = createEditScheduleButton();
-    private DashPanel thursdaySchedule = createPanel(new Table("Четверг"), editThursdayButton);
+    private Table thursdayContent = new PlainBorderlessTable("Четверг");
+    private DashPanel thursdaySchedule = createPanel(thursdayContent, editThursdayButton);
 
     private Button editFridayButton = createEditScheduleButton();
-    private DashPanel fridaySchedule = createPanel(new Table("Пятница"), editFridayButton);
+    private Table fridayContent = new PlainBorderlessTable("Пятница");
+    private DashPanel fridaySchedule = createPanel(fridayContent, editFridayButton);
 
     private Button editSaturdayButton = createEditScheduleButton();
-    private DashPanel saturdaySchedule = createPanel(new Table("Суббота"), editSaturdayButton);
+    private Table saturdayContent = new PlainBorderlessTable("Суббота");
+    private DashPanel saturdaySchedule = createPanel(saturdayContent, editSaturdayButton);
 
     @Override
     public void setRegistrants(List<String> registrants) {
@@ -83,6 +89,13 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     }
 
     public ScheduleView() {
+        configureEditScheduleButton(editMondayButton, mondayContent);
+        configureEditScheduleButton(editTuesdayButton, tuesdayContent);
+        configureEditScheduleButton(editWednesdayButton, wednesdayContent);
+        configureEditScheduleButton(editThursdayButton, thursdayContent);
+        configureEditScheduleButton(editFridayButton, fridayContent);
+        configureEditScheduleButton(editSaturdayButton, saturdayContent);
+
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
 
@@ -108,15 +121,21 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
                 createStage(fridaySchedule, saturdaySchedule));
     }
 
+    private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
+        editScheduleButton.addClickListener(event -> {
+            CreateLessonWindow lessonWindow = new CreateLessonWindow(scheduleContent.getContainerDataSource());
+            getUI().addWindow(lessonWindow);
+            List<Lesson> editedLessons = lessonWindow.getLessons();
+            if (editedLessons != null) {
+                scheduleContent.setContainerDataSource(createDataSource(editedLessons));
+            }
+        });
+    }
+
     private HorizontalLayout createControlsLayout() {
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
-        controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
-        controls.setExpandRatio(scheduleOwners, 1.5f);
-        controls.setExpandRatio(periodFrom, 1.5f);
-        controls.setExpandRatio(periodTo, 1.5f);
-        controls.setExpandRatio(searchLessonsButton, 1.5f);
-        controls.setExpandRatio(addScheduleButton, 1.5f);
+        controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
         controls.setSpacing(true);
         return controls;
     }
@@ -161,6 +180,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         DashPanel schedulePanel = new DashPanel();
         schedulePanel.addComponent(configure);
         schedulePanel.addComponent(content);
+        content.setWidth(100, Unit.PERCENTAGE);
         return schedulePanel;
     }
 
@@ -172,9 +192,6 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         configure.addStyleName("borderless");
         configure.setDescription(EDIT_SCHEDULE_TITLE);
         configure.addStyleName("small");
-        configure.addClickListener(event -> {
-            Notification.show("Not implemented yet");
-        });
         return configure;
     }
 }

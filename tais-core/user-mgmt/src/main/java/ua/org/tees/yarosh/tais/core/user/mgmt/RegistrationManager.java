@@ -18,6 +18,7 @@ import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.GROUPS;
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.REGISTRANTS;
+import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
 
 /**
  * @author Timur Yarosh
@@ -84,6 +85,11 @@ public class RegistrationManager implements RegistrantService {
     @Cacheable(REGISTRANTS)
     public List<Registrant> findAllRegistrants() {
         return registrantRepository.findAll();
+    }
+
+    @Override
+    public List<Registrant> findAllTeachers() {
+        return registrantRepository.findAllByRole(TEACHER);
     }
 
     @Override
