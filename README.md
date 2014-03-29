@@ -55,8 +55,7 @@ user.role=Administrator #possible values: Administrator / Teacher / Student
 </pre>
 
 ####Notes:
-#####hibernate
-Hibernate ORM properties. Do not change them if you don't know anything about ORM and Hibernate.<br />
+<b>hibernate</b> — Hibernate ORM properties. Do not change them if you don't know anything about ORM and Hibernate.<br />
 <b>hibernate.hbm2ddl.auto=create-drop</b> means that database will be deleted after redeploy and should use only for development.
 Change this value to <b>validate</b>.<br>
 <b>jdbc</b> — database connection settings. By default configured for local postgresql with database name <b>tais</b> and credentials <i>postgres</i><br />
