@@ -14,6 +14,8 @@ import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.presenters.UserManagementListener;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;

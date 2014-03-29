@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.teacher;
+package ua.org.tees.yarosh.tais.ui.views.teacher.presenters;
 
 import com.vaadin.data.Container;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
 
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardTaisView.TeacherDashboardPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 /**
  * @author Timur Yarosh

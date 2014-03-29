@@ -17,10 +17,12 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.presenters.UserRegistrationListener;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
-import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh

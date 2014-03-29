@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.admin;
+package ua.org.tees.yarosh.tais.ui.views.admin.presenters;
 
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;
@@ -14,6 +14,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 
 import java.util.Arrays;
 import java.util.List;
@@ -22,7 +23,7 @@ import static java.util.stream.Collectors.toList;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.*;
 import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
-import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh

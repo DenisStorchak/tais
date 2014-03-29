@@ -16,12 +16,12 @@ import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin;
 import ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher;
-import ua.org.tees.yarosh.tais.ui.views.AccessDeniedView;
-import ua.org.tees.yarosh.tais.ui.views.LoginView;
-import ua.org.tees.yarosh.tais.ui.views.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
+import ua.org.tees.yarosh.tais.ui.views.common.AccessDeniedView;
+import ua.org.tees.yarosh.tais.ui.views.common.LoginView;
+import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;

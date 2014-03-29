@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views;
+package ua.org.tees.yarosh.tais.ui.views.common.api;
 
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 

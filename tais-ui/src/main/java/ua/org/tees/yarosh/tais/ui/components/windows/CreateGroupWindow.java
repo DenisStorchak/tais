@@ -11,7 +11,7 @@ import java.util.ArrayList;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
-import static ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationTaisView.UserRegistrationPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh

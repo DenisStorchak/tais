@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.admin;
+package ua.org.tees.yarosh.tais.ui.views.admin.api;
 
 import com.vaadin.navigator.View;
 import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;

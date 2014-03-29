@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views;
+package ua.org.tees.yarosh.tais.ui.views.common;
 
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.ViewChangeListener;
@@ -14,12 +14,14 @@ import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
+import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
+import ua.org.tees.yarosh.tais.ui.views.common.presenters.LoginListener;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.text.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 /**
  * @author Timur Yarosh

@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views;
+package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -8,13 +8,13 @@ import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.views.LoginTaisView.LoginPresenter;
 
 @Service
 @Scope("prototype")
-public class LoginListener extends AbstractPresenter implements LoginPresenter {
+public class LoginListener extends AbstractPresenter implements LoginTaisView.LoginPresenter {
 
     @Autowired
     public LoginListener(@Qualifier(AUTH) PresenterBasedView view, HelpManager helpManager) {

@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.admin;
+package ua.org.tees.yarosh.tais.ui.views.admin.api;
 
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;

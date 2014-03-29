@@ -19,6 +19,8 @@ import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.presenters.ScheduleListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;

@@ -16,6 +16,8 @@ import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.presenters.TeacherDashboardListener;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;

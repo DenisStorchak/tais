@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.admin;
+package ua.org.tees.yarosh.tais.ui.views.admin.presenters;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,6 +12,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.*;
 

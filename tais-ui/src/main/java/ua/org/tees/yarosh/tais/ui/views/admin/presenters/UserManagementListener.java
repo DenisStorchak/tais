@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.admin;
+package ua.org.tees.yarosh.tais.ui.views.admin.presenters;
 
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
@@ -12,6 +12,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;
 

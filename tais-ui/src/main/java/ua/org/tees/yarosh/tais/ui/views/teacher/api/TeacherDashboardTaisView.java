@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.views.teacher;
+package ua.org.tees.yarosh.tais.ui.views.teacher.api;
 
 import com.vaadin.data.Container;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
