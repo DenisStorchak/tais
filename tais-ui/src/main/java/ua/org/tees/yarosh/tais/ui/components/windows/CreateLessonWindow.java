@@ -98,13 +98,13 @@ public class CreateLessonWindow extends Window {
                     ComboBox lessonTypes = ((ComboBox) item.getItemProperty(LESSON_TYPE).getValue());
                     String lessonType = (String) lessonTypes.getValue();
 
-                    ComboBox classrooms = (ComboBox) item.getItemProperty(CLASSROOM);
+                    ComboBox classrooms = (ComboBox) item.getItemProperty(CLASSROOM).getValue();
                     Classroom classroom = (Classroom) classrooms.getValue();
 
-                    ComboBox teachers = (ComboBox) item.getItemProperty(TEACHER);
+                    ComboBox teachers = (ComboBox) item.getItemProperty(TEACHER).getValue();
                     Registrant teacher = (Registrant) teachers.getValue();
 
-                    DateField lessonDate = (DateField) item.getItemProperty(TIME);
+                    DateField lessonDate = (DateField) item.getItemProperty(TIME).getValue();
                     Date date = lessonDate.getValue();
 
                     Lesson lesson = new Lesson();
