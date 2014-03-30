@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.ui;
 
-import ua.org.tees.yarosh.tais.attendance.schedule.LessonType;
+import ua.org.tees.yarosh.tais.schedule.LessonType;
 
 import java.util.HashMap;
 import java.util.Map;

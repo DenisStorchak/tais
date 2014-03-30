@@ -1,7 +1,7 @@
-package ua.org.tees.yarosh.tais.attendance.schedule.api;
+package ua.org.tees.yarosh.tais.schedule.api;
 
-import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 
 import java.util.Date;
 import java.util.List;

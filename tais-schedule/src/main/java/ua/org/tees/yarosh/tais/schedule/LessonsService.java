@@ -1,13 +1,13 @@
-package ua.org.tees.yarosh.tais.attendance.schedule;
+package ua.org.tees.yarosh.tais.schedule;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.attendance.schedule.api.*;
-import ua.org.tees.yarosh.tais.attendance.schedule.models.Classroom;
-import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.schedule.api.*;
+import ua.org.tees.yarosh.tais.schedule.models.Classroom;
+import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 
 import java.util.Date;
 import java.util.List;

@@ -1,7 +1,7 @@
-package ua.org.tees.yarosh.tais.attendance.schedule;
+package ua.org.tees.yarosh.tais.schedule;
 
 import org.joda.time.LocalDateTime;
-import ua.org.tees.yarosh.tais.attendance.schedule.models.Lesson;
+import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 
 import java.util.ArrayList;
 import java.util.Arrays;

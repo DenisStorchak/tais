@@ -59,6 +59,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>ua.org.tees.yarosh</groupId>
+            <artifactId>tais-schedule</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <dependency>
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-client-compiled</artifactId>
         </dependency>

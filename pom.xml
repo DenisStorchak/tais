@@ -15,6 +15,7 @@
         <module>tais-user-comm</module>
         <module>tais-ui</module>
         <module>tais-auth</module>
+        <module>tais-schedule</module>
     </modules>
 
     <dependencies>

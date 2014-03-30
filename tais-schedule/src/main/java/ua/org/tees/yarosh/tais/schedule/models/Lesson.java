@@ -1,9 +1,9 @@
-package ua.org.tees.yarosh.tais.attendance.schedule.models;
+package ua.org.tees.yarosh.tais.schedule.models;
 
-import ua.org.tees.yarosh.tais.attendance.schedule.LessonType;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.schedule.LessonType;
 
 import javax.persistence.*;
 import java.util.Date;

@@ -1,6 +1,6 @@
-package ua.org.tees.yarosh.tais.attendance.schedule.api;
+package ua.org.tees.yarosh.tais.schedule.api;
 
-import ua.org.tees.yarosh.tais.attendance.schedule.models.Classroom;
+import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 
 import java.util.List;
 

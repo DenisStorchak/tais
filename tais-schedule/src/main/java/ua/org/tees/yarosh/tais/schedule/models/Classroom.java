@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.attendance.schedule.models;
+package ua.org.tees.yarosh.tais.schedule.models;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
