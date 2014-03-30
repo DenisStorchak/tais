@@ -16,6 +16,13 @@ public class Discipline {
     private Long id;
     private String name;
 
+    public Discipline(String discipline) {
+        name = discipline;
+    }
+
+    public Discipline() {
+    }
+
     public Long getId() {
         return id;
     }

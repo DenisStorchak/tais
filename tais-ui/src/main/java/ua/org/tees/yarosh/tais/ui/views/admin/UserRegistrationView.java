@@ -12,6 +12,8 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
@@ -61,6 +63,22 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow(presenter())));
         top.addComponent(createGroup);
         top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
+
+        Button createClassroom = new Button("Новая аудитория");
+        createClassroom.addStyleName("icon-only");
+        createClassroom.addStyleName("icon-doc-new"); // todo set correct icon
+        createClassroom.setDescription("Создать новую аудиторию");
+        createClassroom.addClickListener(clickEvent -> getUI().addWindow(new CreateClassroomWindow(presenter())));
+        top.addComponent(createClassroom);
+        top.setComponentAlignment(createClassroom, Alignment.MIDDLE_LEFT);
+
+        Button createDiscipline = new Button("Новая дисциплина");
+        createDiscipline.addStyleName("icon-only");
+        createDiscipline.addStyleName("icon-doc-new"); // todo set correct icon
+        createDiscipline.setDescription("Создать новую дисциплину");
+        createDiscipline.addClickListener(clickEvent -> getUI().addWindow(new CreateDisciplineWindow(presenter())));
+        top.addComponent(createDiscipline);
+        top.setComponentAlignment(createDiscipline, Alignment.MIDDLE_LEFT);
 
         HorizontalLayout dash = new HorizontalDash();
         addComponent(dash);

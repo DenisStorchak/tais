@@ -7,7 +7,7 @@ import java.util.List;
 public interface ClassroomService {
     List<Classroom> findAllClassrooms();
 
-    Classroom addClassroom(Classroom classroom);
+    Classroom createClassroom(Classroom classroom);
 
     Classroom findClassroom(String id);
 }

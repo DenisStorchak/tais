@@ -90,8 +90,8 @@ public class CreateLessonWindow extends Window {
 
             saveChangesButton.addClickListener(event -> {
                 Container dataSource = schedule.getContainerDataSource();
-                for (int i = 0; i < dataSource.getItemIds().size(); i++) {
-                    Item item = dataSource.getItem(i);
+                for (Object id : dataSource.getItemIds()) {
+                    Item item = dataSource.getItem(id);
                     ComboBox disciplines = (ComboBox) item.getItemProperty(DISCIPLINE).getValue();
                     Discipline discipline = (Discipline) disciplines.getValue();
 

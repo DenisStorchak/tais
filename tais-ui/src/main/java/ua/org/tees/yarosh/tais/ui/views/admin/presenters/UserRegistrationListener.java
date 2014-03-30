@@ -8,6 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.attendance.schedule.api.ClassroomService;
+import ua.org.tees.yarosh.tais.attendance.schedule.api.DisciplineService;
+import ua.org.tees.yarosh.tais.attendance.schedule.models.Classroom;
+import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
@@ -35,10 +39,22 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
 public class UserRegistrationListener extends AbstractPresenter implements UserRegistrationPresenter {
 
     private RegistrantService registrantService;
+    private DisciplineService disciplineService;
+    private ClassroomService classroomService;
 
     @Autowired
     public void setRegistrantService(RegistrantService registrantService) {
         this.registrantService = registrantService;
+    }
+
+    @Autowired
+    public void setDisciplineService(DisciplineService disciplineService) {
+        this.disciplineService = disciplineService;
+    }
+
+    @Autowired
+    public void setClassroomService(ClassroomService classroomService) {
+        this.classroomService = classroomService;
     }
 
     @Autowired
@@ -73,9 +89,19 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     }
 
     @Override
+    public boolean createClassroom(String classroom) {
+        return classroomService.createClassroom(new Classroom(classroom)) != null;
+    }
+
+    @Override
+    public boolean createDiscipline(String discipline) {
+        return disciplineService.createDiscipline(new Discipline(discipline)) != null;
+    }
+
+    @Override
     public List<String> listStudentGroups() {
         List<StudentGroup> studentGroups = registrantService.listStudentGroups();
-        return studentGroups.stream().map(s -> s.getId().toString()).collect(toList());
+        return studentGroups.stream().map(StudentGroup::getId).collect(toList());
     }
 
     @Override

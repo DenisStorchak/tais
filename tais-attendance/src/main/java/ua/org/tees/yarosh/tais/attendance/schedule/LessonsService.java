@@ -85,7 +85,7 @@ public class LessonsService implements ScheduleService, TeacherService, Discipli
     }
 
     @Override
-    public Classroom addClassroom(Classroom classroom) {
+    public Classroom createClassroom(Classroom classroom) {
         return classroomRepository.save(classroom);
     }
 

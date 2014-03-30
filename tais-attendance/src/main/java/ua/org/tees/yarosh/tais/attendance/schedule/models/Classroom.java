@@ -8,6 +8,13 @@ public class Classroom {
     @Id
     private String id;
 
+    public Classroom() {
+    }
+
+    public Classroom(String classroom) {
+        this.id = classroom;
+    }
+
     public String getId() {
         return id;
     }

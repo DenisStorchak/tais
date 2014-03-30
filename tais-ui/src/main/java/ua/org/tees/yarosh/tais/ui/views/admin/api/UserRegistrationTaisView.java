@@ -24,6 +24,10 @@ public interface UserRegistrationTaisView {
                                    ComboBox position,
                                    ComboBox studentGroup);
 
+        boolean createClassroom(String classroom);
+
+        boolean createDiscipline(String discipline);
+
         List<String> listStudentGroups();
 
         List<String> listRoles();
