@@ -50,5 +50,5 @@ public abstract class AbstractPresenter implements Presenter {
     }
 
     @Override
-    public void updateData() { /*NOP*/ }
+    public void update() { /*NOP*/ }
 }

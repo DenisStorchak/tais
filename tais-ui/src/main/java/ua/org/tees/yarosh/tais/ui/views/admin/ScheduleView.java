@@ -26,6 +26,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
@@ -48,35 +49,14 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     private static final SimpleDateFormat onlyTimeSdf = new SimpleDateFormat("hh:mm");
     private static final String EDIT_SCHEDULE_TITLE = "Редактировать расписание";
     private List<String> registrants;
-
+    private Map<? extends Date, ? extends List<Lesson>> lessons;
     private List<String> groups;
+
     private ComboBox scheduleOwners = new ComboBox();
     private PopupDateField periodFrom = new PopupDateField();
     private PopupDateField periodTo = new PopupDateField();
     private Button searchLessonsButton = new Button("Поиск");
-    private Button editMondayButton = createEditScheduleButton();
-    private Table mondayContent = new PlainBorderlessTable("Понедельник");
-    private DashPanel mondaySchedule = createPanel(mondayContent, editMondayButton);
-
-    private Button editTuesdayButton = createEditScheduleButton();
-    private Table tuesdayContent = new PlainBorderlessTable("Вторник");
-    private DashPanel tuesdaySchedule = createPanel(tuesdayContent, editTuesdayButton);
-
-    private Button editWednesdayButton = createEditScheduleButton();
-    private Table wednesdayContent = new PlainBorderlessTable("Среда");
-    private DashPanel wednesdaySchedule = createPanel(wednesdayContent, editWednesdayButton);
-
-    private Button editThursdayButton = createEditScheduleButton();
-    private Table thursdayContent = new PlainBorderlessTable("Четверг");
-    private DashPanel thursdaySchedule = createPanel(thursdayContent, editThursdayButton);
-
-    private Button editFridayButton = createEditScheduleButton();
-    private Table fridayContent = new PlainBorderlessTable("Пятница");
-    private DashPanel fridaySchedule = createPanel(fridayContent, editFridayButton);
-
-    private Button editSaturdayButton = createEditScheduleButton();
-    private Table saturdayContent = new PlainBorderlessTable("Суббота");
-    private DashPanel saturdaySchedule = createPanel(saturdayContent, editSaturdayButton);
+    private Button addScheduleButton = new Button("Добавить расписание");
 
     @Override
     public void setRegistrants(List<String> registrants) {
@@ -89,13 +69,6 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     }
 
     public ScheduleView() {
-        configureEditScheduleButton(editMondayButton, mondayContent);
-        configureEditScheduleButton(editTuesdayButton, tuesdayContent);
-        configureEditScheduleButton(editWednesdayButton, wednesdayContent);
-        configureEditScheduleButton(editThursdayButton, thursdayContent);
-        configureEditScheduleButton(editFridayButton, fridayContent);
-        configureEditScheduleButton(editSaturdayButton, saturdayContent);
-
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
 
@@ -104,6 +77,23 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         scheduleOwners.focus();
 
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
+
+        addScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow(null, presenter())));
+
+        VerticalLayout lessonsLayout = new VerticalLayout();
+        searchLessonsButton.addClickListener(event -> {
+            lessonsLayout.removeAllComponents();
+
+            lessons = presenter().getSchedule(
+                    (String) scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
+            for (Date date : lessons.keySet()) {
+                Button editScheduleButton = createEditScheduleButton();
+                Table dayContent = new PlainBorderlessTable(sdf.format(date));
+                configureEditScheduleButton(editScheduleButton, dayContent);
+                DashPanel dayPanel = createPanel(dayContent, editScheduleButton);
+                lessonsLayout.addComponent(dayPanel);
+            }
+        });
 
         VaadinUtils.setSizeFull(this);
         addStyleName("dashboard-view");
@@ -115,15 +105,13 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         setExpandRatio(dash, 1.5f);
 
         dash.addComponent(createControlsLayout());
-        dash.addComponents(
-                createStage(mondaySchedule, tuesdaySchedule),
-                createStage(wednesdaySchedule, thursdaySchedule),
-                createStage(fridaySchedule, saturdaySchedule));
+        dash.addComponent(lessonsLayout);
     }
 
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
         editScheduleButton.addClickListener(event -> {
-            CreateLessonWindow lessonWindow = new CreateLessonWindow(scheduleContent.getContainerDataSource());
+            CreateLessonWindow lessonWindow = new CreateLessonWindow(
+                    scheduleContent.getContainerDataSource(), presenter());
             getUI().addWindow(lessonWindow);
             List<Lesson> editedLessons = lessonWindow.getLessons();
             if (editedLessons != null) {
@@ -135,7 +123,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     private HorizontalLayout createControlsLayout() {
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
-        controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
+        controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
         controls.setSpacing(true);
         return controls;
     }
@@ -156,7 +144,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         container.addContainerProperty(KEY_START_TIME, String.class, null);
 
         for (Lesson lesson : lessons) {
-            Item item = container.addItem(lesson.getId());
+            Item item = container.addItem(lesson.getDate());
             item.getItemProperty(KEY_DISCIPLINE).setValue(lesson.getDiscipline());
             item.getItemProperty(KEY_LESSON_TYPE).setValue(lesson.getLessonType().toString());
             item.getItemProperty(KEY_TEACHER).setValue(String.format("%s %s %s",
@@ -171,7 +159,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        presenter().updateData();
+        presenter().update();
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
     }

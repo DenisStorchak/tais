@@ -37,7 +37,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     @Override
-    public void updateData() {
+    public void update() {
         ScheduleTaisView view = getView(ScheduleTaisView.class);
         view.setGroups(getGroups());
         view.setRegistrants(getRegistrants());
@@ -70,6 +70,11 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
             );
         }
         return null;
+    }
+
+    @Override
+    public void saveOrReplaceSchedule(List<Lesson> lessons) {
+        scheduleService.saveOrReplaceSchedule(lessons);
     }
 
     private Map<Date, List<Lesson>> createLessonsDateMap(List<Lesson> schedule) {

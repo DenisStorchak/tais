@@ -18,12 +18,14 @@ import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
+import static ua.org.tees.yarosh.tais.schedule.ScheduleUtils.copyToPeriod;
 
 /**
  * @author Timur Yarosh
@@ -38,6 +40,7 @@ public class CreateLessonWindow extends Window {
     private static final String CLASSROOM = "Аудитория";
     private static final String TEACHER = "Преподаватель";
     private static final String TIME = "Начало";
+    private static final String COPY_WITH_STEP = "Копировать с шагом";
     private CreateLessonWindow window;
     private List<Lesson> lessons = new ArrayList<>();
 
@@ -48,30 +51,32 @@ public class CreateLessonWindow extends Window {
     private DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
     private ClassroomService classroomService = ctx.getBean(ClassroomService.class);
     private RegistrantService registrantService = ctx.getBean(RegistrantService.class);
+    private ScheduleTaisView.SchedulePresenter listener;
 
 
     public List<Lesson> getLessons() {
         return lessons;
     }
 
-    public CreateLessonWindow(Container scheduleContainer) {
+    public CreateLessonWindow(Container scheduleContainer, ScheduleTaisView.SchedulePresenter presenter) {
         super("Редактировать расписание");
         window = this;
         this.scheduleContainer = scheduleContainer;
+        this.listener = presenter;
         setModal(true);
         setClosable(true);
         setResizable(false);
         addStyleName("edit-dashboard");
-        setContent(new CreateTaskWindowContent());
+        setContent(new CreateLessonWindowContent());
         setSizeUndefined();
     }
 
-    public class CreateTaskWindowContent extends VerticalLayout {
+    public class CreateLessonWindowContent extends VerticalLayout {
 
         private Button saveChangesButton = new Button("Сохранить изменения");
         private Button addLessonButton = new Button("Добавить запись");
 
-        public CreateTaskWindowContent() {
+        public CreateLessonWindowContent() {
 
             setMargin(true);
             setSpacing(true);
@@ -114,7 +119,13 @@ public class CreateLessonWindow extends Window {
                     lesson.setTeacher(teacher);
                     lesson.setDate(date);
                     lessons.add(lesson);
+
+                    ComboBox copyWithStep = (ComboBox) item.getItemProperty(COPY_WITH_STEP).getValue();
+                    Integer step = (Integer) copyWithStep.getValue();
+                    copyToPeriod(lesson, step).forEach(lessons::add);
                 }
+                listener.saveOrReplaceSchedule(lessons);
+                listener.update();
                 window.close();
             });
             saveChangesButton.addStyleName("default");
@@ -125,6 +136,7 @@ public class CreateLessonWindow extends Window {
                 item.getItemProperty(CLASSROOM).setValue(createClassrooms(classroomService));
                 item.getItemProperty(TEACHER).setValue(createTeachers(registrantService));
                 item.getItemProperty(TIME).setValue(createDateField());
+                item.getItemProperty(COPY_WITH_STEP).setValue(createCopyWithStep(0, 30));
             });
             HorizontalLayout controls = new HorizontalLayout(addLessonButton, saveChangesButton);
             controls.setSpacing(true);
@@ -139,11 +151,14 @@ public class CreateLessonWindow extends Window {
             editable.addContainerProperty(CLASSROOM, ComboBox.class, null);
             editable.addContainerProperty(TEACHER, ComboBox.class, null);
             editable.addContainerProperty(TIME, DateField.class, null);
+            editable.addContainerProperty(COPY_WITH_STEP, ComboBox.class, null);
 
-            for (Integer i = 0; i < scheduleContainer.getItemIds().size(); i++) {
-                Item sourceItem = scheduleContainer.getItem(scheduleContainer.getItemIds().toArray()[i]);
-                Item editableItem = editable.addItem(i);
-                convertEditable(disciplineService, classroomService, registrantService, sourceItem, editableItem);
+            if (scheduleContainer != null) {
+                for (Integer i = 0; i < scheduleContainer.getItemIds().size(); i++) {
+                    Item sourceItem = scheduleContainer.getItem(scheduleContainer.getItemIds().toArray()[i]);
+                    Item editableItem = editable.addItem(i);
+                    convertEditable(disciplineService, classroomService, registrantService, sourceItem, editableItem);
+                }
             }
             return editable;
         }
@@ -179,7 +194,19 @@ public class CreateLessonWindow extends Window {
             dateField.setResolution(Resolution.MINUTE);
             dateField.setValue(date);
             editableItem.getItemProperty(TIME).setValue(dateField);
+
+            ComboBox copyWithStep = createCopyWithStep(0, 30);
+            copyWithStep.setValue(0);
+            editableItem.getItemProperty(COPY_WITH_STEP).setValue(copyWithStep);
         }
+    }
+
+    private ComboBox createCopyWithStep(int first, int last) {
+        ComboBox comboBox = new ComboBox();
+        for (int i = first; i < last; i++) {
+            comboBox.addItem(i);
+        }
+        return comboBox;
     }
 
     private DateField createDateField() {
@@ -196,7 +223,7 @@ public class CreateLessonWindow extends Window {
 
     private ComboBox createTeachers(RegistrantService registrantService) {
         ComboBox teachers = new ComboBox();
-        registrantService.findAllRegistrants().forEach(teachers::addItem);
+        registrantService.findAllTeachers().forEach(teachers::addItem);
         return teachers;
     }
 

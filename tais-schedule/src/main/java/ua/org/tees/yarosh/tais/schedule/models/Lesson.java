@@ -11,12 +11,10 @@ import java.util.List;
 
 @Entity
 public class Lesson {
-    @Id
-    @GeneratedValue
-    private Long id;
     @OneToOne
     @JoinColumn(name = "disciplineId")
     private Discipline discipline;
+    @Id
     @Temporal(TemporalType.TIMESTAMP)
     private Date date;
     @ManyToOne
@@ -40,11 +38,11 @@ public class Lesson {
     }
 
     public Lesson(Lesson lesson) {
-        this.id = lesson.getId();
         this.discipline = lesson.getDiscipline();
         this.date = lesson.getDate();
         this.studentGroup = lesson.getStudentGroup();
-
+        this.classroom = lesson.getClassroom();
+        this.lessonType = lesson.getLessonType();
     }
 
     public Discipline getDiscipline() {
@@ -61,14 +59,6 @@ public class Lesson {
 
     public void setDate(Date date) {
         this.date = date;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public StudentGroup getStudentGroup() {

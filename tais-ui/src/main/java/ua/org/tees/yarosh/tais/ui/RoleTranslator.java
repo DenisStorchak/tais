@@ -23,7 +23,7 @@ public class RoleTranslator {
         if (BUNDLE.containsKey(role)) {
             return BUNDLE.get(role);
         } else if (BUNDLE.containsValue(role)) {
-            return BUNDLE.entrySet().stream().filter(r -> r.getValue().equals(role)).findFirst().get().getValue();
+            return BUNDLE.entrySet().stream().filter(r -> r.getValue().equals(role)).findFirst().get().getKey();
         }
         return "";
     }

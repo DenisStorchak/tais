@@ -40,7 +40,6 @@ public class LessonsService implements ScheduleService, TeacherService, Discipli
     public void saveOrReplaceSchedule(List<Lesson> lessonList) {
         if (!lessonList.isEmpty()) {
             StudentGroup scheduleOwner = lessonList.get(0).getStudentGroup();
-            lessonRepository.deleteSchedule(scheduleOwner);
             for (Lesson lesson : lessonList) {
                 if (lesson.getStudentGroup().getId().equals(scheduleOwner.getId())) {
                     lessonRepository.save(lesson);

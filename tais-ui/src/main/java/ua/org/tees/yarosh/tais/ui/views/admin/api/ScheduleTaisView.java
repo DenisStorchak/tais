@@ -16,5 +16,7 @@ public interface ScheduleTaisView extends View {
 
     interface SchedulePresenter extends Presenter {
         Map<? extends Date, ? extends List<Lesson>> getSchedule(String ownerId, Date periodFrom, Date periodTo);
+
+        void saveOrReplaceSchedule(List<Lesson> lessons);
     }
 }

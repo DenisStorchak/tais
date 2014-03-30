@@ -33,7 +33,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
     }
 
     @Override
-    public void updateData() {
+    public void update() {
         getHelpManager().closeAll();
     }
 

@@ -13,5 +13,5 @@ public interface Presenter {
 
     void navigateBack(Navigator navigator);
 
-    void updateData();
+    void update();
 }
