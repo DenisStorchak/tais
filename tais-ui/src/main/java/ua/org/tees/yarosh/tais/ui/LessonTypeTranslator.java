@@ -22,7 +22,7 @@ public class LessonTypeTranslator {
         if (BUNDLE.containsKey(lessonType)) {
             return BUNDLE.get(lessonType);
         } else if (BUNDLE.containsValue(lessonType)) {
-            return BUNDLE.entrySet().stream().filter(r -> r.getValue().equals(lessonType)).findFirst().get().getValue();
+            return BUNDLE.entrySet().stream().filter(r -> r.getValue().equals(lessonType)).findFirst().get().getKey();
         }
         return "";
     }
