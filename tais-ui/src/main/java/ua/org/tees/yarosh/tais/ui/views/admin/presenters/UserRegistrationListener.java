@@ -119,5 +119,6 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         ComboBox roles = new ComboBox();
         listRoles().forEach(roles::addItem);
         getView(UserRegistrationView.class).setRolesComboBox(roles);
+        getView(UserRegistrationView.class).update();
     }
 }

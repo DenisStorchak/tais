@@ -47,6 +47,11 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
     private ComboBox studentGroupComboBox = new ComboBox();
     private ComboBox position = new ComboBox();
 
+    @Override
+    public void update() {
+
+    }
+
     public UserRegistrationView() {
         login.focus();
         setUpValidators();
