@@ -49,7 +49,9 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
 
     @Override
     public void update() {
-
+        studentGroupComboBox.removeAllItems();
+        getUIFactory().getPresenter(UserRegistrationPresenter.class)
+                .listStudentGroups().forEach(studentGroupComboBox::addItem);
     }
 
     public UserRegistrationView() {
@@ -191,21 +193,22 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
         return registrationDataLayout;
     }
 
-    private HorizontalLayout createSingleFormLayout(Label description, Component textField) {
+    private HorizontalLayout createSingleFormLayout(Label description, Component component) {
         HorizontalLayout layout = new HorizontalLayout() {
             {
                 setWidth(100, Unit.PERCENTAGE);
                 setSpacing(true);
             }
         };
-        layout.addComponents(description, textField);
-        layout.setComponentAlignment(textField, Alignment.TOP_RIGHT);
+        layout.addComponents(description, component);
+        layout.setComponentAlignment(component, Alignment.TOP_RIGHT);
         return layout;
     }
 
     @Override
     public void setStudentGroupsComboBox(ComboBox studentGroupsComboBox) {
-        studentGroupsComboBox.getItemIds().forEach(studentGroupComboBox::addItem);
+        this.studentGroupComboBox.removeAllItems();
+        studentGroupsComboBox.getItemIds().forEach(this.studentGroupComboBox::addItem);
     }
 
     @Override
