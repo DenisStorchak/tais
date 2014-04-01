@@ -7,12 +7,12 @@ import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 public abstract class AbstractLayout extends VerticalLayout {
     private UIFactory uiFactory;
 
-    public UIFactory getUiFactory() {
+    public UIFactory getUIFactory() {
         return uiFactory;
     }
 
     @Autowired
-    public void setUiFactory(UIFactory uiFactory) {
+    public void setUIFactory(UIFactory uiFactory) {
         this.uiFactory = uiFactory;
     }
 }

@@ -14,8 +14,8 @@ import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.presenters.TeacherDashboardListener;
 
@@ -33,8 +33,7 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")
 @PermitRoles(TEACHER)
-public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<TeacherDashboardListener>
-        implements TeacherDashboardTaisView {
+public class TeacherDashboardView extends AbstractLayout implements TeacherDashboardTaisView {
 
     private Table unratedReports;
 
@@ -63,6 +62,7 @@ public class TeacherDashboardView extends PresenterBasedVerticalLayoutView<Teach
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        unratedReports.setContainerDataSource(presenter().getUnratedManualReports());
+        unratedReports.setContainerDataSource(getUIFactory().getPresenter(TeacherDashboardPresenter.class)
+                .getUnratedManualReports());
     }
 }

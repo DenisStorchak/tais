@@ -9,9 +9,8 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;
@@ -35,8 +34,8 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     }
 
     @Autowired
-    public UserManagementListener(@Qualifier(USER_MANAGEMENT) PresenterBasedView view, HelpManager helpManager) {
-        super(view, helpManager);
+    public UserManagementListener(@Qualifier(USER_MANAGEMENT) UpdatableView view) {
+        super(view);
     }
 
     @Override

@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.views.admin;
 import com.vaadin.data.Validatable;
 import com.vaadin.data.Validator;
 import com.vaadin.data.validator.BeanValidator;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -15,8 +16,8 @@ import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
@@ -24,7 +25,6 @@ import ua.org.tees.yarosh.tais.ui.views.admin.presenters.UserRegistrationListene
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh
@@ -36,8 +36,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
 @Scope("prototype")
-public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserRegistrationPresenter>
-        implements UserRegistrationTaisView {
+public class UserRegistrationView extends AbstractLayout implements UserRegistrationTaisView {
 
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
@@ -60,7 +59,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         createGroup.addStyleName("icon-only");
         createGroup.addStyleName("icon-doc-new"); // todo set correct icon
         createGroup.setDescription("Создать новую группу");
-        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow(presenter())));
+        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow()));
         top.addComponent(createGroup);
         top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
 
@@ -68,7 +67,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         createClassroom.addStyleName("icon-only");
         createClassroom.addStyleName("icon-doc-new"); // todo set correct icon
         createClassroom.setDescription("Создать новую аудиторию");
-        createClassroom.addClickListener(clickEvent -> getUI().addWindow(new CreateClassroomWindow(presenter())));
+        createClassroom.addClickListener(clickEvent -> getUI().addWindow(new CreateClassroomWindow()));
         top.addComponent(createClassroom);
         top.setComponentAlignment(createClassroom, Alignment.MIDDLE_LEFT);
 
@@ -76,7 +75,7 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         createDiscipline.addStyleName("icon-only");
         createDiscipline.addStyleName("icon-doc-new"); // todo set correct icon
         createDiscipline.setDescription("Создать новую дисциплину");
-        createDiscipline.addClickListener(clickEvent -> getUI().addWindow(new CreateDisciplineWindow(presenter())));
+        createDiscipline.addClickListener(clickEvent -> getUI().addWindow(new CreateDisciplineWindow()));
         top.addComponent(createDiscipline);
         top.setComponentAlignment(createDiscipline, Alignment.MIDDLE_LEFT);
 
@@ -125,8 +124,8 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
         signUpButton.addClickListener(event -> {
             try {
                 if (isValid(login, password, repeatePassword, name, surname, patronymic, position, studentGroupComboBox)) {
-                    boolean success = presenter().createRegistration(login, password,
-                            name, surname, patronymic, position, studentGroupComboBox);
+                    boolean success = getUIFactory().getPresenter(UserRegistrationPresenter.class).
+                            createRegistration(login, password, name, surname, patronymic, position, studentGroupComboBox);
                     if (!success) {
                         Notification.show("Логин занят");
                     } else {
@@ -207,5 +206,10 @@ public class UserRegistrationView extends PresenterBasedVerticalLayoutView<UserR
     @Override
     public void setRolesComboBox(ComboBox rolesComboBox) {
         rolesComboBox.getItemIds().forEach(position::addItem);
+    }
+
+    @Override
+    public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
+
     }
 }

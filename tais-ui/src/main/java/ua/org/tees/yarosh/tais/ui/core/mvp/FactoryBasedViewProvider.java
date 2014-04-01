@@ -25,7 +25,7 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
 
     @Override
     public View getView(String viewName) {
-        ViewFactory viewFactory = (ViewFactory) VaadinSession.getCurrent().getAttribute(SessionKeys.VIEW_FACTORY);
+        ViewFactory viewFactory = (ViewFactory) VaadinSession.getCurrent().getAttribute(SessionKeys.UI_FACTORY);
         return viewFactory.getView(getViewClass());
     }
 }

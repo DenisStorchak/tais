@@ -5,14 +5,12 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.presenters.LoginListener;
@@ -21,7 +19,6 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.text.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 /**
  * @author Timur Yarosh
@@ -33,9 +30,8 @@ import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPre
 @Qualifier(AUTH)
 @Scope("prototype")
 @PermitAll
-public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> implements LoginTaisView {
+public class LoginView extends AbstractLayout implements LoginTaisView {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(LoginView.class);
     private TextField username;
     private PasswordField password;
 
@@ -51,7 +47,7 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        presenter().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
+        getUIFactory().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
         clearValue(username);
         clearValue(password);
         if (username != null) {
@@ -121,7 +117,8 @@ public class LoginView extends PresenterBasedVerticalLayoutView<LoginPresenter> 
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
                         && password.getValue() != null
-                        && presenter().login(username.getValue(), password.getValue())) {
+                        && getUIFactory().getPresenter(LoginPresenter.class)
+                        .login(username.getValue(), password.getValue())) {
                     removeComponent(error);
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
                     getUI().getNavigator().navigateTo(UriFragments.Admin.USER_REGISTRATION);

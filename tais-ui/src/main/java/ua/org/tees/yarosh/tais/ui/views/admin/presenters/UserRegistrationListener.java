@@ -15,9 +15,8 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.api.ClassroomService;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
-import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 
 import java.util.Arrays;
@@ -58,9 +57,8 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     }
 
     @Autowired
-    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) PresenterBasedView view,
-                                    HelpManager helpManager) {
-        super(view, helpManager);
+    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) UpdatableView view) {
+        super(view);
     }
 
     @Override

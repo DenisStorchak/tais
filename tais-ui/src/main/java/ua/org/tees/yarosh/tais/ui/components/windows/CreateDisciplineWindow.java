@@ -1,6 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
+import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
@@ -14,10 +17,9 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  */
 public class CreateDisciplineWindow extends Window {
 
-    private final UserRegistrationPresenter userRegistrationListener;
     private CreateDisciplineWindow window;
 
-    public CreateDisciplineWindow(UserRegistrationPresenter presenter) {
+    public CreateDisciplineWindow() {
         super("Новая дисциплина");
         window = this;
         setModal(true);
@@ -25,7 +27,6 @@ public class CreateDisciplineWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
-        this.userRegistrationListener = presenter;
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {
@@ -51,7 +52,10 @@ public class CreateDisciplineWindow extends Window {
                     setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
                     ok.addClickListener(clickEvent -> {
                         if (disciplineId.isValid()) {
-                            userRegistrationListener.createDiscipline(disciplineId.getValue());
+                            ((ComponentFactory) VaadinSession.getCurrent()
+                                    .getAttribute(SessionKeys.UI_FACTORY))
+                                    .getPresenter(UserRegistrationPresenter.class)
+                                    .createDiscipline(disciplineId.getValue());
                             window.close();
                         } else {
                             Notification.show("Неправильное значение");

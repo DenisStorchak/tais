@@ -9,9 +9,8 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.api.ScheduleService;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
-import ua.org.tees.yarosh.tais.ui.core.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.*;
@@ -52,8 +51,8 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     @Autowired
-    public ScheduleListener(@Qualifier(MANAGED_SCHEDULE) PresenterBasedView view, HelpManager helpManager) {
-        super(view, helpManager);
+    public ScheduleListener(@Qualifier(MANAGED_SCHEDULE) UpdatableView view) {
+        super(view);
     }
 
     @Override

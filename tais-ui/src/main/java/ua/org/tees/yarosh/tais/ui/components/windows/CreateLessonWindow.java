@@ -7,6 +7,8 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.RandomStringUtils;
+import org.springframework.context.ApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
@@ -17,7 +19,6 @@ import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.ArrayList;
@@ -47,7 +48,8 @@ public class CreateLessonWindow extends Window {
     private Container scheduleContainer;
     private PlainBorderlessTable schedule;
 
-    private SpringContextHelper ctx = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+    private ApplicationContext ctx = WebApplicationContextUtils
+            .getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
     private DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
     private ClassroomService classroomService = ctx.getBean(ClassroomService.class);
     private RegistrantService registrantService = ctx.getBean(RegistrantService.class);

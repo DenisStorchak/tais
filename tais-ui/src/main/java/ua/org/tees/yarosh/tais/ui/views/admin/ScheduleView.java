@@ -16,8 +16,8 @@ import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateLessonWindow;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.PresenterBasedVerticalLayoutView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 import ua.org.tees.yarosh.tais.ui.views.admin.presenters.ScheduleListener;
@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
+import static com.vaadin.server.Sizeable.Unit.PERCENTAGE;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
 
@@ -37,8 +38,7 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SC
 @Scope("prototype")
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisView.SchedulePresenter>
-        implements ScheduleTaisView {
+public class ScheduleView extends AbstractLayout implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
@@ -78,13 +78,14 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
 
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
 
-        addScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow(null, presenter())));
+        addScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow(null,
+                getUIFactory().getPresenter(SchedulePresenter.class))));
 
         VerticalLayout lessonsLayout = new VerticalLayout();
         searchLessonsButton.addClickListener(event -> {
             lessonsLayout.removeAllComponents();
 
-            lessons = presenter().getSchedule(
+            lessons = getUIFactory().getPresenter(SchedulePresenter.class).getSchedule(
                     (String) scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
             for (Date date : lessons.keySet()) {
                 Button editScheduleButton = createEditScheduleButton();
@@ -111,7 +112,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
         editScheduleButton.addClickListener(event -> {
             CreateLessonWindow lessonWindow = new CreateLessonWindow(
-                    scheduleContent.getContainerDataSource(), presenter());
+                    scheduleContent.getContainerDataSource(), getUIFactory().getPresenter(SchedulePresenter.class));
             getUI().addWindow(lessonWindow);
             List<Lesson> editedLessons = lessonWindow.getLessons();
             if (editedLessons != null) {
@@ -130,7 +131,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
 
     private HorizontalLayout createStage(Component... components) {
         HorizontalLayout stage = new HorizontalLayout(components);
-        stage.setWidth(100, Unit.PERCENTAGE);
+        stage.setWidth(100, PERCENTAGE);
         stage.setSpacing(true);
         return stage;
     }
@@ -159,7 +160,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        presenter().update();
+        getUIFactory().getPresenter(SchedulePresenter.class).update();
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
     }
@@ -168,7 +169,7 @@ public class ScheduleView extends PresenterBasedVerticalLayoutView<ScheduleTaisV
         DashPanel schedulePanel = new DashPanel();
         schedulePanel.addComponent(configure);
         schedulePanel.addComponent(content);
-        content.setWidth(100, Unit.PERCENTAGE);
+        content.setWidth(100, PERCENTAGE);
         return schedulePanel;
     }
 

@@ -1,10 +1,14 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import org.springframework.web.context.WebApplicationContext;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.configuration.SpringContextHelper;
+import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
+import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import java.util.ArrayList;
@@ -20,11 +24,9 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  */
 public class CreateGroupWindow extends Window {
 
-    private final UserRegistrationPresenter userRegistrationListener;
     private CreateGroupWindow window;
-    private String createdGroup;
 
-    public CreateGroupWindow(UserRegistrationPresenter userRegistrationListener) {
+    public CreateGroupWindow() {
         super("Новая группа");
         window = this;
         setModal(true);
@@ -32,11 +34,6 @@ public class CreateGroupWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
-        this.userRegistrationListener = userRegistrationListener;
-    }
-
-    public String getCreatedGroup() {
-        return createdGroup;
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {
@@ -49,7 +46,8 @@ public class CreateGroupWindow extends Window {
                     setWidth("100%");
                     setCloseShortcut(ESCAPE);
 
-                    SpringContextHelper ctx = new SpringContextHelper(VaadinServlet.getCurrent().getServletContext());
+                    WebApplicationContext ctx = WebApplicationContextUtils
+                            .getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
 
                     TextField groupId = new TextField("№ группы");
                     groupId.addValidator(new NotBlankValidator("Поле не может быть пустым"));
@@ -64,11 +62,12 @@ public class CreateGroupWindow extends Window {
                     setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
                     ok.addClickListener(clickEvent -> {
                         if (groupId.isValid()) {
-                            createdGroup = groupId.getValue();
                             RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                             StudentGroup studentGroup = new StudentGroup(groupId.getValue(), new ArrayList<>());
                             registrantService.createStudentGroup(studentGroup);
-                            userRegistrationListener.update();
+                            ComponentFactory componentFactory = (ComponentFactory) VaadinSession.getCurrent()
+                                    .getAttribute(SessionKeys.UI_FACTORY);
+                            componentFactory.getPresenter(UserRegistrationPresenter.class).update();
                             window.close();
                         } else {
                             Notification.show("Неправильное значение");

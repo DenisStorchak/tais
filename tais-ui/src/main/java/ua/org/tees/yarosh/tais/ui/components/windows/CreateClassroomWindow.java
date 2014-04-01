@@ -1,6 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
+import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
@@ -14,10 +17,9 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  */
 public class CreateClassroomWindow extends Window {
 
-    private final UserRegistrationPresenter userRegistrationListener;
     private CreateClassroomWindow window;
 
-    public CreateClassroomWindow(UserRegistrationPresenter presenter) {
+    public CreateClassroomWindow() {
         super("Новая аудитория");
         window = this;
         setModal(true);
@@ -25,7 +27,6 @@ public class CreateClassroomWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
-        this.userRegistrationListener = presenter;
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {
@@ -51,7 +52,10 @@ public class CreateClassroomWindow extends Window {
                     setComponentAlignment(ok, Alignment.BOTTOM_RIGHT);
                     ok.addClickListener(clickEvent -> {
                         if (classroom.isValid()) {
-                            userRegistrationListener.createClassroom(classroom.getValue());
+                            ((ComponentFactory) VaadinSession.getCurrent()
+                                    .getAttribute(SessionKeys.UI_FACTORY))
+                                    .getPresenter(UserRegistrationPresenter.class)
+                                    .createClassroom(classroom.getValue());
                             window.close();
                         } else {
                             Notification.show("Неправильное значение");
