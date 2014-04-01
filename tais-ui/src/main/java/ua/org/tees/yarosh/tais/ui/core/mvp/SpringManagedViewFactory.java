@@ -3,10 +3,16 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.ui.core.UIContext;
 
 import java.util.HashMap;
 import java.util.Map;
+
+import static ua.org.tees.yarosh.tais.ui.core.bindings.Qualifiers.VIEW_FACTORY;
 
 /**
  * @author Timur Yarosh
@@ -14,17 +20,17 @@ import java.util.Map;
  *         Time: 21:49
  */
 @SuppressWarnings("unchecked")
+@Service
+@Scope("prototype")
+@Qualifier(VIEW_FACTORY)
 public class SpringManagedViewFactory implements ViewFactory {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(SpringManagedViewFactory.class);
     private Map<Class<? extends View>, View> viewPool = new HashMap<>();
-    private ApplicationContext ctx;
+    private UIContext ctx;
 
-    public static ViewFactory createFactory(ApplicationContext ctx) {
-        return new SpringManagedViewFactory(ctx);
-    }
-
-    private SpringManagedViewFactory(ApplicationContext ctx) {
+    @Autowired
+    public SpringManagedViewFactory(UIContext ctx) {
         this.ctx = ctx;
     }
 

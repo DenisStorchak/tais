@@ -1,7 +1,13 @@
 package ua.org.tees.yarosh.tais.ui.configuration;
 
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Scope;
+import ua.org.tees.yarosh.tais.ui.core.UIContext;
+
+import static com.vaadin.server.VaadinServlet.getCurrent;
+import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 
 /**
  * @author Timur Yarosh
@@ -11,4 +17,14 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 @ComponentScan(basePackages = "ua.org.tees.yarosh.tais.ui")
 public class UIConfiguration {
+    @Bean
+    @Scope("prototype")
+    public UIContext uiContext() {
+        return new UIContext() {
+            @Override
+            public <T> T getBean(Class<T> clazz) {
+                return getRequiredWebApplicationContext(getCurrent().getServletContext()).getBean(clazz);
+            }
+        };
+    }
 }
