@@ -3,9 +3,9 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.ui.core.HelpManager;
+import ua.org.tees.yarosh.tais.ui.components.HelpManager;
 
-import static ua.org.tees.yarosh.tais.ui.core.bindings.Qualifiers.HELP_MANAGER_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Qualifiers.HELP_MANAGER_FACTORY;
 
 @Service
 @Scope("prototype")

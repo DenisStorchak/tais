@@ -3,11 +3,11 @@ package ua.org.tees.yarosh.tais.ui.components.windows;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
-import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.COMPONENT_FACTORY;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
@@ -53,7 +53,7 @@ public class CreateDisciplineWindow extends Window {
                     ok.addClickListener(clickEvent -> {
                         if (disciplineId.isValid()) {
                             ((ComponentFactory) VaadinSession.getCurrent()
-                                    .getAttribute(SessionKeys.COMPONENT_FACTORY))
+                                    .getAttribute(COMPONENT_FACTORY))
                                     .getPresenter(UserRegistrationPresenter.class)
                                     .createDiscipline(disciplineId.getValue());
                             window.close();
@@ -64,7 +64,7 @@ public class CreateDisciplineWindow extends Window {
                     });
                     ok.addStyleName("wide");
                     ok.addStyleName("default");
-                    ok.setClickShortcut(ENTER, null);
+                    ok.setClickShortcut(ENTER);
                 }
             });
         }

@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.TAISUI;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
-import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.COMPONENT_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 @WebServlet(urlPatterns = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)

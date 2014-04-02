@@ -24,7 +24,7 @@ import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**

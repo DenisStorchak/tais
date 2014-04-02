@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
 
 @Service
 @Scope("prototype")

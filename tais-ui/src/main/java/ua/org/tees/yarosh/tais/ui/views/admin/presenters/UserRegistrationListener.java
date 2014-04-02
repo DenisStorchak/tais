@@ -25,7 +25,7 @@ import java.util.List;
 import static java.util.stream.Collectors.toList;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.*;
 import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**

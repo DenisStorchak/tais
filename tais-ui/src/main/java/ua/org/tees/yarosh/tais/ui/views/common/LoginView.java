@@ -12,13 +12,13 @@ import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
-import static ua.org.tees.yarosh.tais.ui.core.text.Messages.*;
-import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 /**
@@ -124,7 +124,7 @@ public class LoginView extends AbstractTaisLayout implements LoginTaisView {
                         .login(username.getValue(), password.getValue())) {
                     removeComponent(error);
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
-                    getUI().getNavigator().navigateTo(UriFragments.Admin.USER_REGISTRATION);
+                    getUI().getNavigator().navigateTo(USER_REGISTRATION);
                 } else {
                     if (getComponentCount() > 2) {
                         removeComponent(getComponent(2));

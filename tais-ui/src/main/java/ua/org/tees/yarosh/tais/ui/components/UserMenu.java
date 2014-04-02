@@ -4,10 +4,9 @@ import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 
-import static java.lang.String.format;
-import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
 
 
 /**
@@ -18,10 +17,6 @@ import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 public class UserMenu extends VerticalLayout {
 
     private Label username;
-
-    public UserMenu(String name, String surname) {
-        this(format("%s %s", name, surname));
-    }
 
     public UserMenu(String registrantId) {
         setSizeUndefined();
@@ -49,7 +44,7 @@ public class UserMenu extends VerticalLayout {
         signOut.addClickListener(event -> {
             AuthManager.logout(username.getValue());
             VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, null);
-            getUI().getNavigator().navigateTo(UriFragments.AUTH);
+            getUI().getNavigator().navigateTo(AUTH);
         });
         addComponent(signOut);
     }

@@ -18,7 +18,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView.UserManagementPresenter;
 
 

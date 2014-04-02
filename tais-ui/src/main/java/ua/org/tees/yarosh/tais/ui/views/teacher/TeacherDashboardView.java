@@ -20,7 +20,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 

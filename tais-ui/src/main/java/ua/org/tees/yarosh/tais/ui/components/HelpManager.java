@@ -8,7 +8,7 @@
  *
  */
 
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.navigator.View;
 import com.vaadin.shared.ui.label.ContentMode;
@@ -16,6 +16,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.UI;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.ui.components.windows.HelpOverlay;
 
 import java.util.ArrayList;
 import java.util.List;

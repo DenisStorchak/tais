@@ -30,7 +30,7 @@ import java.util.Map;
 
 import static com.vaadin.server.Sizeable.Unit.PERCENTAGE;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 @PresentedBy(SchedulePresenter.class)

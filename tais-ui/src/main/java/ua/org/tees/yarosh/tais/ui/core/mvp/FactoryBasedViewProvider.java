@@ -3,9 +3,9 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
 import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
-import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 
 import static com.vaadin.navigator.Navigator.ClassBasedViewProvider;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 /**
  * @author Timur Yarosh
@@ -27,7 +27,7 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
     @Override
     public View getView(String viewName) {
         ComponentFactory componentFactory = (ComponentFactory) VaadinSession.getCurrent()
-                .getAttribute(SessionKeys.COMPONENT_FACTORY);
+                .getAttribute(COMPONENT_FACTORY);
         return componentFactory.getView(getViewClass());
     }
 }

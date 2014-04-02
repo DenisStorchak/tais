@@ -10,12 +10,11 @@ import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
+import ua.org.tees.yarosh.tais.ui.core.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
 import ua.org.tees.yarosh.tais.ui.core.SidebarManager;
 import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
-import ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin;
-import ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
@@ -26,11 +25,11 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.ACCESS_DENIED;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.*;
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ACCESS_DENIED;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 /**
  * @author Timur Yarosh
@@ -75,8 +74,8 @@ public class TAISUI extends UI {
 
     private SidebarManager configureSidebarManager(SidebarManager sidebarManager) {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
-        sidebarManager.registerSidebar(Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
-        sidebarManager.registerSidebar(Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
+        sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
+        sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
         return sidebarManager;
     }
 }

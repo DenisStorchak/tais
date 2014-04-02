@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Window;
+import ua.org.tees.yarosh.tais.ui.components.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 
 public class UIFactory implements ComponentFactory {

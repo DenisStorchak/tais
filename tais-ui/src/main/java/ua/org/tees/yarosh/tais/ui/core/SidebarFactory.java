@@ -7,13 +7,13 @@ import ua.org.tees.yarosh.tais.core.common.dto.Role;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.UserMenu;
-import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
-import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
 
 public class SidebarFactory {
 
@@ -45,7 +45,7 @@ public class SidebarFactory {
     }
 
     private UserMenu createUserMenu() {
-        return new UserMenu((String) VaadinSession.getCurrent().getAttribute(SessionKeys.REGISTRANT_ID));
+        return new UserMenu((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID));
     }
 
     private SidebarMenu createTeacherMenu() {

@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 
 /**
  * @author Timur Yarosh
@@ -28,6 +29,7 @@ public abstract class AbstractPresenter implements Presenter {
 
     @Override
     public void update() {
+        SessionFactory.getCurrent().getHelpManager().closeAll();
         view.update();
     }
 }
