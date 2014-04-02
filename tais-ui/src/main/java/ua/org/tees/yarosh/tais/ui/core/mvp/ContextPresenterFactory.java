@@ -20,6 +20,9 @@ public class ContextPresenterFactory implements PresenterFactory {
 
     @Override
     public <P extends Presenter> P getPresenter(Class<P> clazz) {
+        if (!clazz.isInterface()) {
+            throw new IllegalArgumentException("Interface required");
+        }
         if (!presenterPool.containsKey(clazz)) {
             LOGGER.debug("Presenter [{}] will be created now", clazz.getName());
             P presenter = ctx.getBean(clazz);
