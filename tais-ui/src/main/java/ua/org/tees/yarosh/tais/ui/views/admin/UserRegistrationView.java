@@ -52,6 +52,9 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
         studentGroupComboBox.removeAllItems();
         getUIFactory().getPresenter(UserRegistrationPresenter.class)
                 .listStudentGroups().forEach(studentGroupComboBox::addItem);
+        position.removeAllItems();
+        getUIFactory().getPresenter(UserRegistrationPresenter.class)
+                .listRoles().forEach(position::addItem);
     }
 
     public UserRegistrationView() {
@@ -206,18 +209,7 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
     }
 
     @Override
-    public void setStudentGroupsComboBox(ComboBox studentGroupsComboBox) {
-        this.studentGroupComboBox.removeAllItems();
-        studentGroupsComboBox.getItemIds().forEach(this.studentGroupComboBox::addItem);
-    }
-
-    @Override
-    public void setRolesComboBox(ComboBox rolesComboBox) {
-        rolesComboBox.getItemIds().forEach(position::addItem);
-    }
-
-    @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-
+        update();
     }
 }

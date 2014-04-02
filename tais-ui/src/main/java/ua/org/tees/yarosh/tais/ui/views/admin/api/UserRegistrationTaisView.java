@@ -34,8 +34,4 @@ public interface UserRegistrationTaisView extends View, UpdatableView {
 
         List<String> listRoles();
     }
-
-    void setStudentGroupsComboBox(ComboBox studentGroupsComboBox);
-
-    void setRolesComboBox(ComboBox rolesComboBox);
 }
