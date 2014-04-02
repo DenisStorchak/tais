@@ -9,12 +9,14 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.core.common.models.Discipline;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
-import ua.org.tees.yarosh.tais.ui.components.windows.CreateLessonWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
@@ -23,14 +25,13 @@ import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Locale;
-import java.util.Map;
+import java.util.*;
 
 import static com.vaadin.server.Sizeable.Unit.PERCENTAGE;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
+import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.setValidationVisible;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 @PresentedBy(SchedulePresenter.class)
@@ -49,9 +50,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy',' EEEEEE", Locale.forLanguageTag("ru"));
     private static final SimpleDateFormat onlyTimeSdf = new SimpleDateFormat("hh:mm");
     private static final String EDIT_SCHEDULE_TITLE = "Редактировать расписание";
-    private List<String> registrants;
-    private Map<? extends Date, ? extends List<Lesson>> lessons;
-    private List<String> groups;
+    private Map<Date, List<Lesson>> lessons = new HashMap<>();
 
     private ComboBox scheduleOwners = new ComboBox();
     private PopupDateField periodFrom = new PopupDateField();
@@ -60,18 +59,24 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     private Button addScheduleButton = new Button("Добавить расписание");
 
     @Override
-    public void setRegistrants(List<String> registrants) {
-        this.registrants = registrants;
-    }
-
-    @Override
-    public void setGroups(List<String> groups) {
-        this.groups = groups;
-    }
-
-    @Override
     public void update() {
+        if (isValid(scheduleOwners, periodFrom, periodTo)) {
+            updateLessons();
+        }
+        SchedulePresenter presenter = SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class);
+        scheduleOwners.removeAllItems();
+        presenter.getGroups().forEach(scheduleOwners::addItem);
+        presenter.getRegistrants().forEach(scheduleOwners::addItem);
+    }
 
+    private void updateLessons() {
+        Map<? extends Date, ? extends List<Lesson>> schedule = SessionFactory.getCurrent()
+                .getRelativePresenter(this, SchedulePresenter.class)
+                .getSchedule(scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
+        lessons.clear();
+        for (Date date : schedule.keySet()) {
+            lessons.put(date, schedule.get(date));
+        }
     }
 
     public ScheduleView() {
@@ -79,23 +84,25 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         periodTo.setValue(new Date());
 
         scheduleOwners.addValidator(new NotBlankValidator("Поле не должно быть пустым"));
-        VaadinUtils.setValidationVisible(false, scheduleOwners);
+        setValidationVisible(false, scheduleOwners);
         scheduleOwners.focus();
 
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
 
-        addScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow(null,
-                SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class))));
+        addScheduleButton.addClickListener(event -> getUI().addWindow(
+                SessionFactory.getCurrent()
+                        .getRelativePresenter(this, SchedulePresenter.class)
+                        .getCreateScheduleWindow(scheduleOwners.getValue(), null)
+        ));
 
         VerticalLayout lessonsLayout = new VerticalLayout();
         searchLessonsButton.addClickListener(event -> {
             lessonsLayout.removeAllComponents();
-
-            lessons = SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class).getSchedule(
-                    (String) scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
+            updateLessons();
             for (Date date : lessons.keySet()) {
                 Button editScheduleButton = createEditScheduleButton();
                 Table dayContent = new PlainBorderlessTable(sdf.format(date));
+                dayContent.setContainerDataSource(createDataSource(lessons.get(date)));
                 configureEditScheduleButton(editScheduleButton, dayContent);
                 DashPanel dayPanel = createPanel(dayContent, editScheduleButton);
                 lessonsLayout.addComponent(dayPanel);
@@ -116,16 +123,11 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     }
 
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
-        editScheduleButton.addClickListener(event -> {
-            CreateLessonWindow lessonWindow = new CreateLessonWindow(
-                    scheduleContent.getContainerDataSource(),
-                    SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class));
-            getUI().addWindow(lessonWindow);
-            List<Lesson> editedLessons = lessonWindow.getLessons();
-            if (editedLessons != null) {
-                scheduleContent.setContainerDataSource(createDataSource(editedLessons));
-            }
-        });
+        editScheduleButton.addClickListener(event -> getUI().addWindow(
+                SessionFactory.getCurrent()
+                        .getRelativePresenter(this, SchedulePresenter.class)
+                        .getCreateScheduleWindow(scheduleOwners.getValue(), scheduleContent)
+        ));
     }
 
     private HorizontalLayout createControlsLayout() {
@@ -145,10 +147,10 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
 
     private Container createDataSource(List<Lesson> lessons) {
         IndexedContainer container = new IndexedContainer();
-        container.addContainerProperty(KEY_DISCIPLINE, String.class, null);
+        container.addContainerProperty(KEY_DISCIPLINE, Discipline.class, null);
         container.addContainerProperty(KEY_LESSON_TYPE, String.class, null);
-        container.addContainerProperty(KEY_TEACHER, String.class, null);
-        container.addContainerProperty(KEY_CLASSROOM, String.class, null);
+        container.addContainerProperty(KEY_TEACHER, Registrant.class, null);
+        container.addContainerProperty(KEY_CLASSROOM, Classroom.class, null);
         container.addContainerProperty(KEY_START_TIME, String.class, null);
 
         for (Lesson lesson : lessons) {
@@ -167,9 +169,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class).update();
-        groups.forEach(scheduleOwners::addItem);
-        registrants.forEach(scheduleOwners::addItem);
+        update();
     }
 
     private DashPanel createPanel(Component content, Button configure) {

@@ -8,9 +8,12 @@ import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.LessonType;
 import ua.org.tees.yarosh.tais.schedule.api.ClassroomService;
@@ -19,7 +22,6 @@ import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -27,14 +29,17 @@ import java.util.List;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
 import static ua.org.tees.yarosh.tais.schedule.ScheduleUtils.copyToPeriod;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 /**
  * @author Timur Yarosh
  *         Date: 21.03.14
  *         Time: 20:40
  */
+@Service
+@Scope("prototype")
 @SuppressWarnings("unchecked")
-public class CreateLessonWindow extends Window {
+public class CreateScheduleWindow extends Window {
 
     private static final String DISCIPLINE = "Дисциплина";
     private static final String LESSON_TYPE = "Тип занятия";
@@ -42,35 +47,47 @@ public class CreateLessonWindow extends Window {
     private static final String TEACHER = "Преподаватель";
     private static final String TIME = "Начало";
     private static final String COPY_WITH_STEP = "Копировать с шагом";
-    private CreateLessonWindow window;
+    private CreateScheduleWindow window;
+
     private List<Lesson> lessons = new ArrayList<>();
 
     private Container scheduleContainer;
     private PlainBorderlessTable schedule;
+    private StudentGroup studentGroup;
 
     private ApplicationContext ctx = WebApplicationContextUtils
             .getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
     private DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
     private ClassroomService classroomService = ctx.getBean(ClassroomService.class);
     private RegistrantService registrantService = ctx.getBean(RegistrantService.class);
-    private ScheduleTaisView.SchedulePresenter listener;
+    private SchedulePresenter listener;
 
 
     public List<Lesson> getLessons() {
         return lessons;
     }
 
-    public CreateLessonWindow(Container scheduleContainer, ScheduleTaisView.SchedulePresenter presenter) {
+    public CreateScheduleWindow() {
         super("Редактировать расписание");
         window = this;
-        this.scheduleContainer = scheduleContainer;
-        this.listener = presenter;
         setModal(true);
         setClosable(true);
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateLessonWindowContent());
         setSizeUndefined();
+    }
+
+    public void setScheduleContainer(Container scheduleContainer) {
+        this.scheduleContainer = scheduleContainer;
+    }
+
+    public void setListener(SchedulePresenter listener) {
+        this.listener = listener;
+    }
+
+    public void setStudentGroup(StudentGroup studentGroup) {
+        this.studentGroup = studentGroup;
     }
 
     public class CreateLessonWindowContent extends VerticalLayout {
@@ -95,55 +112,60 @@ public class CreateLessonWindow extends Window {
             schedule.setSizeUndefined();
             addComponent(schedule);
 
-            saveChangesButton.addClickListener(event -> {
-                Container dataSource = schedule.getContainerDataSource();
-                for (Object id : dataSource.getItemIds()) {
-                    Item item = dataSource.getItem(id);
-                    ComboBox disciplines = (ComboBox) item.getItemProperty(DISCIPLINE).getValue();
-                    Discipline discipline = (Discipline) disciplines.getValue();
-
-                    ComboBox lessonTypes = ((ComboBox) item.getItemProperty(LESSON_TYPE).getValue());
-                    String lessonType = (String) lessonTypes.getValue();
-
-                    ComboBox classrooms = (ComboBox) item.getItemProperty(CLASSROOM).getValue();
-                    Classroom classroom = (Classroom) classrooms.getValue();
-
-                    ComboBox teachers = (ComboBox) item.getItemProperty(TEACHER).getValue();
-                    Registrant teacher = (Registrant) teachers.getValue();
-
-                    DateField lessonDate = (DateField) item.getItemProperty(TIME).getValue();
-                    Date date = lessonDate.getValue();
-
-                    Lesson lesson = new Lesson();
-                    lesson.setDiscipline(discipline);
-                    lesson.setLessonType(LessonType.valueOf(LessonTypeTranslator.translate(lessonType).toUpperCase()));
-                    lesson.setClassroom(classroom);
-                    lesson.setTeacher(teacher);
-                    lesson.setDate(date);
-                    lessons.add(lesson);
-
-                    ComboBox copyWithStep = (ComboBox) item.getItemProperty(COPY_WITH_STEP).getValue();
-                    Integer step = (Integer) copyWithStep.getValue();
-                    copyToPeriod(lesson, step).forEach(lessons::add);
-                }
-                listener.saveOrReplaceSchedule(lessons);
-                listener.update();
-                window.close();
-            });
+            saveChangesButton.addClickListener(event -> saveChanges());
             saveChangesButton.addStyleName("default");
-            addLessonButton.addClickListener(event -> {
-                Item item = schedule.addItem(RandomStringUtils.random(5));
-                item.getItemProperty(DISCIPLINE).setValue(createDisciplines(disciplineService));
-                item.getItemProperty(LESSON_TYPE).setValue(createLessonTypes());
-                item.getItemProperty(CLASSROOM).setValue(createClassrooms(classroomService));
-                item.getItemProperty(TEACHER).setValue(createTeachers(registrantService));
-                item.getItemProperty(TIME).setValue(createDateField());
-                item.getItemProperty(COPY_WITH_STEP).setValue(createCopyWithStep(0, 30));
-            });
+            addLessonButton.addClickListener(event -> addLesson());
             HorizontalLayout controls = new HorizontalLayout(addLessonButton, saveChangesButton);
             controls.setSpacing(true);
             addComponent(controls);
             setComponentAlignment(controls, Alignment.BOTTOM_RIGHT);
+        }
+
+        private void addLesson() {
+            Item item = schedule.addItem(RandomStringUtils.random(5));
+            item.getItemProperty(DISCIPLINE).setValue(createDisciplines(disciplineService));
+            item.getItemProperty(LESSON_TYPE).setValue(createLessonTypes());
+            item.getItemProperty(CLASSROOM).setValue(createClassrooms(classroomService));
+            item.getItemProperty(TEACHER).setValue(createTeachers(registrantService));
+            item.getItemProperty(TIME).setValue(createDateField());
+            item.getItemProperty(COPY_WITH_STEP).setValue(createCopyWithStep(0, 30));
+        }
+
+        private void saveChanges() {
+            Container dataSource = schedule.getContainerDataSource();
+            for (Object id : dataSource.getItemIds()) {
+                Item item = dataSource.getItem(id);
+                ComboBox disciplines = (ComboBox) item.getItemProperty(DISCIPLINE).getValue();
+                Discipline discipline = (Discipline) disciplines.getValue();
+
+                ComboBox lessonTypes = ((ComboBox) item.getItemProperty(LESSON_TYPE).getValue());
+                String lessonType = (String) lessonTypes.getValue();
+
+                ComboBox classrooms = (ComboBox) item.getItemProperty(CLASSROOM).getValue();
+                Classroom classroom = (Classroom) classrooms.getValue();
+
+                ComboBox teachers = (ComboBox) item.getItemProperty(TEACHER).getValue();
+                Registrant teacher = (Registrant) teachers.getValue();
+
+                DateField lessonDate = (DateField) item.getItemProperty(TIME).getValue();
+                Date date = lessonDate.getValue();
+
+                Lesson lesson = new Lesson();
+                lesson.setDiscipline(discipline);
+                lesson.setLessonType(LessonType.valueOf(LessonTypeTranslator.translate(lessonType).toUpperCase()));
+                lesson.setClassroom(classroom);
+                lesson.setTeacher(teacher);
+                lesson.setDate(date);
+                lesson.setStudentGroup(studentGroup);
+                lessons.add(lesson);
+
+                ComboBox copyWithStep = (ComboBox) item.getItemProperty(COPY_WITH_STEP).getValue();
+                Integer step = (Integer) copyWithStep.getValue();
+                copyToPeriod(lesson, step).forEach(lessons::add);
+            }
+            listener.saveOrReplaceSchedule(lessons);
+            listener.update();
+            window.close();
         }
 
         private Container convertEditable(Container scheduleContainer) {

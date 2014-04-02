@@ -2,6 +2,8 @@ package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
@@ -15,6 +17,8 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  *         Date: 21.03.14
  *         Time: 20:40
  */
+@Service
+@Scope("prototype")
 public class CreateClassroomWindow extends Window {
 
     private CreateClassroomWindow window;

@@ -1,7 +1,11 @@
 package ua.org.tees.yarosh.tais.ui.views.admin.api;
 
+import com.vaadin.data.Container;
 import com.vaadin.navigator.View;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
@@ -11,12 +15,14 @@ import java.util.Map;
 
 public interface ScheduleTaisView extends View, UpdatableView {
 
-    public void setRegistrants(List<String> registrants);
-
-    public void setGroups(List<String> groups);
-
     interface SchedulePresenter extends Presenter {
-        Map<? extends Date, ? extends List<Lesson>> getSchedule(String ownerId, Date periodFrom, Date periodTo);
+        Map<? extends Date, ? extends List<Lesson>> getSchedule(Object owner, Date periodFrom, Date periodTo);
+
+        CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons);
+
+        List<StudentGroup> getGroups();
+
+        List<Registrant> getRegistrants();
 
         void saveOrReplaceSchedule(List<Lesson> lessons);
     }

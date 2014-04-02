@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.admin.presenters;
 
+import com.vaadin.data.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
@@ -9,13 +10,14 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.api.ScheduleService;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.*;
 
-import static java.util.stream.Collectors.toList;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 
 @Service
@@ -35,19 +37,12 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
         this.scheduleService = scheduleService;
     }
 
-    @Override
-    public void update() {
-        ScheduleTaisView view = getView(ScheduleTaisView.class);
-        view.setGroups(getGroups());
-        view.setRegistrants(getRegistrants());
+    public List<StudentGroup> getGroups() {
+        return registrantService.listStudentGroups();
     }
 
-    private List<String> getGroups() {
-        return registrantService.listStudentGroups().stream().map(StudentGroup::getId).collect(toList());
-    }
-
-    private List<String> getRegistrants() {
-        return registrantService.findAllRegistrants().stream().map(Registrant::toString).collect(toList());
+    public List<Registrant> getRegistrants() {
+        return registrantService.findAllRegistrants();
     }
 
     @Autowired
@@ -56,19 +51,24 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     @Override
-    public Map<Date, List<Lesson>> getSchedule(String ownerId, Date periodFrom, Date periodTo) {
-        if (registrantService.isStudentGroupExists(ownerId)) {
-            return createLessonsDateMap(
-                    scheduleService
-                            .findSchedule(periodFrom, periodTo, registrantService.findStudentGroup(ownerId))
-            );
-        } else if (registrantService.loginExists(ownerId)) {
-            return createLessonsDateMap(
-                    scheduleService
-                            .findSchedule(periodFrom, periodTo, registrantService.getRegistration(ownerId).getGroup())
-            );
+    public Map<Date, List<Lesson>> getSchedule(Object owner, Date periodFrom, Date periodTo) {
+        if (owner instanceof StudentGroup) {
+            StudentGroup studentGroup = registrantService.findStudentGroup(((StudentGroup) owner).getId());
+            return createLessonsDateMap(scheduleService.findSchedule(periodFrom, periodTo, studentGroup));
+        } else if (owner instanceof Registrant) {
+            Registrant registration = registrantService.getRegistration(((Registrant) owner).getLogin());
+            return createLessonsDateMap(scheduleService.findSchedule(periodFrom, periodTo, registration.getGroup()));
         }
-        return null;
+        throw new IllegalArgumentException("Owner must be instance of StudentGroup or Registrant");
+    }
+
+    @Override
+    public CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons) {
+        CreateScheduleWindow window = SessionFactory.getCurrent().getWindow(CreateScheduleWindow.class);
+        window.setListener(this);
+        window.setScheduleContainer(lessons);
+        window.setStudentGroup((StudentGroup) studentGroup);
+        return window;
     }
 
     @Override

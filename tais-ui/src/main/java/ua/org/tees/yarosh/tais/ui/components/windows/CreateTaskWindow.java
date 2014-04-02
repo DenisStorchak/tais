@@ -1,6 +1,8 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.ui.*;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
@@ -11,6 +13,8 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
  *         Date: 21.03.14
  *         Time: 20:40
  */
+@Service
+@Scope("prototype")
 public class CreateTaskWindow extends Window {
 
     private CreateTaskWindow window;

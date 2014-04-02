@@ -26,6 +26,11 @@ public class StudentGroup implements Serializable {
     public StudentGroup() {
     }
 
+    @Override
+    public String toString() {
+        return id;
+    }
+
     public StudentGroup(String id, List<Registrant> students) {
         this.id = id;
         this.students = students;

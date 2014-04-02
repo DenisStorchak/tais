@@ -2,6 +2,8 @@ package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Service;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -20,6 +22,8 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  *         Date: 21.03.14
  *         Time: 20:40
  */
+@Service
+@Scope("prototype")
 public class CreateGroupWindow extends Window {
 
     private CreateGroupWindow window;
