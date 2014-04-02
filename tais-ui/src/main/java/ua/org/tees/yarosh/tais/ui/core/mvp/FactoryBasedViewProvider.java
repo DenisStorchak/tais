@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinSession;
+import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
 import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
 
 import static com.vaadin.navigator.Navigator.ClassBasedViewProvider;
@@ -25,7 +26,8 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
 
     @Override
     public View getView(String viewName) {
-        ViewFactory viewFactory = (ViewFactory) VaadinSession.getCurrent().getAttribute(SessionKeys.UI_FACTORY);
-        return viewFactory.getView(getViewClass());
+        ComponentFactory componentFactory = (ComponentFactory) VaadinSession.getCurrent()
+                .getAttribute(SessionKeys.COMPONENT_FACTORY);
+        return componentFactory.getView(getViewClass());
     }
 }

@@ -2,32 +2,30 @@ package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Window;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 
-import static ua.org.tees.yarosh.tais.ui.core.bindings.Qualifiers.*;
-
-@Service
-@Scope("prototype")
-@Qualifier(UI_FACTORY)
 public class UIFactory implements ComponentFactory {
     private ViewFactory viewFactory;
     private WindowFactory windowFactory;
     private PresenterFactory presenterFactory;
     private HelpManagerFactory helpManagerFactory;
 
-    @Autowired
-    public UIFactory(@Qualifier(VIEW_FACTORY) ViewFactory viewFactory,
-                     @Qualifier(WINDOW_FACTORY) WindowFactory windowFactory,
-                     @Qualifier(PRESENTER_FACTORY) PresenterFactory presenterFactory,
-                     @Qualifier(HELP_MANAGER_FACTORY) HelpManagerFactory helpManagerFactory) {
+    private UIFactory(PresenterFactory presenterFactory,
+                      ViewFactory viewFactory,
+                      WindowFactory windowFactory,
+                      HelpManagerFactory helpManagerFactory) {
         this.viewFactory = viewFactory;
         this.windowFactory = windowFactory;
         this.presenterFactory = presenterFactory;
         this.helpManagerFactory = helpManagerFactory;
+    }
+
+    public static UIFactory createFactory(UIContext ctx) {
+        ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
+        ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
+        ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
+        LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
+        return new UIFactory(presenterFactory, viewFactory, windowFactory, helpManagerFactory);
     }
 
     @Override

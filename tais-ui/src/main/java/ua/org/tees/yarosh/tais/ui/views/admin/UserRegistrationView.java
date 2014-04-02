@@ -16,27 +16,28 @@ import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
-import ua.org.tees.yarosh.tais.ui.views.admin.presenters.UserRegistrationListener;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.USER_REGISTRATION;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
  *         Time: 20:44
  */
-@PresentedBy(UserRegistrationListener.class)
+@PresentedBy(UserRegistrationPresenter.class)
 @Service
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
 @Scope("prototype")
-public class UserRegistrationView extends AbstractLayout implements UserRegistrationTaisView {
+public class UserRegistrationView extends AbstractTaisLayout implements UserRegistrationTaisView {
 
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
@@ -50,10 +51,10 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
     @Override
     public void update() {
         studentGroupComboBox.removeAllItems();
-        getUIFactory().getPresenter(UserRegistrationPresenter.class)
+        SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class)
                 .listStudentGroups().forEach(studentGroupComboBox::addItem);
         position.removeAllItems();
-        getUIFactory().getPresenter(UserRegistrationPresenter.class)
+        SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class)
                 .listRoles().forEach(position::addItem);
     }
 
@@ -134,7 +135,7 @@ public class UserRegistrationView extends AbstractLayout implements UserRegistra
         signUpButton.addClickListener(event -> {
             try {
                 if (isValid(login, password, repeatePassword, name, surname, patronymic, position, studentGroupComboBox)) {
-                    boolean success = getUIFactory().getPresenter(UserRegistrationPresenter.class).
+                    boolean success = SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class).
                             createRegistration(login, password, name, surname, patronymic, position, studentGroupComboBox);
                     if (!success) {
                         Notification.show("Логин занят");

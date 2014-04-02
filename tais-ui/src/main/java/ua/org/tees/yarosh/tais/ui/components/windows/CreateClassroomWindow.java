@@ -53,7 +53,7 @@ public class CreateClassroomWindow extends Window {
                     ok.addClickListener(clickEvent -> {
                         if (classroom.isValid()) {
                             ((ComponentFactory) VaadinSession.getCurrent()
-                                    .getAttribute(SessionKeys.UI_FACTORY))
+                                    .getAttribute(SessionKeys.COMPONENT_FACTORY))
                                     .getPresenter(UserRegistrationPresenter.class)
                                     .createClassroom(classroom.getValue());
                             window.close();

@@ -53,7 +53,7 @@ public class CreateDisciplineWindow extends Window {
                     ok.addClickListener(clickEvent -> {
                         if (disciplineId.isValid()) {
                             ((ComponentFactory) VaadinSession.getCurrent()
-                                    .getAttribute(SessionKeys.UI_FACTORY))
+                                    .getAttribute(SessionKeys.COMPONENT_FACTORY))
                                     .getPresenter(UserRegistrationPresenter.class)
                                     .createDiscipline(disciplineId.getValue());
                             window.close();

@@ -3,16 +3,9 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.ui.core.UIContext;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import static ua.org.tees.yarosh.tais.ui.core.bindings.Qualifiers.VIEW_FACTORY;
 
 /**
  * @author Timur Yarosh
@@ -20,18 +13,14 @@ import static ua.org.tees.yarosh.tais.ui.core.bindings.Qualifiers.VIEW_FACTORY;
  *         Time: 21:49
  */
 @SuppressWarnings("unchecked")
-@Service
-@Scope("prototype")
-@Qualifier(VIEW_FACTORY)
-public class SpringManagedViewFactory implements ViewFactory {
+public class ContextViewFactory implements ViewFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SpringManagedViewFactory.class);
+    private static final Logger LOGGER = LoggerFactory.getLogger(ContextViewFactory.class);
     private Map<Class<? extends View>, View> viewPool = new HashMap<>();
-    private UIContext ctx;
+    private PresenterFactory presenterFactory;
 
-    @Autowired
-    public SpringManagedViewFactory(UIContext ctx) {
-        this.ctx = ctx;
+    public ContextViewFactory(PresenterFactory presenterFactory) {
+        this.presenterFactory = presenterFactory;
     }
 
     @Override
@@ -39,7 +28,7 @@ public class SpringManagedViewFactory implements ViewFactory {
         if (!viewPool.containsKey(viewClazz)) {
             LOGGER.debug("View [{}] will be created now", viewClazz.getName());
             Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(PresentedBy.class).value();
-            Presenter presenter = ctx.getBean(presenterClazz);
+            Presenter presenter = presenterFactory.getPresenter(presenterClazz);
             V view = presenter.getView(viewClazz);
             viewPool.put(viewClazz, view);
             return view;

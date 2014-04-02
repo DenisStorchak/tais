@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.TAISUI;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
-import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.UI_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.COMPONENT_FACTORY;
 
 @WebServlet(urlPatterns = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)
@@ -28,9 +28,10 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
 
     @Override
     public void sessionInit(SessionInitEvent event) throws ServiceException {
-        ComponentFactory componentFactory = WebApplicationContextUtils.getRequiredWebApplicationContext(
-                getCurrent().getServletContext()).getBean(ComponentFactory.class);
+        UIContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(
+                getCurrent().getServletContext()).getBean(UIContext.class);
+        UIFactory uiFactory = UIFactory.createFactory(ctx);
         LOGGER.debug("ComponentFactory created for session {}", event.getSession().getSession().getId());
-        event.getSession().setAttribute(UI_FACTORY, componentFactory);
+        event.getSession().setAttribute(COMPONENT_FACTORY, uiFactory);
     }
 }

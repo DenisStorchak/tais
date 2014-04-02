@@ -9,28 +9,29 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.text.UriFragments;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
-import ua.org.tees.yarosh.tais.ui.views.common.presenters.LoginListener;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.text.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.text.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 /**
  * @author Timur Yarosh
  *         Date: 22.03.14
  *         Time: 13:15
  */
-@PresentedBy(LoginListener.class)
+@PresentedBy(LoginPresenter.class)
 @Service
 @Qualifier(AUTH)
 @Scope("prototype")
 @PermitAll
-public class LoginView extends AbstractLayout implements LoginTaisView {
+public class LoginView extends AbstractTaisLayout implements LoginTaisView {
 
     private TextField username;
     private PasswordField password;
@@ -47,7 +48,7 @@ public class LoginView extends AbstractLayout implements LoginTaisView {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        getUIFactory().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
+        SessionFactory.getCurrent().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
         clearValue(username);
         clearValue(password);
         if (username != null) {
@@ -117,7 +118,7 @@ public class LoginView extends AbstractLayout implements LoginTaisView {
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
                         && password.getValue() != null
-                        && getUIFactory().getPresenter(LoginPresenter.class)
+                        && SessionFactory.getCurrent().getPresenter(LoginPresenter.class)
                         .login(username.getValue(), password.getValue())) {
                     removeComponent(error);
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());

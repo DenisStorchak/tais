@@ -14,13 +14,14 @@ import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.presenters.TeacherDashboardListener;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 
 /**
@@ -28,12 +29,12 @@ import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Teacher.TEACHER_
  *         Date: 21.03.14
  *         Time: 19:57
  */
-@PresentedBy(TeacherDashboardListener.class)
+@PresentedBy(TeacherDashboardPresenter.class)
 @Service
 @Qualifier(TEACHER_DASHBOARD)
 @Scope("prototype")
 @PermitRoles(TEACHER)
-public class TeacherDashboardView extends AbstractLayout implements TeacherDashboardTaisView {
+public class TeacherDashboardView extends AbstractTaisLayout implements TeacherDashboardTaisView {
 
     private Table unratedReports;
 
@@ -62,7 +63,7 @@ public class TeacherDashboardView extends AbstractLayout implements TeacherDashb
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        unratedReports.setContainerDataSource(getUIFactory().getPresenter(TeacherDashboardPresenter.class)
+        unratedReports.setContainerDataSource(SessionFactory.getCurrent().getPresenter(TeacherDashboardPresenter.class)
                 .getUnratedManualReports());
     }
 }

@@ -1,14 +1,12 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
-import ua.org.tees.yarosh.tais.ui.core.text.SessionKeys;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import java.util.ArrayList;
@@ -65,9 +63,7 @@ public class CreateGroupWindow extends Window {
                             RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                             StudentGroup studentGroup = new StudentGroup(groupId.getValue(), new ArrayList<>());
                             registrantService.createStudentGroup(studentGroup);
-                            ComponentFactory componentFactory = (ComponentFactory) VaadinSession.getCurrent()
-                                    .getAttribute(SessionKeys.UI_FACTORY);
-                            componentFactory.getPresenter(UserRegistrationPresenter.class).update();
+                            SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class).update();
                             window.close();
                         } else {
                             Notification.show("Неправильное значение");
@@ -76,7 +72,7 @@ public class CreateGroupWindow extends Window {
                     });
                     ok.addStyleName("wide");
                     ok.addStyleName("default");
-                    ok.setClickShortcut(ENTER, null);
+                    ok.setClickShortcut(ENTER);
                 }
             });
         }

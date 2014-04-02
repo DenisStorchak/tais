@@ -15,12 +15,12 @@ import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateLessonWindow;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractLayout;
+import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
-import ua.org.tees.yarosh.tais.ui.views.admin.presenters.ScheduleListener;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -31,14 +31,15 @@ import java.util.Map;
 import static com.vaadin.server.Sizeable.Unit.PERCENTAGE;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.text.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
-@PresentedBy(ScheduleListener.class)
+@PresentedBy(SchedulePresenter.class)
 @Service
 @Qualifier(MANAGED_SCHEDULE)
 @Scope("prototype")
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends AbstractLayout implements ScheduleTaisView {
+public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
@@ -79,13 +80,13 @@ public class ScheduleView extends AbstractLayout implements ScheduleTaisView {
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
 
         addScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow(null,
-                getUIFactory().getPresenter(SchedulePresenter.class))));
+                SessionFactory.getCurrent().getPresenter(SchedulePresenter.class))));
 
         VerticalLayout lessonsLayout = new VerticalLayout();
         searchLessonsButton.addClickListener(event -> {
             lessonsLayout.removeAllComponents();
 
-            lessons = getUIFactory().getPresenter(SchedulePresenter.class).getSchedule(
+            lessons = SessionFactory.getCurrent().getPresenter(SchedulePresenter.class).getSchedule(
                     (String) scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
             for (Date date : lessons.keySet()) {
                 Button editScheduleButton = createEditScheduleButton();
@@ -112,7 +113,7 @@ public class ScheduleView extends AbstractLayout implements ScheduleTaisView {
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
         editScheduleButton.addClickListener(event -> {
             CreateLessonWindow lessonWindow = new CreateLessonWindow(
-                    scheduleContent.getContainerDataSource(), getUIFactory().getPresenter(SchedulePresenter.class));
+                    scheduleContent.getContainerDataSource(), SessionFactory.getCurrent().getPresenter(SchedulePresenter.class));
             getUI().addWindow(lessonWindow);
             List<Lesson> editedLessons = lessonWindow.getLessons();
             if (editedLessons != null) {
@@ -160,7 +161,7 @@ public class ScheduleView extends AbstractLayout implements ScheduleTaisView {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        getUIFactory().getPresenter(SchedulePresenter.class).update();
+        SessionFactory.getCurrent().getPresenter(SchedulePresenter.class).update();
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
     }
