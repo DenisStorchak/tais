@@ -69,6 +69,11 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         this.groups = groups;
     }
 
+    @Override
+    public void update() {
+
+    }
+
     public ScheduleView() {
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
@@ -80,13 +85,13 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
 
         addScheduleButton.addClickListener(event -> getUI().addWindow(new CreateLessonWindow(null,
-                SessionFactory.getCurrent().getPresenter(SchedulePresenter.class))));
+                SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class))));
 
         VerticalLayout lessonsLayout = new VerticalLayout();
         searchLessonsButton.addClickListener(event -> {
             lessonsLayout.removeAllComponents();
 
-            lessons = SessionFactory.getCurrent().getPresenter(SchedulePresenter.class).getSchedule(
+            lessons = SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class).getSchedule(
                     (String) scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
             for (Date date : lessons.keySet()) {
                 Button editScheduleButton = createEditScheduleButton();
@@ -113,7 +118,8 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
         editScheduleButton.addClickListener(event -> {
             CreateLessonWindow lessonWindow = new CreateLessonWindow(
-                    scheduleContent.getContainerDataSource(), SessionFactory.getCurrent().getPresenter(SchedulePresenter.class));
+                    scheduleContent.getContainerDataSource(),
+                    SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class));
             getUI().addWindow(lessonWindow);
             List<Lesson> editedLessons = lessonWindow.getLessons();
             if (editedLessons != null) {
@@ -161,7 +167,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        SessionFactory.getCurrent().getPresenter(SchedulePresenter.class).update();
+        SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class).update();
         groups.forEach(scheduleOwners::addItem);
         registrants.forEach(scheduleOwners::addItem);
     }

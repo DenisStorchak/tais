@@ -51,11 +51,11 @@ public class UserRegistrationView extends AbstractTaisLayout implements UserRegi
     @Override
     public void update() {
         studentGroupComboBox.removeAllItems();
-        SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class)
-                .listStudentGroups().forEach(studentGroupComboBox::addItem);
+        UserRegistrationPresenter presenter = SessionFactory.getCurrent()
+                .getRelativePresenter(this, UserRegistrationPresenter.class);
+        presenter.listStudentGroups().forEach(studentGroupComboBox::addItem);
         position.removeAllItems();
-        SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class)
-                .listRoles().forEach(position::addItem);
+        presenter.listRoles().forEach(position::addItem);
     }
 
     public UserRegistrationView() {
@@ -135,8 +135,9 @@ public class UserRegistrationView extends AbstractTaisLayout implements UserRegi
         signUpButton.addClickListener(event -> {
             try {
                 if (isValid(login, password, repeatePassword, name, surname, patronymic, position, studentGroupComboBox)) {
-                    boolean success = SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class).
-                            createRegistration(login, password, name, surname, patronymic, position, studentGroupComboBox);
+                    boolean success = SessionFactory.getCurrent()
+                            .getRelativePresenter(this, UserRegistrationPresenter.class)
+                            .createRegistration(login, password, name, surname, patronymic, position, studentGroupComboBox);
                     if (!success) {
                         Notification.show("Логин занят");
                     } else {

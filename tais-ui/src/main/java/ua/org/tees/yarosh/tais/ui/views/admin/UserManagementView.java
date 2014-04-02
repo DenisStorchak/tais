@@ -50,7 +50,8 @@ public class UserManagementView extends AbstractTaisLayout
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        setRegistrantsDataSource(SessionFactory.getCurrent().getPresenter(UserManagementPresenter.class).getAllRegistrants());
+        setRegistrantsDataSource(SessionFactory.getCurrent()
+                .getRelativePresenter(this, UserManagementPresenter.class).getAllRegistrants());
     }
 
     @Override

@@ -63,7 +63,8 @@ public class TeacherDashboardView extends AbstractTaisLayout implements TeacherD
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
-        unratedReports.setContainerDataSource(SessionFactory.getCurrent().getPresenter(TeacherDashboardPresenter.class)
+        unratedReports.setContainerDataSource(SessionFactory.getCurrent()
+                .getRelativePresenter(this, TeacherDashboardPresenter.class)
                 .getUnratedManualReports());
     }
 }

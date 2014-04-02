@@ -35,8 +35,10 @@ public class LoginView extends AbstractTaisLayout implements LoginTaisView {
 
     private TextField username;
     private PasswordField password;
+    private LoginView instance;
 
     public LoginView() {
+        instance = this;
         setSizeFull();
         addStyleName("login-layout");
         addStyleName("login-bg");
@@ -118,7 +120,7 @@ public class LoginView extends AbstractTaisLayout implements LoginTaisView {
             signIn.addClickListener(event -> {
                 if (username.getValue() != null
                         && password.getValue() != null
-                        && SessionFactory.getCurrent().getPresenter(LoginPresenter.class)
+                        && SessionFactory.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
                         .login(username.getValue(), password.getValue())) {
                     removeComponent(error);
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());

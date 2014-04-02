@@ -44,6 +44,11 @@ public class UIFactory implements ComponentFactory {
     }
 
     @Override
+    public <P extends Presenter> P getRelativePresenter(View view, Class<P> clazz) {
+        return presenterFactory.getRelativePresenter(view, clazz);
+    }
+
+    @Override
     public HelpManager getHelpManager() {
         return helpManagerFactory.getHelpManager();
     }
