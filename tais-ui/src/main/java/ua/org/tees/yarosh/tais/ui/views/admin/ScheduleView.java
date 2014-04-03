@@ -29,7 +29,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static com.vaadin.server.Sizeable.Unit.PERCENTAGE;
 import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
@@ -156,20 +155,13 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         return controls;
     }
 
-    private HorizontalLayout createStage(Component... components) {
-        HorizontalLayout stage = new HorizontalLayout(components);
-        stage.setWidth(100, PERCENTAGE);
-        stage.setSpacing(true);
-        return stage;
-    }
-
     private Container createDataSource(List<Lesson> lessons) {
         IndexedContainer container = new IndexedContainer();
         container.addContainerProperty(KEY_DISCIPLINE, Discipline.class, null);
         container.addContainerProperty(KEY_LESSON_TYPE, String.class, null);
         container.addContainerProperty(KEY_TEACHER, Registrant.class, null);
         container.addContainerProperty(KEY_CLASSROOM, Classroom.class, null);
-        container.addContainerProperty(KEY_START_TIME, String.class, null);
+        container.addContainerProperty(KEY_START_TIME, Date.class, null);
 
         for (Lesson lesson : lessons) {
             Item item = container.addItem(lesson.getId());
@@ -177,7 +169,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
             item.getItemProperty(KEY_LESSON_TYPE).setValue(lesson.getLessonType().toString());
             item.getItemProperty(KEY_TEACHER).setValue(lesson.getTeacher());
             item.getItemProperty(KEY_CLASSROOM).setValue(lesson.getClassroom());
-            item.getItemProperty(KEY_START_TIME).setValue(onlyTimeSdf.format(lesson.getDate()));
+            item.getItemProperty(KEY_START_TIME).setValue(lesson.getDate());
         }
         return container;
     }
@@ -191,7 +183,6 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         DashPanel schedulePanel = new DashPanel();
         schedulePanel.addComponent(configure);
         schedulePanel.addComponent(content);
-        content.setWidth(100, PERCENTAGE);
         return schedulePanel;
     }
 
