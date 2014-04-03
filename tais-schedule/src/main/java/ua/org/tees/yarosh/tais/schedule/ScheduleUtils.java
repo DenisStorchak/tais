@@ -5,25 +5,26 @@ import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 public class ScheduleUtils {
-    public static List<Lesson> copyToPeriod(Lesson lesson, int daysStep) {
+    public static List<Lesson> copyToPeriod(Lesson lesson, int daysStep, Date lastDate) {
         LocalDateTime lessonFirstDateTime = LocalDateTime.fromDateFields(lesson.getDate());
         ArrayList<Lesson> lessons = new ArrayList<>(Arrays.asList(lesson));
-        LocalDateTime nextLessonDate = null;
-        for (int i = 0; i < daysStep; i++) {
-            if (nextLessonDate == null) {
-                nextLessonDate = lessonFirstDateTime.plusDays(1);
-            } else {
-                nextLessonDate = nextLessonDate.plusDays(1);
+        LocalDateTime nextLessonDate = lessonFirstDateTime.minusDays(1);
+        while (beforeOrEquals(nextLessonDate.toDate(), lastDate)) {
+            nextLessonDate = lessonFirstDateTime.plusDays(daysStep);
+            if (beforeOrEquals(nextLessonDate.toDate(), lastDate)) {
+                Lesson nextLesson = new Lesson(lesson);
+                nextLesson.setDate(nextLessonDate.toDate());
+                lessons.add(nextLesson);
             }
-            Lesson nextLesson = new Lesson(lesson);
-            nextLesson.setDate(nextLessonDate.toDate());
-            lessons.add(nextLesson);
-            lessons.add(lesson);
         }
-        if (lessons.isEmpty()) lessons.add(lesson);
         return lessons;
+    }
+
+    private static boolean beforeOrEquals(Date lessonFirstDateTime, Date lessonLastDateTime) {
+        return !lessonFirstDateTime.equals(lessonLastDateTime) && lessonFirstDateTime.before(lessonLastDateTime);
     }
 }
