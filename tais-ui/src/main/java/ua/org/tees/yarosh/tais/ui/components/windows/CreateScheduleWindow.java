@@ -19,7 +19,6 @@ import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.core.Initable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -38,7 +37,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.Schedu
 @Service
 @Scope("prototype")
 @SuppressWarnings("unchecked")
-public class CreateScheduleWindow extends Window implements Initable {
+public class CreateScheduleWindow extends Window {
 
     private static final String DISCIPLINE = "Дисциплина";
     private static final String LESSON_TYPE = "Тип занятия";
@@ -70,8 +69,7 @@ public class CreateScheduleWindow extends Window implements Initable {
         setSizeUndefined();
     }
 
-    @Override
-    public void init() {
+    public void setContent() {
         setContent(new CreateLessonWindowContent());
     }
 
@@ -220,7 +218,7 @@ public class CreateScheduleWindow extends Window implements Initable {
                                      Item sourceItem,
                                      Item editableItem) {
 
-            String discipline = (String) sourceItem.getItemProperty(DISCIPLINE).getValue();
+            Discipline discipline = (Discipline) sourceItem.getItemProperty(DISCIPLINE).getValue();
             ComboBox disciplines = createDisciplines(disciplineService);
             disciplines.setValue(discipline);
             editableItem.getItemProperty(DISCIPLINE).setValue(disciplines);
@@ -230,12 +228,12 @@ public class CreateScheduleWindow extends Window implements Initable {
             lessonTypes.setValue(lessonType);
             editableItem.getItemProperty(LESSON_TYPE).setValue(lessonTypes);
 
-            String classroom = (String) sourceItem.getItemProperty(CLASSROOM).getValue();
+            Classroom classroom = (Classroom) sourceItem.getItemProperty(CLASSROOM).getValue();
             ComboBox classrooms = createClassrooms(classroomService);
             classrooms.setValue(classroom);
             editableItem.getItemProperty(CLASSROOM).setValue(classrooms);
 
-            String teacher = (String) sourceItem.getItemProperty(TEACHER).getValue();
+            Registrant teacher = (Registrant) sourceItem.getItemProperty(TEACHER).getValue();
             ComboBox teachers = createTeachers(registrantService);
             teachers.setValue(teacher);
             editableItem.getItemProperty(TEACHER).setValue(teachers);

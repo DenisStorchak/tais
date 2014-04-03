@@ -5,7 +5,6 @@ import com.vaadin.ui.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
-import ua.org.tees.yarosh.tais.ui.core.Initable;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
@@ -20,7 +19,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  */
 @Service
 @Scope("prototype")
-public class CreateClassroomWindow extends Window implements Initable {
+public class CreateClassroomWindow extends Window {
 
     private CreateClassroomWindow window;
 
@@ -32,11 +31,6 @@ public class CreateClassroomWindow extends Window implements Initable {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
-    }
-
-    @Override
-    public void init() {
-
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {

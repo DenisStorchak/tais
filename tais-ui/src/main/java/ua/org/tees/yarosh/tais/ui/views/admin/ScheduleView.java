@@ -5,6 +5,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
@@ -50,8 +52,18 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy',' EEEEEE", Locale.forLanguageTag("ru"));
     private static final SimpleDateFormat onlyTimeSdf = new SimpleDateFormat("hh:mm");
     private static final String EDIT_SCHEDULE_TITLE = "Редактировать расписание";
-    private final VerticalLayout lessonsLayout;
-    private Map<Date, List<Lesson>> lessons = new HashMap<>();
+    private final Table scheduleTable;
+    private SortedMap<String, List<Lesson>> lessons = new TreeMap<>((o1, o2) -> {
+        try {
+            Date d1 = sdf.parse(o1);
+            Date d2 = sdf.parse(o2);
+            if (d1.before(d2)) return -1;
+            if (d1.equals(d2)) return 0;
+            return 1;
+        } catch (ParseException e) {
+            throw new IllegalArgumentException(e);
+        }
+    });
 
     private ComboBox scheduleOwners = new ComboBox();
     private PopupDateField periodFrom = new PopupDateField();
@@ -76,7 +88,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
                 .getSchedule(scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
         lessons.clear();
         for (Date date : schedule.keySet()) {
-            lessons.put(date, schedule.get(date));
+            lessons.put(sdf.format(date), schedule.get(date));
         }
     }
 
@@ -96,24 +108,26 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
                         .getCreateScheduleWindow(scheduleOwners.getValue(), null, periodTo.getValue())
         ));
 
-        lessonsLayout = new VerticalLayout();
-        lessonsLayout.setSizeFull();
+        scheduleTable = new PlainBorderlessTable("Расписание");
+        scheduleTable.addContainerProperty("", DashPanel.class, null);
+        scheduleTable.setSizeFull();
         searchLessonsButton.addClickListener(event -> {
-            lessonsLayout.removeAllComponents();
+            scheduleTable.removeAllItems();
             updateLessons();
-            for (Date date : lessons.keySet()) {
+            for (String date : lessons.keySet()) {
                 Button editScheduleButton = createEditScheduleButton();
-                Table dayContent = new PlainBorderlessTable(sdf.format(date));
+                Table dayContent = new Table(date);
                 dayContent.setContainerDataSource(createDataSource(lessons.get(date)));
                 configureEditScheduleButton(editScheduleButton, dayContent);
                 DashPanel dayPanel = createPanel(dayContent, editScheduleButton);
-                lessonsLayout.addComponent(dayPanel);
+                Item item = scheduleTable.addItem(RandomStringUtils.random(10));
+                item.getItemProperty("").setValue(dayPanel);
             }
         });
 
         VaadinUtils.setSizeFull(this);
         addStyleName("dashboard-view");
-        HorizontalLayout top = new BgPanel("Расписание занятий");
+        HorizontalLayout top = new BgPanel("");
         top.addComponent(createControlsLayout());
         addComponent(top);
 
@@ -122,7 +136,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         setExpandRatio(dash, 1.5f);
 
         DashPanel dashPanel = new DashPanel();
-        dashPanel.addComponent(lessonsLayout);
+        dashPanel.addComponent(scheduleTable);
         dash.addComponent(dashPanel);
     }
 
@@ -136,7 +150,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
 
     private HorizontalLayout createControlsLayout() {
         HorizontalLayout controls = new HorizontalLayout();
-        controls.setHeight(20, PERCENTAGE);
+        controls.setSizeUndefined();
         controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
         controls.setSpacing(true);
         return controls;

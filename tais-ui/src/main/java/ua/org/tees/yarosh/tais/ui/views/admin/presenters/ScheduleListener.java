@@ -72,6 +72,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
         window.setScheduleContainer(lessons);
         window.setStudentGroup((StudentGroup) studentGroup);
         window.setLastDate(lastDate);
+        window.setContent();
         return window;
     }
 
