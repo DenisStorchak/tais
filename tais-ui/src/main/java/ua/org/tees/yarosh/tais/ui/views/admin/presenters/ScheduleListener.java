@@ -54,10 +54,12 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     public Map<Date, List<Lesson>> getSchedule(Object owner, Date periodFrom, Date periodTo) {
         if (owner instanceof StudentGroup) {
             StudentGroup studentGroup = registrantService.findStudentGroup(((StudentGroup) owner).getId());
-            return createLessonsDateMap(scheduleService.findSchedule(periodFrom, periodTo, studentGroup));
+            List<Lesson> schedule = scheduleService.findSchedule(periodFrom, periodTo, studentGroup);
+            return createLessonsDateMap(schedule);
         } else if (owner instanceof Registrant) {
             Registrant registration = registrantService.getRegistration(((Registrant) owner).getLogin());
-            return createLessonsDateMap(scheduleService.findSchedule(periodFrom, periodTo, registration.getGroup()));
+            List<Lesson> schedule = scheduleService.findSchedule(periodFrom, periodTo, registration.getGroup());
+            return createLessonsDateMap(schedule);
         }
         throw new IllegalArgumentException("Owner must be instance of StudentGroup or Registrant");
     }
@@ -79,7 +81,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     private Map<Date, List<Lesson>> createLessonsDateMap(List<Lesson> schedule) {
         Map<Date, List<Lesson>> lessonsDateMap = new HashMap<>();
         for (Lesson lesson : schedule) {
-            if (lessonsDateMap.containsKey(lesson.getDate())) {
+            if (!lessonsDateMap.containsKey(lesson.getDate())) {
                 lessonsDateMap.get(lesson.getDate()).add(lesson);
             } else {
                 lessonsDateMap.put(lesson.getDate(), Arrays.asList(lesson));

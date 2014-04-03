@@ -50,6 +50,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     private static final SimpleDateFormat sdf = new SimpleDateFormat("dd.MM.yyyy',' EEEEEE", Locale.forLanguageTag("ru"));
     private static final SimpleDateFormat onlyTimeSdf = new SimpleDateFormat("hh:mm");
     private static final String EDIT_SCHEDULE_TITLE = "Редактировать расписание";
+    private final VerticalLayout lessonsLayout;
     private Map<Date, List<Lesson>> lessons = new HashMap<>();
 
     private ComboBox scheduleOwners = new ComboBox();
@@ -95,7 +96,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
                         .getCreateScheduleWindow(scheduleOwners.getValue(), null)
         ));
 
-        VerticalLayout lessonsLayout = new VerticalLayout();
+        this.lessonsLayout = new VerticalLayout();
         searchLessonsButton.addClickListener(event -> {
             lessonsLayout.removeAllComponents();
             updateLessons();
@@ -154,14 +155,11 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         container.addContainerProperty(KEY_START_TIME, String.class, null);
 
         for (Lesson lesson : lessons) {
-            Item item = container.addItem(lesson.getDate());
+            Item item = container.addItem(lesson.getId());
             item.getItemProperty(KEY_DISCIPLINE).setValue(lesson.getDiscipline());
             item.getItemProperty(KEY_LESSON_TYPE).setValue(lesson.getLessonType().toString());
-            item.getItemProperty(KEY_TEACHER).setValue(String.format("%s %s %s",
-                    lesson.getTeacher().getSurname(),
-                    lesson.getTeacher().getName(),
-                    lesson.getTeacher().getPatronymic()));
-            item.getItemProperty(KEY_CLASSROOM).setValue(lesson.getClassroom().getId());
+            item.getItemProperty(KEY_TEACHER).setValue(lesson.getTeacher());
+            item.getItemProperty(KEY_CLASSROOM).setValue(lesson.getClassroom());
             item.getItemProperty(KEY_START_TIME).setValue(onlyTimeSdf.format(lesson.getDate()));
         }
         return container;

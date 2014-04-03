@@ -50,7 +50,12 @@ public class LessonsService implements ScheduleService, TeacherService, Discipli
 
     @Override
     public List<Lesson> findSchedule(Date periodFrom, Date periodTo, StudentGroup studentGroup) {
-        return lessonRepository.findLessonsWithinPeriod(periodFrom, periodTo, studentGroup);
+        return lessonRepository.findLessonsInPeriod(periodFrom, periodTo, studentGroup);
+    }
+
+    private List<Lesson> selectAllThenFilter(Date periodFrom, Date periodTo, StudentGroup studentGroup) {
+        return lessonRepository.findLessonsByStudentGroup(studentGroup).stream()
+                .filter(l -> l.getDate().after(periodFrom) && l.getDate().before(periodTo)).collect(toList());
     }
 
     @Override
