@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.components.windows;
 import com.vaadin.ui.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.ui.core.Initable;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
@@ -15,7 +16,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
  */
 @Service
 @Scope("prototype")
-public class CreateTaskWindow extends Window {
+public class CreateTaskWindow extends Window implements Initable {
 
     private CreateTaskWindow window;
 
@@ -27,6 +28,11 @@ public class CreateTaskWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
+    }
+
+    @Override
+    public void init() {
+
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {
@@ -51,7 +57,7 @@ public class CreateTaskWindow extends Window {
                     questionsSuiteOne.addClickListener(clickEvent -> window.close()); //todo suite creation window
                     questionsSuiteOne.addStyleName("wide");
                     questionsSuiteOne.addStyleName("default");
-                    questionsSuiteOne.setClickShortcut(ENTER, null);
+                    questionsSuiteOne.setClickShortcut(ENTER);
                 }
             });
         }

@@ -93,10 +93,11 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         addScheduleButton.addClickListener(event -> getUI().addWindow(
                 SessionFactory.getCurrent()
                         .getRelativePresenter(this, SchedulePresenter.class)
-                        .getCreateScheduleWindow(scheduleOwners.getValue(), null)
+                        .getCreateScheduleWindow(scheduleOwners.getValue(), null, periodTo.getValue())
         ));
 
-        this.lessonsLayout = new VerticalLayout();
+        lessonsLayout = new VerticalLayout();
+        lessonsLayout.setSizeFull();
         searchLessonsButton.addClickListener(event -> {
             lessonsLayout.removeAllComponents();
             updateLessons();
@@ -113,13 +114,13 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         VaadinUtils.setSizeFull(this);
         addStyleName("dashboard-view");
         HorizontalLayout top = new BgPanel("Расписание занятий");
+        top.addComponent(createControlsLayout());
         addComponent(top);
 
         VerticalLayout dash = new VerticalDash();
         addComponent(dash);
         setExpandRatio(dash, 1.5f);
 
-        dash.addComponent(createControlsLayout());
         dash.addComponent(lessonsLayout);
     }
 
@@ -127,13 +128,13 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         editScheduleButton.addClickListener(event -> getUI().addWindow(
                 SessionFactory.getCurrent()
                         .getRelativePresenter(this, SchedulePresenter.class)
-                        .getCreateScheduleWindow(scheduleOwners.getValue(), scheduleContent)
+                        .getCreateScheduleWindow(scheduleOwners.getValue(), scheduleContent, periodTo.getValue())
         ));
     }
 
     private HorizontalLayout createControlsLayout() {
         HorizontalLayout controls = new HorizontalLayout();
-        controls.setSizeUndefined();
+        controls.setHeight(20, PERCENTAGE);
         controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
         controls.setSpacing(true);
         return controls;

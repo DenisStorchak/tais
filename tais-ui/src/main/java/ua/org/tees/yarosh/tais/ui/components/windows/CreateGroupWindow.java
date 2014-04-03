@@ -8,6 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.core.Initable;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
@@ -24,7 +25,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  */
 @Service
 @Scope("prototype")
-public class CreateGroupWindow extends Window {
+public class CreateGroupWindow extends Window implements Initable {
 
     private CreateGroupWindow window;
 
@@ -36,6 +37,11 @@ public class CreateGroupWindow extends Window {
         setResizable(false);
         addStyleName("edit-dashboard");
         setContent(new CreateTaskWindowContent());
+    }
+
+    @Override
+    public void init() {
+
     }
 
     public class CreateTaskWindowContent extends VerticalLayout {

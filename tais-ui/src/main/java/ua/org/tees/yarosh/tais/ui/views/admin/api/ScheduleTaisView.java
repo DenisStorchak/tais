@@ -18,7 +18,7 @@ public interface ScheduleTaisView extends View, UpdatableView {
     interface SchedulePresenter extends Presenter {
         Map<? extends Date, ? extends List<Lesson>> getSchedule(Object owner, Date periodFrom, Date periodTo);
 
-        CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons);
+        CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons, Date value);
 
         List<StudentGroup> getGroups();
 

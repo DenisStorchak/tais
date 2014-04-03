@@ -18,6 +18,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.*;
 
+import static java.util.Arrays.asList;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 
 @Service
@@ -65,11 +66,12 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     @Override
-    public CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons) {
+    public CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons, Date lastDate) {
         CreateScheduleWindow window = SessionFactory.getCurrent().getWindow(CreateScheduleWindow.class);
         window.setListener(this);
         window.setScheduleContainer(lessons);
         window.setStudentGroup((StudentGroup) studentGroup);
+        window.setLastDate(lastDate);
         return window;
     }
 
@@ -81,10 +83,10 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     private Map<Date, List<Lesson>> createLessonsDateMap(List<Lesson> schedule) {
         Map<Date, List<Lesson>> lessonsDateMap = new HashMap<>();
         for (Lesson lesson : schedule) {
-            if (!lessonsDateMap.containsKey(lesson.getDate())) {
+            if (lessonsDateMap.containsKey(lesson.getDate())) {
                 lessonsDateMap.get(lesson.getDate()).add(lesson);
             } else {
-                lessonsDateMap.put(lesson.getDate(), Arrays.asList(lesson));
+                lessonsDateMap.put(lesson.getDate(), new ArrayList<>(asList(lesson)));
             }
         }
         return lessonsDateMap;

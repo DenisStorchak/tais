@@ -3,14 +3,12 @@ package ua.org.tees.yarosh.tais.ui.components.windows;
 import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.shared.ui.datefield.Resolution;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.RandomStringUtils;
-import org.springframework.context.ApplicationContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -21,6 +19,7 @@ import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
+import ua.org.tees.yarosh.tais.ui.core.Initable;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -39,7 +38,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.Schedu
 @Service
 @Scope("prototype")
 @SuppressWarnings("unchecked")
-public class CreateScheduleWindow extends Window {
+public class CreateScheduleWindow extends Window implements Initable {
 
     private static final String DISCIPLINE = "Дисциплина";
     private static final String LESSON_TYPE = "Тип занятия";
@@ -55,12 +54,11 @@ public class CreateScheduleWindow extends Window {
     private PlainBorderlessTable schedule;
     private StudentGroup studentGroup;
 
-    private ApplicationContext ctx = WebApplicationContextUtils
-            .getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-    private DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
-    private ClassroomService classroomService = ctx.getBean(ClassroomService.class);
-    private RegistrantService registrantService = ctx.getBean(RegistrantService.class);
+    private DisciplineService disciplineService;
+    private ClassroomService classroomService;
+    private RegistrantService registrantService;
     private SchedulePresenter listener;
+    private Date lastDate;
 
     public CreateScheduleWindow() {
         super("Редактировать расписание");
@@ -69,8 +67,12 @@ public class CreateScheduleWindow extends Window {
         setClosable(true);
         setResizable(false);
         addStyleName("edit-dashboard");
-        setContent(new CreateLessonWindowContent());
         setSizeUndefined();
+    }
+
+    @Override
+    public void init() {
+        setContent(new CreateLessonWindowContent());
     }
 
     public void setScheduleContainer(Container scheduleContainer) {
@@ -83,6 +85,37 @@ public class CreateScheduleWindow extends Window {
 
     public void setStudentGroup(StudentGroup studentGroup) {
         this.studentGroup = studentGroup;
+    }
+
+    public void setLastDate(Date lastDate) {
+        this.lastDate = lastDate;
+    }
+
+    public DisciplineService getDisciplineService() {
+        return disciplineService;
+    }
+
+    @Autowired
+    public void setDisciplineService(DisciplineService disciplineService) {
+        this.disciplineService = disciplineService;
+    }
+
+    public ClassroomService getClassroomService() {
+        return classroomService;
+    }
+
+    @Autowired
+    public void setClassroomService(ClassroomService classroomService) {
+        this.classroomService = classroomService;
+    }
+
+    public RegistrantService getRegistrantService() {
+        return registrantService;
+    }
+
+    @Autowired
+    public void setRegistrantService(RegistrantService registrantService) {
+        this.registrantService = registrantService;
     }
 
     public class CreateLessonWindowContent extends VerticalLayout {
@@ -118,10 +151,10 @@ public class CreateScheduleWindow extends Window {
 
         private void addLesson() {
             Item item = schedule.addItem(RandomStringUtils.random(5));
-            item.getItemProperty(DISCIPLINE).setValue(createDisciplines(disciplineService));
+            item.getItemProperty(DISCIPLINE).setValue(createDisciplines(getDisciplineService()));
             item.getItemProperty(LESSON_TYPE).setValue(createLessonTypes());
-            item.getItemProperty(CLASSROOM).setValue(createClassrooms(classroomService));
-            item.getItemProperty(TEACHER).setValue(createTeachers(registrantService));
+            item.getItemProperty(CLASSROOM).setValue(createClassrooms(getClassroomService()));
+            item.getItemProperty(TEACHER).setValue(createTeachers(getRegistrantService()));
             item.getItemProperty(TIME).setValue(createDateField());
             item.getItemProperty(COPY_WITH_STEP).setValue(createCopyWithStep(0, 30));
         }
@@ -155,7 +188,7 @@ public class CreateScheduleWindow extends Window {
 
                 ComboBox copyWithStep = (ComboBox) item.getItemProperty(COPY_WITH_STEP).getValue();
                 Integer step = (Integer) copyWithStep.getValue();
-                copyToPeriod(lesson, step).forEach(lessons::add);
+                copyToPeriod(lesson, step, lastDate).forEach(lessons::add);
             }
             listener.saveOrReplaceSchedule(lessons);
             listener.update();
@@ -175,7 +208,7 @@ public class CreateScheduleWindow extends Window {
                 for (Integer i = 0; i < scheduleContainer.getItemIds().size(); i++) {
                     Item sourceItem = scheduleContainer.getItem(scheduleContainer.getItemIds().toArray()[i]);
                     Item editableItem = editable.addItem(i);
-                    convertEditable(disciplineService, classroomService, registrantService, sourceItem, editableItem);
+                    convertEditable(getDisciplineService(), getClassroomService(), getRegistrantService(), sourceItem, editableItem);
                 }
             }
             return editable;
