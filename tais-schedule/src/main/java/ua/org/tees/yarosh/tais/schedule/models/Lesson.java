@@ -21,8 +21,8 @@ public class Lesson {
     @JoinColumn(name = "studentGroupId")
     private StudentGroup studentGroup;
     @OneToMany
-    @JoinColumn(name = "visitersId")
-    private List<Registrant> visiters;
+    @JoinColumn(name = "visitorsId")
+    private List<Registrant> visitors;
     @ManyToOne
     @JoinColumn(name = "teacherId")
     private Registrant teacher;
@@ -41,8 +41,10 @@ public class Lesson {
         this.discipline = lesson.getDiscipline();
         this.date = lesson.getDate();
         this.studentGroup = lesson.getStudentGroup();
+        this.teacher = lesson.getTeacher();
         this.classroom = lesson.getClassroom();
         this.lessonType = lesson.getLessonType();
+        // don't copy visitors to new lesson
     }
 
     public Discipline getDiscipline() {
@@ -69,12 +71,12 @@ public class Lesson {
         this.studentGroup = studentGroup;
     }
 
-    public List<Registrant> getVisiters() {
-        return visiters;
+    public List<Registrant> getVisitors() {
+        return visitors;
     }
 
-    public void setVisiters(List<Registrant> visiters) {
-        this.visiters = visiters;
+    public void setVisitors(List<Registrant> visitors) {
+        this.visitors = visitors;
     }
 
     public Registrant getTeacher() {

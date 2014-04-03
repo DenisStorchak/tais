@@ -5,25 +5,25 @@ import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Date;
 import java.util.List;
 
 public class ScheduleUtils {
     public static List<Lesson> copyToPeriod(Lesson lesson, int daysStep) {
         LocalDateTime lessonFirstDateTime = LocalDateTime.fromDateFields(lesson.getDate());
-        LocalDateTime lessonLastDateTime = lessonFirstDateTime.plusDays(daysStep);
         ArrayList<Lesson> lessons = new ArrayList<>(Arrays.asList(lesson));
-        LocalDateTime nextLessonDate = lessonFirstDateTime.minusDays(1);
-        while (beforeOrEquals(nextLessonDate.toDate(), lessonLastDateTime.toDate())) {
-            nextLessonDate = lessonFirstDateTime.plusDays(1);
+        LocalDateTime nextLessonDate = null;
+        for (int i = 0; i < daysStep; i++) {
+            if (nextLessonDate == null) {
+                nextLessonDate = lessonFirstDateTime.plusDays(1);
+            } else {
+                nextLessonDate = nextLessonDate.plusDays(1);
+            }
             Lesson nextLesson = new Lesson(lesson);
             nextLesson.setDate(nextLessonDate.toDate());
             lessons.add(nextLesson);
+            lessons.add(lesson);
         }
+        if (lessons.isEmpty()) lessons.add(lesson);
         return lessons;
-    }
-
-    private static boolean beforeOrEquals(Date lessonFirstDateTime, Date lessonLastDateTime) {
-        return !lessonFirstDateTime.equals(lessonLastDateTime) && lessonFirstDateTime.before(lessonLastDateTime);
     }
 }

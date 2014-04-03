@@ -20,7 +20,6 @@ import ua.org.tees.yarosh.tais.schedule.api.ClassroomService;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
-import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 
 import java.util.ArrayList;
@@ -29,6 +28,7 @@ import java.util.List;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
 import static ua.org.tees.yarosh.tais.schedule.ScheduleUtils.copyToPeriod;
+import static ua.org.tees.yarosh.tais.ui.LessonTypeTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 /**
@@ -61,11 +61,6 @@ public class CreateScheduleWindow extends Window {
     private ClassroomService classroomService = ctx.getBean(ClassroomService.class);
     private RegistrantService registrantService = ctx.getBean(RegistrantService.class);
     private SchedulePresenter listener;
-
-
-    public List<Lesson> getLessons() {
-        return lessons;
-    }
 
     public CreateScheduleWindow() {
         super("Редактировать расписание");
@@ -152,12 +147,11 @@ public class CreateScheduleWindow extends Window {
 
                 Lesson lesson = new Lesson();
                 lesson.setDiscipline(discipline);
-                lesson.setLessonType(LessonType.valueOf(LessonTypeTranslator.translate(lessonType).toUpperCase()));
+                lesson.setLessonType(LessonType.valueOf(translate(lessonType).toUpperCase()));
                 lesson.setClassroom(classroom);
                 lesson.setTeacher(teacher);
                 lesson.setDate(date);
                 lesson.setStudentGroup(studentGroup);
-                lessons.add(lesson);
 
                 ComboBox copyWithStep = (ComboBox) item.getItemProperty(COPY_WITH_STEP).getValue();
                 Integer step = (Integer) copyWithStep.getValue();
@@ -230,6 +224,7 @@ public class CreateScheduleWindow extends Window {
         for (int i = first; i < last; i++) {
             comboBox.addItem(i);
         }
+        comboBox.setValue(0);
         return comboBox;
     }
 
@@ -260,7 +255,7 @@ public class CreateScheduleWindow extends Window {
     private ComboBox createLessonTypes() {
         ComboBox lessonTypes = new ComboBox();
         for (LessonType type : LessonType.values()) {
-            lessonTypes.addItem(LessonTypeTranslator.translate(type.toString()));
+            lessonTypes.addItem(translate(type.toString()));
         }
         lessonTypes.setWidth(100, Unit.PERCENTAGE);
         return lessonTypes;

@@ -28,6 +28,7 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
     public View getView(String viewName) {
         ComponentFactory componentFactory = (ComponentFactory) VaadinSession.getCurrent()
                 .getAttribute(COMPONENT_FACTORY);
+        componentFactory.getHelpManager().closeAll();
         return componentFactory.getView(getViewClass());
     }
 }
