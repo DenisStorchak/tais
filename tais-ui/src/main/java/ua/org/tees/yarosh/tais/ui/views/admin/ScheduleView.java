@@ -121,7 +121,9 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         addComponent(dash);
         setExpandRatio(dash, 1.5f);
 
-        dash.addComponent(lessonsLayout);
+        DashPanel dashPanel = new DashPanel();
+        dashPanel.addComponent(lessonsLayout);
+        dash.addComponent(dashPanel);
     }
 
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
