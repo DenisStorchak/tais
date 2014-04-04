@@ -10,4 +10,8 @@ public interface UserRepositoryAdapter {
     UserDetails getUserDetails(String login);
 
     boolean contains(String login);
+
+    default String normalizePassword(String password) {
+        return password;
+    }
 }

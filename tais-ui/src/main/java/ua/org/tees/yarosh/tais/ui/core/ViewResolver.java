@@ -22,7 +22,7 @@ public class ViewResolver {
         throw new IllegalArgumentException("View not found");
     }
 
-    public static String extractName(View view) {
+    public static String resolveUnregistered(View view) {
         Qualifier qualifier = view.getClass().getAnnotation(Qualifier.class);
         if (qualifier != null) {
             return qualifier.value();

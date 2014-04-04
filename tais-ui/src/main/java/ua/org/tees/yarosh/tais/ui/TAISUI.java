@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
@@ -25,7 +26,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.LAST_VIEW;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
@@ -82,10 +83,17 @@ public class TAISUI extends UI {
         return sidebarManager;
     }
 
+    public static void navigateBack() {
+        View previousView = (View) VaadinSession.getCurrent().getAttribute(PREVIOUS_VIEW);
+        String previousState = ViewResolver.resolveUnregistered(previousView);
+        Navigator navigator = VaadinSession.getCurrent().getUIs().iterator().next().getNavigator();
+        if (!navigator.getState().equals(previousState)) navigator.navigateTo(previousState);
+    }
+
     private static class LastViewSaver implements ViewChangeListener {
         @Override
         public boolean beforeViewChange(ViewChangeEvent event) {
-            VaadinSession.getCurrent().setAttribute(LAST_VIEW, event.getOldView());
+            VaadinSession.getCurrent().setAttribute(PREVIOUS_VIEW, event.getOldView());
             return true;
         }
 

@@ -26,7 +26,7 @@ public class AuthManager {
         Optional<UserRepositoryAdapter> dao = DAO_ADAPTERS.stream().filter(d -> d.contains(username)).findFirst();
         if (dao.isPresent()) {
             UserDetails userDetails = dao.get().getUserDetails(username);
-            if (userDetails != null && userDetails.getPassword().equals(password)) {
+            if (userDetails != null && assertPasswords(password, userDetails.getPassword(), dao.get())) {
                 AUTHORIZATIONS.put(username, userDetails);
                 LOGGER.info("Registrant [{}] logged in", username);
                 return true;
@@ -34,6 +34,12 @@ public class AuthManager {
         }
         LOGGER.info("Username [{}] not presented inside of any registered dao adapter", username);
         return false;
+    }
+
+    private static boolean assertPasswords(String candidate,
+                                           String original,
+                                           UserRepositoryAdapter userRepositoryAdapter) {
+        return userRepositoryAdapter.normalizePassword(candidate).equals(original);
     }
 
     public static boolean isAuthorized(String username, Class<?> clazz) {

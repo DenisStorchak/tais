@@ -4,7 +4,6 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.VaadinSession;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
@@ -24,7 +23,6 @@ public class ProfileListener extends AbstractPresenter implements ProfilePresent
 
     private static final String KEY_PROPERTY = "";
     private static final String VALUE_PROPERTY = " ";
-    private static final String ITEM_ID_LENGTH = RandomStringUtils.random(6);
     private UIContext ctx;
 
     @Autowired
@@ -60,7 +58,7 @@ public class ProfileListener extends AbstractPresenter implements ProfilePresent
     }
 
     private void addItem(IndexedContainer container, String key, String value) {
-        Item item = container.addItem(ITEM_ID_LENGTH);
+        Item item = container.addItem(key);
         item.getItemProperty(KEY_PROPERTY).setValue(key);
         item.getItemProperty(VALUE_PROPERTY).setValue(value);
     }

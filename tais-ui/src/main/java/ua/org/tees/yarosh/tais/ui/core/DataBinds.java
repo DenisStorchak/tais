@@ -26,7 +26,7 @@ public abstract class DataBinds {
     }
 
     public static abstract class SessionKeys {
-        public static final String LAST_VIEW = "lastView";
+        public static final String PREVIOUS_VIEW = "previousView";
         public static final String REGISTRANT_ID = "registrantID";
         public static final String COMPONENT_FACTORY = "componentFactory";
     }

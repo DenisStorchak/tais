@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt;
 
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.UserDetails;
@@ -33,6 +34,11 @@ public class DatabaseDaoAdapter implements UserRepositoryAdapter {
             userDetails.setRole(registration.getRole());
         }
         return userDetails;
+    }
+
+    @Override
+    public String normalizePassword(String password) {
+        return DigestUtils.sha256Hex(password);
     }
 
     @Override
