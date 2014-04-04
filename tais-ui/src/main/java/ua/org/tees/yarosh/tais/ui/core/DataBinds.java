@@ -35,6 +35,7 @@ public abstract class DataBinds {
 
         public static final String AUTH = "auth";
         public static final String ACCESS_DENIED = "403";
+        public static final String ME = "me";
 
         public abstract class Admin {
             public static final String PREFIX = "admin/";

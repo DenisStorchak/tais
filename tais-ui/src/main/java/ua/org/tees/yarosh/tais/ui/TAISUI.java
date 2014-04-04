@@ -19,13 +19,13 @@ import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.common.AccessDeniedView;
 import ua.org.tees.yarosh.tais.ui.views.common.LoginView;
 import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
+import ua.org.tees.yarosh.tais.ui.views.common.ProfileView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ACCESS_DENIED;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 
@@ -53,6 +53,7 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(AUTH, LoginView.class));
         nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
         nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
+        nav.addProvider(new FactoryBasedViewProvider(ME, ProfileView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
         nav.addViewChangeListener(new AuthListener());

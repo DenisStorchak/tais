@@ -7,6 +7,7 @@ import ua.org.tees.yarosh.tais.auth.AuthManager;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
 
 
 /**
@@ -34,7 +35,7 @@ public class UserMenu extends VerticalLayout {
         MenuBar settings = new MenuBar();
         MenuBar.MenuItem settingsMenu = settings.addItem("", null);
         settingsMenu.setStyleName("icon-cog-alt");
-        settingsMenu.addItem("Профиль", notImplementedCommand);
+        settingsMenu.addItem("Профиль", menuItem -> getUI().getNavigator().navigateTo(ME));
         settingsMenu.addItem("Настройки профиля", notImplementedCommand);
         addComponent(settings);
 
