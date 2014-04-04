@@ -10,20 +10,18 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
-import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
-import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
+import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
 
-import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
@@ -37,8 +35,9 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
 @Scope("prototype")
-public class UserRegistrationView extends AbstractTaisLayout implements UserRegistrationTaisView {
+public class UserRegistrationView extends DashboardLayout implements UserRegistrationTaisView {
 
+    private static final String CAPTION = "Регистрация нового пользователя";
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
     private PasswordField repeatePassword = new PasswordField();
@@ -59,12 +58,9 @@ public class UserRegistrationView extends AbstractTaisLayout implements UserRegi
     }
 
     public UserRegistrationView() {
+        super(CAPTION);
         login.focus();
         setUpValidators();
-        setSizeFull();
-        addStyleName("dashboard-view");
-        HorizontalLayout top = new BgPanel("Регистрация нового пользователя");
-        addComponent(top);
 
         Button createGroup = new Button("Новая группа");
         createGroup.addStyleName("icon-only");
@@ -90,15 +86,8 @@ public class UserRegistrationView extends AbstractTaisLayout implements UserRegi
         top.addComponent(createDiscipline);
         top.setComponentAlignment(createDiscipline, Alignment.MIDDLE_LEFT);
 
-        HorizontalLayout dash = new HorizontalDash();
-        addComponent(dash);
-        setExpandRatio(dash, 1.5f);
-
-        DashPanel formPanel = new DashPanel();
-        formPanel.setCaption("Все поля являются обязательными для заполнения");
-        dash.addComponent(formPanel);
+        DashPanel formPanel = addDashPanel("Все поля являются обязательными для заполнения", null);
         formPanel.setSizeUndefined();
-
         formPanel.addComponents(createRegistrationForms(), createControls());
         formPanel.setWidth(50, Unit.PERCENTAGE);
         dash.setComponentAlignment(formPanel, Alignment.MIDDLE_CENTER);

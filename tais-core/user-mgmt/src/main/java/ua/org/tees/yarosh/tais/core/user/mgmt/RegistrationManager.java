@@ -18,7 +18,7 @@ import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.GROUPS;
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.REGISTRANTS;
-import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 
 /**
  * @author Timur Yarosh

@@ -42,6 +42,7 @@ public abstract class DataBinds {
             public static final String USER_MANAGEMENT = PREFIX + "usermgmt";
             public static final String MANAGED_SCHEDULE = PREFIX + "schedule";
             public static final String CREATE_SCHEDULE = PREFIX + "schedule/create";
+            public static final String SETTINGS = PREFIX + "settings";
         }
 
         public abstract class Teacher {

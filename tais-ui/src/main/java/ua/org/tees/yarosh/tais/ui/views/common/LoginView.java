@@ -10,7 +10,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
@@ -31,7 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPre
 @Qualifier(AUTH)
 @Scope("prototype")
 @PermitAll
-public class LoginView extends AbstractTaisLayout implements LoginTaisView {
+public class LoginView extends VerticalLayout implements LoginTaisView {
 
     private TextField username;
     private PasswordField password;

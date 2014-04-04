@@ -13,6 +13,7 @@ import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.core.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
+import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.common.AccessDeniedView;
@@ -20,8 +21,8 @@ import ua.org.tees.yarosh.tais.ui.views.common.LoginView;
 import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
-import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
-import static ua.org.tees.yarosh.tais.core.common.dto.Role.TEACHER;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ACCESS_DENIED;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
@@ -46,12 +47,13 @@ public class TAISUI extends UI {
         CommonComponent commonComponent = new CommonComponent(content);
         Navigator nav = new TaisNavigator(this, content);
 
-        nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
         nav.addProvider(new FactoryBasedViewProvider(AUTH, LoginView.class));
         nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
+        nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
+        nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
         nav.addViewChangeListener(new AuthListener());
 

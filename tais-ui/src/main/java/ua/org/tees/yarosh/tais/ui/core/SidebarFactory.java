@@ -2,12 +2,14 @@ package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
-import ua.org.tees.yarosh.tais.core.common.dto.Role;
+import ua.org.tees.yarosh.tais.core.common.dto.Roles;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.UserMenu;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
+import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
@@ -29,9 +31,9 @@ public class SidebarFactory {
 
     public Sidebar createSidebar(String role) {
         switch (role) {
-            case Role.ADMIN:
+            case Roles.ADMIN:
                 return createAdminSidebar();
-            case Role.TEACHER:
+            case Roles.TEACHER:
                 return createTeacherSidebar();
         }
         throw new IllegalArgumentException(String.format("Sidebar for role [%s] not found", role));
@@ -90,10 +92,12 @@ public class SidebarFactory {
         NativeButton fprintScannerButton = new NativeButton("Сканеры отпечатков");
         fprintScannerButton.addStyleName("icon-fingerprint_picture");
         adminMenu.addMenuButton(null, fprintScannerButton); // todo set related view class
+        fprintScannerButton.addClickListener(event -> Notification.show("Пока не поддерживается"));
 
         NativeButton configButton = new NativeButton("Настройки");
         configButton.addStyleName("icon-cog-alt");
-        adminMenu.addMenuButton(null, configButton); // todo set related view class
+        adminMenu.addMenuButton(SettingsView.class, configButton); // todo set related view class
+        configButton.addClickListener(event -> ui.getNavigator().navigateTo(SETTINGS));
 
         return adminMenu;
     }

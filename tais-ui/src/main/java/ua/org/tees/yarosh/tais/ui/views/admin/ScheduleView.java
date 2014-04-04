@@ -14,13 +14,11 @@ import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
-import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
-import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractTaisLayout;
+import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
@@ -29,7 +27,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
 
-import static ua.org.tees.yarosh.tais.core.common.dto.Role.ADMIN;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.setValidationVisible;
@@ -41,7 +39,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.Schedu
 @Scope("prototype")
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView {
+public class ScheduleView extends DashboardLayout implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
@@ -92,6 +90,7 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
     }
 
     public ScheduleView() {
+        super("");
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
 
@@ -125,18 +124,9 @@ public class ScheduleView extends AbstractTaisLayout implements ScheduleTaisView
         });
 
         VaadinUtils.setSizeFull(this);
-        addStyleName("dashboard-view");
-        HorizontalLayout top = new BgPanel("");
         top.addComponent(createControlsLayout());
-        addComponent(top);
 
-        VerticalLayout dash = new VerticalDash();
-        addComponent(dash);
-        setExpandRatio(dash, 1.5f);
-
-        DashPanel dashPanel = new DashPanel();
-        dashPanel.addComponent(scheduleTable);
-        dash.addComponent(dashPanel);
+        addDashPanel(null, null, scheduleTable);
     }
 
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {

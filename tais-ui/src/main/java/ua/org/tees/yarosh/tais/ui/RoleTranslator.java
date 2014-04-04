@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.ui;
 
-import ua.org.tees.yarosh.tais.core.common.dto.Role;
+import ua.org.tees.yarosh.tais.core.common.dto.Roles;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -13,9 +13,9 @@ import java.util.Map;
 public class RoleTranslator {
     private static final Map<String, String> BUNDLE = new HashMap<String, String>() {
         {
-            put(Role.TEACHER, "Преподаватель");
-            put(Role.ADMIN, "Администратор");
-            put(Role.STUDENT, "Студент");
+            put(Roles.TEACHER, "Преподаватель");
+            put(Roles.ADMIN, "Администратор");
+            put(Roles.STUDENT, "Студент");
         }
     };
 
