@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
+import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
@@ -24,6 +25,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.LAST_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
@@ -57,6 +59,7 @@ public class TAISUI extends UI {
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
         nav.addViewChangeListener(new AuthListener());
+        nav.addViewChangeListener(new LastViewSaver());
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager));
@@ -77,5 +80,17 @@ public class TAISUI extends UI {
         sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
         return sidebarManager;
+    }
+
+    private static class LastViewSaver implements ViewChangeListener {
+        @Override
+        public boolean beforeViewChange(ViewChangeEvent event) {
+            VaadinSession.getCurrent().setAttribute(LAST_VIEW, event.getOldView());
+            return true;
+        }
+
+        @Override
+        public void afterViewChange(ViewChangeEvent event) {
+        }
     }
 }

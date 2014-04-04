@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -19,6 +20,14 @@ public class ViewResolver {
             return resolverMap.get(clazz);
         }
         throw new IllegalArgumentException("View not found");
+    }
+
+    public static String extractName(View view) {
+        Qualifier qualifier = view.getClass().getAnnotation(Qualifier.class);
+        if (qualifier != null) {
+            return qualifier.value();
+        }
+        throw new IllegalArgumentException("Qualifier not found");
     }
 
     public static boolean viewRegistered(String name) {
