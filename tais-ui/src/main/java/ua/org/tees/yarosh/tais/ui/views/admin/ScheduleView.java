@@ -14,6 +14,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
+import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
@@ -156,7 +157,7 @@ public class ScheduleView extends DashboardLayout implements ScheduleTaisView {
         for (Lesson lesson : lessons) {
             Item item = container.addItem(lesson.getId());
             item.getItemProperty(KEY_DISCIPLINE).setValue(lesson.getDiscipline());
-            item.getItemProperty(KEY_LESSON_TYPE).setValue(lesson.getLessonType().toString());
+            item.getItemProperty(KEY_LESSON_TYPE).setValue(LessonTypeTranslator.translate(lesson.getLessonType().toString()));
             item.getItemProperty(KEY_TEACHER).setValue(lesson.getTeacher());
             item.getItemProperty(KEY_CLASSROOM).setValue(lesson.getClassroom());
             item.getItemProperty(KEY_START_TIME).setValue(lesson.getDate());
