@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui;
+package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
