@@ -6,6 +6,4 @@ public interface Presenter {
     <V extends View> V getView(Class<V> viewClazz);
 
     void update();
-
-    void navigateBack
 }
