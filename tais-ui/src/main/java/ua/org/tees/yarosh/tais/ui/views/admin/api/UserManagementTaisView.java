@@ -7,8 +7,6 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 public interface UserManagementTaisView extends View, UpdatableView {
 
-    void setRegistrantsDataSource(Container registrantsDataSource);
-
     interface UserManagementPresenter extends Presenter {
         Container getAllRegistrants();
     }

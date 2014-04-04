@@ -26,6 +26,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     private static final String KEY_PATRONYMIC = "Отчество";
     private static final String KEY_GROUP = "Группа";
     private static final String KEY_INTERACT_BUTTON = "";
+    private static final String KEY_ROLE = "Роль";
     private RegistrantService registrantService;
 
     @Autowired
@@ -46,6 +47,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
         registrantsContainer.addContainerProperty(KEY_NAME, String.class, null);
         registrantsContainer.addContainerProperty(KEY_PATRONYMIC, String.class, null);
         registrantsContainer.addContainerProperty(KEY_GROUP, String.class, null);
+        registrantsContainer.addContainerProperty(KEY_ROLE, String.class, null);
         registrantsContainer.addContainerProperty(KEY_INTERACT_BUTTON, Button.class, null);
 
         registrantService.findAllRegistrants().forEach(r -> {
@@ -55,6 +57,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
             item.getItemProperty(KEY_NAME).setValue(r.getName());
             item.getItemProperty(KEY_PATRONYMIC).setValue(r.getPatronymic());
             item.getItemProperty(KEY_GROUP).setValue(String.valueOf(r.getGroup().getId()));
+            item.getItemProperty(KEY_ROLE).setValue(r.getRole());
             item.getItemProperty(KEY_INTERACT_BUTTON).setValue(new Button("Редактировать"));
         });
         return registrantsContainer;
