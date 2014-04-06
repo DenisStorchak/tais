@@ -187,7 +187,7 @@
                 <version>${bonecp.version}</version>
             </dependency>
             <dependency>
-                <groupId>org.postgresql</groupId>
+                <groupId>postgresql</groupId>
                 <artifactId>postgresql</artifactId>
                 <version>${postgresql.version}</version>
             </dependency>
@@ -309,7 +309,7 @@
         <testng.version>6.8.7</testng.version>
         <bonecp.version>0.8.0.RELEASE</bonecp.version>
         <h2.version>1.${commons.lang3.version}60</h2.version>
-        <postgresql.version>9.3-1100-jdbc41</postgresql.version>
+        <postgresql.version>9.1-901.jdbc4</postgresql.version>
         <jdk.version>1.8</jdk.version>
         <org.springframework.spring.data.jpa.version>1.4.4.RELEASE</org.springframework.spring.data.jpa.version>
         <javax.el.api.version>2.2.4</javax.el.api.version>
