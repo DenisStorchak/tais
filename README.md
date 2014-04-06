@@ -15,7 +15,11 @@ To run you need apache tomcat >= 7.0.52. Installation described <a href="http://
 2. type <b>mvn clean install</b><br />
 3. Place tais configuration file (<b>tais.properties</b>) into tomcat <b>conf</b> directory<br />
 4. Edit and save <b>tais.properties</b> file<br />
-5. Open tomcat <b>conf/context.xml</b> and insert line <i><Environment name="tais.config" value="file:///${catalina.home}/conf/tais.properties" type="java.net.URI"/></i> between <cpde>Context</code> tags. Note: <i>file:///${catalina.home}/conf/tais.properties</i> — URL to tais configuration file. Save <b>context.xml</b><br />
+5. Open tomcat <b>conf/context.xml</b> and insert line <i>
+```xml
+<Environment name="tais.config" value="file:///${catalina.home}/conf/tais.properties" type="java.net.URI"/>
+ ```
+</i> between <cpde>Context</code> tags. Note: <i>file:///${catalina.home}/conf/tais.properties</i> — URL to tais configuration file. Save <b>context.xml</b><br />
 6. Configure user access to tomcat manager (described <a href=http://tomcat.apache.org/tomcat-7.0-doc/manager-howto.html>here</a>)<br />
 7. Start tomcat<br />
 8. Open tomcat manager (<a href=http://localhost:8080/manager>http://localhost:8080/manager</a> default url) and deploy <b>tais.war</b> with context path <b>/</b><br />
