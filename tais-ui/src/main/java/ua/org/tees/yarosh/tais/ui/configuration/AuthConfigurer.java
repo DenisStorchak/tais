@@ -32,6 +32,7 @@ public class AuthConfigurer {
 
     @PostConstruct
     public void addInMemoryAdapter() {
+        AuthManager.setAcceptsEmptyStrings(false);
         AuthManager.addDao(new UserRepositoryAdapter() {
             @Override
             public UserDetails getUserDetails(String login) {

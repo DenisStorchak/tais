@@ -24,6 +24,11 @@ public class AuthManager {
     }
 
     public static boolean login(String username, String password) {
+        if ((username.isEmpty() || password.isEmpty()) && !acceptsEmptyStrings()) {
+            LOGGER.info("Can't login with username [{}] and password [{}]. Empty string aren't allowed.",
+                    username, password);
+            return false;
+        }
         Optional<UserRepositoryAdapter> dao = DAO_ADAPTERS.stream().filter(d -> d.contains(username)).findFirst();
         if (dao.isPresent()) {
             UserDetails userDetails = dao.get().getUserDetails(username);
