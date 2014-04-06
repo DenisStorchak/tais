@@ -64,6 +64,7 @@ public class TAISUI extends UI {
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager));
+        LOGGER.info("SidebarManager configured");
 
         CssLayout root = new CssLayout();
         setContent(root);
@@ -80,6 +81,7 @@ public class TAISUI extends UI {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
         sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
+        sidebarManager.addHideException(DataBinds.UriFragments.ME);
         return sidebarManager;
     }
 

@@ -6,9 +6,7 @@ import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 
@@ -23,6 +21,7 @@ public class SidebarManager implements ViewChangeListener {
     private Sidebar sidebar;
     private Map<String, SidebarMenu> menus = new HashMap<>();
     private Map<String, Sidebar> sidebarPool = new HashMap<>();
+    private List<String> hideExceptions = new ArrayList<>();
 
     public SidebarManager(CommonComponent commonComponent, Sidebar sidebar) {
         this.commonComponent = commonComponent;
@@ -35,6 +34,10 @@ public class SidebarManager implements ViewChangeListener {
 
     public void registerSidebar(String viewPrefix, Sidebar sidebar) {
         sidebarPool.put(viewPrefix, sidebar);
+    }
+
+    public void addHideException(String viewName) {
+        hideExceptions.add(viewName);
     }
 
     @Override
@@ -76,6 +79,8 @@ public class SidebarManager implements ViewChangeListener {
             Sidebar relativeSidebar = sidebarPool.get(properlyKey);
             relativeSidebar.getUserMenu().setUsername((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID));
             return relativeSidebar;
+        } else if (hideExceptions.contains(viewPattern)) {
+            return sidebar;
         }
         return null;
     }

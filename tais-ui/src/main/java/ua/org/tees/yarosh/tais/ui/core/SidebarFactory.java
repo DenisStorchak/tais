@@ -4,6 +4,8 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.NativeButton;
 import com.vaadin.ui.Notification;
 import com.vaadin.ui.UI;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.core.common.dto.Roles;
 import ua.org.tees.yarosh.tais.ui.components.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
@@ -19,6 +21,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
 
 public class SidebarFactory {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(SidebarFactory.class);
     private UI ui;
 
     public static SidebarFactory createFactory(UI ui) {
@@ -47,6 +50,7 @@ public class SidebarFactory {
     }
 
     private UserMenu createUserMenu() {
+        LOGGER.debug("User menu will be created");
         return new UserMenu((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID));
     }
 
