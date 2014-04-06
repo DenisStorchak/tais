@@ -28,6 +28,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     private static final String KEY_GROUP = "Группа";
     private static final String KEY_INTERACT_BUTTON = "";
     private static final String KEY_ROLE = "Роль";
+    private static final String KEY_EMAIL = "Email";
     private RegistrantService registrantService;
 
     @Autowired
@@ -47,6 +48,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
         registrantsContainer.addContainerProperty(KEY_SURNAME, String.class, null);
         registrantsContainer.addContainerProperty(KEY_NAME, String.class, null);
         registrantsContainer.addContainerProperty(KEY_PATRONYMIC, String.class, null);
+        registrantsContainer.addContainerProperty(KEY_EMAIL, String.class, null);
         registrantsContainer.addContainerProperty(KEY_GROUP, String.class, null);
         registrantsContainer.addContainerProperty(KEY_ROLE, String.class, null);
         registrantsContainer.addContainerProperty(KEY_INTERACT_BUTTON, Button.class, null);
@@ -57,6 +59,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
             item.getItemProperty(KEY_SURNAME).setValue(r.getSurname());
             item.getItemProperty(KEY_NAME).setValue(r.getName());
             item.getItemProperty(KEY_PATRONYMIC).setValue(r.getPatronymic());
+            item.getItemProperty(KEY_EMAIL).setValue(r.getEmail());
             item.getItemProperty(KEY_GROUP).setValue(String.valueOf(r.getGroup().getId()));
             item.getItemProperty(KEY_ROLE).setValue(RoleTranslator.translate(r.getRole()));
             item.getItemProperty(KEY_INTERACT_BUTTON).setValue(new Button("Редактировать"));

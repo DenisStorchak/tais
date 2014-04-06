@@ -72,6 +72,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
                                       TextField name,
                                       TextField surname,
                                       TextField patronymic,
+                                      TextField email,
                                       ComboBox position,
                                       ComboBox studentGroup) {
         Registrant registrant = new Registrant();
@@ -79,6 +80,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         registrant.setPassword(DigestUtils.sha256Hex(password.getValue()));
         registrant.setName(name.getValue());
         registrant.setSurname(surname.getValue());
+        registrant.setEmail(email.getValue());
         registrant.setPatronymic(patronymic.getValue());
         registrant.setRole(translate((String) position.getValue()));
         StudentGroup group = registrantService.findStudentGroup(studentGroup.getValue().toString());

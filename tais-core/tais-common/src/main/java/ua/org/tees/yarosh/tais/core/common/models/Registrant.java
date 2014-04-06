@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.core.common.models;
 
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
+import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -34,6 +35,9 @@ public class Registrant implements Serializable {
     @NotBlank
     @NotNull
     private String surname;
+    @NotNull
+    @Email
+    private String email;
     @NotNull
     @ManyToOne(fetch = FetchType.EAGER)
     @Cascade(CascadeType.ALL)
@@ -100,5 +104,13 @@ public class Registrant implements Serializable {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

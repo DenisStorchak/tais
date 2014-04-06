@@ -44,6 +44,7 @@ public class UserRegistrationView extends DashboardLayout implements UserRegistr
     private TextField name = new TextField();
     private TextField surname = new TextField();
     private TextField patronymic = new TextField();
+    private TextField email = new TextField();
     private ComboBox studentGroupComboBox = new ComboBox();
     private ComboBox position = new ComboBox();
 
@@ -106,6 +107,8 @@ public class UserRegistrationView extends DashboardLayout implements UserRegistr
         surname.setValidationVisible(false);
         patronymic.addValidator(new BeanValidator(Registrant.class, "patronymic"));
         patronymic.setValidationVisible(false);
+        email.addValidator(new BeanValidator(Registrant.class, "email"));
+        email.setValidationVisible(false);
         studentGroupComboBox.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
         studentGroupComboBox.setValidationVisible(false);
         position.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
@@ -123,10 +126,12 @@ public class UserRegistrationView extends DashboardLayout implements UserRegistr
         Button signUpButton = new Button("Зарегистрировать");
         signUpButton.addClickListener(event -> {
             try {
-                if (isValid(login, password, repeatePassword, name, surname, patronymic, position, studentGroupComboBox)) {
+                if (isValid(login, password, repeatePassword, name, surname,
+                        patronymic, email, position, studentGroupComboBox)) {
                     boolean success = SessionFactory.getCurrent()
                             .getRelativePresenter(this, UserRegistrationPresenter.class)
-                            .createRegistration(login, password, name, surname, patronymic, position, studentGroupComboBox);
+                            .createRegistration(login, password, name, surname,
+                                    patronymic, email, position, studentGroupComboBox);
                     if (!success) {
                         Notification.show("Логин занят");
                     } else {
@@ -171,6 +176,7 @@ public class UserRegistrationView extends DashboardLayout implements UserRegistr
         HorizontalLayout nameLayout = createSingleFormLayout(new Label("Имя"), name);
         HorizontalLayout surnameLayout = createSingleFormLayout(new Label("Фамилия"), surname);
         HorizontalLayout patronymicLayout = createSingleFormLayout(new Label("Отчество"), patronymic);
+        HorizontalLayout emailLayout = createSingleFormLayout(new Label("Email"), email);
         HorizontalLayout studentGroupLayout = createSingleFormLayout(new Label("Группа"), studentGroupComboBox);
         HorizontalLayout positionLayout = createSingleFormLayout(new Label("Набор прав"), position);
 
@@ -181,6 +187,7 @@ public class UserRegistrationView extends DashboardLayout implements UserRegistr
                 surnameLayout,
                 nameLayout,
                 patronymicLayout,
+                emailLayout,
                 studentGroupLayout,
                 positionLayout);
         registrationDataLayout.setWidth(100, Unit.PERCENTAGE);

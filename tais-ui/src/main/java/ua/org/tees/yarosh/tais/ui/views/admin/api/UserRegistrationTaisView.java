@@ -23,6 +23,7 @@ public interface UserRegistrationTaisView extends View, UpdatableView {
                                    TextField name,
                                    TextField surname,
                                    TextField patronymic,
+                                   TextField email,
                                    ComboBox position,
                                    ComboBox studentGroup);
 
