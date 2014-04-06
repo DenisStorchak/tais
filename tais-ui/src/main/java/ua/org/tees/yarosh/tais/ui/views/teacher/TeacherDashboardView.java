@@ -11,7 +11,7 @@ import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
@@ -25,7 +25,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisV
  *         Time: 19:57
  */
 @PresentedBy(TeacherDashboardPresenter.class)
-@SpringManagedView
+@TaisView
 @Qualifier(TEACHER_DASHBOARD)
 @PermitRoles(TEACHER)
 public class TeacherDashboardView extends DashboardLayout implements TeacherDashboardTaisView {

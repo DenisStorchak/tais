@@ -19,7 +19,7 @@ import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
@@ -34,7 +34,7 @@ import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.setValidationVisible;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 @PresentedBy(SchedulePresenter.class)
-@SpringManagedView
+@TaisView
 @Qualifier(MANAGED_SCHEDULE)
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")

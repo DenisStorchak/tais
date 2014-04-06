@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
@@ -21,7 +21,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisV
  *         Date: 22.03.14
  *         Time: 12:41
  */
-@SpringManagedPresenter
+@TaisPresenter
 public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardPresenter {
 
     @Autowired

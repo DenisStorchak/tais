@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
@@ -30,7 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  *         Time: 20:44
  */
 @PresentedBy(UserRegistrationPresenter.class)
-@SpringManagedView
+@TaisView
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
 public class UserRegistrationView extends DashboardLayout implements UserRegistrationTaisView {

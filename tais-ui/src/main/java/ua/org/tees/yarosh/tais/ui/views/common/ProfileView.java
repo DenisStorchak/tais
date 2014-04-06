@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.ui.TAISUI;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
@@ -19,7 +19,7 @@ import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView.ProfilePresenter;
 
 @PresentedBy(ProfilePresenter.class)
-@SpringManagedView
+@TaisView
 @Qualifier(ME)
 @PermitRoles({ADMIN, TEACHER, STUDENT})
 public class ProfileView extends DashboardLayout implements ProfileTaisView {

@@ -9,7 +9,7 @@ import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
-import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
@@ -18,7 +18,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView.
 
 
 @PresentedBy(UserManagementPresenter.class)
-@SpringManagedView
+@TaisView
 @Qualifier(USER_MANAGEMENT)
 @PermitRoles(ADMIN)
 public class UserManagementView extends DashboardLayout

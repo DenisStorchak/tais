@@ -12,5 +12,5 @@ import java.lang.annotation.Target;
 @Scope("prototype")
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
-public @interface SpringManagedView {
+public @interface TaisView {
 }
