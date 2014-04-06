@@ -8,12 +8,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.RoleTranslator;
+import ua.org.tees.yarosh.tais.ui.TAISUI;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
+import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
+import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 
 @TaisPresenter
 @SuppressWarnings("unchecked")
@@ -60,8 +65,19 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
             item.getItemProperty(KEY_EMAIL).setValue(r.getEmail());
             item.getItemProperty(KEY_GROUP).setValue(String.valueOf(r.getGroup().getId()));
             item.getItemProperty(KEY_ROLE).setValue(RoleTranslator.translate(r.getRole()));
-            item.getItemProperty(KEY_INTERACT_BUTTON).setValue(new Button("Редактировать"));
+            item.getItemProperty(KEY_INTERACT_BUTTON).setValue(new Button("Редактировать", createListener(r.getLogin())));
         });
         return registrantsContainer;
+    }
+
+    private Button.ClickListener createListener(String login) {
+        return event -> {
+            TAISUI.navigateTo(EDIT_PROFILE);
+            EditProfileTaisView.EditProfilePresenter presenter = SessionFactory.getCurrent()
+                    .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfileTaisView.EditProfilePresenter.class);
+            presenter.setRegistrantId(login);
+            presenter.allowAdminRights(true);
+            presenter.update();
+        };
     }
 }

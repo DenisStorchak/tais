@@ -17,6 +17,7 @@ import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
+import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
@@ -42,7 +43,9 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
     private ComboBox studentGroup = new ComboBox();
     private ComboBox role = new ComboBox();
     private DashPanel editPanel;
-    private boolean controlsAdded;
+    private boolean controlsAdded;  // to avoid cyclic bean creation and spring crash
+    private boolean formsAdded;     // additional controls creation moved from constructor
+    private HorizontalLayout controls = createControls();
 
     public EditProfileView() {
         super();
@@ -63,13 +66,20 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
     @Override
     public void update() {
         EditProfilePresenter presenter = getCurrent().getRelativePresenter(this, EditProfilePresenter.class);
-        if (presenter.isAdminRightsAllowed() && !controlsAdded) {
+        if (presenter.isAdminRightsAllowed() && !formsAdded) {
             editPanel.addComponents(
                     createSingleFormLayout(new Label("Группа"), studentGroup),
                     createSingleFormLayout(new Label("Роль"), role));
+            // some magic
+            editPanel.removeComponent(controls);
+            editPanel.addComponent(controls);
+            // controls moved under new forms :)
+            formsAdded = true;
         }
-        if (!controlsAdded) editPanel.addComponent(createControls());
-        controlsAdded = true;   // avoid cyclic bean creation
+        if (!controlsAdded) {
+            editPanel.addComponent(controls);
+            controlsAdded = true;
+        }
 
         Registrant registrant = presenter.getRegistrant();
         if (registrant != null) {
@@ -77,10 +87,12 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
             name.setValue(registrant.getName());
             patronymic.setValue(registrant.getPatronymic());
             email.setValue(registrant.getEmail());
+            studentGroup.removeAllItems();
             presenter.groups().forEach(studentGroup::addItem);
             studentGroup.setValue(registrant.getGroup());
+            role.removeAllItems();
             presenter.roles().forEach(role::addItem);
-            role.setValue(registrant.getRole());
+            role.setValue(translate(registrant.getRole()));
         }
     }
 
@@ -109,10 +121,14 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
 
                 if (isValid(studentGroup)) {
                     registrant.setGroup((StudentGroup) studentGroup.getValue());
+                } else {
+                    Notification.show("Группа заполнена неправильно");
                 }
 
                 if (isValid(role)) {
                     registrant.setRole((String) role.getValue());
+                } else {
+                    Notification.show("Роль заполнена неправильно");
                 }
 
                 presenter.updateRegistrant(registrant);

@@ -7,13 +7,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView.UserManagementPresenter;
 
 
@@ -34,9 +34,14 @@ public class UserManagementView extends DashboardView
     }
 
     @Override
+    public void update() {
+        setRegistrantsDataSource(getCurrent().getRelativePresenter(this, UserManagementPresenter.class)
+                .getAllRegistrants());
+    }
+
+    @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        setRegistrantsDataSource(SessionFactory.getCurrent()
-                .getRelativePresenter(this, UserManagementPresenter.class).getAllRegistrants());
+        update();
     }
 
     @Override

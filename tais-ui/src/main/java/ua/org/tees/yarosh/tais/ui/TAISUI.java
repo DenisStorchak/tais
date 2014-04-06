@@ -90,6 +90,10 @@ public class TAISUI extends UI {
         if (!navigator.getState().equals(previousState)) navigator.navigateTo(previousState);
     }
 
+    public static void navigateTo(String state) {
+        getCurrent().getNavigator().navigateTo(state);
+    }
+
     private static class LastViewSaver implements ViewChangeListener {
         @Override
         public boolean beforeViewChange(ViewChangeEvent event) {
