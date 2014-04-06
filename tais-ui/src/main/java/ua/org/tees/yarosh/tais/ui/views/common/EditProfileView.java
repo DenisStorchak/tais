@@ -176,8 +176,8 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
         patronymic.setValidationVisible(false);
         email.addValidator(new BeanValidator(Registrant.class, "email"));
         email.setValidationVisible(false);
-        studentGroup.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
-        studentGroup.setValidationVisible(false);
+//        studentGroup.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
+//        studentGroup.setValidationVisible(false);
         role.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
         role.setValidationVisible(false);
     }

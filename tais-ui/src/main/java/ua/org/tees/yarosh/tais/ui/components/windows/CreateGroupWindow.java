@@ -11,8 +11,6 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
-import java.util.ArrayList;
-
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
@@ -65,7 +63,7 @@ public class CreateGroupWindow extends Window {
                     ok.addClickListener(clickEvent -> {
                         if (groupId.isValid()) {
                             RegistrantService registrantService = ctx.getBean(RegistrantService.class);
-                            StudentGroup studentGroup = new StudentGroup(groupId.getValue(), new ArrayList<>());
+                            StudentGroup studentGroup = new StudentGroup(groupId.getValue());
                             registrantService.createStudentGroup(studentGroup);
                             SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class).update();
                             window.close();

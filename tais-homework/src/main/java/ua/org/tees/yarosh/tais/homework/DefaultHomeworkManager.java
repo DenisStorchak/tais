@@ -78,7 +78,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
         questionsSuite.setEnabled(enable);
         questionsSuiteRepository.saveAndFlush(questionsSuite);
         StudentGroup studentGroup = studentGroupRepository.findOne(questionsSuite.getStudentGroup().getId());
-        for (Registrant student : studentGroup.getStudents()) {
+        for (Registrant student : studentGroupRepository.findRegistrantsByStudentGroup(studentGroup.getId())) {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
             if (enable) {
                 taskHolder.getQuestionsSuiteList().add(questionsSuite);
@@ -186,7 +186,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
         manualTask.setEnabled(enable);
         manualTaskRepository.saveAndFlush(manualTask);
         StudentGroup studentGroup = studentGroupRepository.findOne(manualTask.getStudentGroup().getId());
-        for (Registrant student : studentGroup.getStudents()) {
+        for (Registrant student : studentGroupRepository.findRegistrantsByStudentGroup(studentGroup.getId())) {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
             if (enable) {
                 taskHolder.getManualTaskList().add(manualTask);

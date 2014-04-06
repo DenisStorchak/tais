@@ -42,7 +42,6 @@ public class RegistrationManager implements RegistrantService {
         if (registrantRepository.exists(registrant.getLogin())) {
             return null;
         }
-        registrant.getGroup().getStudents().add(registrant);
 
         Registrant persistedRegistrant = registrantRepository.save(registrant);
         LOGGER.info("[login: {}] registered successfully", registrant.getLogin());
@@ -122,5 +121,10 @@ public class RegistrationManager implements RegistrantService {
     @Cacheable(GROUPS)
     public StudentGroup findStudentGroup(String id) {
         return studentGroupRepository.findOne(id);
+    }
+
+    @Cacheable(GROUPS)
+    public List<Registrant> findRegistrantsByStudentGroup(String id) {
+        return studentGroupRepository.findRegistrantsByStudentGroup(id);
     }
 }

@@ -1,14 +1,12 @@
 package ua.org.tees.yarosh.tais.core.common.models;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
@@ -38,9 +36,8 @@ public class Registrant implements Serializable {
     @NotNull
     @Email
     private String email;
-    @NotNull
-    @ManyToOne(fetch = FetchType.EAGER)
-    @Cascade(CascadeType.ALL)
+    @ManyToOne
+    @JoinColumn(name = "studentGroupId")
     private StudentGroup group;
     @NotNull
     private String role;
