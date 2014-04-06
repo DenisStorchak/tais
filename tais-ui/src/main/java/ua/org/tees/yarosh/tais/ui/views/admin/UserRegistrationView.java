@@ -35,7 +35,6 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
 @PermitRoles(ADMIN)
 public class UserRegistrationView extends DashboardView implements UserRegistrationTaisView {
 
-    private static final String CAPTION = "Регистрация нового пользователя";
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
     private PasswordField repeatPassword = new PasswordField();
