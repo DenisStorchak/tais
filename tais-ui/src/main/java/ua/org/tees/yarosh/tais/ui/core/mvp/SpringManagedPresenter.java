@@ -10,6 +10,7 @@ import java.lang.annotation.Target;
 
 @Service
 @Scope("prototype")
+@SuppressWarnings("unused")
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.TYPE)
 public @interface SpringManagedPresenter {

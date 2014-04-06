@@ -7,8 +7,6 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
@@ -21,6 +19,7 @@ import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
@@ -35,9 +34,8 @@ import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.setValidationVisible;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 @PresentedBy(SchedulePresenter.class)
-@Service
+@SpringManagedView
 @Qualifier(MANAGED_SCHEDULE)
-@Scope("prototype")
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
 public class ScheduleView extends DashboardLayout implements ScheduleTaisView {

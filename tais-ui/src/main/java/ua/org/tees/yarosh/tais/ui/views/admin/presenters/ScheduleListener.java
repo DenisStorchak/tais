@@ -3,8 +3,6 @@ package ua.org.tees.yarosh.tais.ui.views.admin.presenters;
 import com.vaadin.data.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
@@ -13,6 +11,7 @@ import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
@@ -21,8 +20,7 @@ import java.util.*;
 import static java.util.Arrays.asList;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 
-@Service
-@Scope("prototype")
+@SpringManagedPresenter
 public class ScheduleListener extends AbstractPresenter implements ScheduleTaisView.SchedulePresenter {
 
     private RegistrantService registrantService;

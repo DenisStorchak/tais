@@ -6,8 +6,6 @@ import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
@@ -17,6 +15,7 @@ import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
@@ -31,10 +30,9 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  *         Time: 20:44
  */
 @PresentedBy(UserRegistrationPresenter.class)
-@Service
+@SpringManagedView
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
-@Scope("prototype")
 public class UserRegistrationView extends DashboardLayout implements UserRegistrationTaisView {
 
     private static final String CAPTION = "Регистрация нового пользователя";

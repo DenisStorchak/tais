@@ -4,13 +4,12 @@ import com.vaadin.data.Container;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
@@ -19,9 +18,8 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView.
 
 
 @PresentedBy(UserManagementPresenter.class)
-@Service
+@SpringManagedView
 @Qualifier(USER_MANAGEMENT)
-@Scope("prototype")
 @PermitRoles(ADMIN)
 public class UserManagementView extends DashboardLayout
         implements UserManagementTaisView {

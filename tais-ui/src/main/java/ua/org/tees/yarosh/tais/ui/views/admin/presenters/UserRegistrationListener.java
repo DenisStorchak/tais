@@ -6,8 +6,6 @@ import com.vaadin.ui.TextField;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -16,6 +14,7 @@ import ua.org.tees.yarosh.tais.schedule.api.ClassroomService;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 
@@ -33,8 +32,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  *         Date: 22.03.14
  *         Time: 20:51
  */
-@Service
-@Scope("prototype")
+@SpringManagedPresenter
 public class UserRegistrationListener extends AbstractPresenter implements UserRegistrationPresenter {
 
     private RegistrantService registrantService;

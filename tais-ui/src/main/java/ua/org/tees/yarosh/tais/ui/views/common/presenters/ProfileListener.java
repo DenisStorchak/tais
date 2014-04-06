@@ -52,6 +52,7 @@ public class ProfileListener extends AbstractPresenter implements ProfilePresent
         addItem(container, "Фамилия", registrant.getSurname());
         addItem(container, "Имя", registrant.getName());
         addItem(container, "Отчество", registrant.getPatronymic());
+        addItem(container, "Email", registrant.getEmail());
         addItem(container, "Группа", registrant.getGroup().toString());
         addItem(container, "Роль", registrant.getRole());
         return container;

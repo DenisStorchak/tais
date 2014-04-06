@@ -6,11 +6,10 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
@@ -26,9 +25,8 @@ import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPre
  *         Time: 13:15
  */
 @PresentedBy(LoginPresenter.class)
-@Service
+@SpringManagedView
 @Qualifier(AUTH)
-@Scope("prototype")
 @PermitAll
 public class LoginView extends VerticalLayout implements LoginTaisView {
 

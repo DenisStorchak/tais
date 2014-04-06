@@ -3,8 +3,6 @@ package ua.org.tees.yarosh.tais.ui.views.teacher.presenters;
 import com.vaadin.data.Container;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -12,6 +10,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.SpringManagedPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
@@ -22,8 +21,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisV
  *         Date: 22.03.14
  *         Time: 12:41
  */
-@Service
-@Scope("prototype")
+@SpringManagedPresenter
 public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardPresenter {
 
     @Autowired
