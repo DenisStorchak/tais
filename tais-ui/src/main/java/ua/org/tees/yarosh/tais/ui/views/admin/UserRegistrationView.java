@@ -38,7 +38,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
     private static final String CAPTION = "Регистрация нового пользователя";
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
-    private PasswordField repeatePassword = new PasswordField();
+    private PasswordField repeatPassword = new PasswordField();
     private TextField name = new TextField();
     private TextField surname = new TextField();
     private TextField patronymic = new TextField();
@@ -97,8 +97,8 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
         login.setValidationVisible(false);
         password.addValidator(new BeanValidator(Registrant.class, "password"));
         password.setValidationVisible(false);
-        repeatePassword.addValidator(new FieldEqualsValidator(password, "Пароли"));
-        repeatePassword.setValidationVisible(false);
+        repeatPassword.addValidator(new FieldEqualsValidator(password, "Пароли"));
+        repeatPassword.setValidationVisible(false);
         name.addValidator(new BeanValidator(Registrant.class, "name"));
         name.setValidationVisible(false);
         surname.addValidator(new BeanValidator(Registrant.class, "surname"));
@@ -124,7 +124,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
         Button signUpButton = new Button("Зарегистрировать");
         signUpButton.addClickListener(event -> {
             try {
-                if (isValid(login, password, repeatePassword, name, surname,
+                if (isValid(login, password, repeatPassword, name, surname,
                         patronymic, email, position, studentGroupComboBox)) {
                     boolean success = SessionFactory.getCurrent()
                             .getRelativePresenter(this, UserRegistrationPresenter.class)
@@ -133,7 +133,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
                     if (!success) {
                         Notification.show("Логин занят");
                     } else {
-                        clearFields(login, password, repeatePassword, name, surname, patronymic);
+                        clearFields(login, password, repeatPassword, name, surname, patronymic);
                         login.focus();
                     }
                 } else {
@@ -170,13 +170,13 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
 
         HorizontalLayout loginLayout = createSingleFormLayout(new Label("Логин"), login);
         HorizontalLayout passwordLayout = createSingleFormLayout(new Label("Пароль"), password);
-        HorizontalLayout repeatePasswordLayout = createSingleFormLayout(new Label("Повтор пароля"), repeatePassword);
+        HorizontalLayout repeatePasswordLayout = createSingleFormLayout(new Label("Повтор пароля"), repeatPassword);
         HorizontalLayout nameLayout = createSingleFormLayout(new Label("Имя"), name);
         HorizontalLayout surnameLayout = createSingleFormLayout(new Label("Фамилия"), surname);
         HorizontalLayout patronymicLayout = createSingleFormLayout(new Label("Отчество"), patronymic);
         HorizontalLayout emailLayout = createSingleFormLayout(new Label("Email"), email);
         HorizontalLayout studentGroupLayout = createSingleFormLayout(new Label("Группа"), studentGroupComboBox);
-        HorizontalLayout positionLayout = createSingleFormLayout(new Label("Набор прав"), position);
+        HorizontalLayout positionLayout = createSingleFormLayout(new Label("Роль"), position);
 
         registrationDataLayout.addComponents(
                 loginLayout,

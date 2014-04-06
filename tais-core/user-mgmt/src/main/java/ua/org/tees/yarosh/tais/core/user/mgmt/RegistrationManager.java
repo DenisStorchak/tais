@@ -57,7 +57,6 @@ public class RegistrationManager implements RegistrantService {
     }
 
     @Override
-//    @CachePut(value = REGISTRANTS, key = "#registrant.login")
     @CacheEvict(value = REGISTRANTS, allEntries = true)
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException {
         LOGGER.info("Registration updating for [login: {}] requested", registrant);

@@ -22,6 +22,13 @@ public class ViewResolver {
         throw new IllegalArgumentException("View not found");
     }
 
+    public static Class<? extends View> resolveView(String name) {
+        if (resolverMap.containsValue(name)) {
+            return resolverMap.entrySet().stream().filter(e -> e.getValue().equals(name)).findFirst().get().getKey();
+        }
+        throw new IllegalArgumentException("View not found");
+    }
+
     public static String resolveUnregistered(View view) {
         Qualifier qualifier = view.getClass().getAnnotation(Qualifier.class);
         if (qualifier != null) {

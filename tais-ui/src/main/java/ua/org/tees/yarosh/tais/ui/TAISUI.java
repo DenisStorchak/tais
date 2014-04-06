@@ -18,10 +18,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
-import ua.org.tees.yarosh.tais.ui.views.common.AccessDeniedView;
-import ua.org.tees.yarosh.tais.ui.views.common.LoginView;
-import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
-import ua.org.tees.yarosh.tais.ui.views.common.ProfileView;
+import ua.org.tees.yarosh.tais.ui.views.common.*;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
@@ -57,6 +54,7 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
         nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
         nav.addProvider(new FactoryBasedViewProvider(ME, ProfileView.class));
+        nav.addProvider(new FactoryBasedViewProvider(EDIT_PROFILE, EditProfileView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
         nav.addViewChangeListener(new AuthListener());
@@ -81,7 +79,7 @@ public class TAISUI extends UI {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
         sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
-        sidebarManager.addHideException(DataBinds.UriFragments.ME);
+        sidebarManager.addHideException(DataBinds.UriFragments.EDIT_PROFILE);
         return sidebarManager;
     }
 

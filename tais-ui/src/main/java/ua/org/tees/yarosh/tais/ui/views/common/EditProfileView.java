@@ -1,12 +1,26 @@
 package ua.org.tees.yarosh.tais.ui.views.common;
 
+import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.navigator.ViewChangeListener;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
+import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.core.DashboardView;
+import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
+import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
+import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
+import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
+import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView.EditProfilePresenter;
 
 /**
  * @author Timur Yarosh
@@ -14,15 +28,137 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
  *         Time: 13:56
  */
 @TaisView("Редактирование профиля")
-@Qualifier(ME)
+@PresentedBy(EditProfilePresenter.class)
+@Qualifier(EDIT_PROFILE)
+@PermitRoles({ADMIN, TEACHER, STUDENT})
 public class EditProfileView extends DashboardView implements EditProfileTaisView {
 
-    protected EditProfileView() {
+    private PasswordField password = new PasswordField();
+    private PasswordField repeatPassword = new PasswordField();
+    private TextField surname = new TextField();
+    private TextField name = new TextField();
+    private TextField patronymic = new TextField();
+    private TextField email = new TextField();
+    private ComboBox studentGroup = new ComboBox();
+    private ComboBox role = new ComboBox();
+    private DashPanel editPanel;
+    private boolean controlsAdded;
+
+    public EditProfileView() {
         super();
+        setUpValidators();
+        editPanel = addDashPanel(null, null,
+                createSingleFormLayout(new Label("Фамилия"), surname),
+                createSingleFormLayout(new Label("Имя"), name),
+                createSingleFormLayout(new Label("Отчество"), patronymic),
+                createSingleFormLayout(new Label("Email"), email),
+                createSingleFormLayout(new Label("Новый пароль"), password),
+                createSingleFormLayout(new Label("Повтор пароля"), repeatPassword));
+
+        editPanel.setSizeUndefined();
+        editPanel.setWidth(50, Unit.PERCENTAGE);
+        dash.setComponentAlignment(editPanel, Alignment.MIDDLE_CENTER);
+    }
+
+    @Override
+    public void update() {
+        EditProfilePresenter presenter = getCurrent().getRelativePresenter(this, EditProfilePresenter.class);
+        if (presenter.isAdminRightsAllowed() && !controlsAdded) {
+            editPanel.addComponents(
+                    createSingleFormLayout(new Label("Группа"), studentGroup),
+                    createSingleFormLayout(new Label("Роль"), role));
+        }
+        if (!controlsAdded) editPanel.addComponent(createControls());
+        controlsAdded = true;   // avoid cyclic bean creation
+
+        Registrant registrant = presenter.getRegistrant();
+        if (registrant != null) {
+            surname.setValue(registrant.getSurname());
+            name.setValue(registrant.getName());
+            patronymic.setValue(registrant.getPatronymic());
+            email.setValue(registrant.getEmail());
+            presenter.groups().forEach(studentGroup::addItem);
+            studentGroup.setValue(registrant.getGroup());
+            presenter.roles().forEach(role::addItem);
+            role.setValue(registrant.getRole());
+        }
+    }
+
+    private HorizontalLayout createControls() {
+        HorizontalLayout controlsLayout = new HorizontalLayout() {
+            {
+                setWidth(100, Unit.PERCENTAGE);
+                setSpacing(true);
+            }
+        };
+
+        Button apply = new Button("Сохранить изменения");
+        apply.setClickShortcut(ENTER);
+        apply.addClickListener(event -> {
+            if (isValid(surname, name, patronymic, email)) {
+                EditProfilePresenter presenter = getCurrent().getRelativePresenter(this, EditProfilePresenter.class);
+                Registrant registrant = presenter.getRegistrant();
+                registrant.setSurname(surname.getValue());
+                registrant.setName(name.getValue());
+                registrant.setPatronymic(patronymic.getValue());
+                registrant.setEmail(email.getValue());
+
+                if (!password.getValue().isEmpty() && isValid(password, repeatPassword)) {
+                    registrant.setPassword(password.getValue());
+                }
+
+                if (isValid(studentGroup)) {
+                    registrant.setGroup((StudentGroup) studentGroup.getValue());
+                }
+
+                if (isValid(role)) {
+                    registrant.setRole((String) role.getValue());
+                }
+
+                presenter.updateRegistrant(registrant);
+            } else {
+                Notification.show("Не все поля корректно заполнены");
+            }
+        });
+
+        controlsLayout.addComponent(apply);
+        controlsLayout.setComponentAlignment(apply, Alignment.BOTTOM_RIGHT);
+        return controlsLayout;
     }
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent viewChangeEvent) {
         update();
+    }
+
+    private HorizontalLayout createSingleFormLayout(Label description, Component component) {
+        HorizontalLayout layout = new HorizontalLayout() {
+            {
+                setWidth(100, Unit.PERCENTAGE);
+                setSpacing(true);
+            }
+        };
+        layout.addComponents(description, component);
+        layout.setComponentAlignment(component, Alignment.TOP_RIGHT);
+        return layout;
+    }
+
+    private void setUpValidators() {
+        password.addValidator(new BeanValidator(Registrant.class, "password"));
+        password.setValidationVisible(false);
+        repeatPassword.addValidator(new FieldEqualsValidator(password, "Пароли"));
+        repeatPassword.setValidationVisible(false);
+        name.addValidator(new BeanValidator(Registrant.class, "name"));
+        name.setValidationVisible(false);
+        surname.addValidator(new BeanValidator(Registrant.class, "surname"));
+        surname.setValidationVisible(false);
+        patronymic.addValidator(new BeanValidator(Registrant.class, "patronymic"));
+        patronymic.setValidationVisible(false);
+        email.addValidator(new BeanValidator(Registrant.class, "email"));
+        email.setValidationVisible(false);
+        studentGroup.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
+        studentGroup.setValidationVisible(false);
+        role.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
+        role.setValidationVisible(false);
     }
 }
