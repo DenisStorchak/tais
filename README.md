@@ -13,6 +13,7 @@ TEES Automatic Interaction System
 To run you need apache tomcat >= 7.0.52. Installation described <a href="http://tomcat.apache.org/tomcat-7.0-doc/appdev/installation.html">here</a>. Next you need to deploy tais *.war package to tomcat. Deployment described <a href="https://tomcat.apache.org/tomcat-7.0-doc/appdev/deployment.html">here</a>. Also you need postgresql >= 9.3 and redis-server >= 2.6.13 (optional).<br />
 1. Go to tais root directory (that contains <b>pom.xml</b> and <b>tais.properties</b>)<br />
 2. type <b>mvn clean install</b><br />
+3. Create <b>tais</b> database in your rdbms
 3. Place tais configuration file (<b>tais.properties</b>) into tomcat <b>conf</b> directory<br />
 4. Edit and save <b>tais.properties</b> file<br />
 5. Open tomcat <b>conf/context.xml</b> and insert line <i>
@@ -27,7 +28,7 @@ To run you need apache tomcat >= 7.0.52. Installation described <a href="http://
 
 ##tais.properties
 <pre>
-hibernate.hbm2ddl.auto=validate #do not use 'create-drop' value in production. It deletes all the database!!! Recommended value is 'validate'
+hibernate.hbm2ddl.auto=update
 hibernate.show_sql=true
 hibernate.dialect=org.hibernate.dialect.PostgreSQLDialect
 
@@ -52,7 +53,7 @@ redis.password=
 
 user.login=admin
 user.password=admin
-user.role=Administrator #possible values: Administrator / Teacher / Student
+user.role=Administrator
 </pre>
 
 ####Notes:
