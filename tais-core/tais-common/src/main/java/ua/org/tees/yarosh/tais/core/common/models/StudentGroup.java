@@ -27,6 +27,16 @@ public class StudentGroup implements Serializable {
     }
 
     @Override
+    public boolean equals(Object obj) {
+        if (obj == this) return true;
+        if (obj == null) return false;
+        if (obj.getClass() != getClass()) return false;
+
+        StudentGroup that = (StudentGroup) obj;
+        return that.getId().equals(this.getId());
+    }
+
+    @Override
     public String toString() {
         return id;
     }

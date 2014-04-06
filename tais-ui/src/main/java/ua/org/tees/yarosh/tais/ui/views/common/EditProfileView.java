@@ -87,9 +87,13 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
             name.setValue(registrant.getName());
             patronymic.setValue(registrant.getPatronymic());
             email.setValue(registrant.getEmail());
+
             studentGroup.removeAllItems();
-            presenter.groups().forEach(studentGroup::addItem);
-            studentGroup.setValue(registrant.getGroup());
+            presenter.groups().forEach(g -> {
+                studentGroup.addItem(g);
+                if (g.equals(registrant.getGroup())) studentGroup.setValue(g);
+            });
+
             role.removeAllItems();
             presenter.roles().forEach(role::addItem);
             role.setValue(translate(registrant.getRole()));
