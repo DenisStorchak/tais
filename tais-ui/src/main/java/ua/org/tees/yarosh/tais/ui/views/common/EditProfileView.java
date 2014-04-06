@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.ui.views.common;
 
 import com.vaadin.navigator.ViewChangeListener;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ua.org.tees.yarosh.tais.ui.core.mvp.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
 

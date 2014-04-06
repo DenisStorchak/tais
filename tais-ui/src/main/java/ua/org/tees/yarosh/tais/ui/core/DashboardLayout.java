@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.mvp;
+package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
