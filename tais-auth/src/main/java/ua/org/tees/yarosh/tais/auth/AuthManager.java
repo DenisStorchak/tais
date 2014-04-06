@@ -5,11 +5,12 @@ import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 
-import java.util.Arrays;
 import java.util.Map;
 import java.util.Optional;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static java.util.Arrays.binarySearch;
 
 public class AuthManager {
 
@@ -52,8 +53,8 @@ public class AuthManager {
             PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
             UserDetails auth = AUTHORIZATIONS.get(username);
             if (auth != null && permitRoles != null) {
-                int i = Arrays.binarySearch(permitRoles.value(), auth.getRole());
-                return i != -1;
+                int i = binarySearch(permitRoles.value(), auth.getRole());
+                return i >= 0;
             }
         }
         return false;

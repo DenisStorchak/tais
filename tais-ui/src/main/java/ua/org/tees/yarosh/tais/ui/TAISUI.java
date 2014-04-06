@@ -79,6 +79,7 @@ public class TAISUI extends UI {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
         sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
+        sidebarManager.addHideException(DataBinds.UriFragments.ME);
         sidebarManager.addHideException(DataBinds.UriFragments.EDIT_PROFILE);
         return sidebarManager;
     }

@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 import com.vaadin.ui.Notification;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -68,6 +69,7 @@ public class EditProfileListener extends AbstractPresenter implements EditProfil
             registrant.setRole(translate(registrant.getRole()));
             if (registrantService.updateRegistration(registrant) != null) {
                 Notification.show("Регистрационные данные успешно обновлены");
+                if (adminRights) AuthManager.logout(registrant.getLogin());
             } else {
                 Notification.show("Что-то пошло не так...");
             }
