@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * @author Timur Yarosh
@@ -12,6 +13,7 @@ public abstract class AbstractPresenter implements Presenter {
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractPresenter.class);
     private UpdatableView view;
 
+    @Autowired
     public AbstractPresenter(UpdatableView view) {
         LOGGER.debug("AbstractPresenter instance created, view will be initialized now");
         this.view = view;
