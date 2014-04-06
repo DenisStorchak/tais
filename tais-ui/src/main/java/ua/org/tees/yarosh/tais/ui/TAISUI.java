@@ -64,7 +64,7 @@ public class TAISUI extends UI {
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager));
-        LOGGER.info("SidebarManager configured");
+        LOGGER.debug("SidebarManager configured");
 
         CssLayout root = new CssLayout();
         setContent(root);
