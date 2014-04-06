@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.ui.views.common;
 
 import com.vaadin.navigator.ViewChangeListener;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
 
@@ -13,14 +13,12 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
  *         Date: 06.04.14
  *         Time: 13:56
  */
-@TaisView
+@TaisView("Редактирование профиля")
 @Qualifier(ME)
-public class EditProfileView extends DashboardLayout implements EditProfileTaisView {
-
-    private static final String CAPTION = "Редакторивание профиля";
+public class EditProfileView extends DashboardView implements EditProfileTaisView {
 
     protected EditProfileView() {
-        super(CAPTION);
+        super();
     }
 
     @Override

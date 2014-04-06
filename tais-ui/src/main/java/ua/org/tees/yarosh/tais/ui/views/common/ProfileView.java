@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView;
@@ -19,15 +19,15 @@ import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView.ProfilePresenter;
 
 @PresentedBy(ProfilePresenter.class)
-@TaisView
+@TaisView("Мой профиль")
 @Qualifier(ME)
 @PermitRoles({ADMIN, TEACHER, STUDENT})
-public class ProfileView extends DashboardLayout implements ProfileTaisView {
+public class ProfileView extends DashboardView implements ProfileTaisView {
 
     private Table profileTable = new PlainBorderlessTable("Профиль");
 
     protected ProfileView() {
-        super("Мой профиль");
+        super();
         addDashPanel(null, null, profileTable);
     }
 

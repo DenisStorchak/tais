@@ -1,6 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
-import com.vaadin.ui.*;
+import com.vaadin.ui.AbstractOrderedLayout;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.VerticalLayout;
 import ua.org.tees.yarosh.tais.ui.components.BgPanel;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
@@ -8,14 +11,14 @@ import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
 
 public abstract class DashboardLayout extends VerticalLayout {
 
-    protected final HorizontalLayout top;
+    protected final BgPanel top;
     protected final AbstractOrderedLayout dash;
 
-    protected DashboardLayout(String caption) {
+    protected DashboardLayout() {
         setSizeFull();
         addStyleName("dashboard-view");
 
-        top = new BgPanel(caption);
+        top = new BgPanel();
         addComponent(top);
 
         dash = new HorizontalDash();
@@ -23,11 +26,11 @@ public abstract class DashboardLayout extends VerticalLayout {
         setExpandRatio(dash, 1.5f);
     }
 
-    protected DashboardLayout(String caption, boolean horizontalDash) {
+    protected DashboardLayout(boolean horizontalDash) {
         setSizeFull();
         addStyleName("dashboard-view");
 
-        top = new BgPanel(caption);
+        top = new BgPanel();
         addComponent(top);
 
         if (horizontalDash) {
@@ -52,5 +55,9 @@ public abstract class DashboardLayout extends VerticalLayout {
 
         dash.addComponent(dashPanel);
         return dashPanel;
+    }
+
+    protected void setBackgroundCaption(String caption) {
+        top.setCaption(caption);
     }
 }

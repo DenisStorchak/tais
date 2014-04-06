@@ -10,15 +10,22 @@ import com.vaadin.ui.Label;
  *         Time: 0:14
  */
 public class BgPanel extends HorizontalLayout {
-    public BgPanel(String title) {
+
+    private Label titleLabel;
+
+    public BgPanel() {
         setWidth("100%");
         setSpacing(true);
         addStyleName("toolbar");
-        Label titleLabel = new Label(title);
+        titleLabel = new Label();
         titleLabel.setSizeUndefined();
         titleLabel.addStyleName("h1");
         addComponent(titleLabel);
         setComponentAlignment(titleLabel, Alignment.MIDDLE_LEFT);
         setExpandRatio(titleLabel, 1);
+    }
+
+    public void setCaption(String caption) {
+        titleLabel.setValue(caption);
     }
 }

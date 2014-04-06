@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
@@ -38,7 +38,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.Schedu
 @Qualifier(MANAGED_SCHEDULE)
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends DashboardLayout implements ScheduleTaisView {
+public class ScheduleView extends DashboardView implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
@@ -89,7 +89,7 @@ public class ScheduleView extends DashboardLayout implements ScheduleTaisView {
     }
 
     public ScheduleView() {
-        super("");
+        super();
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
 

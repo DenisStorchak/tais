@@ -7,4 +7,6 @@ public interface PresenterFactory {
     <P extends Presenter> P getPresenter(Class<P> clazz);
 
     <P extends Presenter> P getRelativePresenter(View view, Class<P> clazz);
+
+    <P extends Presenter> P getRelativePresenter(Class<? extends View> viewClazz, Class<P> presenterClazz);
 }

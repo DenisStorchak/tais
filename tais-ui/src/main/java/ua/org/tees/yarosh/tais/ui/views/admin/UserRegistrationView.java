@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.ui.components.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -30,10 +30,10 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
  *         Time: 20:44
  */
 @PresentedBy(UserRegistrationPresenter.class)
-@TaisView
+@TaisView("Регистрация нового пользователя")
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
-public class UserRegistrationView extends DashboardLayout implements UserRegistrationTaisView {
+public class UserRegistrationView extends DashboardView implements UserRegistrationTaisView {
 
     private static final String CAPTION = "Регистрация нового пользователя";
     private TextField login = new TextField();
@@ -57,7 +57,7 @@ public class UserRegistrationView extends DashboardLayout implements UserRegistr
     }
 
     public UserRegistrationView() {
-        super(CAPTION);
+        super();
         login.focus();
         setUpValidators();
 

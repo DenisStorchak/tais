@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.buttons.CreateTaskButton;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -25,15 +25,15 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisV
  *         Time: 19:57
  */
 @PresentedBy(TeacherDashboardPresenter.class)
-@TaisView
+@TaisView("Задания")
 @Qualifier(TEACHER_DASHBOARD)
 @PermitRoles(TEACHER)
-public class TeacherDashboardView extends DashboardLayout implements TeacherDashboardTaisView {
+public class TeacherDashboardView extends DashboardView implements TeacherDashboardTaisView {
 
     private Table unratedReports;
 
     public TeacherDashboardView() {
-        super("Задания");
+        super();
 
         Button createTask = new CreateTaskButton();
         top.addComponent(createTask);

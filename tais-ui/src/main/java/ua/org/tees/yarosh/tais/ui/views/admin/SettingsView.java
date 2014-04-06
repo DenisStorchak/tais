@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.properties.*;
 import ua.org.tees.yarosh.tais.ui.RoleTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -23,11 +23,11 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.SETTI
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView.SettingsPresenter;
 
 @PresentedBy(SettingsPresenter.class)
-@TaisView
+@TaisView("Настройки")
 @Qualifier(SETTINGS)
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class SettingsView extends DashboardLayout implements SettingsTaisView {
+public class SettingsView extends DashboardView implements SettingsTaisView {
 
     private static final String KEY = "Параметр";
     private static final String VALUE = "Значение";
@@ -36,7 +36,7 @@ public class SettingsView extends DashboardLayout implements SettingsTaisView {
     private static final String VALUE_HTML = "<i>%s</i>";
 
     public SettingsView() {
-        super("Настройки", false);
+        super(false);
     }
 
     @Override

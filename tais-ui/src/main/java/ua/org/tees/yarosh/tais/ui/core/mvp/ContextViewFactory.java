@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.ui.core.Initable;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -28,9 +29,14 @@ public class ContextViewFactory implements ViewFactory {
         if (!viewPool.containsKey(viewClazz)) {
             LOGGER.debug("View [{}] will be created now", viewClazz.getName());
             Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(PresentedBy.class).value();
-            Presenter presenter = presenterFactory.getPresenter(presenterClazz);
+            Presenter presenter = presenterFactory.getRelativePresenter(viewClazz, presenterClazz);
             V view = presenter.getView(viewClazz);
             viewPool.put(viewClazz, view);
+
+            if (view instanceof Initable) {
+                ((Initable) view).init();
+            }
+
             return view;
         }
         LOGGER.debug("Returning [{}] view", viewClazz.getName());

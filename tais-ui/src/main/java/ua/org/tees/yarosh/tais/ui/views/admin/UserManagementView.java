@@ -6,7 +6,7 @@ import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
-import ua.org.tees.yarosh.tais.ui.core.DashboardLayout;
+import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -18,16 +18,16 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView.
 
 
 @PresentedBy(UserManagementPresenter.class)
-@TaisView
+@TaisView("Все профили")
 @Qualifier(USER_MANAGEMENT)
 @PermitRoles(ADMIN)
-public class UserManagementView extends DashboardLayout
+public class UserManagementView extends DashboardView
         implements UserManagementTaisView {
 
     private Table registrants;
 
     public UserManagementView() {
-        super("Настройка профилей");
+        super();
 
         registrants = new PlainBorderlessTable("Все пользователи");
         addDashPanel(null, null, registrants);

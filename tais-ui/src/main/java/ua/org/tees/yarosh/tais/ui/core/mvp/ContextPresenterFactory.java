@@ -29,11 +29,16 @@ public class ContextPresenterFactory implements PresenterFactory {
 
     @Override
     public <P extends Presenter> P getRelativePresenter(View view, Class<P> clazz) {
-        PresentedBy presentedBy = view.getClass().getAnnotation(PresentedBy.class);
-        if (presentedBy.value().equals(clazz)) {
-            return localGetPresenter(clazz);
+        return getRelativePresenter(view.getClass(), clazz);
+    }
+
+    @Override
+    public <P extends Presenter> P getRelativePresenter(Class<? extends View> viewClazz, Class<P> presenterClazz) {
+        PresentedBy presentedBy = viewClazz.getAnnotation(PresentedBy.class);
+        if (presentedBy.value().equals(presenterClazz)) {
+            return localGetPresenter(presenterClazz);
         }
-        throw new IllegalArgumentException(format(PRESENTER_NOT_RELATED, clazz.getName(), view.getClass().getName()));
+        throw new IllegalArgumentException(format(PRESENTER_NOT_RELATED, presenterClazz.getName(), viewClazz.getName()));
     }
 
     private <P extends Presenter> P localGetPresenter(Class<P> clazz) {
