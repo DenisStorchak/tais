@@ -133,7 +133,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
                     if (!success) {
                         Notification.show("Логин занят");
                     } else {
-                        clearFields(login, password, repeatPassword, name, surname, patronymic);
+                        clearFields(login, password, repeatPassword, name, surname, patronymic, email);
                         login.focus();
                     }
                 } else {
