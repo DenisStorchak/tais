@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.homework.models.Question;
 import ua.org.tees.yarosh.tais.ui.components.DashPanel;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateQuestionWindow;
 import ua.org.tees.yarosh.tais.ui.core.DashboardView;
+import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
@@ -18,8 +20,6 @@ import java.util.List;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.ModifierKey.CTRL;
-import static com.vaadin.ui.Notification.Type.WARNING_MESSAGE;
-import static com.vaadin.ui.Notification.show;
 import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
@@ -60,14 +60,18 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
         dash.setComponentAlignment(dashPanel, Alignment.MIDDLE_CENTER);
 
         addQuestion.setClickShortcut(CTRL, ENTER);
-        addQuestion.addClickListener(event -> show("Еще не реализовано", WARNING_MESSAGE));
+        addQuestion.addClickListener(event -> {
+            CreateQuestionWindow window = SessionFactory.getCurrent().getWindow(CreateQuestionWindow.class);
+            getUI().addWindow(window);
+            window.setPresenter(SessionFactory.getCurrent().getRelativePresenter(this, CreateQuestionsSuitePresenter.class));
+        });
         saveSuite.setClickShortcut(ENTER);
         saveSuite.addStyleName("default");
         saveSuite.addClickListener(event -> {
             if (getCurrent().getRelativePresenter(this, CreateQuestionsSuitePresenter.class)
                     .createQuestionsSuite(studentGroup, theme, discipline, questions, deadline, enabled)) {
                 theme.setValue("");
-                questions = new ArrayList<Question>();
+                questions = new ArrayList<>();
                 update();
             }
         });
@@ -106,5 +110,10 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
         update();
+    }
+
+    @Override
+    public List<Question> questions() {
+        return questions;
     }
 }

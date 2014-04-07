@@ -13,16 +13,21 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 import java.util.List;
 
 public interface CreateQuestionsSuiteTaisView extends View, UpdatableView {
+
+    List<Question> questions();
+
     interface CreateQuestionsSuitePresenter extends Presenter {
         boolean createQuestionsSuite(ComboBox studentGroup,
-                                  TextField theme,
-                                  ComboBox discipline,
-                                  List<Question> questions,
-                                  DateField deadline,
-                                  ComboBox enabled);
+                                     TextField theme,
+                                     ComboBox discipline,
+                                     List<Question> questions,
+                                     DateField deadline,
+                                     ComboBox enabled);
 
         List<StudentGroup> studentGroups();
 
         List<Discipline> disciplines();
+
+        void addQuestion(Question question);
     }
 }

@@ -15,6 +15,7 @@ import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
 
 import java.util.List;
 
@@ -83,5 +84,10 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
     @Override
     public List<Discipline> disciplines() {
         return disciplineService.findAllDisciplines();
+    }
+
+    @Override
+    public void addQuestion(Question question) {
+        getView(CreateQuestionsSuiteView.class).questions().add(question);
     }
 }

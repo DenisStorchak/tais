@@ -16,6 +16,16 @@ public class Answer {
     private String payloadPath;
     private Boolean truth;
 
+    public Answer() {
+    }
+
+    public Answer(Question question, String text, Boolean truth) {
+
+        this.question = question;
+        this.text = text;
+        this.truth = truth;
+    }
+
     public Long getId() {
         return id;
     }

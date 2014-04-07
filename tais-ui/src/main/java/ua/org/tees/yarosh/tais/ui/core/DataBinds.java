@@ -46,11 +46,12 @@ public abstract class DataBinds {
             public static final String CREATE_SCHEDULE = PREFIX + "schedule/create";
             public static final String SETTINGS = PREFIX + "settings";
         }
-
         public abstract class Teacher {
+
             public static final String PREFIX = "teacher/";
             public static final String TEACHER_DASHBOARD = PREFIX + "dashboard";
             public static final String CREATE_QUESTIONS_SUITE = PREFIX + "questions/create";
+            public static final String ADD_QUESTION = PREFIX + "question/add";
         }
     }
 
