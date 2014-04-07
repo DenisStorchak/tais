@@ -10,6 +10,7 @@ import ua.org.tees.yarosh.tais.ui.core.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
+import ua.org.tees.yarosh.tais.ui.core.validators.NotNullValidator;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView;
 
 import java.util.ArrayList;
@@ -19,7 +20,6 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.ModifierKey.CTRL;
 import static com.vaadin.ui.Notification.Type.WARNING_MESSAGE;
 import static com.vaadin.ui.Notification.show;
-import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
@@ -28,7 +28,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteT
 
 @TaisView("Создать тест")
 @PresentedBy(CreateQuestionsSuitePresenter.class)
-@PermitRoles({ADMIN, TEACHER})
+@PermitRoles({TEACHER})
 @Qualifier(CREATE_QUESTIONS_SUITE)
 public class CreateQuestionsSuiteView extends DashboardView implements CreateQuestionsSuiteTaisView {
 
@@ -65,18 +65,19 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
         });
         enabled.addItem("Включен");
         enabled.addItem("Выключен");
+        enabled.setValue("Включен");
     }
 
     private void setUpValidators() {
-        studentGroup.addValidator(new NotBlankValidator("Выберите группу"));
+        studentGroup.addValidator(new NotNullValidator("Выберите группу"));
         studentGroup.setValidationVisible(false);
         theme.addValidator(new NotBlankValidator("Тема должна быть заполнена"));
         theme.setValidationVisible(false);
-        discipline.addValidator(new NotBlankValidator("Выберите дисциплину"));
+        discipline.addValidator(new NotNullValidator("Выберите дисциплину"));
         discipline.setValidationVisible(false);
-        deadline.addValidator(new NotBlankValidator("Выберите дату дедлайна"));
+        deadline.addValidator(new NotNullValidator("Выберите дату дедлайна"));
         deadline.setValidationVisible(false);
-        enabled.addValidator(new NotBlankValidator("Статус"));
+        enabled.addValidator(new NotNullValidator("Статус"));
         enabled.setValidationVisible(false);
     }
 
