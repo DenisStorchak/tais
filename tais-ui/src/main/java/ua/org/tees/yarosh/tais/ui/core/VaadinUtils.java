@@ -44,18 +44,16 @@ public abstract class VaadinUtils {
         }
     }
 
-    public static HorizontalLayout createSingleFormLayout(Label description, Component component) {
+    public static HorizontalLayout createSingleFormLayout(Component leftComponent, Component rightComponent) {
         HorizontalLayout layout = new HorizontalLayout() {
             {
                 setWidth(100, Unit.PERCENTAGE);
                 setSpacing(true);
             }
         };
-        if (description != null) {
-            layout.addComponent(description);
-        }
-        layout.addComponent(component);
-        layout.setComponentAlignment(component, Alignment.TOP_RIGHT);
+        if (leftComponent != null) layout.addComponent(leftComponent);
+        if (rightComponent != null) layout.addComponent(rightComponent);
+        layout.setComponentAlignment(rightComponent, Alignment.TOP_RIGHT);
         return layout;
     }
 }
