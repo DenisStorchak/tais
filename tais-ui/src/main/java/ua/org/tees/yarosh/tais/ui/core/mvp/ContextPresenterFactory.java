@@ -13,7 +13,7 @@ import static java.lang.String.format;
 @SuppressWarnings("unchecked")
 public class ContextPresenterFactory implements PresenterFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextViewFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(ContextViewFactory.class);
     private static final String PRESENTER_NOT_RELATED = "Presenter [%s] isn't relative with view [%s]";
     private Map<Class<? extends Presenter>, Presenter> presenterPool = new HashMap<>();
     private UIContext ctx;
@@ -46,12 +46,12 @@ public class ContextPresenterFactory implements PresenterFactory {
             throw new IllegalArgumentException("Interface required");
         }
         if (!presenterPool.containsKey(clazz)) {
-            LOGGER.debug("Presenter [{}] will be created now", clazz.getName());
+            log.debug("Presenter [{}] will be created now", clazz.getName());
             P presenter = ctx.getBean(clazz);
             presenterPool.put(clazz, presenter);
             return presenter;
         }
-        LOGGER.debug("Returning [{}] presenter", clazz.getName());
+        log.debug("Returning [{}] presenter", clazz.getName());
         return (P) presenterPool.get(clazz);
     }
 }

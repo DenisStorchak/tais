@@ -19,7 +19,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.COMPONENT_FA
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)
 public class ApplicationServlet extends VaadinServlet implements SessionInitListener {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ApplicationServlet.class);
+    private static final Logger log = LoggerFactory.getLogger(ApplicationServlet.class);
 
     protected void servletInitialized() throws ServletException {
         super.servletInitialized();
@@ -31,7 +31,7 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
         UIContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(
                 getCurrent().getServletContext()).getBean(UIContext.class);
         UIFactory uiFactory = UIFactory.createFactory(ctx);
-        LOGGER.debug("ComponentFactory created for session {}", event.getSession().getSession().getId());
+        log.debug("ComponentFactory created for session {}", event.getSession().getSession().getId());
         event.getSession().setAttribute(COMPONENT_FACTORY, uiFactory);
     }
 }

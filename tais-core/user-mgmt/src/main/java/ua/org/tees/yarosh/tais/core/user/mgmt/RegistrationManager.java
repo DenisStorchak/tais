@@ -28,7 +28,7 @@ import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 @Service
 public class RegistrationManager implements RegistrantService {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(RegistrationManager.class);
+    private static final Logger log = LoggerFactory.getLogger(RegistrationManager.class);
     @Autowired
     private RegistrantRepository registrantRepository;
     @Autowired
@@ -37,28 +37,28 @@ public class RegistrationManager implements RegistrantService {
     @Override
     @CacheEvict(value = REGISTRANTS, allEntries = true)
     public Registrant createRegistration(Registrant registrant) {
-        LOGGER.info("Try to create registration [login: {}]", registrant.getLogin());
+        log.info("Try to create registration [login: {}]", registrant.getLogin());
         SimpleValidation.validate(registrant);
         if (registrantRepository.exists(registrant.getLogin())) {
             return null;
         }
 
         Registrant persistedRegistrant = registrantRepository.save(registrant);
-        LOGGER.info("[login: {}] registered successfully", registrant.getLogin());
+        log.info("[login: {}] registered successfully", registrant.getLogin());
         return persistedRegistrant;
     }
 
     @Override
     @Cacheable(REGISTRANTS)
     public Registrant getRegistration(String login) {
-        LOGGER.info("Profile [login: {}] requested", login);
+        log.info("Profile [login: {}] requested", login);
         return registrantRepository.findOne(login);
     }
 
     @Override
     @CacheEvict(value = REGISTRANTS, allEntries = true)
     public Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException {
-        LOGGER.info("Registration updating for [login: {}] requested", registrant);
+        log.info("Registration updating for [login: {}] requested", registrant);
         if (registrant == null) {
             throw new IllegalArgumentException(Registrant.class.getName() + " can't be null");
         }
@@ -72,7 +72,7 @@ public class RegistrationManager implements RegistrantService {
     @Override
     @CacheEvict(value = REGISTRANTS, allEntries = true)
     public void deleteRegistration(String login) {
-        LOGGER.info("Registration [login: {}] deleting requested", login);
+        log.info("Registration [login: {}] deleting requested", login);
         if (login == null || login.isEmpty()) {
             throw new IllegalArgumentException();
         }
@@ -99,7 +99,7 @@ public class RegistrationManager implements RegistrantService {
     @Override
     @Cacheable(GROUPS)
     public List<StudentGroup> findAllStudentGroups() {
-        LOGGER.info("all groups retrieving");
+        log.info("all groups retrieving");
         return studentGroupRepository.findAll();
     }
 

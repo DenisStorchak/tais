@@ -16,7 +16,7 @@ import java.util.Map;
 @SuppressWarnings("unchecked")
 public class ContextViewFactory implements ViewFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(ContextViewFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(ContextViewFactory.class);
     private Map<Class<? extends View>, View> viewPool = new HashMap<>();
     private PresenterFactory presenterFactory;
 
@@ -27,7 +27,7 @@ public class ContextViewFactory implements ViewFactory {
     @Override
     public <V extends View> V getView(Class<V> viewClazz) {
         if (!viewPool.containsKey(viewClazz)) {
-            LOGGER.debug("View [{}] will be created now", viewClazz.getName());
+            log.debug("View [{}] will be created now", viewClazz.getName());
             Class<? extends Presenter> presenterClazz = viewClazz.getAnnotation(PresentedBy.class).value();
             Presenter presenter = presenterFactory.getRelativePresenter(viewClazz, presenterClazz);
             V view = presenter.getView(viewClazz);
@@ -39,7 +39,7 @@ public class ContextViewFactory implements ViewFactory {
 
             return view;
         }
-        LOGGER.debug("Returning [{}] view", viewClazz.getName());
+        log.debug("Returning [{}] view", viewClazz.getName());
         return (V) viewPool.get(viewClazz);
     }
 }

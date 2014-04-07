@@ -19,6 +19,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.common.*;
+import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
@@ -27,6 +28,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIE
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 /**
@@ -38,11 +40,11 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEA
 @Title("TEES Dashboard")
 public class TAISUI extends UI {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(TAISUI.class);
+    public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
 
     @Override
     protected void init(VaadinRequest vaadinRequest) {
-        LOGGER.debug("UI initialization");
+        log.debug("UI initialization");
         CssLayout content = new CssLayout();
         CommonComponent commonComponent = new CommonComponent(content);
         Navigator nav = new TaisNavigator(this, content);
@@ -55,6 +57,7 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
         nav.addProvider(new FactoryBasedViewProvider(ME, ProfileView.class));
         nav.addProvider(new FactoryBasedViewProvider(EDIT_PROFILE, EditProfileView.class));
+        nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
         nav.addViewChangeListener(new AuthListener());
@@ -62,7 +65,7 @@ public class TAISUI extends UI {
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager));
-        LOGGER.debug("SidebarManager configured");
+        log.debug("SidebarManager configured");
 
         CssLayout root = new CssLayout();
         setContent(root);

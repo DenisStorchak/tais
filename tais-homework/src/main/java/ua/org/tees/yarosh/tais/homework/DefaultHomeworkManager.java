@@ -24,7 +24,7 @@ import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 @Service
 public class DefaultHomeworkManager implements HomeworkManager {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(DefaultHomeworkManager.class);
+    private static final Logger log = LoggerFactory.getLogger(DefaultHomeworkManager.class);
     @Autowired
     private ManualTaskRepository manualTaskRepository;
     @Autowired
@@ -43,7 +43,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Override
     @CacheEvict(MANUAL_TASKS)
     public long createManualTask(ManualTask task) {
-        LOGGER.info("Try to create manual task [{}]", task.getDescription());
+        log.info("Try to create manual task [{}]", task.getDescription());
         switchManualTaskState(task, true);
         return task.getId();
     }
@@ -51,7 +51,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Override
     @CacheEvict(QUESTION_SUITES)
     public long createQuestionsSuite(QuestionsSuite questionsSuite) {
-        LOGGER.info("Try to create questions suite [{}]", questionsSuite.getTheme());
+        log.info("Try to create questions suite [{}]", questionsSuite.getTheme());
         switchQuestionsSuiteState(questionsSuite, true);
         return questionsSuite.getId();
     }

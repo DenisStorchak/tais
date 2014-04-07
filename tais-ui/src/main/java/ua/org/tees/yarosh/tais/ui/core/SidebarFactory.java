@@ -14,14 +14,17 @@ import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 
 public class SidebarFactory {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(SidebarFactory.class);
+    private static final Logger log = LoggerFactory.getLogger(SidebarFactory.class);
     private UI ui;
 
     public static SidebarFactory createFactory(UI ui) {
@@ -50,7 +53,7 @@ public class SidebarFactory {
     }
 
     private UserMenu createUserMenu() {
-        LOGGER.debug("User menu will be created");
+        log.debug("User menu will be created");
         return new UserMenu((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID));
     }
 
@@ -59,11 +62,17 @@ public class SidebarFactory {
 
         NativeButton dashboardButton = new NativeButton("Задания");
         dashboardButton.addStyleName("icon-columns");
+        dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
         teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
 
         NativeButton studentListButton = new NativeButton("Студенты");
         studentListButton.addStyleName("icon-users");
         teacherMenu.addMenuButton(null, studentListButton); // todo set related view class
+
+        NativeButton createQuestionsSuiteButton = new NativeButton("Создать тестовое задание");
+        createQuestionsSuiteButton.addStyleName("icon-users");
+        createQuestionsSuiteButton.addClickListener(event -> ui.getNavigator().navigateTo(CREATE_QUESTIONS_SUITE));
+        teacherMenu.addMenuButton(CreateQuestionsSuiteView.class, createQuestionsSuiteButton);
 
         return teacherMenu;
     }

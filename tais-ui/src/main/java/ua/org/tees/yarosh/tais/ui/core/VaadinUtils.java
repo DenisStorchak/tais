@@ -1,9 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.data.Validatable;
-import com.vaadin.ui.AbstractField;
-import com.vaadin.ui.AbstractTextField;
-import com.vaadin.ui.Component;
+import com.vaadin.ui.*;
 
 /**
  * @author Timur Yarosh
@@ -44,5 +42,20 @@ public abstract class VaadinUtils {
         for (AbstractTextField field : fields) {
             field.setValue("");
         }
+    }
+
+    public static HorizontalLayout createSingleFormLayout(Label description, Component component) {
+        HorizontalLayout layout = new HorizontalLayout() {
+            {
+                setWidth(100, Unit.PERCENTAGE);
+                setSpacing(true);
+            }
+        };
+        if (description != null) {
+            layout.addComponent(description);
+        }
+        layout.addComponent(component);
+        layout.setComponentAlignment(component, Alignment.TOP_RIGHT);
+        return layout;
     }
 }

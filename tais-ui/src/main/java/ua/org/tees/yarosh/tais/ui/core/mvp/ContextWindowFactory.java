@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.ui.core.UIContext;
 
 public class ContextWindowFactory implements WindowFactory {
 
-    public static final Logger LOGGER = LoggerFactory.getLogger(ContextWindowFactory.class);
+    public static final Logger log = LoggerFactory.getLogger(ContextWindowFactory.class);
     private UIContext ctx;
 
     public ContextWindowFactory(UIContext ctx) {
@@ -16,7 +16,7 @@ public class ContextWindowFactory implements WindowFactory {
 
     @Override
     public <W extends Window> W getWindow(Class<W> windowType) {
-        LOGGER.debug("Window [{}] will be created", windowType);
+        log.debug("Window [{}] will be created", windowType);
         return ctx.getBean(windowType);
     }
 }

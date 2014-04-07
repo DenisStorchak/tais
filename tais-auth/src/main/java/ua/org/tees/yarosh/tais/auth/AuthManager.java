@@ -16,7 +16,7 @@ public class AuthManager {
 
     private static final Map<String, UserDetails> AUTHORIZATIONS = new ConcurrentHashMap<>();
     private static final Vector<UserRepositoryAdapter> DAO_ADAPTERS = new Vector<>();
-    private static Logger LOGGER = LoggerFactory.getLogger(AuthManager.class);
+    private static Logger log = LoggerFactory.getLogger(AuthManager.class);
     private static volatile boolean acceptEmptyStrings = false;
 
     public static void addDao(UserRepositoryAdapter userRepositoryAdapter) {
@@ -25,7 +25,7 @@ public class AuthManager {
 
     public static boolean login(String username, String password) {
         if ((username.isEmpty() || password.isEmpty()) && !acceptsEmptyStrings()) {
-            LOGGER.info("Can't login with username [{}] and password [{}]. Empty string aren't allowed.",
+            log.info("Can't login with username [{}] and password [{}]. Empty string aren't allowed.",
                     username, password);
             return false;
         }
@@ -34,11 +34,11 @@ public class AuthManager {
             UserDetails userDetails = dao.get().getUserDetails(username);
             if (userDetails != null && assertPasswords(password, userDetails.getPassword(), dao.get())) {
                 AUTHORIZATIONS.put(username, userDetails);
-                LOGGER.info("Registrant [{}] logged in", username);
+                log.info("Registrant [{}] logged in", username);
                 return true;
             }
         }
-        LOGGER.info("Username [{}] not presented inside of any registered dao adapter", username);
+        log.info("Username [{}] not presented inside of any registered dao adapter", username);
         return false;
     }
 
@@ -52,7 +52,7 @@ public class AuthManager {
         if (clazz.getAnnotation(PermitAll.class) != null) {
             return true;
         } else if (username == null || clazz == null) {
-            LOGGER.warn("null username or clazz taken, null returns");
+            log.warn("null username or clazz taken, null returns");
             return false;
         } else if (AUTHORIZATIONS.containsKey(username)) {
             PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
@@ -68,7 +68,7 @@ public class AuthManager {
     public static boolean logout(String username) {
         if (AUTHORIZATIONS.containsKey(username)) {
             AUTHORIZATIONS.remove(username);
-            LOGGER.info("Registrant [{}] logged out", username);
+            log.info("Registrant [{}] logged out", username);
             return true;
         }
         return false;
