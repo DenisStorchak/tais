@@ -43,6 +43,38 @@ public class Registrant implements Serializable {
     private String role;
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Registrant that = (Registrant) o;
+
+        if (!email.equals(that.email)) return false;
+        if (group != null ? !group.equals(that.group) : that.group != null) return false;
+        if (!login.equals(that.login)) return false;
+        if (!name.equals(that.name)) return false;
+        if (!password.equals(that.password)) return false;
+        if (!patronymic.equals(that.patronymic)) return false;
+        if (!role.equals(that.role)) return false;
+        if (!surname.equals(that.surname)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = login.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + name.hashCode();
+        result = 31 * result + patronymic.hashCode();
+        result = 31 * result + surname.hashCode();
+        result = 31 * result + email.hashCode();
+        result = 31 * result + (group != null ? group.hashCode() : 0);
+        result = 31 * result + role.hashCode();
+        return result;
+    }
+
+    @Override
     public String toString() {
         return String.format("%s %s %s", surname, name, patronymic);
     }

@@ -149,10 +149,10 @@ public class CreateScheduleWindow extends Window {
 
         private void addLesson() {
             Item item = schedule.addItem(RandomStringUtils.random(5));
-            item.getItemProperty(DISCIPLINE).setValue(createDisciplines(getDisciplineService()));
-            item.getItemProperty(LESSON_TYPE).setValue(createLessonTypes());
-            item.getItemProperty(CLASSROOM).setValue(createClassrooms(getClassroomService()));
-            item.getItemProperty(TEACHER).setValue(createTeachers(getRegistrantService()));
+            item.getItemProperty(DISCIPLINE).setValue(createDisciplines(getDisciplineService(), null));
+            item.getItemProperty(LESSON_TYPE).setValue(createLessonTypes(null));
+            item.getItemProperty(CLASSROOM).setValue(createClassrooms(getClassroomService(), null));
+            item.getItemProperty(TEACHER).setValue(createTeachers(getRegistrantService(), null));
             item.getItemProperty(TIME).setValue(createDateField());
             item.getItemProperty(COPY_WITH_STEP).setValue(createCopyWithStep(0, 30));
         }
@@ -219,23 +219,19 @@ public class CreateScheduleWindow extends Window {
                                      Item editableItem) {
 
             Discipline discipline = (Discipline) sourceItem.getItemProperty(DISCIPLINE).getValue();
-            ComboBox disciplines = createDisciplines(disciplineService);
-            disciplines.setValue(discipline);
+            ComboBox disciplines = createDisciplines(disciplineService, discipline);
             editableItem.getItemProperty(DISCIPLINE).setValue(disciplines);
 
             String lessonType = (String) sourceItem.getItemProperty(LESSON_TYPE).getValue();
-            ComboBox lessonTypes = createLessonTypes();
-            lessonTypes.setValue(lessonType);
+            ComboBox lessonTypes = createLessonTypes(lessonType);
             editableItem.getItemProperty(LESSON_TYPE).setValue(lessonTypes);
 
             Classroom classroom = (Classroom) sourceItem.getItemProperty(CLASSROOM).getValue();
-            ComboBox classrooms = createClassrooms(classroomService);
-            classrooms.setValue(classroom);
+            ComboBox classrooms = createClassrooms(classroomService, classroom);
             editableItem.getItemProperty(CLASSROOM).setValue(classrooms);
 
             Registrant teacher = (Registrant) sourceItem.getItemProperty(TEACHER).getValue();
-            ComboBox teachers = createTeachers(registrantService);
-            teachers.setValue(teacher);
+            ComboBox teachers = createTeachers(registrantService, teacher);
             editableItem.getItemProperty(TEACHER).setValue(teachers);
 
             Date date = (Date) sourceItem.getItemProperty(TIME).getValue();
@@ -265,28 +261,47 @@ public class CreateScheduleWindow extends Window {
         return dateField;
     }
 
-    private ComboBox createDisciplines(DisciplineService disciplineService) {
+    private ComboBox createDisciplines(DisciplineService disciplineService, Discipline actualDiscipline) {
         ComboBox disciplines = new ComboBox();
         disciplineService.findAllDisciplines().forEach(disciplines::addItem);
+        for (Discipline discipline : disciplineService.findAllDisciplines()) {
+            disciplines.addItem(discipline);
+            if (discipline.equals(actualDiscipline)) {
+                disciplines.setValue(discipline);
+            }
+        }
         return disciplines;
     }
 
-    private ComboBox createTeachers(RegistrantService registrantService) {
+    private ComboBox createTeachers(RegistrantService registrantService, Registrant actualTeacher) {
         ComboBox teachers = new ComboBox();
-        registrantService.findAllTeachers().forEach(teachers::addItem);
+        for (Registrant registrant : registrantService.findAllTeachers()) {
+            teachers.addItem(registrant);
+            if (actualTeacher.equals(registrant)) {
+                teachers.setValue(registrant);
+            }
+        }
         return teachers;
     }
 
-    private ComboBox createClassrooms(ClassroomService classroomService) {
+    private ComboBox createClassrooms(ClassroomService classroomService, Classroom actualClassroom) {
         ComboBox classrooms = new ComboBox();
-        classroomService.findAllClassrooms().forEach(classrooms::addItem);
+        for (Classroom classroom : classroomService.findAllClassrooms()) {
+            classrooms.addItem(classroom);
+            if (classroom.equals(actualClassroom)) {
+                classrooms.setValue(classroom);
+            }
+        }
         return classrooms;
     }
 
-    private ComboBox createLessonTypes() {
+    private ComboBox createLessonTypes(String actualLessonType) {
         ComboBox lessonTypes = new ComboBox();
         for (LessonType type : LessonType.values()) {
             lessonTypes.addItem(translate(type.toString()));
+            if (translate(type.toString()).equals(actualLessonType)) {
+                lessonTypes.setValue(translate(type.toString()));
+            }
         }
         lessonTypes.setWidth(100, Unit.PERCENTAGE);
         return lessonTypes;

@@ -11,6 +11,17 @@ public class Classroom {
     public Classroom() {
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) return false;
+        if (obj.getClass() != this.getClass()) return false;
+        if (obj == this) return true;
+
+        Classroom that = (Classroom) obj;
+
+        return this.id.equals(that.id);
+    }
+
     public Classroom(String classroom) {
         this.id = classroom;
     }
