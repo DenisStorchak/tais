@@ -7,7 +7,9 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
@@ -16,7 +18,6 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 /**
@@ -115,13 +116,14 @@ public class LoginView extends VerticalLayout implements LoginTaisView {
             );
 
             signIn.addClickListener(event -> {
+                Registrant login = SessionFactory.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
+                        .login(username.getValue(), password.getValue());
                 if (username.getValue() != null
                         && password.getValue() != null
-                        && SessionFactory.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
-                        .login(username.getValue(), password.getValue())) {
+                        && login != null) {
                     removeComponent(error);
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
-                    getUI().getNavigator().navigateTo(USER_REGISTRATION);
+                    getUI().getNavigator().navigateTo(ViewResolver.resolveDefaultView(login));
                 } else {
                     if (getComponentCount() > 2) {
                         removeComponent(getComponent(2));

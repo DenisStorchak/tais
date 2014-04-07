@@ -30,6 +30,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.registerDefaultView;
 
 /**
  * @author Timur Yarosh
@@ -45,6 +46,13 @@ public class TAISUI extends UI {
     @Override
     protected void init(VaadinRequest vaadinRequest) {
         log.debug("UI initialization");
+
+        {
+            registerDefaultView(UserRegistrationView.class, ADMIN);
+            registerDefaultView(TeacherDashboardView.class, TEACHER);
+            //todo register default student view
+        }
+
         CssLayout content = new CssLayout();
         CommonComponent commonComponent = new CommonComponent(content);
         Navigator nav = new TaisNavigator(this, content);

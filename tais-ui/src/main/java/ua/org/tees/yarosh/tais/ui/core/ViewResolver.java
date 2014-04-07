@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
 import org.springframework.beans.factory.annotation.Qualifier;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -14,6 +15,7 @@ import java.util.Map;
 public class ViewResolver {
 
     private static final Map<Class<? extends View>, String> resolverMap = new HashMap<>();
+    private static final Map<String, String> roleViews = new HashMap<>();
 
     public static String resolveView(Class<? extends View> clazz) {
         if (resolverMap.containsKey(clazz)) {
@@ -37,8 +39,24 @@ public class ViewResolver {
         throw new IllegalArgumentException("Qualifier not found");
     }
 
+    public static String resolveUnregistered(Class<? extends View> clazz) {
+        Qualifier qualifier = clazz.getAnnotation(Qualifier.class);
+        if (qualifier != null) {
+            return qualifier.value();
+        }
+        throw new IllegalArgumentException("Qualifier not found");
+    }
+
     public static boolean viewRegistered(String name) {
         return resolverMap.containsValue(name);
+    }
+
+    public static String resolveDefaultView(Registrant registrant) {
+        return roleViews.get(registrant.getRole());
+    }
+
+    public static void registerDefaultView(Class<? extends View> clazz, String role) {
+        roleViews.put(role, resolveUnregistered(clazz));
     }
 
     public void register(Class<? extends View> clazz, String name) {
