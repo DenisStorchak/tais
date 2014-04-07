@@ -15,6 +15,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -80,6 +81,12 @@ public class DefaultHomeworkManager implements HomeworkManager {
         StudentGroup studentGroup = studentGroupRepository.findOne(questionsSuite.getStudentGroup().getId());
         for (Registrant student : studentGroupRepository.findRegistrantsByStudentGroup(studentGroup.getId())) {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
+            if (taskHolder == null) {
+                taskHolder = new PersonalTaskHolder();
+                taskHolder.setOwner(student);
+                taskHolder.setQuestionsSuiteList(new ArrayList<>());
+                taskHolder.setManualTaskList(new ArrayList<>());
+            }
             if (enable) {
                 taskHolder.getQuestionsSuiteList().add(questionsSuite);
             } else {
@@ -188,6 +195,12 @@ public class DefaultHomeworkManager implements HomeworkManager {
         StudentGroup studentGroup = studentGroupRepository.findOne(manualTask.getStudentGroup().getId());
         for (Registrant student : studentGroupRepository.findRegistrantsByStudentGroup(studentGroup.getId())) {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
+            if (taskHolder == null) {
+                taskHolder = new PersonalTaskHolder();
+                taskHolder.setManualTaskList(new ArrayList<>());
+                taskHolder.setQuestionsSuiteList(new ArrayList<>());
+                taskHolder.setOwner(student);
+            }
             if (enable) {
                 taskHolder.getManualTaskList().add(manualTask);
             } else {

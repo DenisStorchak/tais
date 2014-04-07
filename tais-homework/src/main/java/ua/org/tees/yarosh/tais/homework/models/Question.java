@@ -1,5 +1,8 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +16,7 @@ public class Question {
     private Long id;
     private String description;
     private String payloadPath;
+    @Cascade(CascadeType.ALL)
     @OneToMany
     private List<Answer> answers;
 

@@ -1,5 +1,7 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
@@ -20,6 +22,7 @@ public class QuestionsSuite {
     @JoinColumn(name = "disciplineId")
     private Discipline discipline;
     @OneToMany
+    @Cascade(CascadeType.ALL)
     @JoinColumn(name = "questionsId")
     private List<Question> questions;
     @Temporal(TemporalType.DATE)
