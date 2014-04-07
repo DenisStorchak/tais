@@ -20,6 +20,7 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.ModifierKey.CTRL;
 import static com.vaadin.ui.Notification.Type.WARNING_MESSAGE;
 import static com.vaadin.ui.Notification.show;
+import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
@@ -32,6 +33,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteT
 @Qualifier(CREATE_QUESTIONS_SUITE)
 public class CreateQuestionsSuiteView extends DashboardView implements CreateQuestionsSuiteTaisView {
 
+    private final HorizontalLayout controls;
     private ComboBox studentGroup = new ComboBox();
     private TextField theme = new TextField();
     private ComboBox discipline = new ComboBox();
@@ -41,16 +43,18 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
     private Button saveSuite = new Button("Сохранить тест");
 
     private List<Question> questions = new ArrayList<>();
+    private final DashPanel dashPanel;
 
     public CreateQuestionsSuiteView() {
         setUpValidators();
-        DashPanel dashPanel = addDashPanel(null, null,
+        controls = createSingleFormLayout(addQuestion, saveSuite);
+        dashPanel = addDashPanel(null, null,
                 createSingleFormLayout(new Label("Группа"), studentGroup),
                 createSingleFormLayout(new Label("Дисциплина"), discipline),
                 createSingleFormLayout(new Label("Статус"), enabled),
                 createSingleFormLayout(new Label("Тема"), theme),
                 createSingleFormLayout(new Label("Дедлайн"), deadline),
-                createSingleFormLayout(addQuestion, saveSuite));
+                controls);
         dashPanel.setSizeUndefined();
         dashPanel.setWidth(50, Unit.PERCENTAGE);
         dash.setComponentAlignment(dashPanel, Alignment.MIDDLE_CENTER);
@@ -60,8 +64,12 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
         saveSuite.setClickShortcut(ENTER);
         saveSuite.addStyleName("default");
         saveSuite.addClickListener(event -> {
-            getCurrent().getRelativePresenter(this, CreateQuestionsSuitePresenter.class)
-                    .createQuestionsSuite(studentGroup, theme, discipline, questions, deadline, enabled);
+            if (getCurrent().getRelativePresenter(this, CreateQuestionsSuitePresenter.class)
+                    .createQuestionsSuite(studentGroup, theme, discipline, questions, deadline, enabled)) {
+                theme.setValue("");
+                questions = new ArrayList<Question>();
+                update();
+            }
         });
         enabled.addItem("Включен");
         enabled.addItem("Выключен");
@@ -91,6 +99,8 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
 
         discipline.removeAllItems();
         presenter.disciplines().forEach(discipline::addItem);
+
+        controls.setCaption(format("Создано [%s] новых вопросов", questions.size()));
     }
 
     @Override

@@ -52,14 +52,15 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
     }
 
     @Override
-    public void createQuestionsSuite(ComboBox studentGroup,
-                                     TextField theme,
-                                     ComboBox discipline,
-                                     List<Question> questions,
-                                     DateField deadline,
-                                     ComboBox enabled) {
+    public boolean createQuestionsSuite(ComboBox studentGroup,
+                                        TextField theme,
+                                        ComboBox discipline,
+                                        List<Question> questions,
+                                        DateField deadline,
+                                        ComboBox enabled) {
         if (!isValid(studentGroup, theme, discipline, deadline, enabled)) {
             show("Неправильно заполнено поле", ERROR_MESSAGE);
+            return false;
         } else {
             QuestionsSuite suite = new QuestionsSuite();
             suite.setStudentGroup((StudentGroup) studentGroup.getValue());
@@ -70,6 +71,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
             suite.setEnabled(enabled.getValue().equals("Включен"));
 
             homeworkManager.createQuestionsSuite(suite);
+            return true;
         }
     }
 

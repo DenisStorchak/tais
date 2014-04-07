@@ -14,7 +14,7 @@ import java.util.List;
 
 public interface CreateQuestionsSuiteTaisView extends View, UpdatableView {
     interface CreateQuestionsSuitePresenter extends Presenter {
-        void createQuestionsSuite(ComboBox studentGroup,
+        boolean createQuestionsSuite(ComboBox studentGroup,
                                   TextField theme,
                                   ComboBox discipline,
                                   List<Question> questions,
