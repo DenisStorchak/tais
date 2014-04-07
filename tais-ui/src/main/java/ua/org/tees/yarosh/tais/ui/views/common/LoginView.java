@@ -2,7 +2,7 @@ package ua.org.tees.yarosh.tais.ui.views.common;
 
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.Page;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
@@ -15,8 +15,9 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
+import javax.servlet.http.Cookie;
+
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
-import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
@@ -130,9 +131,10 @@ public class LoginView extends VerticalLayout implements LoginTaisView {
                     // todo remove line (use cookie instead)
                     VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
 
-                    // save auth cookie
-                    Page.getCurrent().getJavaScript().execute(format("document.cookie = '%s=%s; expires=2000000000;';",
-                            Cookies.AUTH, username.getValue()));
+                    Cookie cookie = new Cookie(Cookies.AUTH, username.getValue());
+                    cookie.setMaxAge(15552000);
+                    cookie.setPath("/");
+                    VaadinService.getCurrentResponse().addCookie(cookie);
 
                     getUI().getNavigator().navigateTo(ViewResolver.resolveDefaultView(login));
                 } else {

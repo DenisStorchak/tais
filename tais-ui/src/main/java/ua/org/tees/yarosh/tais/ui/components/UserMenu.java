@@ -1,9 +1,13 @@
 package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.server.ThemeResource;
+import com.vaadin.server.VaadinService;
 import com.vaadin.ui.*;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
+import ua.org.tees.yarosh.tais.ui.core.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+
+import javax.servlet.http.Cookie;
 
 import static com.vaadin.server.VaadinSession.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
@@ -54,6 +58,10 @@ public class UserMenu extends VerticalLayout {
         signOut.addClickListener(event -> {
             AuthManager.logout(username.getValue());
             getCurrent().setAttribute(REGISTRANT_ID, null);
+            Cookie cookie = new Cookie(DataBinds.Cookies.AUTH, username.getValue());
+            cookie.setMaxAge(0);
+            cookie.setPath("/");
+            VaadinService.getCurrentResponse().addCookie(cookie);
             getUI().getNavigator().navigateTo(AUTH);
         });
         addComponent(signOut);
