@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher.presenters;
 
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
@@ -58,7 +57,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
                                      ComboBox discipline,
                                      List<Question> questions,
                                      DateField deadline,
-                                     CheckBox enabled) {
+                                     ComboBox enabled) {
         if (!isValid(studentGroup, theme, discipline, deadline, enabled)) {
             show("Неправильно заполнено поле", ERROR_MESSAGE);
         } else {
@@ -68,7 +67,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
             suite.setDiscipline((Discipline) discipline.getValue());
             suite.setQuestions(questions);
             suite.setDeadline(deadline.getValue());
-            suite.setEnabled(enabled.getValue());
+            suite.setEnabled(enabled.getValue().equals("Включен"));
 
             homeworkManager.createQuestionsSuite(suite);
         }

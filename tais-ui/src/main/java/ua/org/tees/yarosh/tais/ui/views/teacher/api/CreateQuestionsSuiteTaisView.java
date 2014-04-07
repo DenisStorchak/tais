@@ -1,7 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher.api;
 
 import com.vaadin.navigator.View;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.TextField;
@@ -20,7 +19,7 @@ public interface CreateQuestionsSuiteTaisView extends View, UpdatableView {
                                   ComboBox discipline,
                                   List<Question> questions,
                                   DateField deadline,
-                                  CheckBox enabled);
+                                  ComboBox enabled);
 
         List<StudentGroup> studentGroups();
 
