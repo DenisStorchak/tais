@@ -98,7 +98,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
 
     @Override
     public List<String> listStudentGroups() {
-        List<StudentGroup> studentGroups = registrantService.listStudentGroups();
+        List<StudentGroup> studentGroups = registrantService.findAllStudentGroups();
         return studentGroups.stream().map(StudentGroup::getId).collect(toList());
     }
 

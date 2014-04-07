@@ -98,7 +98,7 @@ public class RegistrationManager implements RegistrantService {
 
     @Override
     @Cacheable(GROUPS)
-    public List<StudentGroup> listStudentGroups() {
+    public List<StudentGroup> findAllStudentGroups() {
         LOGGER.info("all groups retrieving");
         return studentGroupRepository.findAll();
     }

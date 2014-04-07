@@ -1,0 +1,29 @@
+package ua.org.tees.yarosh.tais.ui.views.teacher.api;
+
+import com.vaadin.navigator.View;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.DateField;
+import com.vaadin.ui.TextField;
+import ua.org.tees.yarosh.tais.core.common.models.Discipline;
+import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.homework.models.Question;
+import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
+import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
+
+import java.util.List;
+
+public interface CreateQuestionsSuiteTaisView extends View, UpdatableView {
+    interface CreateQuestionsSuitePresenter extends Presenter {
+        void createQuestionsSuite(ComboBox studentGroup,
+                                  TextField theme,
+                                  ComboBox discipline,
+                                  List<Question> questions,
+                                  DateField deadline,
+                                  CheckBox enabled);
+
+        List<StudentGroup> studentGroups();
+
+        List<Discipline> disciplines();
+    }
+}

@@ -50,6 +50,7 @@ public abstract class DataBinds {
         public abstract class Teacher {
             public static final String PREFIX = "teacher/";
             public static final String TEACHER_DASHBOARD = PREFIX + "dashboard";
+            public static final String CREATE_QUESTIONS_SUITE = PREFIX + "questions/create";
         }
     }
 

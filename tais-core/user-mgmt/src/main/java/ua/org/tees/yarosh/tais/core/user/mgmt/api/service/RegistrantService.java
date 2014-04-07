@@ -26,7 +26,7 @@ public interface RegistrantService {
 
     boolean loginExists(String login);
 
-    List<StudentGroup> listStudentGroups();
+    List<StudentGroup> findAllStudentGroups();
 
     boolean isStudentGroupExists(String id);
 

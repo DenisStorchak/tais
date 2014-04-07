@@ -37,7 +37,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     public List<StudentGroup> getGroups() {
-        return registrantService.listStudentGroups();
+        return registrantService.findAllStudentGroups();
     }
 
     public List<Registrant> getRegistrants() {

@@ -80,7 +80,7 @@ public class EditProfileListener extends AbstractPresenter implements EditProfil
 
     @Override
     public List<StudentGroup> groups() {
-        return registrantService.listStudentGroups();
+        return registrantService.findAllStudentGroups();
     }
 
     @Override
