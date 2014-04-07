@@ -36,6 +36,11 @@ public class SidebarManager implements ViewChangeListener {
         sidebarPool.put(viewPrefix, sidebar);
     }
 
+    /**
+     * Don't hide sidebar while view changing to
+     *
+     * @param viewName exception view name
+     */
     public void addHideException(String viewName) {
         hideExceptions.add(viewName);
     }
