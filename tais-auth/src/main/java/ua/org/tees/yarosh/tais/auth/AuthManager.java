@@ -74,6 +74,10 @@ public class AuthManager {
         return false;
     }
 
+    public static boolean loggedIn(String username) {
+        return AUTHORIZATIONS.containsKey(username);
+    }
+
     public static boolean acceptsEmptyStrings() {
         return acceptEmptyStrings;
     }

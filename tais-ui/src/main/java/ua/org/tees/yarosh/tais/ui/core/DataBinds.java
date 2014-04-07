@@ -63,4 +63,8 @@ public abstract class DataBinds {
         public static final String PRESENTER_FACTORY = "presenterFactory";
         public static final String HELP_MANAGER_FACTORY = "helpManagerFactory";
     }
+
+    public static abstract class Cookies {
+        public static final String AUTH = "taisAuth";
+    }
 }

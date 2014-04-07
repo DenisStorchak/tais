@@ -6,11 +6,13 @@ import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.core.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
@@ -22,10 +24,12 @@ import ua.org.tees.yarosh.tais.ui.views.common.*;
 import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
+import javax.servlet.http.Cookie;
+
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
@@ -81,9 +85,20 @@ public class TAISUI extends UI {
         root.setSizeFull();
         root.addComponent(commonComponent);
 
-        if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
+        Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
+        boolean authorized = false;
+        for (int i = 0; i < cookies.length && !authorized; i++) {
+            if (cookies[i].getName().equals(Cookies.AUTH)) {
+                authorized = AuthManager.loggedIn(cookies[i].getValue());
+            }
+        }
+        if (!authorized) {
             nav.navigateTo(AUTH);
         }
+
+//        if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
+//            nav.navigateTo(AUTH);
+//        }
     }
 
     private SidebarManager configureSidebarManager(SidebarManager sidebarManager) {
