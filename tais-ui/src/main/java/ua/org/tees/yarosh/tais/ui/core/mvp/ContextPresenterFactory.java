@@ -48,6 +48,7 @@ public class ContextPresenterFactory implements PresenterFactory {
         if (!presenterPool.containsKey(clazz)) {
             log.debug("Presenter [{}] will be created now", clazz.getName());
             P presenter = ctx.getBean(clazz);
+            presenter.init();
             presenterPool.put(clazz, presenter);
             return presenter;
         }

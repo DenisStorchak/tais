@@ -6,5 +6,5 @@ package ua.org.tees.yarosh.tais.ui.core.api;
  *         Time: 15:13
  */
 public interface Initable {
-    void init();
+    default void init() { /*NOP*/ }
 }
