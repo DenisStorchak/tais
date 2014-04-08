@@ -12,6 +12,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
+import ua.org.tees.yarosh.tais.ui.components.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
@@ -30,7 +31,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
-import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.registerDefaultView;
+import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
 
 /**
  * @author Timur Yarosh
@@ -47,16 +48,34 @@ public class TAISUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
         log.debug("UI initialization");
 
-        {
-            registerDefaultView(UserRegistrationView.class, ADMIN);
-            registerDefaultView(TeacherDashboardView.class, TEACHER);
-            //todo register default student view
-        }
-
         CssLayout content = new CssLayout();
         CommonComponent commonComponent = new CommonComponent(content);
+        setContent(new RootLayout(commonComponent));
+
         Navigator nav = new TaisNavigator(this, content);
 
+        mapRoleViews();
+        setUpViews(nav);
+        setUpListeners(nav, commonComponent);
+        authenticate(nav);
+    }
+
+    private void mapRoleViews() {
+        mapDefaultView(UserRegistrationView.class, ADMIN);
+        mapDefaultView(TeacherDashboardView.class, TEACHER);
+        //todo register default student view
+    }
+
+    private void setUpListeners(Navigator nav, CommonComponent commonComponent) {
+        nav.addViewChangeListener(new AuthListener());
+        nav.addViewChangeListener(new LastViewSaver());
+        nav.addViewChangeListener(new RootToDefaultViewSwitcher());
+
+        SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
+        nav.addViewChangeListener(configureSidebarManager(sidebarManager));
+    }
+
+    private void setUpViews(Navigator nav) {
         nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
@@ -68,21 +87,9 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
+    }
 
-        nav.addViewChangeListener(new AuthListener());
-        nav.addViewChangeListener(new LastViewSaver());
-        nav.addViewChangeListener(new RootToDefaultViewSwitcher());
-
-        SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
-        nav.addViewChangeListener(configureSidebarManager(sidebarManager));
-        log.debug("SidebarManager configured");
-
-        CssLayout root = new CssLayout();
-        setContent(root);
-        root.addStyleName("root");
-        root.setSizeFull();
-        root.addComponent(commonComponent);
-
+    private void authenticate(Navigator nav) {
         String authCookie = VaadinUtils.getCookie(Cookies.AUTH).getValue();
         if (authCookie.isEmpty() || !AuthManager.loggedIn(authCookie)) {
             nav.navigateTo(AUTH);
