@@ -5,8 +5,8 @@ import com.vaadin.navigator.View;
 import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
-public interface ListEnabledQuestionsSuiteTaisView extends View, UpdatableView {
-    interface ListEnabledQuestionsSuitePresenter extends Presenter {
+public interface EnabledQuestionsSuiteTaisView extends View, UpdatableView {
+    interface EnabledQuestionsSuitePresenter extends Presenter {
         Container suitesContainer();
     }
 }
