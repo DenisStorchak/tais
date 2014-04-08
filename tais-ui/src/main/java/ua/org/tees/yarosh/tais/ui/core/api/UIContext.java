@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.core.api;
 
 import org.springframework.stereotype.Service;
 

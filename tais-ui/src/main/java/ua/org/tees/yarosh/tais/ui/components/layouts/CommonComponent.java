@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.components;
+package ua.org.tees.yarosh.tais.ui.components.layouts;
 
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;

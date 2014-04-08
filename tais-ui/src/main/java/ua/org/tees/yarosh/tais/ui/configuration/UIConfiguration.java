@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.configuration;
 
 import org.springframework.context.annotation.*;
-import ua.org.tees.yarosh.tais.ui.core.UIContext;
+import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
 
 import static com.vaadin.server.VaadinServlet.getCurrent;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;

@@ -3,6 +3,10 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Window;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
+import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.HelpManagerFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
+import ua.org.tees.yarosh.tais.ui.core.api.WindowFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 
 public class UIFactory implements ComponentFactory {

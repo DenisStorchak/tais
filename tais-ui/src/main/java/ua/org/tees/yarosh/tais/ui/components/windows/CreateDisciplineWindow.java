@@ -4,7 +4,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.ui.core.ComponentFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;

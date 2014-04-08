@@ -1,10 +1,11 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.listeners;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
-import ua.org.tees.yarosh.tais.ui.components.CommonComponent;
-import ua.org.tees.yarosh.tais.ui.components.Sidebar;
-import ua.org.tees.yarosh.tais.ui.components.SidebarMenu;
+import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
+import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
+import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
+import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 
 import java.util.*;
 

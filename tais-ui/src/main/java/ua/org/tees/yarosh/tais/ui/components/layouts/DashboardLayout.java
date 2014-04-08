@@ -1,13 +1,9 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.components.layouts;
 
 import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
-import ua.org.tees.yarosh.tais.ui.components.BgPanel;
-import ua.org.tees.yarosh.tais.ui.components.DashPanel;
-import ua.org.tees.yarosh.tais.ui.components.HorizontalDash;
-import ua.org.tees.yarosh.tais.ui.components.VerticalDash;
 
 public abstract class DashboardLayout extends VerticalLayout {
 

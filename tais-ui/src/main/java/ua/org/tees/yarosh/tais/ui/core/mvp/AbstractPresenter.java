@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
 
 /**
  * @author Timur Yarosh

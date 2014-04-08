@@ -1,5 +1,6 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.components.layouts;
 
+import ua.org.tees.yarosh.tais.ui.core.api.Initable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 
 /**

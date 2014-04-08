@@ -6,9 +6,9 @@ import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.properties.DefaultUserProperties;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;

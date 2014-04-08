@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core.mvp;
+package ua.org.tees.yarosh.tais.ui.core.api;
 
 import com.vaadin.ui.Window;
 

@@ -6,8 +6,8 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
+import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 import java.util.Date;
 import java.util.List;

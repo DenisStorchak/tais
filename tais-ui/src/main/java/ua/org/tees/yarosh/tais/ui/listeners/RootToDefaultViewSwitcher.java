@@ -1,10 +1,13 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.listeners;
 
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinServlet;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
+import ua.org.tees.yarosh.tais.ui.core.DataBinds;
+import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
+import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 

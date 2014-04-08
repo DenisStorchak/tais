@@ -1,9 +1,10 @@
-package ua.org.tees.yarosh.tais.ui.core.mvp;
+package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.ui.Window;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.core.UIContext;
+import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
+import ua.org.tees.yarosh.tais.ui.core.api.WindowFactory;
 
 public class ContextWindowFactory implements WindowFactory {
 

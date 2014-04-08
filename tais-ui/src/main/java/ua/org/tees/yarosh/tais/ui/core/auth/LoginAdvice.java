@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.core.auth;
 
 
 import org.aspectj.lang.JoinPoint;
@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
+import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies.AUTH;
 

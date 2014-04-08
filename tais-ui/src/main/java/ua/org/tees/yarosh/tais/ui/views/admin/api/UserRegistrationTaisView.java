@@ -4,8 +4,8 @@ import com.vaadin.navigator.View;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
+import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 import java.util.List;
 

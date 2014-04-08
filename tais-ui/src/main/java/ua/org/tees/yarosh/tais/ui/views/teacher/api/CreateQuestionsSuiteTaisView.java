@@ -7,8 +7,8 @@ import com.vaadin.ui.TextField;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.Question;
+import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
-import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
 
 import java.util.List;
 

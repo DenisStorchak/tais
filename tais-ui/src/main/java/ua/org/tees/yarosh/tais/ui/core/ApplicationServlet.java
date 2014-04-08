@@ -9,6 +9,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
+import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;

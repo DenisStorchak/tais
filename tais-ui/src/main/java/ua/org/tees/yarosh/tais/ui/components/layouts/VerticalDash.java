@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.components;
+package ua.org.tees.yarosh.tais.ui.components.layouts;
 
 import com.vaadin.shared.ui.MarginInfo;
 import com.vaadin.ui.VerticalLayout;
