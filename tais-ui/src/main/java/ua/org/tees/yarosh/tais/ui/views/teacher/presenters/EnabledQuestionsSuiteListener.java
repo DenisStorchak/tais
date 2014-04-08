@@ -46,12 +46,12 @@ public class EnabledQuestionsSuiteListener extends AbstractPresenter implements 
 
     @Override
     public void onDelete(long id) {
-
+        homeworkManager.disableQuestionsSuite(id);
     }
 
     @Override
     public void onDetails(long id) {
-
+        //todo open details window
     }
 
     @Override
