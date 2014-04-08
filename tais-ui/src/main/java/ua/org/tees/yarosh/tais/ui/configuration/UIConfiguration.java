@@ -1,9 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.configuration;
 
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
+import org.springframework.context.annotation.*;
 import ua.org.tees.yarosh.tais.ui.core.UIContext;
 
 import static com.vaadin.server.VaadinServlet.getCurrent;
@@ -15,7 +12,8 @@ import static org.springframework.web.context.support.WebApplicationContextUtils
  *         Time: 10:51
  */
 @Configuration
-@ComponentScan(basePackages = "ua.org.tees.yarosh.tais.ui")
+@EnableAspectJAutoProxy(proxyTargetClass = true)
+@ComponentScan(basePackages = {"ua.org.tees.yarosh.tais.ui"})
 public class UIConfiguration {
     @Bean
     @Scope("prototype")

@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.auth;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 
@@ -12,18 +13,19 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import static java.util.Arrays.binarySearch;
 
+@Service
 public class AuthManager {
 
     private static final Map<String, UserDetails> AUTHORIZATIONS = new ConcurrentHashMap<>();
     private static final Vector<UserRepositoryAdapter> DAO_ADAPTERS = new Vector<>();
-    private static Logger log = LoggerFactory.getLogger(AuthManager.class);
+    private static final Logger log = LoggerFactory.getLogger(AuthManager.class);
     private static volatile boolean acceptEmptyStrings = false;
 
     public static void addDao(UserRepositoryAdapter userRepositoryAdapter) {
         DAO_ADAPTERS.add(userRepositoryAdapter);
     }
 
-    public static boolean login(String username, String password) {
+    public boolean login(String username, String password) {
         if ((username.isEmpty() || password.isEmpty()) && !acceptsEmptyStrings()) {
             log.info("Can't login with username [{}] and password [{}]. Empty string aren't allowed.",
                     username, password);
@@ -65,7 +67,7 @@ public class AuthManager {
         return false;
     }
 
-    public static boolean logout(String username) {
+    public boolean logout(String username) {
         if (AUTHORIZATIONS.containsKey(username)) {
             AUTHORIZATIONS.remove(username);
             log.info("Registrant [{}] logged out", username);

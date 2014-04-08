@@ -69,7 +69,9 @@ public class EditProfileListener extends AbstractPresenter implements EditProfil
             registrant.setRole(translate(registrant.getRole()));
             if (registrantService.updateRegistration(registrant) != null) {
                 Notification.show("Регистрационные данные успешно обновлены");
-                if (adminRights) AuthManager.logout(registrant.getLogin());
+                if (adminRights) {
+                    new AuthManager().logout(registrant.getLogin());
+                }
             } else {
                 Notification.show("Что-то пошло не так...");
             }

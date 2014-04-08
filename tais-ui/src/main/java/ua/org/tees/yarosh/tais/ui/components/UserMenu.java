@@ -1,13 +1,11 @@
 package ua.org.tees.yarosh.tais.ui.components;
 
 import com.vaadin.server.ThemeResource;
-import com.vaadin.server.VaadinService;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.ui.core.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-
-import javax.servlet.http.Cookie;
 
 import static com.vaadin.server.VaadinSession.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
@@ -37,7 +35,6 @@ public class UserMenu extends VerticalLayout {
         username.setSizeUndefined();
         addComponent(username);
 
-        MenuBar.Command notImplementedCommand = menuItem -> Notification.show("Not implemented yet");
         MenuBar settings = new MenuBar();
         MenuBar.MenuItem settingsMenu = settings.addItem("", null);
         settingsMenu.setStyleName("icon-cog-alt");
@@ -56,12 +53,8 @@ public class UserMenu extends VerticalLayout {
         signOut.addStyleName("icon-logout");
         signOut.setDescription("Выход");
         signOut.addClickListener(event -> {
-            AuthManager.logout(username.getValue());
-            getCurrent().setAttribute(REGISTRANT_ID, null);
-            Cookie cookie = new Cookie(DataBinds.Cookies.AUTH, username.getValue());
-            cookie.setMaxAge(0);
-            cookie.setPath("/");
-            VaadinService.getCurrentResponse().addCookie(cookie);
+            WebApplicationContextUtils.getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext())
+                    .getBean(AuthManager.class).logout(username.getValue());
             getUI().getNavigator().navigateTo(AUTH);
         });
         addComponent(signOut);

@@ -1,18 +1,14 @@
 package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 
-import com.vaadin.server.VaadinService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.properties.DefaultUserProperties;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.UpdatableView;
-
-import javax.servlet.http.Cookie;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
@@ -22,6 +18,7 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
 
     private RegistrantService registrantService;
     private DefaultUserProperties defaultUserProperties;
+    private AuthManager authManager;
 
     @Autowired
     public void setRegistrantService(RegistrantService registrantService) {
@@ -34,18 +31,18 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
     }
 
     @Autowired
+    public void setAuthManager(AuthManager authManager) {
+        this.authManager = authManager;
+    }
+
+    @Autowired
     public LoginListener(@Qualifier(AUTH) UpdatableView view) {
         super(view);
     }
 
     @Override
     public Registrant login(String username, String password) {
-        if (AuthManager.login(username, password)) {
-
-            Cookie cookie = new Cookie(DataBinds.Cookies.AUTH, username);
-            cookie.setMaxAge(15552000);
-            cookie.setPath("/");
-            VaadinService.getCurrentResponse().addCookie(cookie);
+        if (authManager.login(username, password)) {
 
             Registrant registration = registrantService.getRegistration(username);
             if (registration == null) { // user in memory
