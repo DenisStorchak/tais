@@ -5,7 +5,6 @@ import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
@@ -22,8 +21,6 @@ import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.common.*;
 import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
-
-import javax.servlet.http.Cookie;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
@@ -86,14 +83,8 @@ public class TAISUI extends UI {
         root.setSizeFull();
         root.addComponent(commonComponent);
 
-        Cookie[] cookies = VaadinService.getCurrentRequest().getCookies();
-        boolean authorized = false;
-        for (int i = 0; i < cookies.length && !authorized; i++) {
-            if (cookies[i].getName().equals(Cookies.AUTH)) {
-                authorized = AuthManager.loggedIn(cookies[i].getValue());
-            }
-        }
-        if (!authorized) {
+        String authCookie = VaadinUtils.getCookie(Cookies.AUTH).getValue();
+        if (authCookie.isEmpty() || !AuthManager.loggedIn(authCookie)) {
             nav.navigateTo(AUTH);
         }
     }
