@@ -80,4 +80,13 @@ public abstract class VaadinUtils {
             }
         }
     }
+
+    public static Cookie getCookie(String name) {
+        for (Cookie cookie : getCurrentRequest().getCookies()) {
+            if (cookie.getName().equals(name)) {
+                return cookie;
+            }
+        }
+        return new Cookie(name, "");
+    }
 }

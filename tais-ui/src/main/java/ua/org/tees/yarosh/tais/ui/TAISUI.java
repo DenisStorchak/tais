@@ -4,7 +4,6 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinService;
 import com.vaadin.server.VaadinSession;
@@ -72,8 +71,10 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
+
         nav.addViewChangeListener(new AuthListener());
         nav.addViewChangeListener(new LastViewSaver());
+        nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 
         SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager));
@@ -95,10 +96,6 @@ public class TAISUI extends UI {
         if (!authorized) {
             nav.navigateTo(AUTH);
         }
-
-//        if (VaadinSession.getCurrent().getAttribute(REGISTRANT_ID) == null) {
-//            nav.navigateTo(AUTH);
-//        }
     }
 
     private SidebarManager configureSidebarManager(SidebarManager sidebarManager) {
@@ -119,17 +116,5 @@ public class TAISUI extends UI {
 
     public static void navigateTo(String state) {
         getCurrent().getNavigator().navigateTo(state);
-    }
-
-    private static class LastViewSaver implements ViewChangeListener {
-        @Override
-        public boolean beforeViewChange(ViewChangeEvent event) {
-            VaadinSession.getCurrent().setAttribute(PREVIOUS_VIEW, event.getOldView());
-            return true;
-        }
-
-        @Override
-        public void afterViewChange(ViewChangeEvent event) {
-        }
     }
 }
