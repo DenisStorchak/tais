@@ -76,6 +76,7 @@ public abstract class VaadinUtils {
             found = cookies[i].getName().equals(name);
             if (found) {
                 cookies[i].setMaxAge(0);
+                cookies[i].setPath("/");
                 getCurrentResponse().addCookie(cookies[i]);
             }
         }
