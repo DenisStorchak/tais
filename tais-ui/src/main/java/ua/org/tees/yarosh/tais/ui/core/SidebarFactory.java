@@ -10,13 +10,13 @@ import ua.org.tees.yarosh.tais.core.common.dto.Roles;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.layouts.UserMenu;
-import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
-import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuiteView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
+import ua.org.tees.yarosh.tais.ui.views.admin.Schedule;
+import ua.org.tees.yarosh.tais.ui.views.admin.Settings;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserManagement;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
+import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuite;
+import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuite;
+import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboard;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
@@ -63,7 +63,7 @@ public class SidebarFactory {
         NativeButton dashboardButton = new NativeButton("Задания");
         dashboardButton.addStyleName("icon-columns");
         dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
-        teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
+        teacherMenu.addMenuButton(TeacherDashboard.class, dashboardButton);
 
         NativeButton studentListButton = new NativeButton("Студенты");
         studentListButton.addStyleName("icon-users");
@@ -72,12 +72,12 @@ public class SidebarFactory {
         NativeButton createQuestionsSuiteButton = new NativeButton("Создать тест");
         createQuestionsSuiteButton.addStyleName("icon-users");
         createQuestionsSuiteButton.addClickListener(event -> ui.getNavigator().navigateTo(CREATE_QUESTIONS_SUITE));
-        teacherMenu.addMenuButton(CreateQuestionsSuiteView.class, createQuestionsSuiteButton);
+        teacherMenu.addMenuButton(CreateQuestionsSuite.class, createQuestionsSuiteButton);
 
         NativeButton showAllQuestionsSuites = new NativeButton("Тесты");
         showAllQuestionsSuites.addStyleName("icon-users");
         showAllQuestionsSuites.addClickListener(event -> ui.getNavigator().navigateTo(ENABLED_QUESTIONS));
-        teacherMenu.addMenuButton(EnabledQuestionsSuiteView.class, showAllQuestionsSuites);
+        teacherMenu.addMenuButton(EnabledQuestionsSuite.class, showAllQuestionsSuites);
 
         return teacherMenu;
     }
@@ -94,17 +94,17 @@ public class SidebarFactory {
 
         NativeButton registrationButton = new NativeButton("Регистрация");
         registrationButton.addStyleName("icon-user-add");
-        adminMenu.addMenuButton(UserRegistrationView.class, registrationButton);
+        adminMenu.addMenuButton(UserRegistration.class, registrationButton);
         registrationButton.addClickListener(event -> ui.getNavigator().navigateTo(USER_REGISTRATION));
 
         NativeButton profilesButton = new NativeButton("Пользователи");
         profilesButton.addStyleName("icon-users");
-        adminMenu.addMenuButton(UserManagementView.class, profilesButton);
+        adminMenu.addMenuButton(UserManagement.class, profilesButton);
         profilesButton.addClickListener(event -> ui.getNavigator().navigateTo(USER_MANAGEMENT));
 
         NativeButton scheduleButton = new NativeButton("Расписание");
         scheduleButton.addStyleName("icon-clock");
-        adminMenu.addMenuButton(ScheduleView.class, scheduleButton);
+        adminMenu.addMenuButton(Schedule.class, scheduleButton);
         scheduleButton.addClickListener(event -> ui.getNavigator().navigateTo(MANAGED_SCHEDULE));
 
         NativeButton fprintScannerButton = new NativeButton("Сканеры отпечатков");
@@ -114,7 +114,7 @@ public class SidebarFactory {
 
         NativeButton configButton = new NativeButton("Настройки");
         configButton.addStyleName("icon-cog-alt");
-        adminMenu.addMenuButton(SettingsView.class, configButton); // todo set related view class
+        adminMenu.addMenuButton(Settings.class, configButton); // todo set related view class
         configButton.addClickListener(event -> ui.getNavigator().navigateTo(SETTINGS));
 
         return adminMenu;

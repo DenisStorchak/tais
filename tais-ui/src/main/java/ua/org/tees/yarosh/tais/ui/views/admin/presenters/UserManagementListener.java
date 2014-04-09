@@ -10,11 +10,11 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.RoleTranslator;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
-import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTais;
+import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
@@ -22,7 +22,7 @@ import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 
 @TaisPresenter
 @SuppressWarnings("unchecked")
-public class UserManagementListener extends AbstractPresenter implements UserManagementTaisView.UserManagementPresenter {
+public class UserManagementListener extends AbstractPresenter implements UserManagementTais.UserManagementPresenter {
 
     private static final String KEY_LOGIN = "Логин";
     private static final String KEY_SURNAME = "Фамилия";
@@ -40,7 +40,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     }
 
     @Autowired
-    public UserManagementListener(@Qualifier(USER_MANAGEMENT) UpdatableView view) {
+    public UserManagementListener(@Qualifier(USER_MANAGEMENT) Updatable view) {
         super(view);
     }
 
@@ -73,8 +73,8 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     private Button.ClickListener createListener(String login) {
         return event -> {
             TAISUI.navigateTo(EDIT_PROFILE);
-            EditProfileTaisView.EditProfilePresenter presenter = SessionFactory.getCurrent()
-                    .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfileTaisView.EditProfilePresenter.class);
+            EditProfileTais.EditProfilePresenter presenter = SessionFactory.getCurrent()
+                    .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfileTais.EditProfilePresenter.class);
             presenter.setRegistrantId(login);
             presenter.allowAdminRights(true);
             presenter.update();

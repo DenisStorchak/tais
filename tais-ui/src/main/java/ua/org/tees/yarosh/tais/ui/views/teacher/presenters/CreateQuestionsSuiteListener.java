@@ -12,10 +12,10 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.Question;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuite;
 
 import java.util.List;
 
@@ -23,7 +23,7 @@ import static com.vaadin.ui.Notification.Type.ERROR_MESSAGE;
 import static com.vaadin.ui.Notification.show;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView.CreateQuestionsSuitePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTais.CreateQuestionsSuitePresenter;
 
 @TaisPresenter
 public class CreateQuestionsSuiteListener extends AbstractPresenter implements CreateQuestionsSuitePresenter {
@@ -48,7 +48,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
     }
 
     @Autowired
-    public CreateQuestionsSuiteListener(@Qualifier(CREATE_QUESTIONS_SUITE) UpdatableView view) {
+    public CreateQuestionsSuiteListener(@Qualifier(CREATE_QUESTIONS_SUITE) Updatable view) {
         super(view);
     }
 
@@ -88,6 +88,6 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
 
     @Override
     public void addQuestion(Question question) {
-        getView(CreateQuestionsSuiteView.class).questions().add(question);
+        getView(CreateQuestionsSuite.class).questions().add(question);
     }
 }

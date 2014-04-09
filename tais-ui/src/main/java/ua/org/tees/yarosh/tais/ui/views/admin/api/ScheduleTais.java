@@ -6,14 +6,14 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public interface ScheduleTaisView extends View, UpdatableView {
+public interface ScheduleTais extends View, Updatable {
 
     interface SchedulePresenter extends Presenter {
         Map<? extends Date, ? extends List<Lesson>> getSchedule(Object owner, Date periodFrom, Date periodTo);

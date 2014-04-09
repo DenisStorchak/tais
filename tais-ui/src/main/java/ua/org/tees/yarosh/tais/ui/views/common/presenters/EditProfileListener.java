@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundExceptio
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
@@ -18,7 +18,7 @@ import static java.util.Arrays.asList;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView.EditProfilePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais.EditProfilePresenter;
 
 /**
  * @author Timur Yarosh
@@ -38,7 +38,7 @@ public class EditProfileListener extends AbstractPresenter implements EditProfil
     }
 
     @Autowired
-    public EditProfileListener(@Qualifier(EDIT_PROFILE) UpdatableView view) {
+    public EditProfileListener(@Qualifier(EDIT_PROFILE) Updatable view) {
         super(view);
     }
 

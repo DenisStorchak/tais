@@ -18,11 +18,11 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTais;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTais.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh
@@ -33,7 +33,7 @@ import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisVie
 @TaisView("Регистрация нового пользователя")
 @Qualifier(USER_REGISTRATION)
 @PermitRoles(ADMIN)
-public class UserRegistrationView extends DashboardView implements UserRegistrationTaisView {
+public class UserRegistration extends DashboardView implements UserRegistrationTais {
 
     private TextField login = new TextField();
     private PasswordField password = new PasswordField();
@@ -55,7 +55,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
         presenter.listRoles().forEach(position::addItem);
     }
 
-    public UserRegistrationView() {
+    public UserRegistration() {
         super();
         login.focus();
         setUpValidators();

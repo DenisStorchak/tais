@@ -6,12 +6,12 @@ import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.properties.DefaultUserProperties;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresenter;
 
 @TaisPresenter
 public class LoginListener extends AbstractPresenter implements LoginPresenter {
@@ -36,7 +36,7 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
     }
 
     @Autowired
-    public LoginListener(@Qualifier(AUTH) UpdatableView view) {
+    public LoginListener(@Qualifier(AUTH) Updatable view) {
         super(view);
     }
 

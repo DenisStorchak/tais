@@ -21,7 +21,7 @@ import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTais;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -31,14 +31,14 @@ import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.setValidationVisible;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTais.SchedulePresenter;
 
 @PresentedBy(SchedulePresenter.class)
 @TaisView
 @Qualifier(MANAGED_SCHEDULE)
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends DashboardView implements ScheduleTaisView {
+public class Schedule extends DashboardView implements ScheduleTais {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
@@ -88,7 +88,7 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
         }
     }
 
-    public ScheduleView() {
+    public Schedule() {
         super();
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());

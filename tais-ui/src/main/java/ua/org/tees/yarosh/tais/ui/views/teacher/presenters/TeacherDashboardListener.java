@@ -9,12 +9,12 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.components.UnratedReportsDataSource;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTais.TeacherDashboardPresenter;
 
 /**
  * @author Timur Yarosh
@@ -25,7 +25,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisV
 public class TeacherDashboardListener extends AbstractPresenter implements TeacherDashboardPresenter {
 
     @Autowired
-    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) UpdatableView view) {
+    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) Updatable view) {
         super(view);
     }
 

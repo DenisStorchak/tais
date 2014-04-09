@@ -4,12 +4,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.common.properties.*;
 import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.SETTINGS;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView.SettingsPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTais.SettingsPresenter;
 
 @TaisPresenter
 public class SettingsListener extends AbstractPresenter implements SettingsPresenter {
@@ -22,7 +22,7 @@ public class SettingsListener extends AbstractPresenter implements SettingsPrese
     }
 
     @Autowired
-    public SettingsListener(@Qualifier(SETTINGS) UpdatableView view) {
+    public SettingsListener(@Qualifier(SETTINGS) Updatable view) {
         super(view);
     }
 

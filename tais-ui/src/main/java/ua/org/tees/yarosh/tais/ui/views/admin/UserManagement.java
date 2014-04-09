@@ -9,24 +9,24 @@ import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTais;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView.UserManagementPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTais.UserManagementPresenter;
 
 
 @PresentedBy(UserManagementPresenter.class)
 @TaisView("Все профили")
 @Qualifier(USER_MANAGEMENT)
 @PermitRoles(ADMIN)
-public class UserManagementView extends DashboardView
-        implements UserManagementTaisView {
+public class UserManagement extends DashboardView
+        implements UserManagementTais {
 
     private Table registrants;
 
-    public UserManagementView() {
+    public UserManagement() {
         super();
 
         registrants = new PlainBorderlessTable("Все пользователи");

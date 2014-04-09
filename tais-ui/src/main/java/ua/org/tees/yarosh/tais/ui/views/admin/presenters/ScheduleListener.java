@@ -10,10 +10,10 @@ import ua.org.tees.yarosh.tais.schedule.api.ScheduleService;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTais;
 
 import java.util.*;
 
@@ -21,7 +21,7 @@ import static java.util.Arrays.asList;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 
 @TaisPresenter
-public class ScheduleListener extends AbstractPresenter implements ScheduleTaisView.SchedulePresenter {
+public class ScheduleListener extends AbstractPresenter implements ScheduleTais.SchedulePresenter {
 
     private RegistrantService registrantService;
     private ScheduleService scheduleService;
@@ -45,7 +45,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
     }
 
     @Autowired
-    public ScheduleListener(@Qualifier(MANAGED_SCHEDULE) UpdatableView view) {
+    public ScheduleListener(@Qualifier(MANAGED_SCHEDULE) Updatable view) {
         super(view);
     }
 

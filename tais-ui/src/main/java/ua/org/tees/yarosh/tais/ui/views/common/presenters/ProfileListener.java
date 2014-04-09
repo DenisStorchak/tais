@@ -9,13 +9,13 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView.ProfilePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais.ProfilePresenter;
 
 @TaisPresenter
 @SuppressWarnings("unchecked")
@@ -31,7 +31,7 @@ public class ProfileListener extends AbstractPresenter implements ProfilePresent
     }
 
     @Autowired
-    public ProfileListener(@Qualifier(ME) UpdatableView view) {
+    public ProfileListener(@Qualifier(ME) Updatable view) {
         super(view);
     }
 

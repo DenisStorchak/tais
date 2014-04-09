@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
-import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
+import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
@@ -21,7 +21,7 @@ import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView.EditProfilePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais.EditProfilePresenter;
 
 /**
  * @author Timur Yarosh
@@ -32,7 +32,7 @@ import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView.Ed
 @PresentedBy(EditProfilePresenter.class)
 @Qualifier(EDIT_PROFILE)
 @PermitRoles({ADMIN, TEACHER, STUDENT})
-public class EditProfileView extends DashboardView implements EditProfileTaisView {
+public class EditProfile extends DashboardView implements EditProfileTais {
 
     private PasswordField password = new PasswordField();
     private PasswordField repeatPassword = new PasswordField();
@@ -47,7 +47,7 @@ public class EditProfileView extends DashboardView implements EditProfileTaisVie
     private boolean formsAdded;     // additional controls creation moved from constructor
     private HorizontalLayout controls = createControls();
 
-    public EditProfileView() {
+    public EditProfile() {
         super();
         setUpValidators();
         editPanel = addDashPanel(null, null,

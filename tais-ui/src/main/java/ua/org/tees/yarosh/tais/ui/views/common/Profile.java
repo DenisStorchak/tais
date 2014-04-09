@@ -11,22 +11,22 @@ import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView;
+import ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView.ProfilePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais.ProfilePresenter;
 
 @PresentedBy(ProfilePresenter.class)
 @TaisView("Мой профиль")
 @Qualifier(ME)
 @PermitRoles({ADMIN, TEACHER, STUDENT})
-public class ProfileView extends DashboardView implements ProfileTaisView {
+public class Profile extends DashboardView implements ProfileTais {
 
     private Table profileTable = new PlainBorderlessTable("Профиль");
 
-    protected ProfileView() {
+    protected Profile() {
         super();
         addDashPanel(null, null, profileTable);
     }

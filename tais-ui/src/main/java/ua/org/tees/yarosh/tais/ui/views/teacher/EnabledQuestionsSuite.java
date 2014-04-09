@@ -15,20 +15,20 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTaisView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTais;
 
 import java.util.Date;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTaisView.EnabledQuestionsSuitePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTais.EnabledQuestionsSuitePresenter;
 
 @PresentedBy(EnabledQuestionsSuitePresenter.class)
 @PermitRoles(TEACHER)
 @Qualifier(ENABLED_QUESTIONS)
 @TaisView("Все тесты")
-public class EnabledQuestionsSuiteView extends DashboardView implements EnabledQuestionsSuiteTaisView {
+public class EnabledQuestionsSuite extends DashboardView implements EnabledQuestionsSuiteTais {
 
     private static final String PROPERTY_GROUP = "Группа";
     private static final String PROPERTY_DISCIPLINE = "Дисциплина";
@@ -40,7 +40,7 @@ public class EnabledQuestionsSuiteView extends DashboardView implements EnabledQ
     private Button search = new Button("Поиск тестов");
     private Table contentTable = new PlainBorderlessTable("Тесты");
 
-    public EnabledQuestionsSuiteView() {
+    public EnabledQuestionsSuite() {
         top.addComponents(studentGroups, search);
         DashPanel dashPanel = addDashPanel(null, null, contentTable);
         dashPanel.setSizeUndefined();

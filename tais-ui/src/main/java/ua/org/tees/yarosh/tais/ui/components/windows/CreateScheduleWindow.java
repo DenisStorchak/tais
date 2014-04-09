@@ -27,7 +27,7 @@ import java.util.List;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
 import static ua.org.tees.yarosh.tais.schedule.ScheduleUtils.copyToPeriod;
 import static ua.org.tees.yarosh.tais.ui.LessonTypeTranslator.translate;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTais.SchedulePresenter;
 
 /**
  * @author Timur Yarosh

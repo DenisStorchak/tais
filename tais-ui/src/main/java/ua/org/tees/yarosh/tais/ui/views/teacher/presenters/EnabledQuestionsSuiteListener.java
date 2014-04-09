@@ -8,16 +8,16 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.ui.components.windows.QuestionSuiteDetailsWindow;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTaisView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTais;
 
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTaisView.EnabledQuestionsSuitePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTais.EnabledQuestionsSuitePresenter;
 
 /**
  * @author Timur Yarosh
@@ -41,13 +41,13 @@ public class EnabledQuestionsSuiteListener extends AbstractPresenter implements 
     }
 
     @Autowired
-    public EnabledQuestionsSuiteListener(@Qualifier(ENABLED_QUESTIONS) UpdatableView view) {
+    public EnabledQuestionsSuiteListener(@Qualifier(ENABLED_QUESTIONS) Updatable view) {
         super(view);
     }
 
     @Override
     public void init() {
-        getView(EnabledQuestionsSuiteTaisView.class).setGroups(registrantService.findAllStudentGroups());
+        getView(EnabledQuestionsSuiteTais.class).setGroups(registrantService.findAllStudentGroups());
     }
 
     @Override
@@ -65,6 +65,6 @@ public class EnabledQuestionsSuiteListener extends AbstractPresenter implements 
     public void onSearch(StudentGroup studentGroup) {
         List<QuestionsSuite> enabledSuites = homeworkManager.findQuestionsSuites(studentGroup)
                 .stream().filter(QuestionsSuite::getEnabled).collect(toList());
-        getView(EnabledQuestionsSuiteTaisView.class).setSuites(enabledSuites);
+        getView(EnabledQuestionsSuiteTais.class).setSuites(enabledSuites);
     }
 }

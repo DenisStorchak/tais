@@ -13,10 +13,10 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.api.ClassroomService;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.schedule.models.Classroom;
-import ua.org.tees.yarosh.tais.ui.core.api.UpdatableView;
+import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
 
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +25,7 @@ import static java.util.stream.Collectors.toList;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTais.UserRegistrationPresenter;
 
 /**
  * @author Timur Yarosh
@@ -55,7 +55,7 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
     }
 
     @Autowired
-    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) UpdatableView view) {
+    public UserRegistrationListener(@Qualifier(USER_REGISTRATION) Updatable view) {
         super(view);
     }
 
@@ -112,6 +112,6 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
 
     @Override
     public void update() {
-        getView(UserRegistrationView.class).update();
+        getView(UserRegistration.class).update();
     }
 }
