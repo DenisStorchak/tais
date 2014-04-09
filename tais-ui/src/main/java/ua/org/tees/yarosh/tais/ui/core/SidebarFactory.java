@@ -116,7 +116,7 @@ public class SidebarFactory {
 
         NativeButton configButton = new NativeButton("Настройки");
         configButton.addStyleName("icon-cog-alt");
-        adminMenu.addMenuButton(Settings.class, configButton); // todo set related view class
+        adminMenu.addMenuButton(Settings.class, configButton);
         configButton.addClickListener(event -> ui.getNavigator().navigateTo(SETTINGS));
 
         return adminMenu;
