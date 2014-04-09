@@ -57,6 +57,7 @@ public abstract class DataBinds {
             public static final String ADD_QUESTION = PREFIX + "question/add";
             public static final String ENABLED_QUESTIONS = PREFIX + "questions";
             public static final String STUDENTS = PREFIX + "students";
+            public static final String ADD_MANUAL = PREFIX + "manual/add";
         }
     }
 
