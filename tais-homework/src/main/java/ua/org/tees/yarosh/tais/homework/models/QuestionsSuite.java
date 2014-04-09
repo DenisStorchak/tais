@@ -21,7 +21,7 @@ public class QuestionsSuite {
     @ManyToOne
     @JoinColumn(name = "disciplineId")
     private Discipline discipline;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @Cascade(CascadeType.ALL)
     @JoinColumn(name = "questionsId")
     private List<Question> questions;

@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface QuestionsSuiteRepository extends JpaRepository<QuestionsSuite, Long> {
     @Query("select q from QuestionsSuite q where q.studentGroup = :studentGroup")
-    List<QuestionsSuite> findOne(@Param("studentGroup") StudentGroup studentGroup);
+    List<QuestionsSuite> findAllByStudentGroup(@Param("studentGroup") StudentGroup studentGroup);
 }

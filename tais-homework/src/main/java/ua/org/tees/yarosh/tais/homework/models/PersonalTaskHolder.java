@@ -18,11 +18,11 @@ public class PersonalTaskHolder {
     @OneToOne
     @JoinColumn(name = "ownerId")
     private Registrant owner;
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "manualTasks")
     private List<ManualTask> manualTaskList;
 
-    @OneToMany
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "questionsSuites")
     private List<QuestionsSuite> questionsSuiteList;
 

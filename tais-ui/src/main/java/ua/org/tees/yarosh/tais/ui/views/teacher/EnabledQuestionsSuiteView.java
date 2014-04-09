@@ -4,9 +4,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.Table;
+import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -36,6 +34,7 @@ public class EnabledQuestionsSuiteView extends DashboardView implements EnabledQ
     private static final String PROPERTY_DISCIPLINE = "Дисциплина";
     private static final String PROPERTY_THEME = "Тема";
     private static final String PROPERTY_DEADLINE = "Дедлайн";
+    private static final String PROPERTY_INTERACTION = "Взаимодействие";
 
     private ComboBox studentGroups = new ComboBox();
     private Button search = new Button("Поиск тестов");
@@ -46,9 +45,10 @@ public class EnabledQuestionsSuiteView extends DashboardView implements EnabledQ
         DashPanel dashPanel = addDashPanel(null, null, contentTable);
         dashPanel.setSizeUndefined();
         dashPanel.setWidth(80, Unit.PERCENTAGE);
+        dash.setComponentAlignment(dashPanel, Alignment.TOP_CENTER);
 
         search.setDescription("Поиск тестов");
-        search.addClickListener(e -> SessionFactory.getCurrent()
+        search.addClickListener(event -> SessionFactory.getCurrent()
                 .getRelativePresenter(this, EnabledQuestionsSuitePresenter.class)
                 .onSearch((StudentGroup) studentGroups.getValue()));
     }
@@ -64,6 +64,7 @@ public class EnabledQuestionsSuiteView extends DashboardView implements EnabledQ
         container.addContainerProperty(PROPERTY_DISCIPLINE, String.class, null);
         container.addContainerProperty(PROPERTY_THEME, String.class, null);
         container.addContainerProperty(PROPERTY_DEADLINE, Date.class, null);
+        container.addContainerProperty(PROPERTY_INTERACTION, AbstractLayout.class, null);
 
         for (QuestionsSuite questionsSuite : questionsSuites) {
             Item item = container.addItem(questionsSuite.getId());
@@ -71,7 +72,37 @@ public class EnabledQuestionsSuiteView extends DashboardView implements EnabledQ
             item.getItemProperty(PROPERTY_DISCIPLINE).setValue(questionsSuite.getDiscipline().toString());
             item.getItemProperty(PROPERTY_THEME).setValue(questionsSuite.getTheme());
             item.getItemProperty(PROPERTY_DEADLINE).setValue(questionsSuite.getDeadline());
+            item.getItemProperty(PROPERTY_INTERACTION).setValue(createInteractionLayout(questionsSuite));
         }
+        contentTable.setContainerDataSource(container);
+    }
+
+    private HorizontalLayout createInteractionLayout(QuestionsSuite questionsSuite) {
+        Button deleteButton = createDeleteButton(questionsSuite.getId(), questionsSuite.getStudentGroup());
+        Button detailsButton = createDetailsButton(questionsSuite.getId());
+        return new HorizontalLayout(deleteButton, detailsButton);
+    }
+
+    private Button createDetailsButton(Long id) {
+        Button det = new Button("Детали");
+        det.setDescription("Открыть детали");
+        det.addStyleName("icon-only");
+        det.addStyleName("icon-logout");
+        det.addClickListener(event -> SessionFactory.getCurrent()
+                .getRelativePresenter(this, EnabledQuestionsSuitePresenter.class)
+                .onDetails(id));
+        return det;
+    }
+
+    private Button createDeleteButton(Long id, StudentGroup studentGroup) {
+        Button del = new Button("Удалить");
+        del.setDescription("Удалить тест");
+        del.addStyleName("icon-only");
+        del.addStyleName("icon-logout");
+        del.addClickListener(event -> SessionFactory.getCurrent()
+                .getRelativePresenter(this, EnabledQuestionsSuitePresenter.class)
+                .onDelete(id, studentGroup));
+        return del;
     }
 
     @Override

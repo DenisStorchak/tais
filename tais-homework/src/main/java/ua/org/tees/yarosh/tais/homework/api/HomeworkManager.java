@@ -18,6 +18,8 @@ public interface HomeworkManager {
 
     long createQuestionsSuite(QuestionsSuite questionsSuite);
 
+    QuestionsSuite findQuestionsSuite(long id);
+
     void enableQuestionsSuite(long id);
 
     void disableQuestionsSuite(long id);

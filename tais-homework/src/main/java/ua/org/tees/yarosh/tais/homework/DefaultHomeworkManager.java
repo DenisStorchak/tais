@@ -58,6 +58,11 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    public QuestionsSuite findQuestionsSuite(long id) {
+        return questionsSuiteRepository.findOne(id);
+    }
+
+    @Override
     @CachePut(QUESTION_SUITES)
     public void enableQuestionsSuite(long id) {
         QuestionsSuite questionsSuite = questionsSuiteRepository.findOne(id);
@@ -70,7 +75,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @CachePut(QUESTION_SUITES)
     public void disableQuestionsSuite(long id) {
         QuestionsSuite questionsSuite = questionsSuiteRepository.findOne(id);
-        if (!questionsSuite.getEnabled()) {
+        if (questionsSuite.getEnabled()) {
             switchQuestionsSuiteState(questionsSuite, false);
         }
     }
@@ -105,7 +110,9 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Override
     @Cacheable(QUESTION_SUITES)
     public List<QuestionsSuite> findQuestionsSuites(StudentGroup studentGroup) {
-        return questionsSuiteRepository.findOne(studentGroup);
+        List<QuestionsSuite> suites = questionsSuiteRepository.findAllByStudentGroup(studentGroup);
+        log.info("[{}] questions suites found", suites.size());
+        return suites;
     }
 
     @Override

@@ -15,7 +15,7 @@ public interface EnabledQuestionsSuiteTaisView extends View, UpdatableView {
     void setGroups(List<StudentGroup> studentGroups);
 
     interface EnabledQuestionsSuitePresenter extends Presenter {
-        void onDelete(long id);
+        void onDelete(long id, StudentGroup studentGroup);
 
         void onDetails(long id);
 
