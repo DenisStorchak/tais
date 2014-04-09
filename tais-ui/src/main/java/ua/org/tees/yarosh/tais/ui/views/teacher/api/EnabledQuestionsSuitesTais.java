@@ -8,13 +8,13 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
 import java.util.List;
 
-public interface EnabledQuestionsSuiteTais extends View, Updatable {
+public interface EnabledQuestionsSuitesTais extends View, Updatable {
 
     void setSuites(List<QuestionsSuite> questionsSuites);
 
     void setGroups(List<StudentGroup> studentGroups);
 
-    interface EnabledQuestionsSuitePresenter extends Presenter {
+    interface EnabledQuestionsSuitesPresenter extends Presenter {
         void onDelete(long id, StudentGroup studentGroup);
 
         void onDetails(long id);

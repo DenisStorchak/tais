@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.user.comm.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 import org.springframework.mail.SimpleMailMessage;
@@ -17,6 +18,7 @@ import java.util.Properties;
  *         Time: 22:42
  */
 @Configuration
+@ComponentScan(basePackages = "ua.org.tees.yarosh.tais.user.comm")
 @Import(CommonConfiguration.class)
 public class MailConfiguration {
     private static final String MAIL_SMTP_AUTH_JMAIL_PROPERTY_NAME = "mail.smtp.auth";

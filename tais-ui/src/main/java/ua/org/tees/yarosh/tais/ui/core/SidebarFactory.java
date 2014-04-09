@@ -15,7 +15,8 @@ import ua.org.tees.yarosh.tais.ui.views.admin.Settings;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagement;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
 import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuite;
-import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuite;
+import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuites;
+import ua.org.tees.yarosh.tais.ui.views.teacher.StudentsView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboard;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
@@ -77,7 +78,12 @@ public class SidebarFactory {
         NativeButton showAllQuestionsSuites = new NativeButton("Тесты");
         showAllQuestionsSuites.addStyleName("icon-users");
         showAllQuestionsSuites.addClickListener(event -> ui.getNavigator().navigateTo(ENABLED_QUESTIONS));
-        teacherMenu.addMenuButton(EnabledQuestionsSuite.class, showAllQuestionsSuites);
+        teacherMenu.addMenuButton(EnabledQuestionsSuites.class, showAllQuestionsSuites);
+
+        NativeButton showAllStudents = new NativeButton("Студенты");
+        showAllStudents.addStyleName("icon-users");
+        showAllStudents.addClickListener(event -> ui.getNavigator().navigateTo(STUDENTS));
+        teacherMenu.addMenuButton(StudentsView.class, showAllStudents);
 
         return teacherMenu;
     }

@@ -15,20 +15,19 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTais;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTais;
 
 import java.util.Date;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuiteTais.EnabledQuestionsSuitePresenter;
 
-@PresentedBy(EnabledQuestionsSuitePresenter.class)
+@PresentedBy(EnabledQuestionsSuitesTais.EnabledQuestionsSuitesPresenter.class)
 @PermitRoles(TEACHER)
 @Qualifier(ENABLED_QUESTIONS)
 @TaisView("Все тесты")
-public class EnabledQuestionsSuite extends DashboardView implements EnabledQuestionsSuiteTais {
+public class EnabledQuestionsSuites extends DashboardView implements EnabledQuestionsSuitesTais {
 
     private static final String PROPERTY_GROUP = "Группа";
     private static final String PROPERTY_DISCIPLINE = "Дисциплина";
@@ -40,7 +39,7 @@ public class EnabledQuestionsSuite extends DashboardView implements EnabledQuest
     private Button search = new Button("Поиск тестов");
     private Table contentTable = new PlainBorderlessTable("Тесты");
 
-    public EnabledQuestionsSuite() {
+    public EnabledQuestionsSuites() {
         top.addComponents(studentGroups, search);
         DashPanel dashPanel = addDashPanel(null, null, contentTable);
         dashPanel.setSizeUndefined();
@@ -49,7 +48,7 @@ public class EnabledQuestionsSuite extends DashboardView implements EnabledQuest
 
         search.setDescription("Поиск тестов");
         search.addClickListener(event -> SessionFactory.getCurrent()
-                .getRelativePresenter(this, EnabledQuestionsSuitePresenter.class)
+                .getRelativePresenter(this, EnabledQuestionsSuitesPresenter.class)
                 .onSearch((StudentGroup) studentGroups.getValue()));
     }
 
@@ -89,7 +88,7 @@ public class EnabledQuestionsSuite extends DashboardView implements EnabledQuest
         det.addStyleName("icon-only");
         det.addStyleName("icon-logout");
         det.addClickListener(event -> SessionFactory.getCurrent()
-                .getRelativePresenter(this, EnabledQuestionsSuitePresenter.class)
+                .getRelativePresenter(this, EnabledQuestionsSuitesPresenter.class)
                 .onDetails(id));
         return det;
     }
@@ -100,7 +99,7 @@ public class EnabledQuestionsSuite extends DashboardView implements EnabledQuest
         del.addStyleName("icon-only");
         del.addStyleName("icon-logout");
         del.addClickListener(event -> SessionFactory.getCurrent()
-                .getRelativePresenter(this, EnabledQuestionsSuitePresenter.class)
+                .getRelativePresenter(this, EnabledQuestionsSuitesPresenter.class)
                 .onDelete(id, studentGroup));
         return del;
     }
