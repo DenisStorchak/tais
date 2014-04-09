@@ -11,6 +11,7 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.presenters.CreateManualTaskListener;
 
 import java.util.List;
 
@@ -42,6 +43,11 @@ public class CreateManualTaskView extends DashboardView implements CreateManualT
     public void setDisciplines(List<Discipline> disciplines) {
         this.disciplines.removeAllItems();
         disciplines.forEach(this.disciplines::addItem);
+    }
+
+    @Override
+    public void setPayloadReceiver(CreateManualTaskListener.PayloadReceiver payloadReceiver) {
+
     }
 
     public CreateManualTaskView() {
