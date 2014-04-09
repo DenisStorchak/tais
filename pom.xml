@@ -125,6 +125,11 @@
                 <artifactId>commons-lang3</artifactId>
                 <version>${commons.lang3.version}</version>
             </dependency>
+            <dependency>
+                <groupId>commons-io</groupId>
+                <artifactId>commons-io</artifactId>
+                <version>${commons.io.version}</version>
+            </dependency>
 
             <!--caching-->
             <dependency>
@@ -330,5 +335,6 @@
         <jedis.version>2.4.2</jedis.version>
         <org.springframework.security.version>3.2.3.RELEASE</org.springframework.security.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <commons.io.version>2.4</commons.io.version>
     </properties>
 </project>

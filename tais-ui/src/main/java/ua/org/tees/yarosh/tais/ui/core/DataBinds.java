@@ -73,4 +73,9 @@ public abstract class DataBinds {
     public static abstract class Cookies {
         public static final String AUTH = "taisAuth";
     }
+
+    public static abstract class FileSystem {
+        public static final String PREFIX = "./";
+        public static final String MANUAL_PAYLOAD_DIRECTORY = PREFIX + "payload/";
+    }
 }
