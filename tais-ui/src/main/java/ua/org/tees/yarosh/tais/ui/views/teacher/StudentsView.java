@@ -26,7 +26,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.StudentsTaisView.Stud
 @PresentedBy(StudentsTaisPresenter.class)
 @Qualifier(STUDENTS)
 @PermitRoles(TEACHER)
-@TaisView
+@TaisView("Студенты")
 public class StudentsView extends DashboardView implements StudentsTaisView {
 
     private static final String PROPERTY_LOGIN = "Логин";
