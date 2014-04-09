@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
 import java.util.List;
 
-public interface EnabledQuestionsSuitesTais extends View, Updatable {
+public interface EnabledQuestionsSuitesTaisView extends View, Updatable {
 
     void setSuites(List<QuestionsSuite> questionsSuites);
 

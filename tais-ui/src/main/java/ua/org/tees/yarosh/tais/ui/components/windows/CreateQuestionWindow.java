@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTais.CreateQuestionsSuitePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView.CreateQuestionsSuitePresenter;
 
 @Service
 @Scope("prototype")

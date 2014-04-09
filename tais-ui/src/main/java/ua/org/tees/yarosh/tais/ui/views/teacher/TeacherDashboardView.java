@@ -12,11 +12,11 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTais;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTais.TeacherDashboardPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 
 /**
@@ -28,11 +28,11 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTais.
 @TaisView("Задания")
 @Qualifier(TEACHER_DASHBOARD)
 @PermitRoles(TEACHER)
-public class TeacherDashboard extends DashboardView implements TeacherDashboardTais {
+public class TeacherDashboardView extends DashboardView implements TeacherDashboardTaisView {
 
     private Table unratedReports;
 
-    public TeacherDashboard() {
+    public TeacherDashboardView() {
         super();
 
         Button createTask = new CreateTaskButton();

@@ -14,7 +14,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTais.TeacherDashboardPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 /**
  * @author Timur Yarosh

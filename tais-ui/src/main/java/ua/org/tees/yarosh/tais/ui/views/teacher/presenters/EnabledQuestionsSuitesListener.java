@@ -11,7 +11,7 @@ import ua.org.tees.yarosh.tais.ui.components.windows.QuestionSuiteDetailsWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTais;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTaisView;
 
 import java.util.List;
 
@@ -24,7 +24,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENA
  *         Time: 21:29
  */
 @TaisPresenter
-public class EnabledQuestionsSuitesListener extends AbstractPresenter implements EnabledQuestionsSuitesTais.EnabledQuestionsSuitesPresenter {
+public class EnabledQuestionsSuitesListener extends AbstractPresenter implements EnabledQuestionsSuitesTaisView.EnabledQuestionsSuitesPresenter {
 
     private HomeworkManager homeworkManager;
     private RegistrantService registrantService;
@@ -46,7 +46,7 @@ public class EnabledQuestionsSuitesListener extends AbstractPresenter implements
 
     @Override
     public void init() {
-        getView(EnabledQuestionsSuitesTais.class).setGroups(registrantService.findAllStudentGroups());
+        getView(EnabledQuestionsSuitesTaisView.class).setGroups(registrantService.findAllStudentGroups());
     }
 
     @Override
@@ -64,6 +64,6 @@ public class EnabledQuestionsSuitesListener extends AbstractPresenter implements
     public void onSearch(StudentGroup studentGroup) {
         List<QuestionsSuite> enabledSuites = homeworkManager.findQuestionsSuites(studentGroup)
                 .stream().filter(QuestionsSuite::getEnabled).collect(toList());
-        getView(EnabledQuestionsSuitesTais.class).setSuites(enabledSuites);
+        getView(EnabledQuestionsSuitesTaisView.class).setSuites(enabledSuites);
     }
 }

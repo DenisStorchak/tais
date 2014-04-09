@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
 import java.util.List;
 
-public interface CreateQuestionsSuiteTais extends View, Updatable {
+public interface CreateQuestionsSuiteTaisView extends View, Updatable {
 
     List<Question> questions();
 

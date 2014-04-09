@@ -24,10 +24,10 @@ import ua.org.tees.yarosh.tais.ui.views.admin.Settings;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagement;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
 import ua.org.tees.yarosh.tais.ui.views.common.*;
-import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuite;
-import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuites;
+import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuitesView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.StudentsView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboard;
+import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
@@ -67,7 +67,7 @@ public class TAISUI extends UI {
 
     private void mapRoleViews() {
         mapDefaultView(UserRegistration.class, ADMIN);
-        mapDefaultView(TeacherDashboard.class, TEACHER);
+        mapDefaultView(TeacherDashboardView.class, TEACHER);
         //todo register default student view
     }
 
@@ -81,7 +81,7 @@ public class TAISUI extends UI {
     }
 
     private void setUpViews(Navigator nav) {
-        nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboard.class));
+        nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistration.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagement.class));
         nav.addProvider(new FactoryBasedViewProvider(AUTH, Login.class));
@@ -89,8 +89,8 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(SETTINGS, Settings.class));
         nav.addProvider(new FactoryBasedViewProvider(ME, Profile.class));
         nav.addProvider(new FactoryBasedViewProvider(EDIT_PROFILE, EditProfile.class));
-        nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuite.class));
-        nav.addProvider(new FactoryBasedViewProvider(ENABLED_QUESTIONS, EnabledQuestionsSuites.class));
+        nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));
+        nav.addProvider(new FactoryBasedViewProvider(ENABLED_QUESTIONS, EnabledQuestionsSuitesView.class));
         nav.addProvider(new FactoryBasedViewProvider(STUDENTS, StudentsView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());

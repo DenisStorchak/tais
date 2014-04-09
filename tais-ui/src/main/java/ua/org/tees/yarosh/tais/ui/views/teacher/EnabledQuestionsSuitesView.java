@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTais;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTaisView;
 
 import java.util.Date;
 import java.util.List;
@@ -23,11 +23,11 @@ import java.util.List;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
 
-@PresentedBy(EnabledQuestionsSuitesTais.EnabledQuestionsSuitesPresenter.class)
+@PresentedBy(EnabledQuestionsSuitesTaisView.EnabledQuestionsSuitesPresenter.class)
 @PermitRoles(TEACHER)
 @Qualifier(ENABLED_QUESTIONS)
 @TaisView("Все тесты")
-public class EnabledQuestionsSuites extends DashboardView implements EnabledQuestionsSuitesTais {
+public class EnabledQuestionsSuitesView extends DashboardView implements EnabledQuestionsSuitesTaisView {
 
     private static final String PROPERTY_GROUP = "Группа";
     private static final String PROPERTY_DISCIPLINE = "Дисциплина";
@@ -39,7 +39,7 @@ public class EnabledQuestionsSuites extends DashboardView implements EnabledQues
     private Button search = new Button("Поиск тестов");
     private Table contentTable = new PlainBorderlessTable("Тесты");
 
-    public EnabledQuestionsSuites() {
+    public EnabledQuestionsSuitesView() {
         top.addComponents(studentGroups, search);
         DashPanel dashPanel = addDashPanel(null, null, contentTable);
         dashPanel.setSizeUndefined();

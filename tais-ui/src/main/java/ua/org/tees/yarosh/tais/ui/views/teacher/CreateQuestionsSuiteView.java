@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotNullValidator;
-import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTais;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,13 +25,13 @@ import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
-import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTais.CreateQuestionsSuitePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView.CreateQuestionsSuitePresenter;
 
 @TaisView("Создать тест")
 @PresentedBy(CreateQuestionsSuitePresenter.class)
 @PermitRoles({TEACHER})
 @Qualifier(CREATE_QUESTIONS_SUITE)
-public class CreateQuestionsSuite extends DashboardView implements CreateQuestionsSuiteTais {
+public class CreateQuestionsSuiteView extends DashboardView implements CreateQuestionsSuiteTaisView {
 
     private final HorizontalLayout controls;
     private ComboBox studentGroup = new ComboBox();
@@ -45,7 +45,7 @@ public class CreateQuestionsSuite extends DashboardView implements CreateQuestio
     private List<Question> questions = new ArrayList<>();
     private final DashPanel dashPanel;
 
-    public CreateQuestionsSuite() {
+    public CreateQuestionsSuiteView() {
         setUpValidators();
         controls = createSingleFormLayout(addQuestion, saveSuite);
         dashPanel = addDashPanel(null, null,
