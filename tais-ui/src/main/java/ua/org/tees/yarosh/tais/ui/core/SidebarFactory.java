@@ -66,10 +66,6 @@ public class SidebarFactory {
         dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
         teacherMenu.addMenuButton(TeacherDashboard.class, dashboardButton);
 
-        NativeButton studentListButton = new NativeButton("Студенты");
-        studentListButton.addStyleName("icon-users");
-        teacherMenu.addMenuButton(null, studentListButton); // todo set related view class
-
         NativeButton createQuestionsSuiteButton = new NativeButton("Создать тест");
         createQuestionsSuiteButton.addStyleName("icon-users");
         createQuestionsSuiteButton.addClickListener(event -> ui.getNavigator().navigateTo(CREATE_QUESTIONS_SUITE));
