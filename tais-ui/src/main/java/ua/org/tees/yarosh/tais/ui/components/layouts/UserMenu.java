@@ -2,6 +2,7 @@ package ua.org.tees.yarosh.tais.ui.components.layouts;
 
 import com.vaadin.server.ThemeResource;
 import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
@@ -56,6 +57,7 @@ public class UserMenu extends VerticalLayout {
             WebApplicationContextUtils.getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext())
                     .getBean(AuthManager.class).logout(username.getValue());
             getUI().getNavigator().navigateTo(AUTH);
+            VaadinSession.getCurrent().close();
         });
         addComponent(signOut);
     }

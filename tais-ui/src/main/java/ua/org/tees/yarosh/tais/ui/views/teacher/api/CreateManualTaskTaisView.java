@@ -20,6 +20,8 @@ public interface CreateManualTaskTaisView extends View, Updatable {
 
     void setPayloadReceiver(PayloadReceiver payloadReceiver);
 
+    void setPayloadPath(String path);
+
     interface CreateManualTaskPresenter extends Presenter, Initable {
         void onCreate(ManualTask manualTask);
     }

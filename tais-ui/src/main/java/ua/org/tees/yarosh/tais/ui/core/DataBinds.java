@@ -74,8 +74,9 @@ public abstract class DataBinds {
         public static final String AUTH = "taisAuth";
     }
 
-    public static abstract class FileSystem {
-        public static final String PREFIX = "./";
-        public static final String MANUAL_PAYLOAD_DIRECTORY = PREFIX + "payload/";
+    public static abstract class FS {
+        public static final String DEFAULT_EXTENSION = "tais";
+        public static final String HOME_DIR = System.getProperty("user.home");
+        public static final String MANUAL_PAYLOAD_DIR = "payload";
     }
 }

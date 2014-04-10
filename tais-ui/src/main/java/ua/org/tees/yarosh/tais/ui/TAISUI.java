@@ -24,10 +24,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.Settings;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagement;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
 import ua.org.tees.yarosh.tais.ui.views.common.*;
-import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuitesView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.StudentsView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
+import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
@@ -92,6 +89,7 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));
         nav.addProvider(new FactoryBasedViewProvider(ENABLED_QUESTIONS, EnabledQuestionsSuitesView.class));
         nav.addProvider(new FactoryBasedViewProvider(STUDENTS, StudentsView.class));
+        nav.addProvider(new FactoryBasedViewProvider(ADD_MANUAL, CreateManualTaskView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
     }

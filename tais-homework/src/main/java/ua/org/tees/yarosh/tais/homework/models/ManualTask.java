@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import javax.persistence.*;
@@ -27,6 +28,9 @@ public class ManualTask {
     private String payloadPath;
     @Temporal(TemporalType.DATE)
     private Date deadline;
+    @JoinColumn(name = "examinerId")
+    @ManyToOne
+    private Registrant examiner;
 
     public Long getId() {
         return id;
@@ -82,5 +86,13 @@ public class ManualTask {
 
     public void setDeadline(Date deadline) {
         this.deadline = deadline;
+    }
+
+    public Registrant getExaminer() {
+        return examiner;
+    }
+
+    public void setExaminer(Registrant examiner) {
+        this.examiner = examiner;
     }
 }

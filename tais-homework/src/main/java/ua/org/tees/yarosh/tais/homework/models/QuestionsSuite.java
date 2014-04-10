@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.homework.models;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import javax.persistence.*;
@@ -28,6 +29,9 @@ public class QuestionsSuite {
     @Temporal(TemporalType.DATE)
     private Date deadline;
     private Boolean enabled;
+    @JoinColumn(name = "examinerId")
+    @ManyToOne
+    private Registrant examiner;
 
     public Long getId() {
         return id;
@@ -83,5 +87,13 @@ public class QuestionsSuite {
 
     public void setEnabled(Boolean enabled) {
         this.enabled = enabled;
+    }
+
+    public Registrant getExaminer() {
+        return examiner;
+    }
+
+    public void setExaminer(Registrant examiner) {
+        this.examiner = examiner;
     }
 }

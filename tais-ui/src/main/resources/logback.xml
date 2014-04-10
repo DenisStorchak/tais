@@ -6,6 +6,9 @@
     </appender>
     <!--  No Tomcat debug logs -->
     <logger name="org.apache.catalina" level="INFO"/>
+    <logger name="ua.org.tees" level="DEBUG">
+        <appender-ref ref="STDOUT"/>
+    </logger>
     <root level="INFO">
         <appender-ref ref="STDOUT"/>
     </root>

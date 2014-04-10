@@ -25,7 +25,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisV
  *         Time: 19:57
  */
 @PresentedBy(TeacherDashboardPresenter.class)
-@TaisView("Задания")
+@TaisView("Отчеты")
 @Qualifier(TEACHER_DASHBOARD)
 @PermitRoles(TEACHER)
 public class TeacherDashboardView extends DashboardView implements TeacherDashboardTaisView {

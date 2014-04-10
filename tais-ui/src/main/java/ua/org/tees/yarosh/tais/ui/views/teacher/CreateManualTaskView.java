@@ -29,9 +29,11 @@ public class CreateManualTaskView extends DashboardView implements CreateManualT
     private ComboBox groups = new ComboBox();
     private ComboBox disciplines = new ComboBox();
     private TextField description = new TextField();
-    private Upload payload = new Upload();
+    private Upload payloadUploader = new Upload();
     private DateField deadline = new DateField();
-    private Button save = new Button();
+    private Button save = new Button("Добавить");
+
+    private String payloadPath;
 
     @Override
     public void setGroups(List<StudentGroup> studentGroups) {
@@ -47,20 +49,29 @@ public class CreateManualTaskView extends DashboardView implements CreateManualT
 
     @Override
     public void setPayloadReceiver(CreateManualTaskListener.PayloadReceiver payloadReceiver) {
+        payloadUploader.setReceiver(payloadReceiver);
+        payloadUploader.addFailedListener(payloadReceiver);
+        payloadUploader.addSucceededListener(payloadReceiver);
+    }
 
+    @Override
+    public void setPayloadPath(String path) {
+        payloadPath = path;
     }
 
     public CreateManualTaskView() {
+        top.addComponent(payloadUploader);
+
         DashPanel dashPanel = addDashPanel(null, null);
         dashPanel.addComponent(createSingleFormLayout(new Label("Группа"), groups));
         dashPanel.addComponent(createSingleFormLayout(new Label("Дисциплина"), disciplines));
-        dashPanel.addComponent(createSingleFormLayout(new Label("Задание"), payload));
+//        dashPanel.addComponent(createSingleFormLayout(new Label("Задание"), payloadUploader));
         dashPanel.addComponent(createSingleFormLayout(new Label("Описание"), description));
         dashPanel.addComponent(createSingleFormLayout(new Label("Дедлайн"), deadline));
         dashPanel.addComponent(createSingleFormLayout(null, save));
 
         dashPanel.setSizeUndefined();
-        dashPanel.setWidth(60, Unit.PERCENTAGE);
+        dashPanel.setWidth(80, Unit.PERCENTAGE);
         dash.setComponentAlignment(dashPanel, Alignment.TOP_CENTER);
     }
 

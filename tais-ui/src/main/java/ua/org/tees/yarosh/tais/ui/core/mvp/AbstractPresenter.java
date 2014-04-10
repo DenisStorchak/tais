@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
  */
 @SuppressWarnings("unchecked")
 public abstract class AbstractPresenter implements Presenter {
-    private static final Logger log = LoggerFactory.getLogger(AbstractPresenter.class);
+    public static final Logger log = LoggerFactory.getLogger(AbstractPresenter.class);
     private Updatable view;
 
     public AbstractPresenter(Updatable view) {
@@ -21,10 +21,6 @@ public abstract class AbstractPresenter implements Presenter {
     @Override
     public <V extends View> V getView(Class<V> viewClazz) {
         return (V) view;
-    }
-
-    protected void info(String message, Object... params) {
-        log.info(message, params);
     }
 
     @Override
