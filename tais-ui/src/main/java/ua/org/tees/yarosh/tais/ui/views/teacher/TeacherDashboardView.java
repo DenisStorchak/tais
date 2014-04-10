@@ -14,6 +14,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.transformToIconOnlyButton;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 
@@ -43,15 +44,8 @@ public class TeacherDashboardView extends DashboardView implements TeacherDashbo
     public void init() {
         super.init();
         TeacherDashboardPresenter p = getCurrent().getRelativePresenter(this, TeacherDashboardPresenter.class);
-        setUpButton("Добавить задание", "icon-doc-new", e -> p.onCreateManualTask(), createManualTask);
-        setUpButton("Создать тесты", "icon-doc-new", e -> p.onCreateQuestionsSuite(), createQuestionsSuite);
-    }
-
-    private void setUpButton(String description, String icon, Button.ClickListener listener, Button button) {
-        button.setDescription(description);
-        button.addStyleName(icon);
-        button.addStyleName("icon-only");
-        button.addClickListener(listener);
+        transformToIconOnlyButton("Добавить задание", "icon-doc-new", e -> p.onCreateManualTask(), createManualTask);
+        transformToIconOnlyButton("Создать тесты", "icon-doc-new", e -> p.onCreateQuestionsSuite(), createQuestionsSuite);
     }
 
     @Override
