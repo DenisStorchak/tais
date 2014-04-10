@@ -45,7 +45,7 @@ public class UserManagementView extends DashboardView
     public UserManagementView() {
         super();
         addDashPanel(null, null, registrants);
-        top.addComponents(createRegistration, createGroup, createClassroom, createDiscipline);
+        top.addButtons(createRegistration, createGroup, createClassroom, createDiscipline);
     }
 
     @Override

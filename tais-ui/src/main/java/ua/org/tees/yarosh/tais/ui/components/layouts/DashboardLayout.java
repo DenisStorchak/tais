@@ -1,9 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.components.layouts;
 
-import com.vaadin.ui.AbstractOrderedLayout;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.*;
 
 public abstract class DashboardLayout extends VerticalLayout {
 
@@ -16,6 +13,7 @@ public abstract class DashboardLayout extends VerticalLayout {
 
         top = new BgPanel();
         addComponent(top);
+        setComponentAlignment(top, Alignment.TOP_CENTER);
 
         dash = new HorizontalDash();
         addComponent(dash);
