@@ -13,6 +13,7 @@ import ua.org.tees.yarosh.tais.ui.TAISUI;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateRegistrationWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -21,7 +22,6 @@ import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 
@@ -77,7 +77,8 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
 
     @Override
     public void onCreateRegistration() {
-        UI.getCurrent().getNavigator().navigateTo(USER_REGISTRATION);
+//        UI.getCurrent().getNavigator().navigateTo(USER_REGISTRATION);
+        UI.getCurrent().addWindow(SessionFactory.getCurrent().getWindow(CreateRegistrationWindow.class));
     }
 
     @Override
