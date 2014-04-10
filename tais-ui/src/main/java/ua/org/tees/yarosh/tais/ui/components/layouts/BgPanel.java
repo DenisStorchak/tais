@@ -10,34 +10,50 @@ import com.vaadin.ui.*;
 public class BgPanel extends VerticalLayout {
 
     private Label titleLabel;
-    private HorizontalLayout buttonsLayout = new HorizontalLayout();
+    private HorizontalLayout additionalLayout = new HorizontalLayout();
 
     public BgPanel() {
-        setWidth(100, Unit.PERCENTAGE);
-//        setSpacing(true);
-        addStyleName("toolbar");
+        super.setWidth(100, Unit.PERCENTAGE);
+        super.addStyleName("toolbar");
         titleLabel = new Label();
         titleLabel.addStyleName("h1");
-//        addComponent(titleLabel);
-//        setComponentAlignment(titleLabel, Alignment.TOP_CENTER);
 
-        buttonsLayout.setSizeUndefined();
-//        addComponent(buttonsLayout);
-//        setComponentAlignment(buttonsLayout, Alignment.BOTTOM_CENTER);
+        additionalLayout.setSizeUndefined();
 
-        HorizontalLayout layout = new HorizontalLayout(titleLabel, buttonsLayout);
+        HorizontalLayout layout = new HorizontalLayout(titleLabel, additionalLayout);
         layout.setWidth(100, Unit.PERCENTAGE);
         layout.setHeight(2, Unit.PERCENTAGE);
         layout.setComponentAlignment(titleLabel, Alignment.MIDDLE_LEFT);
-        layout.setComponentAlignment(buttonsLayout, Alignment.MIDDLE_RIGHT);
-        addComponent(layout);
+        layout.setComponentAlignment(additionalLayout, Alignment.MIDDLE_RIGHT);
+        super.addComponent(layout);
     }
 
     public void setCaption(String caption) {
         titleLabel.setValue(caption);
     }
 
-    public void addButtons(Button... buttons) {
-        buttonsLayout.addComponents(buttons);
+    @Override
+    public void addComponents(Component... components) {
+        additionalLayout.addComponents(components);
+    }
+
+    @Override
+    public void addComponent(Component c, int index) {
+        additionalLayout.addComponent(c, index);
+    }
+
+    @Override
+    public void addComponentAsFirst(Component c) {
+        additionalLayout.addComponentAsFirst(c);
+    }
+
+    @Override
+    public void addComponent(Component c) {
+        additionalLayout.addComponent(c);
+    }
+
+    @Override
+    public void setSpacing(boolean spacing) {
+        additionalLayout.setSpacing(spacing);
     }
 }
