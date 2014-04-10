@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher.presenters;
 
 import com.vaadin.data.Container;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
@@ -12,8 +13,9 @@ import ua.org.tees.yarosh.tais.ui.components.UnratedReportsDataSource;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
+import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.*;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 /**
@@ -31,6 +33,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
 
     @Override
     public void update() {
+        getView(TeacherDashboardTaisView.class).update();
     }
 
     @Override
@@ -40,6 +43,16 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
             unratedReports.addReport(createSampleReport(i));
         }
         return unratedReports;
+    }
+
+    @Override
+    public void onCreateManualTask() {
+        UI.getCurrent().getNavigator().navigateTo(ADD_MANUAL);
+    }
+
+    @Override
+    public void onCreateQuestionsSuite() {
+        UI.getCurrent().getNavigator().navigateTo(CREATE_QUESTIONS_SUITE);
     }
 
     private ManualTaskReport createSampleReport(long i) {

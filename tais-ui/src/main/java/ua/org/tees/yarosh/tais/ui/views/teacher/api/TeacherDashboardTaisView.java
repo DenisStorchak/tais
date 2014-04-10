@@ -13,5 +13,9 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 public interface TeacherDashboardTaisView extends View, Updatable {
     interface TeacherDashboardPresenter extends Presenter {
         Container getUnratedManualReports();
+
+        void onCreateManualTask();
+
+        void onCreateQuestionsSuite();
     }
 }
