@@ -93,6 +93,7 @@ public class CreateQuestionWindow extends Window {
                     setComponentAlignment(answer, Alignment.TOP_CENTER);
                     setComponentAlignment(truth, Alignment.BOTTOM_RIGHT);
                     answer.setWidth(500, Unit.PIXELS);
+                    answer.setHeight(50, Unit.PIXELS);
                 }
             };
         }
