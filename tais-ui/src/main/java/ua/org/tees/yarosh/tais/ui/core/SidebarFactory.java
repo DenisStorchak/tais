@@ -10,10 +10,9 @@ import ua.org.tees.yarosh.tais.core.common.dto.Roles;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.layouts.UserMenu;
-import ua.org.tees.yarosh.tais.ui.views.admin.Schedule;
-import ua.org.tees.yarosh.tais.ui.views.admin.Settings;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserManagement;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
+import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
+import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuitesView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.StudentsView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
@@ -88,19 +87,14 @@ public class SidebarFactory {
     private SidebarMenu createAdminMenu() {
         SidebarMenu adminMenu = new SidebarMenu();
 
-        NativeButton registrationButton = new NativeButton("Регистрация");
-        registrationButton.addStyleName("icon-user-add");
-        adminMenu.addMenuButton(UserRegistration.class, registrationButton);
-        registrationButton.addClickListener(event -> ui.getNavigator().navigateTo(USER_REGISTRATION));
-
         NativeButton profilesButton = new NativeButton("Пользователи");
         profilesButton.addStyleName("icon-users");
-        adminMenu.addMenuButton(UserManagement.class, profilesButton);
+        adminMenu.addMenuButton(UserManagementView.class, profilesButton);
         profilesButton.addClickListener(event -> ui.getNavigator().navigateTo(USER_MANAGEMENT));
 
         NativeButton scheduleButton = new NativeButton("Расписание");
         scheduleButton.addStyleName("icon-clock");
-        adminMenu.addMenuButton(Schedule.class, scheduleButton);
+        adminMenu.addMenuButton(ScheduleView.class, scheduleButton);
         scheduleButton.addClickListener(event -> ui.getNavigator().navigateTo(MANAGED_SCHEDULE));
 
         NativeButton fprintScannerButton = new NativeButton("Сканеры отпечатков");
@@ -110,7 +104,7 @@ public class SidebarFactory {
 
         NativeButton configButton = new NativeButton("Настройки");
         configButton.addStyleName("icon-cog-alt");
-        adminMenu.addMenuButton(Settings.class, configButton);
+        adminMenu.addMenuButton(SettingsView.class, configButton);
         configButton.addClickListener(event -> ui.getNavigator().navigateTo(SETTINGS));
 
         return adminMenu;

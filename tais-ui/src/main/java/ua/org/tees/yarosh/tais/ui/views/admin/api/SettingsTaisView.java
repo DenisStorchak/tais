@@ -5,7 +5,7 @@ import ua.org.tees.yarosh.tais.core.common.properties.*;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
-public interface SettingsTais extends View, Updatable {
+public interface SettingsTaisView extends View, Updatable {
 
     interface SettingsPresenter extends Presenter {
         CacheProperties getCacheProperties();

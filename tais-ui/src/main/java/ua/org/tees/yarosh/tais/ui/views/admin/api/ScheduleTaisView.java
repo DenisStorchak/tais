@@ -13,7 +13,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-public interface ScheduleTais extends View, Updatable {
+public interface ScheduleTaisView extends View, Updatable {
 
     interface SchedulePresenter extends Presenter {
         Map<? extends Date, ? extends List<Lesson>> getSchedule(Object owner, Date periodFrom, Date periodTo);

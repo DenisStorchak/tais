@@ -14,20 +14,20 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTais;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView;
 
 import static java.lang.String.format;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.SETTINGS;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTais.SettingsPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView.SettingsPresenter;
 
 @PresentedBy(SettingsPresenter.class)
 @TaisView("Настройки")
 @Qualifier(SETTINGS)
 @PermitRoles(ADMIN)
 @SuppressWarnings("unchecked")
-public class Settings extends DashboardView implements SettingsTais {
+public class SettingsView extends DashboardView implements SettingsTaisView {
 
     private static final String KEY = "Параметр";
     private static final String VALUE = "Значение";
@@ -35,7 +35,7 @@ public class Settings extends DashboardView implements SettingsTais {
     private static final String KEY_HTML = "<b>%s<b>";
     private static final String VALUE_HTML = "<i>%s</i>";
 
-    public Settings() {
+    public SettingsView() {
         super(false);
     }
 

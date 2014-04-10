@@ -90,4 +90,14 @@ public abstract class VaadinUtils {
         }
         return new Cookie(name, "");
     }
+
+    public static void transformToIconOnlyButton(String description,
+                                                 String icon,
+                                                 Button.ClickListener listener,
+                                                 Button button) {
+        button.setDescription(description);
+        button.addStyleName(icon);
+        button.addStyleName("icon-only");
+        button.addClickListener(listener);
+    }
 }

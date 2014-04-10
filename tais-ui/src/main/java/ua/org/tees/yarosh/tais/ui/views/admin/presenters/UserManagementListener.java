@@ -4,6 +4,7 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
@@ -13,16 +14,17 @@ import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTais;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_REGISTRATION;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 
 @TaisPresenter
 @SuppressWarnings("unchecked")
-public class UserManagementListener extends AbstractPresenter implements UserManagementTais.UserManagementPresenter {
+public class UserManagementListener extends AbstractPresenter implements UserManagementTaisView.UserManagementPresenter {
 
     private static final String KEY_LOGIN = "Логин";
     private static final String KEY_SURNAME = "Фамилия";
@@ -63,11 +65,16 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
             item.getItemProperty(KEY_NAME).setValue(r.getName());
             item.getItemProperty(KEY_PATRONYMIC).setValue(r.getPatronymic());
             item.getItemProperty(KEY_EMAIL).setValue(r.getEmail());
-            item.getItemProperty(KEY_GROUP).setValue(String.valueOf(r.getGroup().getId()));
+            item.getItemProperty(KEY_GROUP).setValue(r.getGroup() != null ? String.valueOf(r.getGroup().getId()) : null);
             item.getItemProperty(KEY_ROLE).setValue(RoleTranslator.translate(r.getRole()));
             item.getItemProperty(KEY_INTERACT_BUTTON).setValue(new Button("Редактировать", createListener(r.getLogin())));
         });
         return registrantsContainer;
+    }
+
+    @Override
+    public void onRegistration() {
+        UI.getCurrent().getNavigator().navigateTo(USER_REGISTRATION);
     }
 
     private Button.ClickListener createListener(String login) {

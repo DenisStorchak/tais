@@ -14,7 +14,7 @@ import java.util.List;
  *         Date: 22.03.14
  *         Time: 20:48
  */
-public interface UserRegistrationTais extends View, Updatable {
+public interface UserRegistrationTaisView extends View, Updatable {
     interface UserRegistrationPresenter extends Presenter {
         boolean isLoginExists(String login);
 

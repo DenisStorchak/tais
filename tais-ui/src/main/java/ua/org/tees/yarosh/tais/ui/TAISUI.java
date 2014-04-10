@@ -19,10 +19,10 @@ import ua.org.tees.yarosh.tais.ui.listeners.AuthListener;
 import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
 import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
-import ua.org.tees.yarosh.tais.ui.views.admin.Schedule;
-import ua.org.tees.yarosh.tais.ui.views.admin.Settings;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserManagement;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistration;
+import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
+import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
+import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.common.*;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
@@ -63,7 +63,7 @@ public class TAISUI extends UI {
     }
 
     private void mapRoleViews() {
-        mapDefaultView(UserRegistration.class, ADMIN);
+        mapDefaultView(UserManagementView.class, ADMIN);
         mapDefaultView(TeacherDashboardView.class, TEACHER);
         //todo register default student view
     }
@@ -79,11 +79,11 @@ public class TAISUI extends UI {
 
     private void setUpViews(Navigator nav) {
         nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
-        nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistration.class));
-        nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagement.class));
+        nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
+        nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
         nav.addProvider(new FactoryBasedViewProvider(AUTH, Login.class));
-        nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, Schedule.class));
-        nav.addProvider(new FactoryBasedViewProvider(SETTINGS, Settings.class));
+        nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
+        nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
         nav.addProvider(new FactoryBasedViewProvider(ME, Profile.class));
         nav.addProvider(new FactoryBasedViewProvider(EDIT_PROFILE, EditProfile.class));
         nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));

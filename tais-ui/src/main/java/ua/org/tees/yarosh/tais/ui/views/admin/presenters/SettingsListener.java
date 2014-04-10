@@ -9,7 +9,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.SETTINGS;
-import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTais.SettingsPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView.SettingsPresenter;
 
 @TaisPresenter
 public class SettingsListener extends AbstractPresenter implements SettingsPresenter {

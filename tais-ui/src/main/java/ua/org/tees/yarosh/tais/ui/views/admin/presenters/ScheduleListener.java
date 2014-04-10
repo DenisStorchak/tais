@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
-import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTais;
+import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 
 import java.util.*;
 
@@ -21,7 +21,7 @@ import static java.util.Arrays.asList;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 
 @TaisPresenter
-public class ScheduleListener extends AbstractPresenter implements ScheduleTais.SchedulePresenter {
+public class ScheduleListener extends AbstractPresenter implements ScheduleTaisView.SchedulePresenter {
 
     private RegistrantService registrantService;
     private ScheduleService scheduleService;
