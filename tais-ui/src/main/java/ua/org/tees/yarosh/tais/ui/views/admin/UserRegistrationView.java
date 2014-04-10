@@ -10,9 +10,6 @@ import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
-import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
-import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -60,31 +57,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
         login.focus();
         setUpValidators();
 
-        Button createGroup = new Button("Новая группа");
-        createGroup.addStyleName("icon-only");
-        createGroup.addStyleName("icon-doc-new"); // todo set correct icon
-        createGroup.setDescription("Создать новую группу");
-        createGroup.addClickListener(clickEvent -> getUI().addWindow(new CreateGroupWindow()));
-        top.addComponent(createGroup);
-        top.setComponentAlignment(createGroup, Alignment.MIDDLE_LEFT);
-
-        Button createClassroom = new Button("Новая аудитория");
-        createClassroom.addStyleName("icon-only");
-        createClassroom.addStyleName("icon-doc-new"); // todo set correct icon
-        createClassroom.setDescription("Создать новую аудиторию");
-        createClassroom.addClickListener(clickEvent -> getUI().addWindow(new CreateClassroomWindow()));
-        top.addComponent(createClassroom);
-        top.setComponentAlignment(createClassroom, Alignment.MIDDLE_LEFT);
-
-        Button createDiscipline = new Button("Новая дисциплина");
-        createDiscipline.addStyleName("icon-only");
-        createDiscipline.addStyleName("icon-doc-new"); // todo set correct icon
-        createDiscipline.setDescription("Создать новую дисциплину");
-        createDiscipline.addClickListener(clickEvent -> getUI().addWindow(new CreateDisciplineWindow()));
-        top.addComponent(createDiscipline);
-        top.setComponentAlignment(createDiscipline, Alignment.MIDDLE_LEFT);
-
-        DashPanel formPanel = addDashPanel("Все поля являются обязательными для заполнения", null);
+        DashPanel formPanel = addDashPanel(null, null);
         formPanel.setSizeUndefined();
         formPanel.addComponents(createRegistrationForms(), createControls());
         formPanel.setWidth(50, Unit.PERCENTAGE);

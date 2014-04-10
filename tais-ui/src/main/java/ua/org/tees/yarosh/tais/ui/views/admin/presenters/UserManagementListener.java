@@ -10,6 +10,9 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.RoleTranslator;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -73,8 +76,23 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     }
 
     @Override
-    public void onRegistration() {
+    public void onCreateRegistration() {
         UI.getCurrent().getNavigator().navigateTo(USER_REGISTRATION);
+    }
+
+    @Override
+    public void onCreateGroup() {
+        UI.getCurrent().addWindow(SessionFactory.getCurrent().getWindow(CreateGroupWindow.class));
+    }
+
+    @Override
+    public void onCreateClassroom() {
+        UI.getCurrent().addWindow(SessionFactory.getCurrent().getWindow(CreateClassroomWindow.class));
+    }
+
+    @Override
+    public void onCreateDiscipline() {
+        UI.getCurrent().addWindow(SessionFactory.getCurrent().getWindow(CreateDisciplineWindow.class));
     }
 
     private Button.ClickListener createListener(String login) {

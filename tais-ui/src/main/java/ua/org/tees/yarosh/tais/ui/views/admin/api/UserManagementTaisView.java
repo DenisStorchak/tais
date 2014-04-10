@@ -12,6 +12,12 @@ public interface UserManagementTaisView extends View, Updatable {
     interface UserManagementPresenter extends Presenter {
         Container getAllRegistrants();
 
-        void onRegistration();
+        void onCreateRegistration();
+
+        void onCreateGroup();
+
+        void onCreateClassroom();
+
+        void onCreateDiscipline();
     }
 }

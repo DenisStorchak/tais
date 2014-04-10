@@ -28,18 +28,24 @@ public class UserManagementView extends DashboardView
 
     private Table registrants = new PlainBorderlessTable("Все пользователи");
     private Button createRegistration = new Button();
+    private Button createGroup = new Button();
+    private Button createClassroom = new Button();
+    private Button createDiscipline = new Button();
 
     @Override
     public void init() {
         super.init();
         UserManagementPresenter p = getCurrent().getRelativePresenter(this, UserManagementPresenter.class);
-        transformToIconOnlyButton("Регистрация", "icon-user-add", e -> p.onRegistration(), createRegistration);
+        transformToIconOnlyButton("Регистрация", "icon-user-add", e -> p.onCreateRegistration(), createRegistration);
+        transformToIconOnlyButton("Создать новую группу", "icon-doc-new", e -> p.onCreateGroup(), createGroup);
+        transformToIconOnlyButton("Создать новую аудиторию", "icon-doc-new", e -> p.onCreateClassroom(), createClassroom);
+        transformToIconOnlyButton("Создать новую дисциплину", "icon-doc-new", e -> p.onCreateDiscipline(), createDiscipline);
     }
 
     public UserManagementView() {
         super();
-        top.addComponent(createRegistration);
         addDashPanel(null, null, registrants);
+        top.addComponents(createRegistration, createGroup, createClassroom, createDiscipline);
     }
 
     @Override
