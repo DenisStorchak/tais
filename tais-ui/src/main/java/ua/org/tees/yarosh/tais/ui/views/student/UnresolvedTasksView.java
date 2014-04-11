@@ -55,7 +55,7 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
         unresolvedTasks.addContainerProperty(PROPERTY_DEADLINE, Date.class, null);
         unresolvedTasks.addContainerProperty(PROPERTY_TEACHER, String.class, null);
         unresolvedTasks.addContainerProperty(PROPERTY_TYPE, String.class, null);
-        unresolvedTasks.addContainerProperty(PROPERTY_INTERACTION, String.class, null);
+        unresolvedTasks.addContainerProperty(PROPERTY_INTERACTION, HorizontalLayout.class, null);
 
         top.addComponent(refresh);
         addDashPanel(null, null, unresolvedTasks);
