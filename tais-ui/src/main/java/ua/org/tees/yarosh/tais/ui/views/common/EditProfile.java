@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.views.common;
 import com.vaadin.data.validator.BeanValidator;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
+import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
@@ -120,7 +121,7 @@ public class EditProfile extends DashboardView implements EditProfileTais {
                 registrant.setEmail(email.getValue());
 
                 if (!password.getValue().isEmpty() && isValid(password, repeatPassword)) {
-                    registrant.setPassword(password.getValue());
+                    registrant.setPassword(DigestUtils.sha256Hex(password.getValue()));
                 }
 
                 if (isValid(studentGroup)) {
