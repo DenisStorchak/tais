@@ -28,6 +28,6 @@ public class EmailCommunicator implements Communicator {
     }
 
     private String formatMessage(Message message) {
-        return String.format("%s\nОт: %s", message.getFrom());
+        return String.format("%s\n\nОт: %s", message.getFrom());
     }
 }
