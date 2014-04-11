@@ -51,7 +51,7 @@ public class SidebarFactory {
     private SidebarMenu createStudentMenu() {
         SidebarMenu studentMenu = new SidebarMenu();
 
-        NativeButton unresolvedTasks = new NativeButton("Не выполненные\nзадания");
+        NativeButton unresolvedTasks = new NativeButton("Задания");
         unresolvedTasks.addStyleName("icon-columns");
         unresolvedTasks.addClickListener(event -> ui.getNavigator().navigateTo(UNRESOLVED));
         studentMenu.addMenuButton(UnresolvedTasksView.class, unresolvedTasks);
@@ -62,14 +62,6 @@ public class SidebarFactory {
     private Sidebar localCreateSidebar(SidebarMenu menu) {
         Sidebar sidebar = new Sidebar();
         sidebar.setSidebarMenu(menu);
-        sidebar.setUserMenu(createUserMenu());
-        return sidebar;
-    }
-
-    @Deprecated
-    private Sidebar createTeacherSidebar() {
-        Sidebar sidebar = new Sidebar();
-        sidebar.setSidebarMenu(createTeacherMenu());
         sidebar.setUserMenu(createUserMenu());
         return sidebar;
     }
@@ -98,14 +90,6 @@ public class SidebarFactory {
         teacherMenu.addMenuButton(StudentsView.class, showAllStudents);
 
         return teacherMenu;
-    }
-
-    @Deprecated
-    private Sidebar createAdminSidebar() {
-        Sidebar sidebar = new Sidebar();
-        sidebar.setSidebarMenu(createAdminMenu());
-        sidebar.setUserMenu(createUserMenu());
-        return sidebar;
     }
 
     private SidebarMenu createAdminMenu() {
