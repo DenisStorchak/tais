@@ -11,8 +11,6 @@ import java.util.Optional;
 import java.util.Vector;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static java.util.Arrays.binarySearch;
-
 @Service
 public class AuthManager {
 
@@ -65,8 +63,10 @@ public class AuthManager {
                 PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
                 UserDetails auth = AUTHORIZATIONS.get(username);
                 if (auth != null && permitRoles != null) {
-                    int i = binarySearch(permitRoles.value(), auth.getRole());
-                    return i >= 0;
+                    for (String s : permitRoles.value()) {
+                        if (s.equals(auth.getRole())) return true;
+                    }
+                    return false;
                 }
             }
             return false;
