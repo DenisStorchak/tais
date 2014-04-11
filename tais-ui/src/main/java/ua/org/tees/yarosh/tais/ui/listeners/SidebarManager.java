@@ -83,7 +83,7 @@ public class SidebarManager implements ViewChangeListener {
         if (first.isPresent() && ViewResolver.viewRegistered(viewPattern)) {
             String properlyKey = first.get();
             Sidebar relativeSidebar = sidebarPool.get(properlyKey);
-            relativeSidebar.getUserMenu().setUsername((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID));
+            relativeSidebar.getUserMenu().setUsername((String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID)); //todo why it works?
             return relativeSidebar;
         } else if (hideExceptions.contains(viewPattern)) {
             return sidebar;
