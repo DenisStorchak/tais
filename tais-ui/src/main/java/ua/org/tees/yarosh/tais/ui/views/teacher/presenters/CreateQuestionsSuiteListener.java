@@ -12,6 +12,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.Question;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
+import ua.org.tees.yarosh.tais.ui.core.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -70,6 +71,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
             suite.setQuestions(questions);
             suite.setDeadline(deadline.getValue());
             suite.setEnabled(enabled.getValue().equals("Включен"));
+            suite.setExaminer(Registrants.getCurrent());
 
             homeworkManager.createQuestionsSuite(suite);
             return true;
