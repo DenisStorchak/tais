@@ -33,8 +33,6 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Autowired
     private PersonalTaskHolderRepository personalTaskHolderRepository;
     @Autowired
-    private TaskHolderRepository taskHolderRepository;
-    @Autowired
     private QuestionsSuiteRepository questionsSuiteRepository;
     @Autowired
     private ManualTaskReportRepository manualTaskReportRepository;
@@ -179,7 +177,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    @CacheEvict(value = MANUAL_TASKS, key = "#id")
+    @CacheEvict(value = MANUAL_TASKS, allEntries = true)
     public void enableGroupTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (manualTask.isEnabled()) {
@@ -188,7 +186,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    @CacheEvict(value = MANUAL_TASKS, key = "#id")
+    @CacheEvict(value = MANUAL_TASKS, allEntries = true)
     public void disableGroupTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (!manualTask.isEnabled()) {
@@ -213,7 +211,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
             } else {
                 taskHolder.getManualTaskList().remove(manualTask);
             }
-            taskHolderRepository.saveAndFlush(taskHolder);
+            personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
     }
 }

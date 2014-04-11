@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.core.auth;
 
+
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -12,18 +13,22 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies.AUTH;
 
 @Aspect
 @Component
-public class LogoutAdvice {
+public class LoginAspect {
 
-    private static final Logger log = LoggerFactory.getLogger(LogoutAdvice.class);
+    private static final Logger log = LoggerFactory.getLogger(LoginAspect.class);
 
+    /**
+     * Save authorization cookie
+     */
     @AfterReturning(
-            pointcut = "execution(* ua.org.tees.yarosh.tais.auth.AuthManager.logout(..))",
+            pointcut = "execution(* ua.org.tees.yarosh.tais.auth.AuthManager.login(..))",
             returning = "result"
     )
-    public void logLoggingOut(JoinPoint joinPoint, boolean result) {
+    public void saveAuthCookie(JoinPoint joinPoint, boolean result) {
         if (result) {
-            VaadinUtils.deleteCookie(AUTH);
-            log.info("Auth cookie for [{}] removed", joinPoint.getArgs()[0]);
+            String auth = (String) joinPoint.getArgs()[0];
+            VaadinUtils.saveCookie(AUTH, auth);
+            log.info("Auth cookie for [{}] stored", auth);
         }
     }
 }
