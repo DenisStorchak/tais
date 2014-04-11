@@ -24,14 +24,15 @@ import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
 import ua.org.tees.yarosh.tais.ui.views.common.*;
+import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
-import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
-import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
+import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.*;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
 
@@ -65,7 +66,7 @@ public class TAISUI extends UI {
     private void mapRoleViews() {
         mapDefaultView(UserManagementView.class, ADMIN);
         mapDefaultView(TeacherDashboardView.class, TEACHER);
-        //todo register default student view
+        mapDefaultView(UnresolvedTasksView.class, STUDENT);
     }
 
     private void setUpListeners(Navigator nav, CommonComponent commonComponent) {
@@ -90,6 +91,7 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(ENABLED_QUESTIONS, EnabledQuestionsSuitesView.class));
         nav.addProvider(new FactoryBasedViewProvider(STUDENTS, StudentsView.class));
         nav.addProvider(new FactoryBasedViewProvider(ADD_MANUAL, CreateManualTaskView.class));
+        nav.addProvider(new FactoryBasedViewProvider(UNRESOLVED, UnresolvedTasksView.class));
         nav.addView(ACCESS_DENIED, new AccessDeniedView());
         nav.setErrorView(new PageNotFoundView());
     }
@@ -105,6 +107,7 @@ public class TAISUI extends UI {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
         sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
+        sidebarManager.registerSidebar(DataBinds.UriFragments.Student.PREFIX, sidebarFactory.createSidebar(STUDENT));
         sidebarManager.addHideException(DataBinds.UriFragments.ME);
         sidebarManager.addHideException(DataBinds.UriFragments.EDIT_PROFILE);
         return sidebarManager;
