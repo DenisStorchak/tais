@@ -15,7 +15,7 @@ public interface UnresolvedTasksTaisView extends View, Updatable {
     void setUnresolvedQuestionsSuites(List<QuestionsSuite> questionsSuites);
 
     interface UnresolvedTasksPresenter extends Presenter {
-        void onUpdate();
+        void onRefresh();
 
         void onQuestionsSuite(QuestionsSuite questionsSuite);
 

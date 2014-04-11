@@ -20,7 +20,7 @@ public class UnresolvedTasksListener extends AbstractPresenter implements Unreso
     }
 
     @Override
-    public void onUpdate() {
+    public void onRefresh() {
 
     }
 

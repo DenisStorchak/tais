@@ -18,6 +18,7 @@ public class ManualTask {
     @GeneratedValue
     private Long id;
     private String description;
+    private String theme;
     @ManyToOne
     @JoinColumn(name = "disciplineId")
     private Discipline discipline;
@@ -94,5 +95,13 @@ public class ManualTask {
 
     public void setExaminer(Registrant examiner) {
         this.examiner = examiner;
+    }
+
+    public String getTheme() {
+        return theme;
+    }
+
+    public void setTheme(String theme) {
+        this.theme = theme;
     }
 }
