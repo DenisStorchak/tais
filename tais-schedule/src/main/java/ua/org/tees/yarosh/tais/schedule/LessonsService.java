@@ -84,6 +84,11 @@ public class LessonsService implements ScheduleService, TeacherService, Discipli
     }
 
     @Override
+    public List<Discipline> findDisciplinesByTeacher(String login) {
+        return disciplineRepository.findDisciplinesByTeacher(login);
+    }
+
+    @Override
     public List<Classroom> findAllClassrooms() {
         return classroomRepository.findAll();
     }

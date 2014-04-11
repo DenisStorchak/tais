@@ -1,9 +1,11 @@
 package ua.org.tees.yarosh.tais.ui.views.teacher.api;
 
-import com.vaadin.data.Container;
 import com.vaadin.navigator.View;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
+
+import java.util.List;
 
 /**
  * @author Timur Yarosh
@@ -11,8 +13,13 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
  *         Time: 12:52
  */
 public interface TeacherDashboardTaisView extends View, Updatable {
+
+    void setUnrated(List<ManualTaskReport> unratedReports);
+
     interface TeacherDashboardPresenter extends Presenter {
-        Container getUnratedManualReports();
+        void onUpdate();
+
+        void onDetails(ManualTaskReport report);
 
         void onCreateManualTask();
 

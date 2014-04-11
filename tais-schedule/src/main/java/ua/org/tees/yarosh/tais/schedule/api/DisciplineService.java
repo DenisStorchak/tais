@@ -12,4 +12,6 @@ public interface DisciplineService {
     Discipline findDiscipline(Long id);
 
     Discipline findDisciplineByName(String name);
+
+    List<Discipline> findDisciplinesByTeacher(String login);
 }

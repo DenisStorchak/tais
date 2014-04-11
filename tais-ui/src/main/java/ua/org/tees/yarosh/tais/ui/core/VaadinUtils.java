@@ -1,9 +1,17 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.data.Validatable;
+import com.vaadin.server.FileDownloader;
+import com.vaadin.server.StreamResource;
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.Cookie;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.InputStream;
 
 import static com.vaadin.server.VaadinService.getCurrentRequest;
 import static com.vaadin.server.VaadinService.getCurrentResponse;
@@ -99,5 +107,31 @@ public abstract class VaadinUtils {
         button.addStyleName(icon);
         button.addStyleName("icon-only");
         button.addClickListener(listener);
+    }
+
+    public static void extendDownloadButton(File source, Button button) {
+        new FileDownloader(new StreamResource(new PayloadSource(source), source.getName())).extend(button);
+    }
+
+    public static class PayloadSource implements StreamResource.StreamSource {
+
+        private static final Logger log = LoggerFactory.getLogger(PayloadSource.class);
+
+        private File source;
+
+        public PayloadSource(File source) {
+            this.source = source;
+        }
+
+        @Override
+
+        public InputStream getStream() {
+            try {
+                return new FileInputStream(source);
+            } catch (FileNotFoundException e) {
+                log.error("File not found. [REASON: {}]", e);
+            }
+            return null;
+        }
     }
 }

@@ -1,8 +1,7 @@
 package ua.org.tees.yarosh.tais.core.common.models;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
+import javax.persistence.*;
+import java.util.List;
 
 /**
  * @author Timur Yarosh
@@ -15,6 +14,9 @@ public class Discipline {
     @GeneratedValue
     private Long id;
     private String name;
+    @JoinColumn
+    @OneToMany
+    private List<Registrant> teachers;
 
     public Discipline(String discipline) {
         name = discipline;
@@ -53,5 +55,13 @@ public class Discipline {
     @Override
     public String toString() {
         return name;
+    }
+
+    public List<Registrant> getTeachers() {
+        return teachers;
+    }
+
+    public void setTeachers(List<Registrant> teachers) {
+        this.teachers = teachers;
     }
 }

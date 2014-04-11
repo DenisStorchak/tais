@@ -16,6 +16,7 @@ public class ManualAchievement {
     @ManyToOne
     @JoinColumn(name = "examinerId")
     private Registrant examiner;
+    private String note;
 
     public Long getId() {
         return id;
@@ -47,5 +48,13 @@ public class ManualAchievement {
 
     public void setExaminer(Registrant examiner) {
         this.examiner = examiner;
+    }
+
+    public String getNote() {
+        return note;
+    }
+
+    public void setNote(String note) {
+        this.note = note;
     }
 }
