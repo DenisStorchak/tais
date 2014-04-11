@@ -20,7 +20,9 @@ public class ContextWindowFactory implements WindowFactory {
     public <W extends Window> W getWindow(Class<W> windowType) {
         log.debug("Window [{}] will be created", windowType);
         W window = ctx.getBean(windowType);
-        ((Initable) window).init();
+        if (window instanceof Initable) {
+            ((Initable) window).init();
+        }
         return window;
     }
 }
