@@ -13,12 +13,14 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.UserMenu;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
+import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuitesView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.StudentsView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.*;
 
 public class SidebarFactory {
@@ -37,13 +39,34 @@ public class SidebarFactory {
     public Sidebar createSidebar(String role) {
         switch (role) {
             case Roles.ADMIN:
-                return createAdminSidebar();
+                return localCreateSidebar(createAdminMenu());
             case Roles.TEACHER:
-                return createTeacherSidebar();
+                return localCreateSidebar(createTeacherMenu());
+            case Roles.STUDENT:
+                return localCreateSidebar(createStudentMenu());
         }
         throw new IllegalArgumentException(String.format("Sidebar for role [%s] not found", role));
     }
 
+    private SidebarMenu createStudentMenu() {
+        SidebarMenu studentMenu = new SidebarMenu();
+
+        NativeButton unresolvedTasks = new NativeButton("Не выполненные\nзадания");
+        unresolvedTasks.addStyleName("icon-columns");
+        unresolvedTasks.addClickListener(event -> ui.getNavigator().navigateTo(UNRESOLVED));
+        studentMenu.addMenuButton(UnresolvedTasksView.class, unresolvedTasks);
+
+        return studentMenu;
+    }
+
+    private Sidebar localCreateSidebar(SidebarMenu menu) {
+        Sidebar sidebar = new Sidebar();
+        sidebar.setSidebarMenu(menu);
+        sidebar.setUserMenu(createUserMenu());
+        return sidebar;
+    }
+
+    @Deprecated
     private Sidebar createTeacherSidebar() {
         Sidebar sidebar = new Sidebar();
         sidebar.setSidebarMenu(createTeacherMenu());
@@ -77,6 +100,7 @@ public class SidebarFactory {
         return teacherMenu;
     }
 
+    @Deprecated
     private Sidebar createAdminSidebar() {
         Sidebar sidebar = new Sidebar();
         sidebar.setSidebarMenu(createAdminMenu());
