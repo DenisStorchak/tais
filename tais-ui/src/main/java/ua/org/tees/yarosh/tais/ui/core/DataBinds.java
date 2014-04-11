@@ -61,7 +61,7 @@ public abstract class DataBinds {
 
         public abstract class Student {
             public static final String PREFIX = "student/";
-            public static final String UNRESOLVED = "unresolved";
+            public static final String UNRESOLVED = PREFIX + "unresolved";
         }
     }
 
