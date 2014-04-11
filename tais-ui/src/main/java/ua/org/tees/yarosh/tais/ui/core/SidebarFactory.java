@@ -74,7 +74,7 @@ public class SidebarFactory {
     private SidebarMenu createTeacherMenu() {
         SidebarMenu teacherMenu = new SidebarMenu();
 
-        NativeButton dashboardButton = new NativeButton("Задания");
+        NativeButton dashboardButton = new NativeButton("Отчеты");
         dashboardButton.addStyleName("icon-columns");
         dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
         teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
