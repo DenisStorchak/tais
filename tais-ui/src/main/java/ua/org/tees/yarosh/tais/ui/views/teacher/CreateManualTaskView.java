@@ -65,7 +65,6 @@ public class CreateManualTaskView extends DashboardView implements CreateManualT
         DashPanel dashPanel = addDashPanel(null, null);
         dashPanel.addComponent(createSingleFormLayout(new Label("Группа"), groups));
         dashPanel.addComponent(createSingleFormLayout(new Label("Дисциплина"), disciplines));
-//        dashPanel.addComponent(createSingleFormLayout(new Label("Задание"), payloadUploader));
         dashPanel.addComponent(createSingleFormLayout(new Label("Описание"), description));
         dashPanel.addComponent(createSingleFormLayout(new Label("Дедлайн"), deadline));
         dashPanel.addComponent(createSingleFormLayout(null, save));
