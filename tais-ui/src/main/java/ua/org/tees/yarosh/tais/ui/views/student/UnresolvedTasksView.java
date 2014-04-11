@@ -39,13 +39,15 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
     private static final String VALUE_QUESTIONS_SUITE = "Тесты";
     private static final String VALUE_MANUAL_TASK = "С файлом";
 
+    private UnresolvedTasksPresenter p;
+
     private Table unresolvedTasks = new PlainBorderlessTable("Невыполненные задания");
     private Button refresh = new Button();
 
     @Override
     public void init() {
         super.init();
-        UnresolvedTasksPresenter p = getCurrent().getRelativePresenter(this, UnresolvedTasksPresenter.class);
+        p = getCurrent().getRelativePresenter(this, UnresolvedTasksPresenter.class);
         transformToIconOnlyButton("Обновить список", "icon-doc-new", e -> p.onRefresh(), refresh);
     }
 
@@ -63,7 +65,6 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
 
     @Override
     public void setUnresolvedManualTasks(List<ManualTask> manualTasks) {
-        UnresolvedTasksPresenter p = getCurrent().getRelativePresenter(this, UnresolvedTasksPresenter.class);
         removeTasks(VALUE_MANUAL_TASK);
         for (ManualTask manualTask : manualTasks) {
             Button detailsButton = new Button();
@@ -82,7 +83,6 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
 
     @Override
     public void setUnresolvedQuestionsSuites(List<QuestionsSuite> questionsSuites) {
-        UnresolvedTasksPresenter p = getCurrent().getRelativePresenter(this, UnresolvedTasksPresenter.class);
         removeTasks(VALUE_QUESTIONS_SUITE);
         for (QuestionsSuite questionsSuite : questionsSuites) {
             Button details = new Button();

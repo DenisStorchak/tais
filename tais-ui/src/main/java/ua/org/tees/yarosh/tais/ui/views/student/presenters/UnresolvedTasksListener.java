@@ -31,6 +31,11 @@ public class UnresolvedTasksListener extends AbstractPresenter implements Unreso
 
     @Override
     public void onRefresh() {
+        init();
+    }
+
+    @Override
+    public void init() {
         UnresolvedTasksTaisView view = getView(UnresolvedTasksTaisView.class);
         view.setUnresolvedManualTasks(homeworkManager.findUnresolvedActualManualTasks(Registrants.getCurrent()));
         view.setUnresolvedQuestionsSuites(homeworkManager.findUnresolvedActualQuestionsSuite(Registrants.getCurrent()));
