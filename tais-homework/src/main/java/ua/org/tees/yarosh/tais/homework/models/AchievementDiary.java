@@ -1,9 +1,12 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
+import org.hibernate.annotations.Cascade;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.ALL;
 
 @Entity
 public class AchievementDiary {
@@ -13,10 +16,12 @@ public class AchievementDiary {
     @OneToOne
     @JoinColumn(name = "ownerId")
     private Registrant owner;
-    @OneToMany
+    @Cascade(ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "autoAchievementsID")
     private List<AutoAchievement> autoAchievements;
-    @OneToMany
+    @Cascade(ALL)
+    @OneToMany(fetch = FetchType.EAGER)
     @JoinColumn(name = "manualAchievementsID")
     private List<ManualAchievement> manualAchievements;
 
