@@ -51,13 +51,17 @@ public abstract class DataBinds {
         public abstract class Teacher {
 
             public static final String PREFIX = "teacher/";
-
             public static final String TEACHER_DASHBOARD = PREFIX + "dashboard";
             public static final String CREATE_QUESTIONS_SUITE = PREFIX + "questions/create";
             public static final String ADD_QUESTION = PREFIX + "question/add";
             public static final String ENABLED_QUESTIONS = PREFIX + "questions";
             public static final String STUDENTS = PREFIX + "students";
             public static final String ADD_MANUAL = PREFIX + "manual/add";
+        }
+
+        public abstract class Student {
+            public static final String PREFIX = "student/";
+            public static final String UNRESOLVED = "unresolved";
         }
     }
 
