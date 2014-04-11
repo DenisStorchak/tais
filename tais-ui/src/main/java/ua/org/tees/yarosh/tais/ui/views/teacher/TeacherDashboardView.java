@@ -79,7 +79,7 @@ public class TeacherDashboardView extends DashboardView implements TeacherDashbo
         for (ManualTaskReport unratedReport : unratedReports) {
             HorizontalLayout controls = new HorizontalLayout();
             Button details = new Button();
-            transformToIconOnlyButton("Скачать отчет", "icon-doc-new", e -> p.onDetails(unratedReport), details);
+            transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onDetails(unratedReport), details);
             controls.addComponent(details);
 
             Item item = this.unratedReports.addItem(unratedReport.getId());
