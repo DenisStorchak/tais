@@ -44,6 +44,7 @@ public class QuestionsSuiteRunnerView extends DashboardView implements Questions
     private List<Answer> answers = new ArrayList<>();
 
     public QuestionsSuiteRunnerView() {
+        super(false);
         top.addComponents(progressBar, remaining);
     }
 
