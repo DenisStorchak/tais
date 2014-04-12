@@ -76,7 +76,7 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
             item.getItemProperty(PROPERTY_DISCIPLINE).setValue(manualTask.getDiscipline().toString());
             item.getItemProperty(PROPERTY_THEME).setValue(manualTask.getTheme());
             item.getItemProperty(PROPERTY_DEADLINE).setValue(manualTask.getDeadline());
-            item.getItemProperty(PROPERTY_TEACHER).setValue(manualTask.getExaminer());
+            item.getItemProperty(PROPERTY_TEACHER).setValue(manualTask.getExaminer().toString());
             item.getItemProperty(PROPERTY_TYPE).setValue(VALUE_MANUAL_TASK);
             item.getItemProperty(PROPERTY_INTERACTION).setValue(controls);
         }
@@ -94,7 +94,7 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
             item.getItemProperty(PROPERTY_DISCIPLINE).setValue(questionsSuite.getDiscipline().toString());
             item.getItemProperty(PROPERTY_THEME).setValue(questionsSuite.getTheme());
             item.getItemProperty(PROPERTY_DEADLINE).setValue(questionsSuite.getDeadline());
-            item.getItemProperty(PROPERTY_TEACHER).setValue(questionsSuite.getExaminer());
+            item.getItemProperty(PROPERTY_TEACHER).setValue(questionsSuite.getExaminer().toString());
             item.getItemProperty(PROPERTY_TYPE).setValue(VALUE_QUESTIONS_SUITE);
             item.getItemProperty(PROPERTY_INTERACTION).setValue(controls);
         }
