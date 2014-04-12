@@ -74,7 +74,8 @@ public class SidebarFactory {
     private SidebarMenu createTeacherMenu() {
         SidebarMenu teacherMenu = new SidebarMenu();
 
-        NativeButton dashboardButton = new NativeButton("Отчеты");
+        NativeButton dashboardButton = new NativeButton("Отчеты<span class=\"badge\">2</span>");                   //todo update in realtime
+        dashboardButton.setHtmlContentAllowed(true);
         dashboardButton.addStyleName("icon-columns");
         dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
         teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
