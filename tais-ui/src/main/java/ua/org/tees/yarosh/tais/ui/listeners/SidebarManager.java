@@ -1,7 +1,9 @@
 package ua.org.tees.yarosh.tais.ui.listeners;
 
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
@@ -93,5 +95,45 @@ public class SidebarManager implements ViewChangeListener {
 
     @Override
     public void afterViewChange(ViewChangeEvent event) {
+    }
+
+    @Subscribe
+    public void onManualTaskRegisteredEvent(ManualTaskRegisteredEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onManualTaskRemovedEvent(ManualTaskRemovedEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onManualTaskResolvedEvent(ManualTaskResolvedEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onQuestionsSuiteRegisteredEvent(QuestionsSuiteRegisteredEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onQuestionsSuiteRemovedEvent(QuestionsSuiteRemovedEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onQuestionsSuiteResolvedEvent(QuestionsSuiteResolvedEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onReportRatedEvent(ReportRatedEvent event) {
+        //fixme
+    }
+
+    @Subscribe
+    public void onReportRegisteredEvent(ReportRegisteredEvent event) {
+        //fixme
     }
 }
