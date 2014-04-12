@@ -14,10 +14,7 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.StudentGroupRepository;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
-import ua.org.tees.yarosh.tais.homework.events.ManualTaskRegisteredEvent;
-import ua.org.tees.yarosh.tais.homework.events.ManualTaskRemovedEvent;
-import ua.org.tees.yarosh.tais.homework.events.QuestionsSuiteRegisteredEvent;
-import ua.org.tees.yarosh.tais.homework.events.QuestionsSuiteRemovedEvent;
+import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
 import java.util.List;
@@ -159,6 +156,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
         manualAchievement.setManualTask(manualTaskReport.getTask());
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
+        eventBus.post(new ReportRatedEvent(manualTaskReport, examiner, grade));
     }
 
     @Override

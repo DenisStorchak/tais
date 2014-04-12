@@ -1,11 +1,13 @@
 package ua.org.tees.yarosh.tais.homework;
 
+import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.CacheNames;
 import ua.org.tees.yarosh.tais.homework.api.QuestionsSuiteResolver;
 import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryRepository;
+import ua.org.tees.yarosh.tais.homework.events.QuestionsSuiteResolvedEvent;
 import ua.org.tees.yarosh.tais.homework.models.AchievementDiary;
 import ua.org.tees.yarosh.tais.homework.models.Answer;
 import ua.org.tees.yarosh.tais.homework.models.AutoAchievement;
@@ -16,10 +18,16 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
     private static final int MAX_GRADE = 100;
     private static final int MIN_GRADE = 0;
     private AchievementDiaryRepository diaryRepository;
+    private EventBus eventBus;
 
     @Autowired
     public void setDiaryRepository(AchievementDiaryRepository diaryRepository) {
         this.diaryRepository = diaryRepository;
+    }
+
+    @Autowired
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
     }
 
     @Override
@@ -29,6 +37,7 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
         AutoAchievement achievement = calculate(report);
         diary.getAutoAchievements().add(achievement);
         diaryRepository.saveAndFlush(diary);
+        eventBus.post(new QuestionsSuiteResolvedEvent(report));
         return achievement.getGrade();
     }
 
