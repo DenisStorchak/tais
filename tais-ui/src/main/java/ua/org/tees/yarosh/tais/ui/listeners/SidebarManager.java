@@ -3,6 +3,8 @@ package ua.org.tees.yarosh.tais.ui.listeners;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
 import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
@@ -18,6 +20,8 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_I
  *         Date: 22.03.14
  *         Time: 22:53
  */
+@Component
+@Scope("prototype")
 public class SidebarManager implements ViewChangeListener {
 
     private CommonComponent commonComponent;
@@ -26,8 +30,11 @@ public class SidebarManager implements ViewChangeListener {
     private Map<String, Sidebar> sidebarPool = new HashMap<>();
     private List<String> hideExceptions = new ArrayList<>();
 
-    public SidebarManager(CommonComponent commonComponent, Sidebar sidebar) {
+    public void setCommonComponent(CommonComponent commonComponent) {
         this.commonComponent = commonComponent;
+    }
+
+    public void setSidebar(Sidebar sidebar) {
         this.sidebar = sidebar;
     }
 
@@ -64,7 +71,7 @@ public class SidebarManager implements ViewChangeListener {
         if (resolvedSidebar != null) {
             commonComponent.addComponentAsFirst(resolvedSidebar);
         }
-        this.sidebar = resolvedSidebar;
+        this.setSidebar(resolvedSidebar);
         if (sidebar != null) {
             sidebar.getSidebarMenu().selectButton(event.getNewView().getClass());
         }

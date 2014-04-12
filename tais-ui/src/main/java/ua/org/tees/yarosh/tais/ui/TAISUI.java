@@ -5,11 +5,13 @@ import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
@@ -28,6 +30,7 @@ import ua.org.tees.yarosh.tais.ui.views.student.QuestionsSuiteRunnerView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
+import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
@@ -76,8 +79,9 @@ public class TAISUI extends UI {
         nav.addViewChangeListener(new LastViewSaver());
         nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 
-        SidebarManager sidebarManager = new SidebarManager(commonComponent, null);
-        nav.addViewChangeListener(configureSidebarManager(sidebarManager));
+        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
+        SidebarManager sidebarManager = ctx.getBean(SidebarManager.class);
+        nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
     }
 
     private void setUpViews(Navigator nav) {
@@ -106,8 +110,9 @@ public class TAISUI extends UI {
         }
     }
 
-    private SidebarManager configureSidebarManager(SidebarManager sidebarManager) {
+    private SidebarManager configureSidebarManager(SidebarManager sidebarManager, CommonComponent commonComponent) {
         SidebarFactory sidebarFactory = SidebarFactory.createFactory(this);
+        sidebarManager.setCommonComponent(commonComponent);
         sidebarManager.registerSidebar(DataBinds.UriFragments.Teacher.PREFIX, sidebarFactory.createSidebar(TEACHER));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Admin.PREFIX, sidebarFactory.createSidebar(ADMIN));
         sidebarManager.registerSidebar(DataBinds.UriFragments.Student.PREFIX, sidebarFactory.createSidebar(STUDENT));
