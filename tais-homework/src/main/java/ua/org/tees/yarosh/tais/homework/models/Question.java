@@ -9,6 +9,8 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
 
+import static javax.persistence.FetchType.EAGER;
+
 @Entity
 public class Question {
     @Id
@@ -17,7 +19,7 @@ public class Question {
     private String description;
     private String payloadPath;
     @Cascade(CascadeType.ALL)
-    @OneToMany
+    @OneToMany(fetch = EAGER)
     private List<Answer> answers;
 
     public Long getId() {

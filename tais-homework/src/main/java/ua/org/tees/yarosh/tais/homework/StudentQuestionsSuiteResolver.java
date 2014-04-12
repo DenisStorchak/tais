@@ -9,9 +9,6 @@ import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryReposito
 import ua.org.tees.yarosh.tais.homework.models.AchievementDiary;
 import ua.org.tees.yarosh.tais.homework.models.Answer;
 import ua.org.tees.yarosh.tais.homework.models.AutoAchievement;
-import ua.org.tees.yarosh.tais.homework.models.ManualAchievement;
-
-import java.util.ArrayList;
 
 @Service
 public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
@@ -26,17 +23,13 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
     }
 
     @Override
-    @CacheEvict(value = CacheNames.QUESTION_SUITES_RESULTS, key = "result.id")
-    public void resolve(QuestionsSuiteReport result) {
-        AchievementDiary diary = diaryRepository.findOne(result.getOwner().getLogin());
-        if (diary == null) {
-            diary = new AchievementDiary();
-            diary.setOwner(result.getOwner());
-            diary.setAutoAchievements(new ArrayList<AutoAchievement>());
-            diary.setManualAchievements(new ArrayList<ManualAchievement>());
-        }
-        diary.getAutoAchievements().add(calculate(result));
+    @CacheEvict(value = CacheNames.QUESTION_SUITES_RESULTS, allEntries = true)
+    public int resolve(QuestionsSuiteReport report) {
+        AchievementDiary diary = diaryRepository.findOne(report.getOwner());
+        AutoAchievement achievement = calculate(report);
+        diary.getAutoAchievements().add(achievement);
         diaryRepository.saveAndFlush(diary);
+        return achievement.getGrade();
     }
 
     private AutoAchievement calculate(QuestionsSuiteReport result) {

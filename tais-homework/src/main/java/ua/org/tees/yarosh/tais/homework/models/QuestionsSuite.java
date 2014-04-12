@@ -1,7 +1,6 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
 import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -9,6 +8,10 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+
+import static javax.persistence.FetchType.EAGER;
+import static javax.persistence.TemporalType.DATE;
+import static org.hibernate.annotations.CascadeType.ALL;
 
 @Entity
 public class QuestionsSuite {
@@ -22,11 +25,11 @@ public class QuestionsSuite {
     @ManyToOne
     @JoinColumn(name = "disciplineId")
     private Discipline discipline;
-    @OneToMany(fetch = FetchType.EAGER)
-    @Cascade(CascadeType.ALL)
+    @OneToMany(fetch = EAGER)
+    @Cascade(ALL)
     @JoinColumn(name = "questionsId")
     private List<Question> questions;
-    @Temporal(TemporalType.DATE)
+    @Temporal(DATE)
     private Date deadline;
     private Boolean enabled;
     @JoinColumn(name = "examinerId")
