@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.ui.components.windows.QuestionSuiteDetailsWindow;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTaisView;
@@ -40,7 +40,7 @@ public class EnabledQuestionsSuitesListener extends AbstractPresenter implements
     }
 
     @Autowired
-    public EnabledQuestionsSuitesListener(@Qualifier(ENABLED_QUESTIONS) Updatable view) {
+    public EnabledQuestionsSuitesListener(@Qualifier(ENABLED_QUESTIONS) Updateable view) {
         super(view);
     }
 

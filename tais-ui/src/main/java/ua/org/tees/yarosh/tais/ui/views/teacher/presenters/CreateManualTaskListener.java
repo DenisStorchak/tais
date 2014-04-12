@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.teacher.CreateManualTaskView;
@@ -50,7 +50,7 @@ public class CreateManualTaskListener extends AbstractPresenter implements Creat
     }
 
     @Autowired
-    public CreateManualTaskListener(@Qualifier(ADD_MANUAL) Updatable view) {
+    public CreateManualTaskListener(@Qualifier(ADD_MANUAL) Updateable view) {
         super(view);
     }
 

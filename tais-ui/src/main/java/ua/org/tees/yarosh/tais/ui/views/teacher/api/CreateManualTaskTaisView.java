@@ -5,14 +5,14 @@ import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.ui.core.api.Initable;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.ui.views.teacher.presenters.CreateManualTaskListener.PayloadReceiver;
 
-public interface CreateManualTaskTaisView extends View, Updatable {
+public interface CreateManualTaskTaisView extends View, Updateable {
 
     void setGroups(List<StudentGroup> studentGroups);
 

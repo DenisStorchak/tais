@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.homework.models.Question;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.core.Registrants;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
@@ -49,7 +49,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
     }
 
     @Autowired
-    public CreateQuestionsSuiteListener(@Qualifier(CREATE_QUESTIONS_SUITE) Updatable view) {
+    public CreateQuestionsSuiteListener(@Qualifier(CREATE_QUESTIONS_SUITE) Updateable view) {
         super(view);
     }
 

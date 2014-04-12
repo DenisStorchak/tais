@@ -6,7 +6,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.ui.core.Registrants;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
@@ -25,7 +25,7 @@ public class UnresolvedTasksListener extends AbstractPresenter implements Unreso
     }
 
     @Autowired
-    public UnresolvedTasksListener(@Qualifier(UNRESOLVED) Updatable view) {
+    public UnresolvedTasksListener(@Qualifier(UNRESOLVED) Updateable view) {
         super(view);
     }
 

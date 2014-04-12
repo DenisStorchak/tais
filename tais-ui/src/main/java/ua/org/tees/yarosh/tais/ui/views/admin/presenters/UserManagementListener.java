@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateRegistrationWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
@@ -45,7 +45,7 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     }
 
     @Autowired
-    public UserManagementListener(@Qualifier(USER_MANAGEMENT) Updatable view) {
+    public UserManagementListener(@Qualifier(USER_MANAGEMENT) Updateable view) {
         super(view);
     }
 

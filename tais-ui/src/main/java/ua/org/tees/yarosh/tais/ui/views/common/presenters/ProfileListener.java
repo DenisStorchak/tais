@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
@@ -31,7 +31,7 @@ public class ProfileListener extends AbstractPresenter implements ProfilePresent
     }
 
     @Autowired
-    public ProfileListener(@Qualifier(ME) Updatable view) {
+    public ProfileListener(@Qualifier(ME) Updateable view) {
         super(view);
     }
 

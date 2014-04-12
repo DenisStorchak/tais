@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.components.windows.RegistrantDetailWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.SendEmailWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.StudentsTaisView;
@@ -31,7 +31,7 @@ public class StudentsListener extends AbstractPresenter implements StudentsTaisP
     }
 
     @Autowired
-    public StudentsListener(@Qualifier(STUDENTS) Updatable view) {
+    public StudentsListener(@Qualifier(STUDENTS) Updateable view) {
         super(view);
     }
 

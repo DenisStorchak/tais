@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.core.common.properties.*;
 import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
@@ -22,7 +22,7 @@ public class SettingsListener extends AbstractPresenter implements SettingsPrese
     }
 
     @Autowired
-    public SettingsListener(@Qualifier(SETTINGS) Updatable view) {
+    public SettingsListener(@Qualifier(SETTINGS) Updateable view) {
         super(view);
     }
 

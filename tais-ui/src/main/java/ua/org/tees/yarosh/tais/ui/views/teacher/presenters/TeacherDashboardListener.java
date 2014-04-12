@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.windows.ManualReportDetailsWindow;
 import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
-import ua.org.tees.yarosh.tais.ui.core.api.Updatable;
+import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
@@ -44,7 +44,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
     }
 
     @Autowired
-    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) Updatable view) {
+    public TeacherDashboardListener(@Qualifier(TEACHER_DASHBOARD) Updateable view) {
         super(view);
     }
 

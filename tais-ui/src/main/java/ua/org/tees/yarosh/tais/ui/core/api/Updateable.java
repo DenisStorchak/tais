@@ -1,5 +1,5 @@
 package ua.org.tees.yarosh.tais.ui.core.api;
 
-public interface Updatable {
+public interface Updateable {
     default void update() { /* NOP */ }
 }
