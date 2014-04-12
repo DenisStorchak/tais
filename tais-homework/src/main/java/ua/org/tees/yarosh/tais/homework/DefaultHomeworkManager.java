@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.homework;
 
+import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,10 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.StudentGroupRepository;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
+import ua.org.tees.yarosh.tais.homework.events.ManualTaskRegisteredEvent;
+import ua.org.tees.yarosh.tais.homework.events.ManualTaskRemovedEvent;
+import ua.org.tees.yarosh.tais.homework.events.QuestionsSuiteRegisteredEvent;
+import ua.org.tees.yarosh.tais.homework.events.QuestionsSuiteRemovedEvent;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
 import java.util.List;
@@ -25,18 +30,48 @@ import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 public class DefaultHomeworkManager implements HomeworkManager {
 
     private static final Logger log = LoggerFactory.getLogger(DefaultHomeworkManager.class);
-    @Autowired
     private ManualTaskRepository manualTaskRepository;
-    @Autowired
     private StudentGroupRepository studentGroupRepository;
-    @Autowired
     private PersonalTaskHolderRepository personalTaskHolderRepository;
-    @Autowired
     private QuestionsSuiteRepository questionsSuiteRepository;
-    @Autowired
     private ManualTaskReportRepository manualTaskReportRepository;
-    @Autowired
     private AchievementDiaryRepository diaryRepository;
+    private EventBus eventBus;
+
+    @Autowired
+    public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
+        this.manualTaskRepository = manualTaskRepository;
+    }
+
+    @Autowired
+    public void setStudentGroupRepository(StudentGroupRepository studentGroupRepository) {
+        this.studentGroupRepository = studentGroupRepository;
+    }
+
+    @Autowired
+    public void setPersonalTaskHolderRepository(PersonalTaskHolderRepository personalTaskHolderRepository) {
+        this.personalTaskHolderRepository = personalTaskHolderRepository;
+    }
+
+    @Autowired
+    public void setQuestionsSuiteRepository(QuestionsSuiteRepository questionsSuiteRepository) {
+        this.questionsSuiteRepository = questionsSuiteRepository;
+    }
+
+    @Autowired
+    public void setManualTaskReportRepository(ManualTaskReportRepository manualTaskReportRepository) {
+        this.manualTaskReportRepository = manualTaskReportRepository;
+    }
+
+    @Autowired
+    public void setDiaryRepository(AchievementDiaryRepository diaryRepository) {
+        this.diaryRepository = diaryRepository;
+    }
+
+    @Autowired
+    public void setEventBus(EventBus eventBus) {
+        this.eventBus = eventBus;
+    }
 
     @Override
     @CacheEvict(MANUAL_TASKS)
@@ -51,6 +86,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     public long createQuestionsSuite(QuestionsSuite questionsSuite) {
         log.info("Try to create questions suite [{}]", questionsSuite.getTheme());
         switchQuestionsSuiteState(questionsSuite, true);
+        eventBus.post(new QuestionsSuiteRegisteredEvent(questionsSuite));
         return questionsSuite.getId();
     }
 
@@ -85,8 +121,10 @@ public class DefaultHomeworkManager implements HomeworkManager {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
             if (enable) {
                 taskHolder.getQuestionsSuiteList().add(questionsSuite);
+                eventBus.post(new QuestionsSuiteRegisteredEvent(questionsSuite));
             } else {
                 taskHolder.getQuestionsSuiteList().remove(questionsSuite);
+                eventBus.post(new QuestionsSuiteRemovedEvent(questionsSuite));
             }
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
@@ -195,8 +233,10 @@ public class DefaultHomeworkManager implements HomeworkManager {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
             if (enable) {
                 taskHolder.getManualTaskList().add(manualTask);
+                eventBus.post(new ManualTaskRegisteredEvent(manualTask));
             } else {
                 taskHolder.getManualTaskList().remove(manualTask);
+                eventBus.post(new ManualTaskRemovedEvent(manualTask));
             }
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
