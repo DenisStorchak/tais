@@ -15,9 +15,9 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.STUDENT;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
@@ -101,13 +101,10 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
     }
 
     private void removeTasks(String type) {
-        List<Object> removeCandidats = new ArrayList<>();
-        for (Object id : unresolvedTasks.getItemIds()) {
-            if (unresolvedTasks.getItem(id).getItemProperty(PROPERTY_TYPE).getValue().equals(type)) {
-                removeCandidats.add(id);
-            }
-        }
-        removeCandidats.forEach(unresolvedTasks::removeItem);
+        List<Object> removeCandidates = unresolvedTasks.getItemIds().stream()
+                .filter(id -> unresolvedTasks.getItem(id).getItemProperty(PROPERTY_TYPE)
+                        .getValue().equals(type)).map(id -> id).collect(Collectors.toList());
+        removeCandidates.forEach(unresolvedTasks::removeItem);
     }
 
     @Override
