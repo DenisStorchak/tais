@@ -131,9 +131,4 @@ public class SidebarManager implements ViewChangeListener {
     public void onReportRatedEvent(ReportRatedEvent event) {
         //fixme
     }
-
-    @Subscribe
-    public void onReportRegisteredEvent(ReportRegisteredEvent event) {
-        //fixme
-    }
 }
