@@ -78,7 +78,7 @@ public class SidebarFactory {
         dashboardButton.setHtmlContentAllowed(true);
         dashboardButton.addStyleName("icon-columns");
         dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
-        teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
+        teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton); //todo indexes
 
         NativeButton showAllQuestionsSuites = new NativeButton("Тесты");
         showAllQuestionsSuites.addStyleName("icon-users");
