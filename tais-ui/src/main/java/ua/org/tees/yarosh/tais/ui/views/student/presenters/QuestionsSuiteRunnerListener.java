@@ -53,6 +53,7 @@ public class QuestionsSuiteRunnerListener extends AbstractPresenter implements Q
         } else {
             answers.forEach(a -> report.getAnswers().put(a.getQuestion(), a));
 
+            ++currentQuestionIndex;
             view.setProgress((suite.getQuestions().size() / 100) * currentQuestionIndex);
             view.setRemainingQuestions(suite.getQuestions().size() - currentQuestionIndex);
 
