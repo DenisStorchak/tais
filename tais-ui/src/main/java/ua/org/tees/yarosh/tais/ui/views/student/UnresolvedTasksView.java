@@ -15,6 +15,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -100,11 +101,13 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
     }
 
     private void removeTasks(String type) {
+        List<Object> removeCandidats = new ArrayList<>();
         for (Object id : unresolvedTasks.getItemIds()) {
             if (unresolvedTasks.getItem(id).getItemProperty(PROPERTY_TYPE).getValue().equals(type)) {
-                unresolvedTasks.removeItem(id);
+                removeCandidats.add(id);
             }
         }
+        removeCandidats.forEach(unresolvedTasks::removeItem);
     }
 
     @Override
