@@ -88,7 +88,7 @@ public class TAISUI extends UI {
         nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
         nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
-        nav.addProvider(new FactoryBasedViewProvider(AUTH, Login.class));
+        nav.addProvider(new FactoryBasedViewProvider(AUTH, LoginView.class));
         nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
         nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
         nav.addProvider(new FactoryBasedViewProvider(ME, Profile.class));

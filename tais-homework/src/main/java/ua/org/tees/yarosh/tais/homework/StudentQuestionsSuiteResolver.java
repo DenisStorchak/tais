@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.homework;
 
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.AsyncEventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -18,7 +18,7 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
     private static final int MAX_GRADE = 100;
     private static final int MIN_GRADE = 0;
     private AchievementDiaryRepository diaryRepository;
-    private EventBus eventBus;
+    private AsyncEventBus eventBus;
 
     @Autowired
     public void setDiaryRepository(AchievementDiaryRepository diaryRepository) {
@@ -26,7 +26,7 @@ public class StudentQuestionsSuiteResolver implements QuestionsSuiteResolver {
     }
 
     @Autowired
-    public void setEventBus(EventBus eventBus) {
+    public void setEventBus(AsyncEventBus eventBus) {
         this.eventBus = eventBus;
     }
 

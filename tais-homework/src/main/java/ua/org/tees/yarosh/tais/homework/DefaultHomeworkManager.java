@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.homework;
 
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private QuestionsSuiteRepository questionsSuiteRepository;
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
-    private EventBus eventBus;
+    private AsyncEventBus eventBus;
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
@@ -66,7 +66,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Autowired
-    public void setEventBus(EventBus eventBus) {
+    public void setEventBus(AsyncEventBus eventBus) {
         this.eventBus = eventBus;
     }
 
@@ -229,14 +229,11 @@ public class DefaultHomeworkManager implements HomeworkManager {
         StudentGroup studentGroup = studentGroupRepository.findOne(manualTask.getStudentGroup().getId());
         for (Registrant student : studentGroupRepository.findRegistrantsByStudentGroup(studentGroup.getId())) {
             PersonalTaskHolder taskHolder = personalTaskHolderRepository.findOne(student);
-            if (enable) {
-                taskHolder.getManualTaskList().add(manualTask);
-                eventBus.post(new ManualTaskRegisteredEvent(manualTask));
-            } else {
-                taskHolder.getManualTaskList().remove(manualTask);
-                eventBus.post(new ManualTaskRemovedEvent(manualTask));
-            }
+            if (enable) taskHolder.getManualTaskList().add(manualTask);
+            else taskHolder.getManualTaskList().remove(manualTask);
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
+        if (enable) eventBus.post(new ManualTaskRegisteredEvent(manualTask));
+        else eventBus.post(new ManualTaskRemovedEvent(manualTask));
     }
 }

@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.data.Validatable;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -91,9 +92,12 @@ public abstract class VaadinUtils {
     }
 
     public static Cookie getCookie(String name) {
-        for (Cookie cookie : getCurrentRequest().getCookies()) {
-            if (cookie.getName().equals(name)) {
-                return cookie;
+        VaadinRequest currentRequest = getCurrentRequest();
+        if (currentRequest != null) {
+            for (Cookie cookie : currentRequest.getCookies()) {
+                if (cookie.getName().equals(name)) {
+                    return cookie;
+                }
             }
         }
         return new Cookie(name, "");

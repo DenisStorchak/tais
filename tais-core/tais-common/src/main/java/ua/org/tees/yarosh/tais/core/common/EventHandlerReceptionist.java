@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.core.common;
 
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.AsyncEventBus;
 import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -20,10 +20,10 @@ import java.lang.reflect.Method;
 public class EventHandlerReceptionist implements BeanPostProcessor {
 
     public static final Logger log = LoggerFactory.getLogger(EventHandlerReceptionist.class);
-    private EventBus eventBus;
+    private AsyncEventBus eventBus;
 
     @Autowired
-    public void setEventBus(EventBus eventBus) {
+    public void setEventBus(AsyncEventBus eventBus) {
         this.eventBus = eventBus;
     }
 

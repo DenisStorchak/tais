@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import ua.org.tees.yarosh.tais.core.common.RegexUtils;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
@@ -115,10 +116,12 @@ public class SidebarManager implements ViewChangeListener {
 
     @Subscribe
     @AllowConcurrentEvents
-    public void onManualTaskRegisteredEvent(ManualTaskRegisteredEvent event) {
+    public void onManualTaskRegisteredEvent(ManualTaskRegisteredEvent event) throws InterruptedException {
         log.debug("ManualTaskRegisteredEvent handler invoked");
-        if (event.getTask().getStudentGroup().equals(Registrants.getCurrent().getGroup())) {
-            log.debug("Groups matcher, badge value will be incremented");
+        Registrant registrant = Registrants.getCurrent();
+        if (event.getTask().getStudentGroup().equals(registrant.getGroup())) {
+            log.debug("Registrant [{}] session affected", registrant.toString());
+            log.debug("Groups matched, badge value will be incremented");
             Button button = sidebar.getSidebarMenu().getButton(UnresolvedTasksView.class);
             log.debug("Old button caption is [{}]", button.getCaption());
             String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile(".*(\\d+).*"));

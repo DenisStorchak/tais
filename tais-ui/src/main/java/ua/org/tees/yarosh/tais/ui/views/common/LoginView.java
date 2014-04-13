@@ -29,13 +29,13 @@ import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresent
 @TaisView
 @Qualifier(AUTH)
 @PermitAll
-public class Login extends VerticalLayout implements LoginTais {
+public class LoginView extends VerticalLayout implements LoginTais {
 
     private TextField username;
     private PasswordField password;
-    private Login instance;
+    private LoginView instance;
 
-    public Login() {
+    public LoginView() {
         instance = this;
         setSizeFull();
         addStyleName("login-layout");

@@ -34,5 +34,9 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
         UIFactory uiFactory = UIFactory.createFactory(ctx);
         log.debug("ComponentFactory created for session {}", event.getSession().getSession().getId());
         event.getSession().setAttribute(COMPONENT_FACTORY, uiFactory);
+        event.getSession().addRequestHandler((session, request, response) -> {
+            log.debug("Request from [{}] handled", request.getRemoteHost());
+            return false;
+        });
     }
 }
