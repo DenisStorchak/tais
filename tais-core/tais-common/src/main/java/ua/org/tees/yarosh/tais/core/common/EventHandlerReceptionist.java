@@ -39,6 +39,6 @@ public class EventHandlerReceptionist implements BeanPostProcessor {
                 log.debug("[{}] handler registered", method.getParameterTypes()[0].getName());
             }
         }
-        return null;
+        return o;
     }
 }

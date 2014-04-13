@@ -51,7 +51,8 @@ public class SidebarFactory {
     private SidebarMenu createStudentMenu() {
         SidebarMenu studentMenu = new SidebarMenu();
 
-        NativeButton unresolvedTasks = new NativeButton("Задания");
+        NativeButton unresolvedTasks = new NativeButton("Задания<span class=\"badge\">0</span>");
+        unresolvedTasks.setHtmlContentAllowed(true);
         unresolvedTasks.addStyleName("icon-columns");
         unresolvedTasks.addClickListener(event -> ui.getNavigator().navigateTo(UNRESOLVED));
         studentMenu.addMenuButton(UnresolvedTasksView.class, unresolvedTasks);
@@ -74,11 +75,11 @@ public class SidebarFactory {
     private SidebarMenu createTeacherMenu() {
         SidebarMenu teacherMenu = new SidebarMenu();
 
-        NativeButton dashboardButton = new NativeButton("Отчеты<span class=\"badge\">2</span>");                   //todo update in realtime
+        NativeButton dashboardButton = new NativeButton("Отчеты<span class=\"badge\">0</span>");                   //todo update in realtime
         dashboardButton.setHtmlContentAllowed(true);
         dashboardButton.addStyleName("icon-columns");
         dashboardButton.addClickListener(event -> ui.getNavigator().navigateTo(TEACHER_DASHBOARD));
-        teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton); //todo indexes
+        teacherMenu.addMenuButton(TeacherDashboardView.class, dashboardButton);
 
         NativeButton showAllQuestionsSuites = new NativeButton("Тесты");
         showAllQuestionsSuites.addStyleName("icon-users");

@@ -35,4 +35,8 @@ public class SidebarMenu extends CssLayout {
             buttons.get(clazz).addStyleName(SELECTED_BUTTON_STYLE);
         }
     }
+
+    public Button getButton(Class<? extends View> clazz) {
+        return buttons.get(clazz);
+    }
 }

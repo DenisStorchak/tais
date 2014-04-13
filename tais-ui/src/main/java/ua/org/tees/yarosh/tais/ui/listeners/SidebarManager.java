@@ -1,17 +1,25 @@
 package ua.org.tees.yarosh.tais.ui.listeners;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
+import ua.org.tees.yarosh.tais.core.common.RegexUtils;
 import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
+import ua.org.tees.yarosh.tais.ui.core.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
+import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 
 import java.util.*;
+import java.util.regex.Pattern;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
 
@@ -24,6 +32,7 @@ import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_I
 @Scope("prototype")
 public class SidebarManager implements ViewChangeListener {
 
+    public static final Logger log = LoggerFactory.getLogger(SidebarManager.class);
     private CommonComponent commonComponent;
     private Sidebar sidebar;
     private Map<String, SidebarMenu> menus = new HashMap<>();
@@ -105,36 +114,52 @@ public class SidebarManager implements ViewChangeListener {
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onManualTaskRegisteredEvent(ManualTaskRegisteredEvent event) {
-        //fixme
+        log.debug("ManualTaskRegisteredEvent handler invoked");
+        if (event.getTask().getStudentGroup().equals(Registrants.getCurrent().getGroup())) {
+            log.debug("Groups matcher, badge value will be incremented");
+            Button button = sidebar.getSidebarMenu().getButton(UnresolvedTasksView.class);
+            log.debug("Old button caption is [{}]", button.getCaption());
+            String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile(".*(\\d+).*"));
+            int newValue = Integer.valueOf(badge) + 1;
+            button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
+            log.debug("New button caption is [{}]", button.getCaption());
+        }
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onManualTaskRemovedEvent(ManualTaskRemovedEvent event) {
         //fixme
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onManualTaskResolvedEvent(ManualTaskResolvedEvent event) {
         //fixme
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onQuestionsSuiteRegisteredEvent(QuestionsSuiteRegisteredEvent event) {
         //fixme
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onQuestionsSuiteRemovedEvent(QuestionsSuiteRemovedEvent event) {
         //fixme
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onQuestionsSuiteResolvedEvent(QuestionsSuiteResolvedEvent event) {
         //fixme
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onReportRatedEvent(ReportRatedEvent event) {
         //fixme
     }

@@ -105,7 +105,7 @@ public class TAISUI extends UI {
 
     private void authenticate(Navigator nav) {
         String authCookie = VaadinUtils.getCookie(Cookies.AUTH).getValue();
-        if (authCookie.isEmpty() || !AuthManager.loggedIn(authCookie)) {
+        if (!AuthManager.loggedIn(authCookie)) {
             nav.navigateTo(AUTH);
         }
     }
