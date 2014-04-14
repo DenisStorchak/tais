@@ -4,6 +4,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
@@ -16,9 +17,19 @@ public abstract class Registrants {
     private static RegistrantService registrantService = getRequiredWebApplicationContext(
             VaadinServlet.getCurrent().getServletContext()).getBean(RegistrantService.class);
 
-    public static ua.org.tees.yarosh.tais.core.common.models.Registrant getCurrent() {
-        String login = (String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID);
-        log.debug("login [{}] found in session", login);
-        return registrantService.getRegistration(login);
+    public static Registrant getCurrent() {
+        if (VaadinSession.getCurrent() == null) {
+            log.debug("Current session is null, null will be returned");
+            return null;
+        }
+        Object attribute = VaadinSession.getCurrent().getAttribute(REGISTRANT_ID);
+        if (attribute != null) {
+            String login = (String) attribute;
+            log.debug("login [{}] found in session", login);
+            return registrantService.getRegistration(login);
+        } else {
+            log.debug("login not found in session");
+            return null;
+        }
     }
 }

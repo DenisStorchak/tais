@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.homework;
 
-import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.stereotype.Service;
@@ -14,7 +14,7 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 public class StudentManualTaskResolver implements ManualTaskResolver {
 
     private ManualTaskReportRepository resultRepository;
-    private AsyncEventBus eventBus;
+    private EventBus eventBus;
 
     @Autowired
     public void setResultRepository(ManualTaskReportRepository resultRepository) {
@@ -22,7 +22,7 @@ public class StudentManualTaskResolver implements ManualTaskResolver {
     }
 
     @Autowired
-    public void setEventBus(AsyncEventBus eventBus) {
+    public void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
     }
 

@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.homework;
 
-import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +33,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private QuestionsSuiteRepository questionsSuiteRepository;
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
-    private AsyncEventBus eventBus;
+    private EventBus eventBus;
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
@@ -66,7 +66,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Autowired
-    public void setEventBus(AsyncEventBus eventBus) {
+    public void setEventBus(EventBus eventBus) {
         this.eventBus = eventBus;
     }
 

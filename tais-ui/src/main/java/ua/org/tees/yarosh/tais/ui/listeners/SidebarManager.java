@@ -115,11 +115,11 @@ public class SidebarManager implements ViewChangeListener {
     }
 
     @Subscribe
-    @AllowConcurrentEvents
+//    @AllowConcurrentEvents
     public void onManualTaskRegisteredEvent(ManualTaskRegisteredEvent event) throws InterruptedException {
         log.debug("ManualTaskRegisteredEvent handler invoked");
         Registrant registrant = Registrants.getCurrent();
-        if (event.getTask().getStudentGroup().equals(registrant.getGroup())) {
+        if (registrant != null && event.getTask().getStudentGroup().equals(registrant.getGroup())) {
             log.debug("Registrant [{}] session affected", registrant.toString());
             log.debug("Groups matched, badge value will be incremented");
             Button button = sidebar.getSidebarMenu().getButton(UnresolvedTasksView.class);
@@ -128,6 +128,8 @@ public class SidebarManager implements ViewChangeListener {
             int newValue = Integer.valueOf(badge) + 1;
             button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
             log.debug("New button caption is [{}]", button.getCaption());
+        } else {
+            log.debug("Current registrant is null, so handler is resting");
         }
     }
 

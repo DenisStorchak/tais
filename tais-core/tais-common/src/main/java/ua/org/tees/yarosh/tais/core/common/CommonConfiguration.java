@@ -1,11 +1,9 @@
 package ua.org.tees.yarosh.tais.core.common;
 
-import com.google.common.eventbus.AsyncEventBus;
+import com.google.common.eventbus.EventBus;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-
-import static java.util.concurrent.Executors.newCachedThreadPool;
 
 /**
  * @author Timur Yarosh
@@ -16,8 +14,8 @@ import static java.util.concurrent.Executors.newCachedThreadPool;
 @Import({CommonPersistenceConfiguration.class, CachingConfiguration.class})
 public class CommonConfiguration {
     @Bean
-    public AsyncEventBus asyncEventBus() {
-        return new AsyncEventBus(newCachedThreadPool());
+    public EventBus eventBus() {
+        return new EventBus();
     }
 
     @Bean
