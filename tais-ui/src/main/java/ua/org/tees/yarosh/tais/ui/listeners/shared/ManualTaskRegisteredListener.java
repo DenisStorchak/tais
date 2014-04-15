@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.listeners.shared;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
@@ -26,6 +27,7 @@ public class ManualTaskRegisteredListener {
     }
 
     @Subscribe
+    @AllowConcurrentEvents
     public void onManualTaskRegisteredEvent(ManualTaskRegisteredEvent event) throws InterruptedException {
         log.debug("ManualTaskRegisteredEvent handler invoked");
         Registrant registrant = Registrants.getCurrent(session);

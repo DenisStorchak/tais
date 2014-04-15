@@ -1,6 +1,6 @@
 package ua.org.tees.yarosh.tais.ui;
 
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.AsyncEventBus;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
@@ -85,7 +85,7 @@ public class TAISUI extends UI {
         SidebarManager sidebarManager = ctx.getBean(SidebarManager.class);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
 
-        ctx.getBean(EventBus.class).register(
+        ctx.getBean(AsyncEventBus.class).register(
                 new ManualTaskRegisteredListener(sidebarManager, VaadinSession.getCurrent()));
     }
 

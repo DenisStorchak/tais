@@ -1,9 +1,11 @@
 package ua.org.tees.yarosh.tais.homework;
 
-import com.google.common.eventbus.EventBus;
+import com.google.common.eventbus.AsyncEventBus;
 import org.springframework.context.annotation.*;
 import ua.org.tees.yarosh.tais.core.common.CommonConfiguration;
 import ua.org.tees.yarosh.tais.core.user.mgmt.UserMgmtConfiguration;
+
+import static java.util.concurrent.Executors.newCachedThreadPool;
 
 @Configuration
 @Import({CommonConfiguration.class, UserMgmtConfiguration.class})
@@ -11,7 +13,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.UserMgmtConfiguration;
 @EnableAspectJAutoProxy
 public class HomeworkConfiguration {
     @Bean
-    public EventBus eventBus() {
-        return new EventBus();
+    public AsyncEventBus eventBus() {
+        return new AsyncEventBus(newCachedThreadPool());
     }
 }
