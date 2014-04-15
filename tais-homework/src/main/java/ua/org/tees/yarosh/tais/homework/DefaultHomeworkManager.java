@@ -207,7 +207,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     @CacheEvict(value = MANUAL_TASKS, allEntries = true)
-    public void enableGroupTask(long id) {
+    public void enableManualTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (manualTask.isEnabled()) {
             switchManualTaskState(manualTask, true);
@@ -216,7 +216,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     @CacheEvict(value = MANUAL_TASKS, allEntries = true)
-    public void disableGroupTask(long id) {
+    public void disableManualTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (!manualTask.isEnabled()) {
             switchManualTaskState(manualTask, false);
