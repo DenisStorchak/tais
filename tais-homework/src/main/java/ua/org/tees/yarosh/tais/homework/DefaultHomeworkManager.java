@@ -131,8 +131,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
             }
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
-        if (enable) questionsSuiteEnabledListeners.forEach(l -> l.onEnabled(questionsSuite));
-        else questionsSuiteDisabledListeners.forEach(l -> l.onDisabled(questionsSuite));
+        if (enable) questionsSuiteEnabledListeners.parallelStream().forEach(l -> l.onEnabled(questionsSuite));
+        else questionsSuiteDisabledListeners.parallelStream().forEach(l -> l.onDisabled(questionsSuite));
     }
 
     @Override
@@ -164,7 +164,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
         manualAchievement.setManualTask(manualTaskReport.getTask());
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
-        manualTaskRatedListeners.forEach(l -> l.onRated(manualTaskReport, examiner, grade));
+        manualTaskRatedListeners.parallelStream().forEach(l -> l.onRated(manualTaskReport, examiner, grade));
     }
 
     @Override
@@ -256,7 +256,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
             else taskHolder.getManualTaskList().remove(manualTask);
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
-        if (enable) manualTaskEnabledListeners.forEach(l -> l.onEnabled(manualTask));
-        else manualTaskDisabledListeners.forEach(l -> l.onDisabled(manualTask));
+        if (enable) manualTaskEnabledListeners.parallelStream().forEach(l -> l.onEnabled(manualTask));
+        else manualTaskDisabledListeners.parallelStream().forEach(l -> l.onDisabled(manualTask));
     }
 }

@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.ui;
 
-import com.google.common.eventbus.AsyncEventBus;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
@@ -14,6 +13,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
+import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.*;
@@ -85,7 +85,7 @@ public class TAISUI extends UI {
         SidebarManager sidebarManager = ctx.getBean(SidebarManager.class);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
 
-        ctx.getBean(AsyncEventBus.class).register(
+        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(
                 new ManualTaskRegisteredListener(sidebarManager, VaadinSession.getCurrent()));
     }
 
