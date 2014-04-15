@@ -69,6 +69,6 @@ public interface HomeworkManager {
     }
 
     interface ManualTaskRatedListener {
-        void onRated(ManualTask manualTask, Registrant examiner, int grade);
+        void onRated(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
     }
 }

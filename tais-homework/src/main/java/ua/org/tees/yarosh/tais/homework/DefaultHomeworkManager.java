@@ -16,6 +16,7 @@ import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
 import java.util.List;
+import java.util.Vector;
 import java.util.stream.Collectors;
 
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.*;
@@ -31,6 +32,12 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private QuestionsSuiteRepository questionsSuiteRepository;
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
+
+    private Vector<ManualTaskEnabledListener> manualTaskEnabledListeners = new Vector<>();
+    private Vector<ManualTaskDisabledListener> manualTaskDisabledListeners = new Vector<>();
+    private Vector<QuestionsSuiteEnabledListener> questionsSuiteEnabledListeners = new Vector<>();
+    private Vector<QuestionsSuiteDisabledListener> questionsSuiteDisabledListeners = new Vector<>();
+    private Vector<ManualTaskRatedListener> manualTaskRatedListeners = new Vector<>();
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
@@ -94,7 +101,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     public void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener) {
-
+        questionsSuiteEnabledListeners.add(listener);
     }
 
     @Override
@@ -108,7 +115,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     public void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListener listener) {
-
+        questionsSuiteDisabledListeners.add(listener);
     }
 
     private void switchQuestionsSuiteState(QuestionsSuite questionsSuite, boolean enable) {
@@ -124,6 +131,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
             }
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
+        if (enable) questionsSuiteEnabledListeners.forEach(l -> l.onEnabled(questionsSuite));
+        else questionsSuiteDisabledListeners.forEach(l -> l.onDisabled(questionsSuite));
     }
 
     @Override
@@ -155,11 +164,12 @@ public class DefaultHomeworkManager implements HomeworkManager {
         manualAchievement.setManualTask(manualTaskReport.getTask());
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
+        manualTaskRatedListeners.forEach(l -> l.onRated(manualTaskReport, examiner, grade));
     }
 
     @Override
     public void addManualTaskRatedListener(ManualTaskRatedListener listener) {
-
+        manualTaskRatedListeners.add(listener);
     }
 
     @Override
@@ -219,7 +229,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     public void addManualTaskEnabledListener(ManualTaskEnabledListener listener) {
-
+        manualTaskEnabledListeners.add(listener);
     }
 
     @Override
@@ -233,7 +243,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
 
     @Override
     public void addManualTaskDisabledListener(ManualTaskDisabledListener listener) {
-
+        manualTaskDisabledListeners.add(listener);
     }
 
     private void switchManualTaskState(ManualTask manualTask, boolean enable) {
@@ -246,5 +256,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
             else taskHolder.getManualTaskList().remove(manualTask);
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
+        if (enable) manualTaskEnabledListeners.forEach(l -> l.onEnabled(manualTask));
+        else manualTaskDisabledListeners.forEach(l -> l.onDisabled(manualTask));
     }
 }
