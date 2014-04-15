@@ -28,10 +28,6 @@
             <groupId>com.jolbox</groupId>
             <artifactId>bonecp</artifactId>
         </dependency>
-        <dependency>
-            <groupId>com.google.guava</groupId>
-            <artifactId>guava</artifactId>
-        </dependency>
     </dependencies>
 
 
