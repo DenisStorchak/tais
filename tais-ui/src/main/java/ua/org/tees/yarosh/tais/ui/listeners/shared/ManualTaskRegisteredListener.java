@@ -33,7 +33,6 @@ public class ManualTaskRegisteredListener {
         Registrant registrant = Registrants.getCurrent(session);
         if (registrant != null && event.getTask().getStudentGroup().equals(registrant.getGroup())) {
             log.debug("Registrant [{}] session affected", registrant.toString());
-            log.debug("Groups matched, badge value will be incremented");
             Button button = sidebarManager.getSidebar().getSidebarMenu().getButton(UnresolvedTasksView.class);
             log.debug("Old button caption is [{}]", button.getCaption());
             String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile(".*(\\d+).*"));
