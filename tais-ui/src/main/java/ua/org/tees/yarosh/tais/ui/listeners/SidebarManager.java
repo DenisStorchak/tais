@@ -1,13 +1,11 @@
 package ua.org.tees.yarosh.tais.ui.listeners;
 
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
-import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
@@ -34,6 +32,7 @@ public class SidebarManager implements ViewChangeListener {
     private Map<String, SidebarMenu> menus = new HashMap<>();
     private Map<String, Sidebar> sidebarPool = new HashMap<>();
     private List<String> hideExceptions = new ArrayList<>();
+
     public void setCommonComponent(CommonComponent commonComponent) {
         this.commonComponent = commonComponent;
     }
@@ -67,6 +66,11 @@ public class SidebarManager implements ViewChangeListener {
     public boolean beforeViewChange(ViewChangeEvent event) {
         resolveOrHideSidebar(event);
         return true;
+    }
+
+    @Override
+    public void afterViewChange(ViewChangeEvent event) {
+
     }
 
     private void resolveOrHideSidebar(ViewChangeEvent event) {
@@ -106,39 +110,5 @@ public class SidebarManager implements ViewChangeListener {
             return sidebar;
         }
         return null;
-    }
-
-    @Override
-    public void afterViewChange(ViewChangeEvent event) {
-    }
-
-    @Subscribe
-    public void onManualTaskRemovedEvent(ManualTaskRemovedEvent event) {
-        //fixme
-    }
-
-    @Subscribe
-    public void onManualTaskResolvedEvent(ManualTaskResolvedEvent event) {
-        //fixme
-    }
-
-    @Subscribe
-    public void onQuestionsSuiteRegisteredEvent(QuestionsSuiteRegisteredEvent event) {
-        //fixme
-    }
-
-    @Subscribe
-    public void onQuestionsSuiteRemovedEvent(QuestionsSuiteRemovedEvent event) {
-        //fixme
-    }
-
-    @Subscribe
-    public void onQuestionsSuiteResolvedEvent(QuestionsSuiteResolvedEvent event) {
-        //fixme
-    }
-
-    @Subscribe
-    public void onReportRatedEvent(ReportRatedEvent event) {
-        //fixme
     }
 }
