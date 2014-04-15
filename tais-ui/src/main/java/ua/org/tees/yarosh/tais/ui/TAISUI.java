@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui;
 
+import com.google.common.eventbus.EventBus;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
@@ -21,6 +22,7 @@ import ua.org.tees.yarosh.tais.ui.listeners.AuthListener;
 import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
 import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
+import ua.org.tees.yarosh.tais.ui.listeners.shared.ManualTaskRegisteredListener;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
@@ -82,6 +84,9 @@ public class TAISUI extends UI {
         WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
         SidebarManager sidebarManager = ctx.getBean(SidebarManager.class);
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
+
+        ctx.getBean(EventBus.class).register(
+                new ManualTaskRegisteredListener(sidebarManager, VaadinSession.getCurrent()));
     }
 
     private void setUpViews(Navigator nav) {

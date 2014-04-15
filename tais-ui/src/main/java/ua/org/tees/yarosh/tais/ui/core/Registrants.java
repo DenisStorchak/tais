@@ -18,7 +18,12 @@ public abstract class Registrants {
             VaadinServlet.getCurrent().getServletContext()).getBean(RegistrantService.class);
 
     public static Registrant getCurrent() {
-        if (VaadinSession.getCurrent() == null) {
+        return getCurrent(VaadinSession.getCurrent());
+    }
+
+
+    public static Registrant getCurrent(VaadinSession session) {
+        if (session == null) {
             log.debug("Current session is null, null will be returned");
             return null;
         }
