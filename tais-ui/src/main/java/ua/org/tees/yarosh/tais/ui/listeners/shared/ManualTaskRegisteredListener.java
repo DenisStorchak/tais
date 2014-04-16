@@ -40,7 +40,7 @@ public class ManualTaskRegisteredListener implements ManualTaskEnabledListener {
                 button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
                 log.debug("New button caption is [{}]", button.getCaption());
             } else {
-                log.warn("Button on found");
+                log.warn("Button not found");
             }
         } else {
             log.debug("Current registrant is null, so handler is resting");
