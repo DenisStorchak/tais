@@ -102,12 +102,10 @@ public class TAISUI extends UI {
     }
 
     private void authenticate(Navigator nav) {
-        getUI().access(() -> {
-            Registrant auth = Registrants.getCurrent(getSession());
-            if (!AuthManager.loggedIn(auth.getLogin())) {
-                nav.navigateTo(AUTH);
-            }
-        });//
+        Registrant auth = Registrants.getCurrent(getSession());
+        if (!AuthManager.loggedIn(auth.getLogin())) {
+            nav.navigateTo(AUTH);
+        }
     }
 
     private SidebarManager configureSidebarManager(SidebarManager sidebarManager, CommonComponent commonComponent) {
