@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core.auth;
 
 
+import com.vaadin.ui.UI;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -27,7 +28,7 @@ public class LoginAspect {
     public void saveAuthCookie(JoinPoint joinPoint, boolean result) {
         if (result) {
             String auth = (String) joinPoint.getArgs()[0];
-            VaadinUtils.saveCookie(AUTH, auth);
+            new VaadinUtils(UI.getCurrent()).saveCookie(AUTH, auth);
             log.info("Auth cookie for [{}] stored", auth);
         }
     }

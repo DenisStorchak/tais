@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui;
 
+import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
@@ -11,6 +12,7 @@ import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.*;
@@ -29,7 +31,6 @@ import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
@@ -45,6 +46,7 @@ import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
  */
 @Theme("dashboard")
 @Title("TEES Dashboard")
+@Push
 public class TAISUI extends UI {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
@@ -100,10 +102,12 @@ public class TAISUI extends UI {
     }
 
     private void authenticate(Navigator nav) {
-        String authCookie = VaadinUtils.getCookie(Cookies.AUTH).getValue();
-        if (!AuthManager.loggedIn(authCookie)) {
-            nav.navigateTo(AUTH);
-        }
+        getUI().access(() -> {
+            Registrant auth = Registrants.getCurrent(getSession());
+            if (!AuthManager.loggedIn(auth.getLogin())) {
+                nav.navigateTo(AUTH);
+            }
+        });//
     }
 
     private SidebarManager configureSidebarManager(SidebarManager sidebarManager, CommonComponent commonComponent) {

@@ -3,7 +3,6 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.data.Validatable;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
-import com.vaadin.server.VaadinRequest;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -14,7 +13,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 
-import static com.vaadin.server.VaadinService.getCurrentRequest;
 import static com.vaadin.server.VaadinService.getCurrentResponse;
 
 /**
@@ -22,7 +20,13 @@ import static com.vaadin.server.VaadinService.getCurrentResponse;
  *         Date: 29.03.14
  *         Time: 19:19
  */
-public abstract class VaadinUtils {
+public class VaadinUtils {
+
+    private UI ui;
+
+    public VaadinUtils(UI ui) {
+        this.ui = ui;
+    }
 
     public static void setSizeUndefined(Component... components) {
         for (Component component : components) {
@@ -71,37 +75,33 @@ public abstract class VaadinUtils {
         return layout;
     }
 
-    public static void saveCookie(String name, String value) {
+    public void saveCookie(String name, String value) {
         Cookie cookie = new Cookie(name, value);
         cookie.setMaxAge(15552000);
         cookie.setPath("/");
-        getCurrentResponse().addCookie(cookie);
+        ui.access(() -> getCurrentResponse().addCookie(cookie));
     }
 
-    public static void deleteCookie(String name) {
-        boolean found = false;
-        Cookie[] cookies = getCurrentRequest().getCookies();
-        for (int i = 0; i < cookies.length && !found; i++) {
-            found = cookies[i].getName().equals(name);
-            if (found) {
-                cookies[i].setMaxAge(0);
-                cookies[i].setPath("/");
-                getCurrentResponse().addCookie(cookies[i]);
-            }
-        }
+    public void deleteCookie(String name) {
+        ui.access(() -> {
+            Cookie cookie = new Cookie(name, "");
+            cookie.setPath("/");
+            cookie.setMaxAge(0);
+            getCurrentResponse().addCookie(cookie);
+        });
     }
 
-    public static Cookie getCookie(String name) {
-        VaadinRequest currentRequest = getCurrentRequest();
-        if (currentRequest != null) {
-            for (Cookie cookie : currentRequest.getCookies()) {
-                if (cookie.getName().equals(name)) {
-                    return cookie;
-                }
-            }
-        }
-        return new Cookie(name, "");
-    }
+//    public Cookie getCookie(String name) {
+//        VaadinRequest currentRequest = getCurrentRequest();
+//        if (currentRequest != null) {
+//            for (Cookie cookie : currentRequest.getCookies()) {
+//                if (cookie.getName().equals(name)) {
+//                    return cookie;
+//                }
+//            }
+//        }
+//        return new Cookie(name, "");
+//    }
 
     public static void transformToIconOnlyButton(String description,
                                                  String icon,

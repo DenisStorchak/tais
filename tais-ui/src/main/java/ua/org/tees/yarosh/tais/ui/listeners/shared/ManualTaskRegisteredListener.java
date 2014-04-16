@@ -39,6 +39,7 @@ public class ManualTaskRegisteredListener implements ManualTaskEnabledListener {
                 int newValue = Integer.valueOf(badge) + 1;
                 button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
                 log.debug("New button caption is [{}]", button.getCaption());
+                log.debug("Changes pushed");
             } else {
                 log.warn("Button not found");
             }
