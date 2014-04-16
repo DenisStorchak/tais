@@ -27,7 +27,7 @@ public abstract class Registrants {
             log.debug("Current session is null, null will be returned");
             return null;
         }
-        Object attribute = VaadinSession.getCurrent().getAttribute(REGISTRANT_ID);
+        Object attribute = session.getAttribute(REGISTRANT_ID);
         if (attribute != null) {
             String login = (String) attribute;
             log.debug("login [{}] found in session", login);
