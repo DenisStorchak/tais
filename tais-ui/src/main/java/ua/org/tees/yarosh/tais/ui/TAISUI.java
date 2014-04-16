@@ -5,15 +5,12 @@ import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.*;
@@ -22,7 +19,6 @@ import ua.org.tees.yarosh.tais.ui.listeners.AuthListener;
 import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
 import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
-import ua.org.tees.yarosh.tais.ui.listeners.shared.ManualTaskRegisteredListener;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
@@ -32,7 +28,6 @@ import ua.org.tees.yarosh.tais.ui.views.student.QuestionsSuiteRunnerView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
-import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
@@ -81,12 +76,8 @@ public class TAISUI extends UI {
         nav.addViewChangeListener(new LastViewSaver());
         nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 
-        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-        SidebarManager sidebarManager = ctx.getBean(SidebarManager.class);
+        SidebarManager sidebarManager = SessionFactory.getCurrent().getSidebarManager();
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
-
-        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(
-                new ManualTaskRegisteredListener(sidebarManager, VaadinSession.getCurrent()));
     }
 
     private void setUpViews(Navigator nav) {

@@ -3,26 +3,27 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Window;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
-import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.HelpManagerFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
-import ua.org.tees.yarosh.tais.ui.core.api.WindowFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
+import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 
 public class UIFactory implements ComponentFactory {
     private ViewFactory viewFactory;
     private WindowFactory windowFactory;
     private PresenterFactory presenterFactory;
     private HelpManagerFactory helpManagerFactory;
+    private SidebarManagerFactory sidebarManagerFactory;
 
     private UIFactory(PresenterFactory presenterFactory,
                       ViewFactory viewFactory,
                       WindowFactory windowFactory,
-                      HelpManagerFactory helpManagerFactory) {
+                      HelpManagerFactory helpManagerFactory,
+                      SidebarManagerFactory sidebarManagerFactory) {
         this.viewFactory = viewFactory;
         this.windowFactory = windowFactory;
         this.presenterFactory = presenterFactory;
         this.helpManagerFactory = helpManagerFactory;
+        this.sidebarManagerFactory = sidebarManagerFactory;
     }
 
     public static UIFactory createFactory(UIContext ctx) {
@@ -30,7 +31,8 @@ public class UIFactory implements ComponentFactory {
         ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
         ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
         LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
-        return new UIFactory(presenterFactory, viewFactory, windowFactory, helpManagerFactory);
+        SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();
+        return new UIFactory(presenterFactory, viewFactory, windowFactory, helpManagerFactory, sidebarManagerFactory);
     }
 
     @Override
@@ -61,5 +63,10 @@ public class UIFactory implements ComponentFactory {
     @Override
     public HelpManager getHelpManager() {
         return helpManagerFactory.getHelpManager();
+    }
+
+    @Override
+    public SidebarManager getSidebarManager() {
+        return sidebarManagerFactory.getSidebarManager();
     }
 }

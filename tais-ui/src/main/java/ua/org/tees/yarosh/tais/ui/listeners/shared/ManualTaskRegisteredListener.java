@@ -46,4 +46,24 @@ public class ManualTaskRegisteredListener implements ManualTaskEnabledListener {
             log.debug("Current registrant is null, so handler is resting");
         }
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ManualTaskRegisteredListener that = (ManualTaskRegisteredListener) o;
+
+        if (!session.equals(that.session)) return false;
+        if (!sidebarManager.equals(that.sidebarManager)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = sidebarManager.hashCode();
+        result = 31 * result + session.hashCode();
+        return result;
+    }
 }

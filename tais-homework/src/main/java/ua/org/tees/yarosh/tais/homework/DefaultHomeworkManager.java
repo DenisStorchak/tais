@@ -15,10 +15,12 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
+import java.util.HashSet;
 import java.util.List;
-import java.util.Vector;
+import java.util.Set;
 import java.util.stream.Collectors;
 
+import static java.util.Collections.synchronizedSet;
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.*;
 import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 
@@ -33,11 +35,11 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
 
-    private Vector<ManualTaskEnabledListener> manualTaskEnabledListeners = new Vector<>();
-    private Vector<ManualTaskDisabledListener> manualTaskDisabledListeners = new Vector<>();
-    private Vector<QuestionsSuiteEnabledListener> questionsSuiteEnabledListeners = new Vector<>();
-    private Vector<QuestionsSuiteDisabledListener> questionsSuiteDisabledListeners = new Vector<>();
-    private Vector<ManualTaskRatedListener> manualTaskRatedListeners = new Vector<>();
+    private Set<ManualTaskEnabledListener> manualTaskEnabledListeners = synchronizedSet(new HashSet<>());
+    private Set<ManualTaskDisabledListener> manualTaskDisabledListeners = synchronizedSet(new HashSet<>());
+    private Set<QuestionsSuiteEnabledListener> questionsSuiteEnabledListeners = synchronizedSet(new HashSet<>());
+    private Set<QuestionsSuiteDisabledListener> questionsSuiteDisabledListeners = synchronizedSet(new HashSet<>());
+    private Set<ManualTaskRatedListener> manualTaskRatedListeners = synchronizedSet(new HashSet<>());
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
