@@ -11,6 +11,7 @@ import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
@@ -21,6 +22,8 @@ import ua.org.tees.yarosh.tais.core.common.RegexUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.events.ManualTaskEnabledEvent;
+import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
+import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
@@ -45,6 +48,8 @@ import ua.org.tees.yarosh.tais.ui.views.student.QuestionsSuiteRunnerView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
@@ -164,11 +169,11 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
                 Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
                         .getSidebarMenu().getButton(UnresolvedTasksView.class);
                 if (button != null) {
-                    log.debug("Old button caption is [{}]", button.getCaption());
+                    log.debug("Old component caption is [{}]", button.getCaption());
                     String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile("(\\d+)"));
                     int newValue = Integer.valueOf(badge) + 1;
                     button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
-                    log.debug("New button caption is [{}]", button.getCaption());
+                    log.debug("New component caption is [{}]", button.getCaption());
                 } else {
                     log.warn("Button not found");
                 }
@@ -190,7 +195,7 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
                 setUpUnresolvedTasksButton(event);
             } else if (registrant.getRole().equals(TEACHER)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
-                log.warn("Nothing to do");
+                setUpTeacherDashboardViewButton(event);
             } else if (registrant.getRole().equals(ADMIN)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
                 log.warn("Nothing to do");
@@ -198,6 +203,20 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
                 log.debug("Current registrant is null, so handler is resting");
             }
         });
+    }
+
+    private void setUpTeacherDashboardViewButton(LoginEvent event) {
+        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
+        HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
+        DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
+
+        List<ManualTaskReport> reports = new ArrayList<>();
+        disciplineService.findDisciplinesByTeacher(event.getRegistrant().getLogin())
+                .forEach(d -> reports.addAll(homeworkManager.findUnratedManualTaskReports(d)));
+
+        Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
+                .getSidebarMenu().getButton(TeacherDashboardView.class);
+        updateCaption(reports.size(), button);
     }
 
     private void setUpUnresolvedTasksButton(LoginEvent event) {
@@ -210,12 +229,16 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
 
         Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
                 .getSidebarMenu().getButton(UnresolvedTasksView.class);
-        if (button != null) {
-            log.debug("Old button caption is [{}]", button.getCaption());
-            button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(tasks)));
-            log.debug("New button caption is [{}]", button.getCaption());
+        updateCaption(tasks, button);
+    }
+
+    private void updateCaption(int number, Component component) {
+        if (component != null) {
+            log.debug("Old component caption is [{}]", component.getCaption());
+            component.setCaption(component.getCaption().replaceAll("\\d+", String.valueOf(number)));
+            log.debug("New component caption is [{}]", component.getCaption());
         } else {
-            log.warn("Button not found");
+            log.warn("component is null");
         }
     }
 }
