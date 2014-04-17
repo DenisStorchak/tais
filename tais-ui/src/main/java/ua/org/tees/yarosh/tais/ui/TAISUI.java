@@ -18,10 +18,8 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.core.common.RegexUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
-import ua.org.tees.yarosh.tais.homework.events.ManualTaskEnabledEvent;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
@@ -35,10 +33,7 @@ import ua.org.tees.yarosh.tais.ui.core.api.LoginListener;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.events.LoginEvent;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
-import ua.org.tees.yarosh.tais.ui.listeners.AuthListener;
-import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
-import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
-import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
+import ua.org.tees.yarosh.tais.ui.listeners.*;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
@@ -50,11 +45,9 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Pattern;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
-import static ua.org.tees.yarosh.tais.homework.api.HomeworkManager.ManualTaskEnabledListenerTeacher;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.PREVIOUS_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.*;
@@ -71,7 +64,7 @@ import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher
 @Theme("dashboard")
 @Title("TEES Dashboard")
 @Push
-public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, LoginListener {
+public class TAISUI extends UI implements LoginListener {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
 
@@ -106,7 +99,7 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
 
         WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(this);
+        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(new TaskEnabledListener(this));
     }
 
     private void setUpViews(Navigator nav) {
@@ -155,32 +148,6 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
 
     public static void navigateTo(String state) {
         getCurrent().getNavigator().navigateTo(state);
-    }
-
-    @Override
-    @Subscribe
-    @AllowConcurrentEvents
-    public void onEnabled(ManualTaskEnabledEvent event) {
-        access(() -> {
-            log.debug("ManualTaskEnabledEvent handler invoked");
-            Registrant registrant = Registrants.getCurrent(getSession());
-            if (registrant != null && event.getTask().getStudentGroup().equals(registrant.getGroup())) {
-                log.debug("Registrant [{}] session affected", registrant.toString());
-                Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
-                        .getSidebarMenu().getButton(UnresolvedTasksView.class);
-                if (button != null) {
-                    log.debug("Old component caption is [{}]", button.getCaption());
-                    String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile("(\\d+)"));
-                    int newValue = Integer.valueOf(badge) + 1;
-                    button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
-                    log.debug("New component caption is [{}]", button.getCaption());
-                } else {
-                    log.warn("Button not found");
-                }
-            } else {
-                log.debug("Current registrant is null, so handler is resting");
-            }
-        });
     }
 
     @Override

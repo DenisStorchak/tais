@@ -105,7 +105,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public synchronized void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListenerTeacher listener) {
+    public synchronized void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener) {
         if (listeners.add(listener)) eventbus.register(listener);
     }
 

@@ -28,7 +28,7 @@ public interface HomeworkManager {
 
     void enableQuestionsSuite(long id);
 
-    void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListenerTeacher listener);
+    void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener);
 
     void disableQuestionsSuite(long id);
 
@@ -62,7 +62,7 @@ public interface HomeworkManager {
         void onDisabled(ManualTask manualTask);
     }
 
-    interface QuestionsSuiteEnabledListenerTeacher extends Listener {
+    interface QuestionsSuiteEnabledListener extends Listener {
         void onEnabled(QuestionsSuite questionsSuite);
     }
 
