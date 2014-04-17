@@ -15,12 +15,9 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
-import static java.util.Collections.synchronizedSet;
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.*;
 import static ua.org.tees.yarosh.tais.homework.util.TaskUtils.*;
 
@@ -34,12 +31,6 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private QuestionsSuiteRepository questionsSuiteRepository;
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
-
-    private Set<ManualTaskEnabledListener> manualTaskEnabledListeners = synchronizedSet(new HashSet<>());
-    private Set<ManualTaskDisabledListener> manualTaskDisabledListeners = synchronizedSet(new HashSet<>());
-    private Set<QuestionsSuiteEnabledListener> questionsSuiteEnabledListeners = synchronizedSet(new HashSet<>());
-    private Set<QuestionsSuiteDisabledListener> questionsSuiteDisabledListeners = synchronizedSet(new HashSet<>());
-    private Set<ManualTaskRatedListener> manualTaskRatedListeners = synchronizedSet(new HashSet<>());
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
@@ -102,22 +93,12 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener) {
-        questionsSuiteEnabledListeners.add(listener);
-    }
-
-    @Override
     @CachePut(QUESTION_SUITES)
     public void disableQuestionsSuite(long id) {
         QuestionsSuite questionsSuite = questionsSuiteRepository.findOne(id);
         if (questionsSuite.getEnabled()) {
             switchQuestionsSuiteState(questionsSuite, false);
         }
-    }
-
-    @Override
-    public void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListener listener) {
-        questionsSuiteDisabledListeners.add(listener);
     }
 
     private void switchQuestionsSuiteState(QuestionsSuite questionsSuite, boolean enable) {
@@ -133,8 +114,6 @@ public class DefaultHomeworkManager implements HomeworkManager {
             }
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
-        if (enable) questionsSuiteEnabledListeners.parallelStream().forEach(l -> l.onEnabled(questionsSuite));
-        else questionsSuiteDisabledListeners.parallelStream().forEach(l -> l.onDisabled(questionsSuite));
     }
 
     @Override
@@ -166,12 +145,6 @@ public class DefaultHomeworkManager implements HomeworkManager {
         manualAchievement.setManualTask(manualTaskReport.getTask());
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
-        manualTaskRatedListeners.parallelStream().forEach(l -> l.onRated(manualTaskReport, examiner, grade));
-    }
-
-    @Override
-    public void addManualTaskRatedListener(ManualTaskRatedListener listener) {
-        manualTaskRatedListeners.add(listener);
     }
 
     @Override
@@ -230,22 +203,12 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addManualTaskEnabledListener(ManualTaskEnabledListener listener) {
-        manualTaskEnabledListeners.add(listener);
-    }
-
-    @Override
     @CacheEvict(value = MANUAL_TASKS, allEntries = true)
     public void disableManualTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (!manualTask.isEnabled()) {
             switchManualTaskState(manualTask, false);
         }
-    }
-
-    @Override
-    public void addManualTaskDisabledListener(ManualTaskDisabledListener listener) {
-        manualTaskDisabledListeners.add(listener);
     }
 
     private void switchManualTaskState(ManualTask manualTask, boolean enable) {
@@ -258,7 +221,5 @@ public class DefaultHomeworkManager implements HomeworkManager {
             else taskHolder.getManualTaskList().remove(manualTask);
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
-        if (enable) manualTaskEnabledListeners.parallelStream().forEach(l -> l.onEnabled(manualTask));
-        else manualTaskDisabledListeners.parallelStream().forEach(l -> l.onDisabled(manualTask));
     }
 }

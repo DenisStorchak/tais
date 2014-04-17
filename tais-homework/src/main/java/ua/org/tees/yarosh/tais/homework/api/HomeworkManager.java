@@ -14,11 +14,7 @@ public interface HomeworkManager {
 
     void enableManualTask(long id);
 
-    void addManualTaskEnabledListener(ManualTaskEnabledListener listener);
-
     void disableManualTask(long id);
-
-    void addManualTaskDisabledListener(ManualTaskDisabledListener listener);
 
     long createQuestionsSuite(QuestionsSuite questionsSuite);
 
@@ -26,11 +22,7 @@ public interface HomeworkManager {
 
     void enableQuestionsSuite(long id);
 
-    void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener);
-
     void disableQuestionsSuite(long id);
-
-    void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListener listener);
 
     List<ManualTask> findManualTasks(StudentGroup studentGroup);
 
@@ -39,8 +31,6 @@ public interface HomeworkManager {
     ManualTaskReport getManualTaskReport(Registrant registrant, ManualTask manualTask);
 
     void rate(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
-
-    void addManualTaskRatedListener(ManualTaskRatedListener listener);
 
     List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 
