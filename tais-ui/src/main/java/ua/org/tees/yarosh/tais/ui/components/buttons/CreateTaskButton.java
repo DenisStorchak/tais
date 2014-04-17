@@ -3,7 +3,7 @@ package ua.org.tees.yarosh.tais.ui.components.buttons;
 import com.vaadin.ui.Button;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateTaskWindow;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.CREATE_TASK_BUTTON_DESCRIPTION;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Messages.CREATE_TASK_BUTTON_DESCRIPTION;
 
 /**
  * @author Timur Yarosh

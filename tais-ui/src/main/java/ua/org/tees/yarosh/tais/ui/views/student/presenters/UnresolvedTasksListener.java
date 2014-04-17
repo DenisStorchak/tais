@@ -7,16 +7,16 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
-import ua.org.tees.yarosh.tais.ui.core.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
 import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.UNRESOLVED;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.QuestionsSuiteRunnerTaisView.QuestionsSuiteRunnerPresenter;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView.UnresolvedTasksPresenter;
 

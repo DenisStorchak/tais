@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.homework.api;
 
+import ua.org.tees.yarosh.tais.core.common.api.Listener;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -53,26 +54,23 @@ public interface HomeworkManager {
 
     List<QuestionsSuite> findUnresolvedActualQuestionsSuite(Registrant registrant);
 
-    interface TeacherEventListener {
-    }
-
-    interface ManualTaskEnabledListenerTeacher extends TeacherEventListener {
+    interface ManualTaskEnabledListenerTeacher extends Listener {
         void onEnabled(ManualTaskEnabledEvent event);
     }
 
-    interface ManualTaskDisabledListenerTeacher extends TeacherEventListener {
+    interface ManualTaskDisabledListenerTeacher extends Listener {
         void onDisabled(ManualTask manualTask);
     }
 
-    interface QuestionsSuiteEnabledListenerTeacher extends TeacherEventListener {
+    interface QuestionsSuiteEnabledListenerTeacher extends Listener {
         void onEnabled(QuestionsSuite questionsSuite);
     }
 
-    interface QuestionsSuiteDisabledListenerTeacher extends TeacherEventListener {
+    interface QuestionsSuiteDisabledListenerTeacher extends Listener {
         void onDisabled(QuestionsSuite questionsSuite);
     }
 
-    interface ManualTaskRatedListenerTeacher extends TeacherEventListener {
+    interface ManualTaskRatedListenerTeacher extends Listener {
         void onRated(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
     }
 }

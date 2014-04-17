@@ -22,9 +22,9 @@ import java.nio.file.FileSystems;
 
 import static com.vaadin.ui.Upload.*;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.FS.HOME_DIR;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.FS.MANUAL_PAYLOAD_DIR;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ADD_MANUAL;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.HOME_DIR;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.MANUAL_PAYLOAD_DIR;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.ADD_MANUAL;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView.CreateManualTaskPresenter;
 
 @TaisPresenter

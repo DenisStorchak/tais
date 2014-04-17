@@ -21,9 +21,9 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.EDIT_PROFILE;
 
 @TaisPresenter
 @SuppressWarnings("unchecked")

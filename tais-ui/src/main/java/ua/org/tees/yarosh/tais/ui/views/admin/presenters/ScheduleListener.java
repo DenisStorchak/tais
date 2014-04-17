@@ -18,7 +18,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView;
 import java.util.*;
 
 import static java.util.Arrays.asList;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 
 @TaisPresenter
 public class ScheduleListener extends AbstractPresenter implements ScheduleTaisView.SchedulePresenter {

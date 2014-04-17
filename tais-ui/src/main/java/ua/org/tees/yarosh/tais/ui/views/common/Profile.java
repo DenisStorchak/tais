@@ -14,8 +14,8 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
 import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ME;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais.ProfilePresenter;
 
 @PresentedBy(ProfilePresenter.class)

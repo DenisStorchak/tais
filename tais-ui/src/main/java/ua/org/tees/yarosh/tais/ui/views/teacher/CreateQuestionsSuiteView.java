@@ -22,9 +22,9 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.ModifierKey.CTRL;
 import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView.CreateQuestionsSuitePresenter;
 
 @TaisView("Создать тест")

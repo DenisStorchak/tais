@@ -6,11 +6,13 @@ import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.properties.DefaultUserProperties;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
+import ua.org.tees.yarosh.tais.ui.core.events.LoginEvent;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresenter;
 
 @TaisPresenter
@@ -50,6 +52,7 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
                 registration.setLogin(defaultUserProperties.getLogin());
                 registration.setRole(defaultUserProperties.getRole());
             }
+            UIFactoryAccessor.getCurrent().getEventBus().post(new LoginEvent(registration));
             return registration;
         }
         return null;

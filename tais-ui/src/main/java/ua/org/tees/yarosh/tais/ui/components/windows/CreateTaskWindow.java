@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Messages.*;
 
 /**
  * @author Timur Yarosh

@@ -23,7 +23,14 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.events.ManualTaskEnabledEvent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
-import ua.org.tees.yarosh.tais.ui.core.*;
+import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
+import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
+import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
+import ua.org.tees.yarosh.tais.ui.core.api.LoginListener;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
+import ua.org.tees.yarosh.tais.ui.core.events.LoginEvent;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.listeners.AuthListener;
 import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
@@ -42,13 +49,14 @@ import java.util.regex.Pattern;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.*;
+import static ua.org.tees.yarosh.tais.homework.api.HomeworkManager.ManualTaskEnabledListenerTeacher;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.PREVIOUS_VIEW;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.UNRESOLVED;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.*;
 
 /**
  * @author Timur Yarosh
@@ -58,7 +66,7 @@ import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
 @Theme("dashboard")
 @Title("TEES Dashboard")
 @Push
-public class TAISUI extends UI implements HomeworkManager.ManualTaskEnabledListenerTeacher {
+public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, LoginListener {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
 
@@ -157,7 +165,7 @@ public class TAISUI extends UI implements HomeworkManager.ManualTaskEnabledListe
                         .getSidebarMenu().getButton(UnresolvedTasksView.class);
                 if (button != null) {
                     log.debug("Old button caption is [{}]", button.getCaption());
-                    String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile(".*(\\d+).*"));
+                    String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile("(\\d+)"));
                     int newValue = Integer.valueOf(badge) + 1;
                     button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
                     log.debug("New button caption is [{}]", button.getCaption());
@@ -168,5 +176,41 @@ public class TAISUI extends UI implements HomeworkManager.ManualTaskEnabledListe
                 log.debug("Current registrant is null, so handler is resting");
             }
         });
+    }
+
+    @Override
+    @Subscribe
+    @AllowConcurrentEvents
+    public void onLogin(LoginEvent event) {
+        access(() -> {
+            log.debug("LoginEvent handler invoked");
+            Registrant registrant = event.getRegistrant();
+            if (registrant.getRole().equals(STUDENT)) {
+                log.debug("Registrant [{}] session affected", registrant.toString());
+
+                WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
+                HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
+
+                int unresolvedManual = homeworkManager.findUnresolvedActualManualTasks(event.getRegistrant()).size();
+                int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(event.getRegistrant()).size();
+                int tasks = unresolvedManual + unresolvedSuites;
+
+                setUpUnresolvedTasksButton(tasks);
+            } else {
+                log.debug("Current registrant is null, so handler is resting");
+            }
+        });
+    }
+
+    private void setUpUnresolvedTasksButton(int tasks) {
+        Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
+                .getSidebarMenu().getButton(UnresolvedTasksView.class);
+        if (button != null) {
+            log.debug("Old button caption is [{}]", button.getCaption());
+            button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(tasks)));
+            log.debug("New button caption is [{}]", button.getCaption());
+        } else {
+            log.warn("Button not found");
+        }
     }
 }

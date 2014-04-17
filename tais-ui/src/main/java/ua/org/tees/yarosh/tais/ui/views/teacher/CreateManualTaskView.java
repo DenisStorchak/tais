@@ -9,7 +9,7 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.Registrants;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView;
@@ -18,10 +18,10 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.presenters.CreateManualTaskListe
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ADD_MANUAL;
 import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.ADD_MANUAL;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView.CreateManualTaskPresenter;
 
 @PermitRoles(TEACHER)

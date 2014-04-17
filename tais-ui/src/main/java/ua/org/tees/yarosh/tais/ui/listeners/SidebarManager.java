@@ -13,7 +13,7 @@ import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 
 import java.util.*;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 
 /**
  * @author Timur Yarosh

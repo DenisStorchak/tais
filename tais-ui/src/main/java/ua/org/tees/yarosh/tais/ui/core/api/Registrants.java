@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.core;
+package ua.org.tees.yarosh.tais.ui.core.api;
 
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 
 public abstract class Registrants {
 

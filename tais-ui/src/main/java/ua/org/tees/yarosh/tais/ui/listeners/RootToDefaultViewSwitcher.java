@@ -5,8 +5,8 @@ import com.vaadin.server.VaadinServlet;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
-import ua.org.tees.yarosh.tais.ui.core.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 

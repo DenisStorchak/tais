@@ -20,7 +20,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.api.StudentsTaisView;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.STUDENTS;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.STUDENTS;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.StudentsTaisView.StudentsTaisPresenter;
 
 @PresentedBy(StudentsTaisPresenter.class)

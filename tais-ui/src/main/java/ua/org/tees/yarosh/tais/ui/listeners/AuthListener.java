@@ -5,8 +5,8 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ACCESS_DENIED;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ACCESS_DENIED;
 
 public class AuthListener implements ViewChangeListener {
 

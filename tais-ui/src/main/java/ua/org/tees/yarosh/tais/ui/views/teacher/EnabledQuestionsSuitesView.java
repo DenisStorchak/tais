@@ -21,7 +21,7 @@ import java.util.Date;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTaisView.EnabledQuestionsSuitesPresenter;
 
 @PresentedBy(EnabledQuestionsSuitesPresenter.class)

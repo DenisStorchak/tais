@@ -28,9 +28,9 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.setValidationVisible;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.MANAGED_SCHEDULE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.ScheduleTaisView.SchedulePresenter;
 
 @PresentedBy(SchedulePresenter.class)

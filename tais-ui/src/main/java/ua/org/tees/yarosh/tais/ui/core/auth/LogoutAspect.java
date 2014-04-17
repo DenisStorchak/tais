@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Cookies.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Cookies.AUTH;
 
 @Aspect
 @Component

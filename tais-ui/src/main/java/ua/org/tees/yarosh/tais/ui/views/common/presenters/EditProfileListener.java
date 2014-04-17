@@ -17,7 +17,7 @@ import java.util.List;
 import static java.util.Arrays.asList;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.EDIT_PROFILE;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais.EditProfilePresenter;
 
 /**

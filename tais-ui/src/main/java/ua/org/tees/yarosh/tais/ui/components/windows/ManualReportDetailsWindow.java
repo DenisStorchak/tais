@@ -4,8 +4,8 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
-import ua.org.tees.yarosh.tais.ui.core.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.AbstractWindow;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
 
 import java.io.File;

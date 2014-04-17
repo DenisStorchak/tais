@@ -13,8 +13,8 @@ import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.ME;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ME;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais.ProfilePresenter;
 
 @TaisPresenter

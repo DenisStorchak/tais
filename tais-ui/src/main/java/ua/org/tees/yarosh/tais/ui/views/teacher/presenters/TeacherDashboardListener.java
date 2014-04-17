@@ -8,8 +8,8 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.windows.ManualReportDetailsWindow;
-import ua.org.tees.yarosh.tais.ui.core.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -18,7 +18,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.*;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 /**

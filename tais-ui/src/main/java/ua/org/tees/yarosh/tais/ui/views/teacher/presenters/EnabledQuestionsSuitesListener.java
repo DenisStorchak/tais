@@ -16,7 +16,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTaisVi
 import java.util.List;
 
 import static java.util.stream.Collectors.toList;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.ENABLED_QUESTIONS;
 
 /**
  * @author Timur Yarosh

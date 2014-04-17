@@ -14,7 +14,7 @@ import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.COMPONENT_FACTORY;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 @WebServlet(urlPatterns = "/*", asyncSupported = true)
 @VaadinServletConfiguration(productionMode = true, ui = TAISUI.class)

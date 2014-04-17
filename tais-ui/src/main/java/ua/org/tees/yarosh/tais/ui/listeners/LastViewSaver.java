@@ -3,7 +3,7 @@ package ua.org.tees.yarosh.tais.ui.listeners;
 import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.server.VaadinSession;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.PREVIOUS_VIEW;
 
 public class LastViewSaver implements ViewChangeListener {
     @Override

@@ -15,9 +15,9 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.Messages.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.AUTH;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Messages.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresenter;
 
 /**

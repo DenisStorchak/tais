@@ -3,8 +3,8 @@ package ua.org.tees.yarosh.tais.ui.core.validators;
 import com.vaadin.data.validator.AbstractStringValidator;
 import com.vaadin.ui.AbstractTextField;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.ErrorMessages.FIELDS_NOT_EQUALS;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.ErrorMessages.getFormattedMessage;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.ErrorMessages.FIELDS_NOT_EQUALS;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.ErrorMessages.getFormattedMessage;
 
 /**
  * @author Timur Yarosh

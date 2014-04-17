@@ -8,6 +8,7 @@ import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.core.common.api.Listener;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -36,7 +37,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
     private AsyncEventBus eventbus;
-    private Set<TeacherEventListener> listeners = new HashSet<>();
+    private Set<Listener> listeners = new HashSet<>();
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {

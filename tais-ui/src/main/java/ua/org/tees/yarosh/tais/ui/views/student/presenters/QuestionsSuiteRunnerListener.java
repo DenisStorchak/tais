@@ -6,7 +6,7 @@ import ua.org.tees.yarosh.tais.homework.QuestionsSuiteReport;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkResolver;
 import ua.org.tees.yarosh.tais.homework.models.Answer;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
-import ua.org.tees.yarosh.tais.ui.core.Registrants;
+import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.views.student.api.QuestionsSuiteRunnerTaisView
 import java.util.HashMap;
 import java.util.List;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.QuestionsSuiteRunnerTaisView.QuestionsSuiteRunnerPresenter;
 
 /**

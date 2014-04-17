@@ -20,9 +20,9 @@ import java.util.Date;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.STUDENT;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
 import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.transformToIconOnlyButton;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.UNRESOLVED;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView.UnresolvedTasksPresenter;
 
 @Qualifier(UNRESOLVED)

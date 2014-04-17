@@ -18,10 +18,11 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.EnabledQuestionsSuitesView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.StudentsView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.REGISTRANT_ID;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.*;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Teacher.*;
+import static java.lang.String.format;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.UNRESOLVED;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.*;
 
 public class SidebarFactory {
 
@@ -45,13 +46,13 @@ public class SidebarFactory {
             case Roles.STUDENT:
                 return localCreateSidebar(createStudentMenu());
         }
-        throw new IllegalArgumentException(String.format("Sidebar for role [%s] not found", role));
+        throw new IllegalArgumentException(format("Sidebar for role [%s] not found", role));
     }
 
     private SidebarMenu createStudentMenu() {
         SidebarMenu studentMenu = new SidebarMenu();
 
-        NativeButton unresolvedTasks = new NativeButton("Задания<span class=\"badge\">0</span>");
+        NativeButton unresolvedTasks = new NativeButton(format("Задания<span class=\"badge\">%d</span>", 0));
         unresolvedTasks.setHtmlContentAllowed(true);
         unresolvedTasks.addStyleName("icon-columns");
         unresolvedTasks.addClickListener(event -> ui.getNavigator().navigateTo(UNRESOLVED));

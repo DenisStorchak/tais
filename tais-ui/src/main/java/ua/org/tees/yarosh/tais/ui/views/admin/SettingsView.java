@@ -19,7 +19,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView;
 import static java.lang.String.format;
 import static org.apache.commons.lang3.RandomStringUtils.random;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
-import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Admin.SETTINGS;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.SETTINGS;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView.SettingsPresenter;
 
 @PresentedBy(SettingsPresenter.class)
