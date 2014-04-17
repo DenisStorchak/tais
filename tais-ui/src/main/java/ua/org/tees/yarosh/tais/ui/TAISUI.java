@@ -187,22 +187,21 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
             Registrant registrant = event.getRegistrant();
             if (registrant.getRole().equals(STUDENT)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
-
-                WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-                HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
-
-                int unresolvedManual = homeworkManager.findUnresolvedActualManualTasks(event.getRegistrant()).size();
-                int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(event.getRegistrant()).size();
-                int tasks = unresolvedManual + unresolvedSuites;
-
-                setUpUnresolvedTasksButton(tasks);
+                setUpUnresolvedTasksButton(event);
             } else {
                 log.debug("Current registrant is null, so handler is resting");
             }
         });
     }
 
-    private void setUpUnresolvedTasksButton(int tasks) {
+    private void setUpUnresolvedTasksButton(LoginEvent event) {
+        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
+        HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
+
+        int unresolvedManual = homeworkManager.findUnresolvedActualManualTasks(event.getRegistrant()).size();
+        int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(event.getRegistrant()).size();
+        int tasks = unresolvedManual + unresolvedSuites;
+
         Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
                 .getSidebarMenu().getButton(UnresolvedTasksView.class);
         if (button != null) {
