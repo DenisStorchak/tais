@@ -8,7 +8,7 @@ import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
@@ -65,7 +65,7 @@ public class CreateGroupWindow extends Window {
                             RegistrantService registrantService = ctx.getBean(RegistrantService.class);
                             StudentGroup studentGroup = new StudentGroup(groupId.getValue());
                             registrantService.createStudentGroup(studentGroup);
-                            SessionFactory.getCurrent().getPresenter(UserRegistrationPresenter.class).update();
+                            UIFactoryAccessor.getCurrent().getPresenter(UserRegistrationPresenter.class).update();
                             window.close();
                         } else {
                             Notification.show("Неправильное значение");

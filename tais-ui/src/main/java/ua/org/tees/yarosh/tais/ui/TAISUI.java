@@ -1,18 +1,26 @@
 package ua.org.tees.yarosh.tais.ui;
 
+import com.google.common.eventbus.AllowConcurrentEvents;
+import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
+import ua.org.tees.yarosh.tais.core.common.RegexUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
+import ua.org.tees.yarosh.tais.homework.events.ManualTaskEnabledEvent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.*;
@@ -30,6 +38,9 @@ import ua.org.tees.yarosh.tais.ui.views.student.QuestionsSuiteRunnerView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
 
+import java.util.regex.Pattern;
+
+import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.SessionKeys.PREVIOUS_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.*;
@@ -47,7 +58,7 @@ import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
 @Theme("dashboard")
 @Title("TEES Dashboard")
 @Push
-public class TAISUI extends UI {
+public class TAISUI extends UI implements HomeworkManager.ManualTaskEnabledListenerTeacher {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
 
@@ -78,8 +89,11 @@ public class TAISUI extends UI {
         nav.addViewChangeListener(new LastViewSaver());
         nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 
-        SidebarManager sidebarManager = SessionFactory.getCurrent().getSidebarManager();
+        SidebarManager sidebarManager = UIFactoryAccessor.getCurrent().getSidebarManager();
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
+
+        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
+        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(this);
     }
 
     private void setUpViews(Navigator nav) {
@@ -103,7 +117,7 @@ public class TAISUI extends UI {
 
     private void authenticate(Navigator nav) {
         Registrant auth = Registrants.getCurrent(getSession());
-        if (!AuthManager.loggedIn(auth.getLogin())) {
+        if (auth == null || !AuthManager.loggedIn(auth.getLogin())) {
             nav.navigateTo(AUTH);
         }
     }
@@ -128,5 +142,31 @@ public class TAISUI extends UI {
 
     public static void navigateTo(String state) {
         getCurrent().getNavigator().navigateTo(state);
+    }
+
+    @Override
+    @Subscribe
+    @AllowConcurrentEvents
+    public void onEnabled(ManualTaskEnabledEvent event) {
+        access(() -> {
+            log.debug("ManualTaskEnabledEvent handler invoked");
+            Registrant registrant = Registrants.getCurrent(getSession());
+            if (registrant != null && event.getTask().getStudentGroup().equals(registrant.getGroup())) {
+                log.debug("Registrant [{}] session affected", registrant.toString());
+                Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
+                        .getSidebarMenu().getButton(UnresolvedTasksView.class);
+                if (button != null) {
+                    log.debug("Old button caption is [{}]", button.getCaption());
+                    String badge = RegexUtils.substringMatching(button.getCaption(), Pattern.compile(".*(\\d+).*"));
+                    int newValue = Integer.valueOf(badge) + 1;
+                    button.setCaption(button.getCaption().replaceAll("\\d+", String.valueOf(newValue)));
+                    log.debug("New button caption is [{}]", button.getCaption());
+                } else {
+                    log.warn("Button not found");
+                }
+            } else {
+                log.debug("Current registrant is null, so handler is resting");
+            }
+        });
     }
 }

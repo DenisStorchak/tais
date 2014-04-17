@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.EnabledQuestionsSuitesTaisView;
@@ -48,7 +48,7 @@ public class EnabledQuestionsSuitesView extends DashboardView implements Enabled
         dash.setComponentAlignment(dashPanel, Alignment.TOP_CENTER);
 
         search.setDescription("Поиск тестов");
-        search.addClickListener(event -> SessionFactory.getCurrent()
+        search.addClickListener(event -> UIFactoryAccessor.getCurrent()
                 .getRelativePresenter(this, EnabledQuestionsSuitesPresenter.class)
                 .onSearch((StudentGroup) studentGroups.getValue()));
     }
@@ -88,7 +88,7 @@ public class EnabledQuestionsSuitesView extends DashboardView implements Enabled
         det.setDescription("Открыть детали");
         det.addStyleName("icon-only");
         det.addStyleName("icon-logout");
-        det.addClickListener(event -> SessionFactory.getCurrent()
+        det.addClickListener(event -> UIFactoryAccessor.getCurrent()
                 .getRelativePresenter(this, EnabledQuestionsSuitesPresenter.class)
                 .onDetails(id));
         return det;
@@ -99,7 +99,7 @@ public class EnabledQuestionsSuitesView extends DashboardView implements Enabled
         del.setDescription("Удалить тест");
         del.addStyleName("icon-only");
         del.addStyleName("icon-logout");
-        del.addClickListener(event -> SessionFactory.getCurrent()
+        del.addClickListener(event -> UIFactoryAccessor.getCurrent()
                 .getRelativePresenter(this, EnabledQuestionsSuitesPresenter.class)
                 .onDelete(id, studentGroup));
         return del;

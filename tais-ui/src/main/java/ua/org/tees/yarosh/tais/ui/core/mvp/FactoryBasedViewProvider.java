@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.View;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
 
 import static com.vaadin.navigator.Navigator.ClassBasedViewProvider;
@@ -16,7 +16,7 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
      * Create a new view provider which creates new view instances based on
      * a view class.
      *
-     * @param viewName  name of the views to create (not null)
+     * @param viewName  name of the views to extend (not null)
      * @param viewClass
      */
     public FactoryBasedViewProvider(String viewName, Class<? extends View> viewClass) {
@@ -25,7 +25,7 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
 
     @Override
     public View getView(String viewName) {
-        ComponentFactory componentFactory = SessionFactory.getCurrent();
+        ComponentFactory componentFactory = UIFactoryAccessor.getCurrent();
         componentFactory.getHelpManager().closeAll();
         return componentFactory.getView(getViewClass());
     }

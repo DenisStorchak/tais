@@ -16,7 +16,7 @@ import ua.org.tees.yarosh.tais.ui.LessonTypeTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -72,14 +72,14 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
         if (isValid(scheduleOwners, periodFrom, periodTo)) {
             updateLessons();
         }
-        SchedulePresenter presenter = SessionFactory.getCurrent().getRelativePresenter(this, SchedulePresenter.class);
+        SchedulePresenter presenter = UIFactoryAccessor.getCurrent().getRelativePresenter(this, SchedulePresenter.class);
         scheduleOwners.removeAllItems();
         presenter.getGroups().forEach(scheduleOwners::addItem);
         presenter.getRegistrants().forEach(scheduleOwners::addItem);
     }
 
     private void updateLessons() {
-        Map<? extends Date, ? extends List<Lesson>> schedule = SessionFactory.getCurrent()
+        Map<? extends Date, ? extends List<Lesson>> schedule = UIFactoryAccessor.getCurrent()
                 .getRelativePresenter(this, SchedulePresenter.class)
                 .getSchedule(scheduleOwners.getValue(), periodFrom.getValue(), periodTo.getValue());
         lessons.clear();
@@ -100,7 +100,7 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
 
         addScheduleButton.addClickListener(event -> getUI().addWindow(
-                SessionFactory.getCurrent()
+                UIFactoryAccessor.getCurrent()
                         .getRelativePresenter(this, SchedulePresenter.class)
                         .getCreateScheduleWindow(scheduleOwners.getValue(), null, periodTo.getValue())
         ));
@@ -130,7 +130,7 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
 
     private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
         editScheduleButton.addClickListener(event -> getUI().addWindow(
-                SessionFactory.getCurrent()
+                UIFactoryAccessor.getCurrent()
                         .getRelativePresenter(this, SchedulePresenter.class)
                         .getCreateScheduleWindow(scheduleOwners.getValue(), scheduleContent, periodTo.getValue())
         ));

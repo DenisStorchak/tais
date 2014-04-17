@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.ui.core.auth;
 
-import com.vaadin.ui.UI;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
@@ -23,7 +22,7 @@ public class LogoutAspect {
     )
     public void logLoggingOut(JoinPoint joinPoint, boolean result) {
         if (result) {
-            new VaadinUtils(UI.getCurrent()).deleteCookie(AUTH);
+            VaadinUtils.storeToSession(AUTH, null);
             log.info("Auth cookie for [{}] removed", joinPoint.getArgs()[0]);
         }
     }

@@ -16,7 +16,7 @@ import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.Student.UNRESOLVED;
-import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.QuestionsSuiteRunnerTaisView.QuestionsSuiteRunnerPresenter;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView.UnresolvedTasksPresenter;
 

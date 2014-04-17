@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.homework.api;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.homework.events.ManualTaskEnabledEvent;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
@@ -14,11 +15,11 @@ public interface HomeworkManager {
 
     void enableManualTask(long id);
 
-    void addManualTaskEnabledListener(ManualTaskEnabledListener listener);
+    void addManualTaskEnabledListener(ManualTaskEnabledListenerTeacher listener);
 
     void disableManualTask(long id);
 
-    void addManualTaskDisabledListener(ManualTaskDisabledListener listener);
+    void addManualTaskDisabledListener(ManualTaskDisabledListenerTeacher listener);
 
     long createQuestionsSuite(QuestionsSuite questionsSuite);
 
@@ -26,11 +27,11 @@ public interface HomeworkManager {
 
     void enableQuestionsSuite(long id);
 
-    void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener);
+    void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListenerTeacher listener);
 
     void disableQuestionsSuite(long id);
 
-    void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListener listener);
+    void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListenerTeacher listener);
 
     List<ManualTask> findManualTasks(StudentGroup studentGroup);
 
@@ -40,7 +41,7 @@ public interface HomeworkManager {
 
     void rate(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
 
-    void addManualTaskRatedListener(ManualTaskRatedListener listener);
+    void addManualTaskRatedListener(ManualTaskRatedListenerTeacher listener);
 
     List<ManualTask> findUnresolvedManualTasksBeforeDeadline(Registrant registrant, int daysBeforeDeadline);
 
@@ -52,23 +53,26 @@ public interface HomeworkManager {
 
     List<QuestionsSuite> findUnresolvedActualQuestionsSuite(Registrant registrant);
 
-    interface ManualTaskEnabledListener {
-        void onEnabled(ManualTask manualTask);
+    interface TeacherEventListener {
     }
 
-    interface ManualTaskDisabledListener {
+    interface ManualTaskEnabledListenerTeacher extends TeacherEventListener {
+        void onEnabled(ManualTaskEnabledEvent event);
+    }
+
+    interface ManualTaskDisabledListenerTeacher extends TeacherEventListener {
         void onDisabled(ManualTask manualTask);
     }
 
-    interface QuestionsSuiteEnabledListener {
+    interface QuestionsSuiteEnabledListenerTeacher extends TeacherEventListener {
         void onEnabled(QuestionsSuite questionsSuite);
     }
 
-    interface QuestionsSuiteDisabledListener {
+    interface QuestionsSuiteDisabledListenerTeacher extends TeacherEventListener {
         void onDisabled(QuestionsSuite questionsSuite);
     }
 
-    interface ManualTaskRatedListener {
+    interface ManualTaskRatedListenerTeacher extends TeacherEventListener {
         void onRated(ManualTaskReport manualTaskReport, Registrant examiner, int grade);
     }
 }

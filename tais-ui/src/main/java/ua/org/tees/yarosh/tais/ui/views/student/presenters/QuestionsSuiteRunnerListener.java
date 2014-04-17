@@ -58,7 +58,7 @@ public class QuestionsSuiteRunnerListener extends AbstractPresenter implements Q
             view.setRemainingQuestions(suite.getQuestions().size() - currentQuestionIndex);
 
             homeworkResolver.resolve(report);
-            //todo create congrats window
+            //todo extend congrats window
         }
     }
 

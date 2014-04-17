@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.ui.components.windows.RegistrantDetailWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.SendEmailWindow;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -44,14 +44,14 @@ public class StudentsListener extends AbstractPresenter implements StudentsTaisP
 
     @Override
     public void onDetails(Registrant registrant) {
-        RegistrantDetailWindow window = SessionFactory.getCurrent().getWindow(RegistrantDetailWindow.class);
+        RegistrantDetailWindow window = UIFactoryAccessor.getCurrent().getWindow(RegistrantDetailWindow.class);
         window.setRegistrant(registrant);
         UI.getCurrent().addWindow(window);
     }
 
     @Override
     public void onSend(Registrant registrant) {
-        SendEmailWindow window = SessionFactory.getCurrent().getWindow(SendEmailWindow.class);
+        SendEmailWindow window = UIFactoryAccessor.getCurrent().getWindow(SendEmailWindow.class);
         UI.getCurrent().addWindow(window);
     }
 }

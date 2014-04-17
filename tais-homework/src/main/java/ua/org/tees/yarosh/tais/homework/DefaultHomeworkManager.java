@@ -17,7 +17,9 @@ import ua.org.tees.yarosh.tais.homework.api.persistence.*;
 import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import static ua.org.tees.yarosh.tais.core.common.CacheNames.*;
@@ -34,6 +36,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
     private AsyncEventBus eventbus;
+    private Set<TeacherEventListener> listeners = new HashSet<>();
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
@@ -101,8 +104,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener) {
-        eventbus.register(listener);
+    public synchronized void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListenerTeacher listener) {
+        if (listeners.add(listener)) eventbus.register(listener);
     }
 
     @Override
@@ -115,8 +118,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListener listener) {
-        eventbus.register(listener);
+    public synchronized void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListenerTeacher listener) {
+        if (listeners.add(listener)) eventbus.register(listener);
     }
 
     private void switchQuestionsSuiteState(QuestionsSuite questionsSuite, boolean enable) {
@@ -169,8 +172,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addManualTaskRatedListener(ManualTaskRatedListener listener) {
-        eventbus.register(listener);
+    public synchronized void addManualTaskRatedListener(ManualTaskRatedListenerTeacher listener) {
+        if (listeners.add(listener)) eventbus.register(listener);
     }
 
     @Override
@@ -229,8 +232,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addManualTaskEnabledListener(ManualTaskEnabledListener listener) {
-        eventbus.register(listener);
+    public synchronized void addManualTaskEnabledListener(ManualTaskEnabledListenerTeacher listener) {
+        if (listeners.add(listener)) eventbus.register(listener);
     }
 
     @Override
@@ -243,8 +246,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
-    public void addManualTaskDisabledListener(ManualTaskDisabledListener listener) {
-        eventbus.register(listener);
+    public synchronized void addManualTaskDisabledListener(ManualTaskDisabledListenerTeacher listener) {
+        if (listeners.add(listener)) eventbus.register(listener);
     }
 
     private void switchManualTaskState(ManualTask manualTask, boolean enable) {

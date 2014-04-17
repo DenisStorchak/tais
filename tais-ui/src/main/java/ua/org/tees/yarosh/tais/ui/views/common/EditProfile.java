@@ -20,7 +20,7 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.RoleTranslator.translate;
 import static ua.org.tees.yarosh.tais.ui.core.DataBinds.UriFragments.EDIT_PROFILE;
-import static ua.org.tees.yarosh.tais.ui.core.SessionFactory.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais.EditProfilePresenter;
 

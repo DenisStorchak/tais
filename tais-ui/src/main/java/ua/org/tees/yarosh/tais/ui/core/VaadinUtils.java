@@ -3,17 +3,15 @@ package ua.org.tees.yarosh.tais.ui.core;
 import com.vaadin.data.Validatable;
 import com.vaadin.server.FileDownloader;
 import com.vaadin.server.StreamResource;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import javax.servlet.http.Cookie;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
-
-import static com.vaadin.server.VaadinService.getCurrentResponse;
 
 /**
  * @author Timur Yarosh
@@ -24,8 +22,15 @@ public class VaadinUtils {
 
     private UI ui;
 
-    public VaadinUtils(UI ui) {
+    private VaadinUtils(UI ui) {
         this.ui = ui;
+    }
+
+    public static VaadinUtils extendedUtils(UI ui) {
+        if (ui == null) {
+            throw new IllegalArgumentException("ui must be not null");
+        }
+        return new VaadinUtils(ui);
     }
 
     public static void setSizeUndefined(Component... components) {
@@ -75,33 +80,13 @@ public class VaadinUtils {
         return layout;
     }
 
-    public void saveCookie(String name, String value) {
-        Cookie cookie = new Cookie(name, value);
-        cookie.setMaxAge(15552000);
-        cookie.setPath("/");
-        ui.access(() -> getCurrentResponse().addCookie(cookie));
+    public static void storeToSession(String key, Object object) {
+        VaadinSession.getCurrent().setAttribute(key, object);
     }
 
-    public void deleteCookie(String name) {
-        ui.access(() -> {
-            Cookie cookie = new Cookie(name, "");
-            cookie.setPath("/");
-            cookie.setMaxAge(0);
-            getCurrentResponse().addCookie(cookie);
-        });
+    public static <E> E getFromSession(String key, Class<? extends E> clazz) {
+        return (E) VaadinSession.getCurrent().getAttribute(key);
     }
-
-//    public Cookie getCookie(String name) {
-//        VaadinRequest currentRequest = getCurrentRequest();
-//        if (currentRequest != null) {
-//            for (Cookie cookie : currentRequest.getCookies()) {
-//                if (cookie.getName().equals(name)) {
-//                    return cookie;
-//                }
-//            }
-//        }
-//        return new Cookie(name, "");
-//    }
 
     public static void transformToIconOnlyButton(String description,
                                                  String icon,

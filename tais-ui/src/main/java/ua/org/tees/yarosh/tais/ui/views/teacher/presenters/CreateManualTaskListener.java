@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
-import ua.org.tees.yarosh.tais.ui.core.SessionFactory;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -104,7 +104,7 @@ public class CreateManualTaskListener extends AbstractPresenter implements Creat
 
         @Override
         public void uploadSucceeded(SucceededEvent event) {
-            SessionFactory.getCurrent().getView(CreateManualTaskView.class).setPayloadPath(payloadPath);
+            UIFactoryAccessor.getCurrent().getView(CreateManualTaskView.class).setPayloadPath(payloadPath);
             Notification.show("Задание успешно загружено", Notification.Type.HUMANIZED_MESSAGE);
         }
 

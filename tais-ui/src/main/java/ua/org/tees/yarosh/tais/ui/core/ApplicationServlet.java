@@ -1,14 +1,15 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.annotations.VaadinServletConfiguration;
-import com.vaadin.server.*;
+import com.vaadin.server.ServiceException;
+import com.vaadin.server.SessionInitEvent;
+import com.vaadin.server.SessionInitListener;
+import com.vaadin.server.VaadinServlet;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.ui.TAISUI;
 import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
-import ua.org.tees.yarosh.tais.ui.listeners.shared.ManualTaskRegisteredListener;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -37,9 +38,5 @@ public class ApplicationServlet extends VaadinServlet implements SessionInitList
             log.debug("Request from [{}] handled", request.getRemoteHost());
             return false;
         });
-
-        // service listeners
-        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(
-                new ManualTaskRegisteredListener(uiFactory.getSidebarManager(), VaadinSession.getCurrent()));
     }
 }

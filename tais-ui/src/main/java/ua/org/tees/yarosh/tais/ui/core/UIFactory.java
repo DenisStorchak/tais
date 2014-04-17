@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
+import com.google.common.eventbus.AsyncEventBus;
 import com.vaadin.navigator.View;
 import com.vaadin.ui.Window;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
@@ -13,17 +14,20 @@ public class UIFactory implements ComponentFactory {
     private PresenterFactory presenterFactory;
     private HelpManagerFactory helpManagerFactory;
     private SidebarManagerFactory sidebarManagerFactory;
+    private EventbusFactory eventbusFactory;
 
     private UIFactory(PresenterFactory presenterFactory,
                       ViewFactory viewFactory,
                       WindowFactory windowFactory,
                       HelpManagerFactory helpManagerFactory,
-                      SidebarManagerFactory sidebarManagerFactory) {
+                      SidebarManagerFactory sidebarManagerFactory,
+                      EventbusFactory eventbusFactory) {
         this.viewFactory = viewFactory;
         this.windowFactory = windowFactory;
         this.presenterFactory = presenterFactory;
         this.helpManagerFactory = helpManagerFactory;
         this.sidebarManagerFactory = sidebarManagerFactory;
+        this.eventbusFactory = eventbusFactory;
     }
 
     public static UIFactory createFactory(UIContext ctx) {
@@ -32,7 +36,9 @@ public class UIFactory implements ComponentFactory {
         ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
         LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
         SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();
-        return new UIFactory(presenterFactory, viewFactory, windowFactory, helpManagerFactory, sidebarManagerFactory);
+        EventbusFactory eventbusFactory = new ContextEventbusFactory();
+        return new UIFactory(presenterFactory, viewFactory, windowFactory,
+                helpManagerFactory, sidebarManagerFactory, eventbusFactory);
     }
 
     @Override
@@ -68,5 +74,10 @@ public class UIFactory implements ComponentFactory {
     @Override
     public SidebarManager getSidebarManager() {
         return sidebarManagerFactory.getSidebarManager();
+    }
+
+    @Override
+    public AsyncEventBus getEventBus() {
+        return eventbusFactory.getEventBus();
     }
 }
