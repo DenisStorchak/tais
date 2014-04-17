@@ -188,6 +188,12 @@ public class TAISUI extends UI implements ManualTaskEnabledListenerTeacher, Logi
             if (registrant.getRole().equals(STUDENT)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
                 setUpUnresolvedTasksButton(event);
+            } else if (registrant.getRole().equals(TEACHER)) {
+                log.debug("Registrant [{}] session affected", registrant.toString());
+                log.warn("Nothing to do");
+            } else if (registrant.getRole().equals(ADMIN)) {
+                log.debug("Registrant [{}] session affected", registrant.toString());
+                log.warn("Nothing to do");
             } else {
                 log.debug("Current registrant is null, so handler is resting");
             }
