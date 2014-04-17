@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.homework;
 
+import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.persistence.StudentGroupRepository;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.*;
+import ua.org.tees.yarosh.tais.homework.events.*;
 import ua.org.tees.yarosh.tais.homework.models.*;
 
 import java.util.List;
@@ -31,6 +33,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     private QuestionsSuiteRepository questionsSuiteRepository;
     private ManualTaskReportRepository manualTaskReportRepository;
     private AchievementDiaryRepository diaryRepository;
+    private AsyncEventBus eventbus;
 
     @Autowired
     public void setManualTaskRepository(ManualTaskRepository manualTaskRepository) {
@@ -60,6 +63,11 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Autowired
     public void setDiaryRepository(AchievementDiaryRepository diaryRepository) {
         this.diaryRepository = diaryRepository;
+    }
+
+    @Autowired
+    public void setEventbus(AsyncEventBus eventbus) {
+        this.eventbus = eventbus;
     }
 
     @Override
@@ -114,6 +122,8 @@ public class DefaultHomeworkManager implements HomeworkManager {
             }
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
+        if (enable) eventbus.post(new QuestionsSuiteEnabledEvent(questionsSuite));
+        else eventbus.post(new QuestionsSuiteDisabledEvent(questionsSuite));
     }
 
     @Override
@@ -145,6 +155,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
         manualAchievement.setManualTask(manualTaskReport.getTask());
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
+        eventbus.post(new ReportRatedEvent(manualTaskReport, examiner, grade));
     }
 
     @Override
@@ -221,5 +232,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
             else taskHolder.getManualTaskList().remove(manualTask);
             personalTaskHolderRepository.saveAndFlush(taskHolder);
         }
+        if (enable) eventbus.post(new ManualTaskEnabledEvent(manualTask));
+        else eventbus.post(new ManualTaskDisabledEvent(manualTask));
     }
 }

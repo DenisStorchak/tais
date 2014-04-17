@@ -28,7 +28,7 @@ public class ManualTaskRegisteredListener implements ManualTaskEnabledListener {
 
     @Override
     public void onEnabled(ManualTask manualTask) {
-        log.debug("ManualTaskRegisteredEvent handler invoked");
+        log.debug("ManualTaskEnabledEvent handler invoked");
         Registrant registrant = Registrants.getCurrent(session);
         if (registrant != null && manualTask.getStudentGroup().equals(registrant.getGroup())) {
             log.debug("Registrant [{}] session affected", registrant.toString());

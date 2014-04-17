@@ -5,9 +5,9 @@ import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 /**
  * @author Timur Yarosh
  *         Date: 12.04.14
- *         Time: 22:11
+ *         Time: 23:03
  */
-public class ManualTaskRegisteredEvent {
+public class ManualTaskDisabledEvent {
 
     private ManualTask task;
 
@@ -15,7 +15,7 @@ public class ManualTaskRegisteredEvent {
         return task;
     }
 
-    public ManualTaskRegisteredEvent(ManualTask task) {
-        this.task = task;
+    public ManualTaskDisabledEvent(ManualTask manualTask) {
+        this.task = manualTask;
     }
 }

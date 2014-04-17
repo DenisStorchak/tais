@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
  *         Date: 12.04.14
  *         Time: 22:11
  */
-public class QuestionsSuiteRegisteredEvent {
+public class QuestionsSuiteEnabledEvent {
 
     private QuestionsSuite suite;
 
@@ -15,7 +15,7 @@ public class QuestionsSuiteRegisteredEvent {
         return suite;
     }
 
-    public QuestionsSuiteRegisteredEvent(QuestionsSuite suite) {
+    public QuestionsSuiteEnabledEvent(QuestionsSuite suite) {
         this.suite = suite;
     }
 }
