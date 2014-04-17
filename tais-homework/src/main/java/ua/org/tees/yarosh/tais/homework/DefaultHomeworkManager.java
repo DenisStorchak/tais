@@ -101,12 +101,22 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    public void addQuestionsSuiteEnabledListener(QuestionsSuiteEnabledListener listener) {
+        eventbus.register(listener);
+    }
+
+    @Override
     @CachePut(QUESTION_SUITES)
     public void disableQuestionsSuite(long id) {
         QuestionsSuite questionsSuite = questionsSuiteRepository.findOne(id);
         if (questionsSuite.getEnabled()) {
             switchQuestionsSuiteState(questionsSuite, false);
         }
+    }
+
+    @Override
+    public void addQuestionsSuiteDisabledListener(QuestionsSuiteDisabledListener listener) {
+        eventbus.register(listener);
     }
 
     private void switchQuestionsSuiteState(QuestionsSuite questionsSuite, boolean enable) {
@@ -156,6 +166,11 @@ public class DefaultHomeworkManager implements HomeworkManager {
         diary.getManualAchievements().add(manualAchievement);
         diaryRepository.saveAndFlush(diary);
         eventbus.post(new ReportRatedEvent(manualTaskReport, examiner, grade));
+    }
+
+    @Override
+    public void addManualTaskRatedListener(ManualTaskRatedListener listener) {
+        eventbus.register(listener);
     }
 
     @Override
@@ -214,12 +229,22 @@ public class DefaultHomeworkManager implements HomeworkManager {
     }
 
     @Override
+    public void addManualTaskEnabledListener(ManualTaskEnabledListener listener) {
+        eventbus.register(listener);
+    }
+
+    @Override
     @CacheEvict(value = MANUAL_TASKS, allEntries = true)
     public void disableManualTask(long id) {
         ManualTask manualTask = manualTaskRepository.findOne(id);
         if (!manualTask.isEnabled()) {
             switchManualTaskState(manualTask, false);
         }
+    }
+
+    @Override
+    public void addManualTaskDisabledListener(ManualTaskDisabledListener listener) {
+        eventbus.register(listener);
     }
 
     private void switchManualTaskState(ManualTask manualTask, boolean enable) {
