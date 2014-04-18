@@ -29,14 +29,15 @@ public class UIFactory implements ComponentFactory {
         this.sidebarManagerFactory = sidebarManagerFactory;
     }
 
-    public static UIFactory createFactory(UIContext ctx) {
+    public static void createAndSaveFactory(UIContext ctx) {
         ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
         ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
         ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
         LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
         SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();
-        return new UIFactory(presenterFactory, viewFactory, windowFactory,
+        UIFactory uiFactory = new UIFactory(presenterFactory, viewFactory, windowFactory,
                 helpManagerFactory, sidebarManagerFactory);
+        VaadinSession.getCurrent().setAttribute(COMPONENT_FACTORY, uiFactory);
     }
 
     @Override
