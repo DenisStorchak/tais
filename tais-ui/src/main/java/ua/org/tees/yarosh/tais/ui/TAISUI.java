@@ -16,7 +16,11 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.homework.AchievementDiaryReceptionist;
+import ua.org.tees.yarosh.tais.homework.PersonalTaskHolderReceptionist;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
+import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryRepository;
+import ua.org.tees.yarosh.tais.homework.api.persistence.PersonalTaskHolderRepository;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
@@ -101,6 +105,12 @@ public class TAISUI extends UI {
         homeworkManager.addManualTaskEnabledListener(new TaskEnabledListener(this));
 
         RegistrantService registrantService = ctx.getBean(RegistrantService.class);
+        AchievementDiaryRepository achievementDiaryRepository = ctx.getBean(AchievementDiaryRepository.class);
+        registrantService.addRegistrationListener(new AchievementDiaryReceptionist(achievementDiaryRepository));
+
+        PersonalTaskHolderRepository personalTaskHolderRepository = ctx.getBean(PersonalTaskHolderRepository.class);
+        registrantService.addRegistrationListener(new PersonalTaskHolderReceptionist(personalTaskHolderRepository));
+
         AuthManager authManager = ctx.getBean(AuthManager.class);
         authManager.addLoginListener(new LoginButtonsInitializer(this, registrantService));
     }
