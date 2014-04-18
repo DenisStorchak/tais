@@ -44,7 +44,9 @@ public class LoginButtonsInitializer implements LoginListener {
         ui.access(() -> {
             log.debug("LoginEvent handler invoked");
             Registrant registrant = registrantService.getRegistration(event.getUserDetails().getUsername());
-            if (registrant.getRole().equals(STUDENT)) {
+            if (registrant == null) {
+                log.warn("Registrant not found");
+            } else if (registrant.getRole().equals(STUDENT)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
                 setUpUnresolvedTasksButton(registrant);
             } else if (registrant.getRole().equals(TEACHER)) {
