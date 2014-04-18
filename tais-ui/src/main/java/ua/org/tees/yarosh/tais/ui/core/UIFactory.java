@@ -1,8 +1,10 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Window;
+import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.api.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
@@ -27,22 +29,6 @@ public class UIFactory implements ComponentFactory {
         this.presenterFactory = presenterFactory;
         this.helpManagerFactory = helpManagerFactory;
         this.sidebarManagerFactory = sidebarManagerFactory;
-    }
-
-    /**
-     * Create factory and save it to current vaadin session
-     *
-     * @param ctx context
-     */
-    public static void createAndSaveFactory(UIContext ctx) {
-        ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
-        ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
-        ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
-        LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
-        SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();
-        UIFactory uiFactory = new UIFactory(presenterFactory, viewFactory, windowFactory,
-                helpManagerFactory, sidebarManagerFactory);
-        VaadinSession.getCurrent().setAttribute(COMPONENT_FACTORY, uiFactory);
     }
 
     @Override
@@ -81,11 +67,32 @@ public class UIFactory implements ComponentFactory {
     }
 
     /**
-     * Get factory from current vaadin session
+     * Get factory from current vaadin session if presented or create and save it
      *
      * @return factory
      */
     public static ComponentFactory getCurrent() {
-        return (ComponentFactory) VaadinSession.getCurrent().getAttribute(COMPONENT_FACTORY);
+        ComponentFactory instance = (ComponentFactory) VaadinSession.getCurrent().getAttribute(COMPONENT_FACTORY);
+        if (instance == null) {
+            instance = createAndSaveFactory();
+        }
+        return instance;
+    }
+
+    /**
+     * Create factory and save it to current vaadin session
+     */
+    private static ComponentFactory createAndSaveFactory() {
+        UIContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(
+                VaadinServlet.getCurrent().getServletContext()).getBean(UIContext.class);
+        ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
+        ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
+        ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
+        LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
+        SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();
+        UIFactory uiFactory = new UIFactory(presenterFactory, viewFactory, windowFactory,
+                helpManagerFactory, sidebarManagerFactory);
+        VaadinSession.getCurrent().setAttribute(COMPONENT_FACTORY, uiFactory);
+        return uiFactory;
     }
 }
