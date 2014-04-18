@@ -11,7 +11,7 @@ import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
 
 import static com.vaadin.ui.Button.ClickEvent;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.MANUAL_PAYLOAD_DIR;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.REPORT_PAYLOAD_DIR;
 
 @TaisWindow("Загрузка отчета")
 public class UploadReportWindow extends AbstractWindow {
@@ -25,6 +25,7 @@ public class UploadReportWindow extends AbstractWindow {
     private Label discipline = new Label();
     private Label deadline = new Label();
     private Button save = new Button();
+
     private String filepath;
     private ManualTask manualTask;
 
@@ -49,7 +50,7 @@ public class UploadReportWindow extends AbstractWindow {
     public void init() {
         super.init();
 
-        PayloadReceiver receiver = new PayloadReceiver(MANUAL_PAYLOAD_DIR, e -> filepath = e.getFilename());
+        PayloadReceiver receiver = new PayloadReceiver(REPORT_PAYLOAD_DIR, e -> filepath = e.getFilename());
         payloadUploader.setReceiver(receiver);
         payloadUploader.addSucceededListener(receiver);
         payloadUploader.addFailedListener(receiver);

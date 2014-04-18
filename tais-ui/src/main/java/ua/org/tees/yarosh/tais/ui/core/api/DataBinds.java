@@ -82,7 +82,7 @@ public abstract class DataBinds {
     public static abstract class FS {
         public static final String DEFAULT_EXTENSION = "tais";
         public static final String HOME_DIR = System.getProperty("user.home");
-        public static final String MANUAL_PAYLOAD_DIR = "manual_task";
+        public static final String TASK_PAYLOAD_DIR = "manual_task";
         public static final String REPORT_PAYLOAD_DIR = "manual_report";
     }
 }
