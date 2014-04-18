@@ -46,6 +46,7 @@ public class ManualTaskDetailsWindow extends AbstractWindow {
     public void init() {
         super.init();
         extendDownloadButton(new File(manualTask.getPayloadPath()), download);
+        download.addClickListener(e -> close());
     }
 
     @Override
