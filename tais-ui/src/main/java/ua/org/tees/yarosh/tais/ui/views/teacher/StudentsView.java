@@ -8,7 +8,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;

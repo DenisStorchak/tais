@@ -6,7 +6,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.properties.*;
 import ua.org.tees.yarosh.tais.ui.RoleTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;

@@ -6,7 +6,7 @@ import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitAll;
 
 @PermitAll
 public class AccessDeniedView extends VerticalLayout implements View {

@@ -1,7 +1,5 @@
 package ua.org.tees.yarosh.tais.ui;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
-import com.google.common.eventbus.Subscribe;
 import com.vaadin.annotations.Push;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
@@ -10,8 +8,6 @@ import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
@@ -20,8 +16,6 @@ import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
-import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
-import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
@@ -29,9 +23,7 @@ import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
 import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
-import ua.org.tees.yarosh.tais.ui.core.api.LoginListener;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
-import ua.org.tees.yarosh.tais.ui.core.events.LoginEvent;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.listeners.*;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
@@ -42,9 +34,6 @@ import ua.org.tees.yarosh.tais.ui.views.common.*;
 import ua.org.tees.yarosh.tais.ui.views.student.QuestionsSuiteRunnerView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.*;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
@@ -64,7 +53,7 @@ import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher
 @Theme("dashboard")
 @Title("TEES Dashboard")
 @Push
-public class TAISUI extends UI implements LoginListener {
+public class TAISUI extends UI {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
 
@@ -100,6 +89,7 @@ public class TAISUI extends UI implements LoginListener {
 
         WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
         ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(new TaskEnabledListener(this));
+        UIFactoryAccessor.getCurrent().getEventBus().register(new LoginListener(this));
     }
 
     private void setUpViews(Navigator nav) {
@@ -148,64 +138,5 @@ public class TAISUI extends UI implements LoginListener {
 
     public static void navigateTo(String state) {
         getCurrent().getNavigator().navigateTo(state);
-    }
-
-    @Override
-    @Subscribe
-    @AllowConcurrentEvents
-    public void onLogin(LoginEvent event) {
-        access(() -> {
-            log.debug("LoginEvent handler invoked");
-            Registrant registrant = event.getRegistrant();
-            if (registrant.getRole().equals(STUDENT)) {
-                log.debug("Registrant [{}] session affected", registrant.toString());
-                setUpUnresolvedTasksButton(event);
-            } else if (registrant.getRole().equals(TEACHER)) {
-                log.debug("Registrant [{}] session affected", registrant.toString());
-                setUpTeacherDashboardViewButton(event);
-            } else if (registrant.getRole().equals(ADMIN)) {
-                log.debug("Registrant [{}] session affected", registrant.toString());
-                log.warn("Nothing to do");
-            } else {
-                log.debug("Current registrant is null, so handler is resting");
-            }
-        });
-    }
-
-    private void setUpTeacherDashboardViewButton(LoginEvent event) {
-        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-        HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
-        DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
-
-        List<ManualTaskReport> reports = new ArrayList<>();
-        disciplineService.findDisciplinesByTeacher(event.getRegistrant().getLogin())
-                .forEach(d -> reports.addAll(homeworkManager.findUnratedManualTaskReports(d)));
-
-        Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
-                .getSidebarMenu().getButton(TeacherDashboardView.class);
-        updateCaption(reports.size(), button);
-    }
-
-    private void setUpUnresolvedTasksButton(LoginEvent event) {
-        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-        HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
-
-        int unresolvedManual = homeworkManager.findUnresolvedActualManualTasks(event.getRegistrant()).size();
-        int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(event.getRegistrant()).size();
-        int tasks = unresolvedManual + unresolvedSuites;
-
-        Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
-                .getSidebarMenu().getButton(UnresolvedTasksView.class);
-        updateCaption(tasks, button);
-    }
-
-    private void updateCaption(int number, Component component) {
-        if (component != null) {
-            log.debug("Old component caption is [{}]", component.getCaption());
-            component.setCaption(component.getCaption().replaceAll("\\d+", String.valueOf(number)));
-            log.debug("New component caption is [{}]", component.getCaption());
-        } else {
-            log.warn("component is null");
-        }
     }
 }

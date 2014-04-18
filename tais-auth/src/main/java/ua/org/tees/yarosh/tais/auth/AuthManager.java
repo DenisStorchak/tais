@@ -1,10 +1,16 @@
 package ua.org.tees.yarosh.tais.auth;
 
+import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.auth.api.LoginListener;
+import ua.org.tees.yarosh.tais.auth.api.LogoutListener;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.auth.events.LoginEvent;
+import ua.org.tees.yarosh.tais.auth.events.LogoutEvent;
 
 import java.util.Map;
 import java.util.Optional;
@@ -19,6 +25,20 @@ public class AuthManager {
     private static final Logger log = LoggerFactory.getLogger(AuthManager.class);
     private static volatile boolean acceptEmptyStrings = false;
     private static boolean enabled = false;
+    private AsyncEventBus eventBus;
+
+    @Autowired
+    public void setEventBus(AsyncEventBus eventBus) {
+        this.eventBus = eventBus;
+    }
+
+    public void addLoginListener(LoginListener listener) {
+        eventBus.register(listener);
+    }
+
+    public void addLogoutListener(LogoutListener listener) {
+        eventBus.register(listener);
+    }
 
     public static void addDao(UserRepositoryAdapter userRepositoryAdapter) {
         DAO_ADAPTERS.add(userRepositoryAdapter);
@@ -37,6 +57,7 @@ public class AuthManager {
                 if (userDetails != null && assertPasswords(password, userDetails.getPassword(), dao.get())) {
                     AUTHORIZATIONS.put(username, userDetails);
                     log.info("Registrant [{}] logged in", username);
+                    eventBus.post(new LoginEvent(userDetails));
                     return true;
                 }
             }
@@ -79,6 +100,7 @@ public class AuthManager {
             if (AUTHORIZATIONS.containsKey(username)) {
                 AUTHORIZATIONS.remove(username);
                 log.info("Registrant [{}] logged out", username);
+                eventBus.post(new LogoutEvent(AUTHORIZATIONS.get(username)));
                 return true;
             }
             return false;

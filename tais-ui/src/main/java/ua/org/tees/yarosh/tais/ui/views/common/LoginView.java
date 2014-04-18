@@ -6,7 +6,7 @@ import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;

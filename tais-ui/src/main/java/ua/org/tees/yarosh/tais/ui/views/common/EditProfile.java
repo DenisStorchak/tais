@@ -5,7 +5,7 @@ import com.vaadin.navigator.ViewChangeListener;
 import com.vaadin.ui.*;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Qualifier;
-import ua.org.tees.yarosh.tais.auth.annotations.PermitRoles;
+import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
