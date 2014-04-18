@@ -29,6 +29,11 @@ public class UIFactory implements ComponentFactory {
         this.sidebarManagerFactory = sidebarManagerFactory;
     }
 
+    /**
+     * Create factory and save it to current vaadin session
+     *
+     * @param ctx context
+     */
     public static void createAndSaveFactory(UIContext ctx) {
         ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
         ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
@@ -75,6 +80,11 @@ public class UIFactory implements ComponentFactory {
         return sidebarManagerFactory.getSidebarManager();
     }
 
+    /**
+     * Get factory from current vaadin session
+     *
+     * @return factory
+     */
     public static ComponentFactory getCurrent() {
         return (ComponentFactory) VaadinSession.getCurrent().getAttribute(COMPONENT_FACTORY);
     }
