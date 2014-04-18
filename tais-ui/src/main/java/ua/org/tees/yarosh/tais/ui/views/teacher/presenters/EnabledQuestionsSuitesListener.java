@@ -7,7 +7,8 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
-import ua.org.tees.yarosh.tais.ui.components.windows.QuestionSuiteDetailsWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.QuestionsSuiteDetailsWindow;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -57,7 +58,10 @@ public class EnabledQuestionsSuitesListener extends AbstractPresenter implements
 
     @Override
     public void onDetails(long id) {
-        UI.getCurrent().addWindow(new QuestionSuiteDetailsWindow(homeworkManager.findQuestionsSuite(id)));
+        QuestionsSuiteDetailsWindow window = UIFactoryAccessor.getCurrent().getWindow(QuestionsSuiteDetailsWindow.class);
+        window.setQuestionsSuite(homeworkManager.findQuestionsSuite(id));
+        window.afterPropertiesSet();
+        UI.getCurrent().addWindow(window);
     }
 
     @Override

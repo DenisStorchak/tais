@@ -8,6 +8,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
 import ua.org.tees.yarosh.tais.ui.components.windows.ManualTaskDetailsWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.QuestionsSuiteDetailsWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.UploadReportWindow;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
@@ -51,7 +52,10 @@ public class UnresolvedTasksListener extends AbstractPresenter implements Unreso
 
     @Override
     public void onQuestionsSuiteRequested(QuestionsSuite questionsSuite) {
-        //todo show q suite details
+        QuestionsSuiteDetailsWindow window = getCurrent().getWindow(QuestionsSuiteDetailsWindow.class);
+        window.setQuestionsSuite(questionsSuite);
+        window.afterPropertiesSet();
+        UI.getCurrent().addWindow(window);
     }
 
     @Override
