@@ -1,15 +1,14 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
-import com.vaadin.server.VaadinServlet;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Window;
-import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.api.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 
-import static org.springframework.web.context.support.WebApplicationContextUtils.getWebApplicationContext;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 public class UIFactory implements ComponentFactory {
     private ViewFactory viewFactory;
@@ -17,8 +16,6 @@ public class UIFactory implements ComponentFactory {
     private PresenterFactory presenterFactory;
     private HelpManagerFactory helpManagerFactory;
     private SidebarManagerFactory sidebarManagerFactory;
-
-    private static final ThreadLocal<UIFactory> instance = new InheritableThreadLocal<>();
 
     private UIFactory(PresenterFactory presenterFactory,
                       ViewFactory viewFactory,
@@ -78,10 +75,6 @@ public class UIFactory implements ComponentFactory {
     }
 
     public static ComponentFactory getCurrent() {
-        if (instance.get() == null) {
-            WebApplicationContext ctx = getWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-            instance.set(createFactory(ctx.getBean(UIContext.class)));
-        }
-        return instance.get();
+        return (ComponentFactory) VaadinSession.getCurrent().getAttribute(COMPONENT_FACTORY);
     }
 }
