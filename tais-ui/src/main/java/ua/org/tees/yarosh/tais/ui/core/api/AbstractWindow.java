@@ -37,6 +37,8 @@ public abstract class AbstractWindow extends Window implements Initable {
     }
 
     public void close() {
-        this.close();
+        super.close();
     }
+
+    public void afterPropertiesSet() { /* NOP */ }
 }

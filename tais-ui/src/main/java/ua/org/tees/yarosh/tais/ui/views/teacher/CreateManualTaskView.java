@@ -7,13 +7,13 @@ import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
+import ua.org.tees.yarosh.tais.ui.components.PayloadReceiver;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.presenters.CreateManualTaskListener;
 
 import java.util.List;
 
@@ -72,7 +72,7 @@ public class CreateManualTaskView extends DashboardView implements CreateManualT
     }
 
     @Override
-    public void setPayloadReceiver(CreateManualTaskListener.PayloadReceiver payloadReceiver) {
+    public void setPayloadReceiver(PayloadReceiver payloadReceiver) {
         payloadUploader.setReceiver(payloadReceiver);
         payloadUploader.addFailedListener(payloadReceiver);
         payloadUploader.addSucceededListener(payloadReceiver);
