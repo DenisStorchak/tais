@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.homework.models.Question;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateQuestionWindow;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
@@ -22,7 +22,7 @@ import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.ModifierKey.CTRL;
 import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.UIFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateQuestionsSuiteTaisView.CreateQuestionsSuitePresenter;
@@ -61,9 +61,9 @@ public class CreateQuestionsSuiteView extends DashboardView implements CreateQue
 
         addQuestion.setClickShortcut(CTRL, ENTER);
         addQuestion.addClickListener(event -> {
-            CreateQuestionWindow window = UIFactoryAccessor.getCurrent().getWindow(CreateQuestionWindow.class);
+            CreateQuestionWindow window = UIFactory.getCurrent().getWindow(CreateQuestionWindow.class);
             getUI().addWindow(window);
-            window.setPresenter(UIFactoryAccessor.getCurrent().getRelativePresenter(this, CreateQuestionsSuitePresenter.class));
+            window.setPresenter(UIFactory.getCurrent().getRelativePresenter(this, CreateQuestionsSuitePresenter.class));
         });
         saveSuite.setClickShortcut(ENTER);
         saveSuite.addStyleName("default");

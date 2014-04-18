@@ -18,7 +18,7 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
-import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.UIFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.isValid;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.ADD_MANUAL;

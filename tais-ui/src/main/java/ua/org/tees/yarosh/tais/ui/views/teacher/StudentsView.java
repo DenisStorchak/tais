@@ -12,7 +12,7 @@ import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.StudentsTaisView;
@@ -72,7 +72,7 @@ public class StudentsView extends DashboardView implements StudentsTaisView {
         details.addStyleName("icon-only");
         details.addStyleName("icon-logout");
         details.setDescription("Открыть детали");
-        details.addClickListener(event -> UIFactoryAccessor.getCurrent()
+        details.addClickListener(event -> UIFactory.getCurrent()
                 .getRelativePresenter(this, StudentsTaisPresenter.class)
                 .onDetails(registrant));
 
@@ -80,7 +80,7 @@ public class StudentsView extends DashboardView implements StudentsTaisView {
         send.addStyleName("icon-only");
         send.addStyleName("icon-logout");
         send.setDescription("Отправить email");
-        send.addClickListener(event -> UIFactoryAccessor.getCurrent()
+        send.addClickListener(event -> UIFactory.getCurrent()
                 .getRelativePresenter(this, StudentsTaisPresenter.class)
                 .onSend(registrant));
 

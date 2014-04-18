@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.core.common.RegexUtils;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.homework.events.ManualTaskEnabledEvent;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 
@@ -42,7 +42,7 @@ public class TaskEnabledListener implements ManualTaskEnabledListenerTeacher, Qu
             Registrant registrant = Registrants.getCurrent(ui.getSession());
             if (registrant != null && event.getTask().getStudentGroup().equals(registrant.getGroup())) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
-                Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
+                Button button = UIFactory.getCurrent().getSidebarManager().getSidebar()
                         .getSidebarMenu().getButton(UnresolvedTasksView.class);
                 if (button != null) {
                     log.debug("Old component caption is [{}]", button.getCaption());

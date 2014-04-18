@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.windows.ManualReportDetailsWindow;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -65,7 +65,7 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
 
     @Override
     public void onDetails(ManualTaskReport report) {
-        ManualReportDetailsWindow window = UIFactoryAccessor.getCurrent().getWindow(ManualReportDetailsWindow.class);
+        ManualReportDetailsWindow window = UIFactory.getCurrent().getWindow(ManualReportDetailsWindow.class);
         window.setReport(report);
         UI.getCurrent().addWindow(window);
     }

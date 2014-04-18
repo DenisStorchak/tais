@@ -10,7 +10,7 @@ import ua.org.tees.yarosh.tais.auth.api.annotations.PermitRoles;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashPanel;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
@@ -45,7 +45,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
     @Override
     public void update() {
         studentGroupComboBox.removeAllItems();
-        UserRegistrationPresenter presenter = UIFactoryAccessor.getCurrent()
+        UserRegistrationPresenter presenter = UIFactory.getCurrent()
                 .getRelativePresenter(this, UserRegistrationPresenter.class);
         presenter.listStudentGroups().forEach(studentGroupComboBox::addItem);
         position.removeAllItems();
@@ -98,7 +98,7 @@ public class UserRegistrationView extends DashboardView implements UserRegistrat
             try {
                 if (isValid(login, password, repeatPassword, name, surname,
                         patronymic, email, position, studentGroupComboBox)) {
-                    boolean success = UIFactoryAccessor.getCurrent()
+                    boolean success = UIFactory.getCurrent()
                             .getRelativePresenter(this, UserRegistrationPresenter.class)
                             .createRegistration(login, password, name, surname,
                                     patronymic, email, position, studentGroupComboBox);

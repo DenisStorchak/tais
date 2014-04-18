@@ -8,7 +8,7 @@ import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.api.annotations.PermitAll;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
@@ -48,7 +48,7 @@ public class LoginView extends VerticalLayout implements LoginTais {
 
     @Override
     public void enter(ViewChangeListener.ViewChangeEvent event) {
-        UIFactoryAccessor.getCurrent().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
+        UIFactory.getCurrent().getHelpManager().addOverlay("TAIS", WELCOME_MESSAGE, "login", UI.getCurrent());
         clearValue(username);
         clearValue(password);
         if (username != null) {
@@ -116,7 +116,7 @@ public class LoginView extends VerticalLayout implements LoginTais {
             );
 
             signIn.addClickListener(event -> {
-                Registrant login = UIFactoryAccessor.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
+                Registrant login = UIFactory.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
                         .login(username.getValue(), password.getValue());
                 if (username.getValue() != null
                         && password.getValue() != null

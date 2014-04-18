@@ -16,7 +16,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
@@ -68,7 +68,7 @@ public class LoginButtonsInitializer implements LoginListener {
         disciplineService.findDisciplinesByTeacher(registrant.getLogin())
                 .forEach(d -> reports.addAll(homeworkManager.findUnratedManualTaskReports(d)));
 
-        Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
+        Button button = UIFactory.getCurrent().getSidebarManager().getSidebar()
                 .getSidebarMenu().getButton(TeacherDashboardView.class);
         updateCaption(reports.size(), button);
     }
@@ -81,7 +81,7 @@ public class LoginButtonsInitializer implements LoginListener {
         int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(registrant).size();
         int tasks = unresolvedManual + unresolvedSuites;
 
-        Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
+        Button button = UIFactory.getCurrent().getSidebarManager().getSidebar()
                 .getSidebarMenu().getButton(UnresolvedTasksView.class);
         updateCaption(tasks, button);
     }

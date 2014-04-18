@@ -20,7 +20,7 @@ import java.util.Map;
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.STUDENT;
-import static ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor.getCurrent;
+import static ua.org.tees.yarosh.tais.ui.core.UIFactory.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.QuestionsSuiteRunnerTaisView.QuestionsSuiteRunnerPresenter;
 

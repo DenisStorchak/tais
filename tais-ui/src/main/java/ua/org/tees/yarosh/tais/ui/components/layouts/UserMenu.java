@@ -5,7 +5,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.*;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 
 import static com.vaadin.server.VaadinSession.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
@@ -41,7 +41,7 @@ public class UserMenu extends VerticalLayout {
         settingsMenu.addItem("Профиль", menuItem -> getUI().getNavigator().navigateTo(ME));
         settingsMenu.addItem("Редактировать профиль", menuItem -> {
             getUI().getNavigator().navigateTo(EDIT_PROFILE);
-            EditProfilePresenter presenter = UIFactoryAccessor.getCurrent()
+            EditProfilePresenter presenter = UIFactory.getCurrent()
                     .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfilePresenter.class);
             String login = (String) getCurrent().getAttribute(REGISTRANT_ID);
             presenter.setRegistrantId(login);

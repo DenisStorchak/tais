@@ -6,7 +6,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkResolver;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.components.PayloadReceiver;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.AbstractWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
@@ -68,7 +68,7 @@ public class UploadReportWindow extends AbstractWindow {
             manualTaskReport.setOwner(Registrants.getCurrent());
             manualTaskReport.setTask(manualTask);
             homeworkResolver.resolve(manualTaskReport);
-            UIFactoryAccessor.getCurrent()
+            UIFactory.getCurrent()
                     .getRelativePresenter(UnresolvedTasksTaisView.class, UnresolvedTasksPresenter.class)
                     .onRefresh();
             close();

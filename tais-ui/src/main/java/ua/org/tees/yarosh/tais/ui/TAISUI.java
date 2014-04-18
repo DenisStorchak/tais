@@ -25,7 +25,7 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
 import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
@@ -120,7 +120,7 @@ public class TAISUI extends UI {
         nav.addViewChangeListener(new LastViewSaver());
         nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 
-        SidebarManager sidebarManager = UIFactoryAccessor.getCurrent().getSidebarManager();
+        SidebarManager sidebarManager = UIFactory.getCurrent().getSidebarManager();
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
     }
 

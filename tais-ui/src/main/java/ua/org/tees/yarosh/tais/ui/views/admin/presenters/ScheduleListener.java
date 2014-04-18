@@ -9,7 +9,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.api.ScheduleService;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -65,7 +65,7 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
 
     @Override
     public CreateScheduleWindow getCreateScheduleWindow(Object studentGroup, Container lessons, Date lastDate) {
-        CreateScheduleWindow window = UIFactoryAccessor.getCurrent().getWindow(CreateScheduleWindow.class);
+        CreateScheduleWindow window = UIFactory.getCurrent().getWindow(CreateScheduleWindow.class);
         window.setListener(this);
         window.setScheduleContainer(lessons);
         window.setStudentGroup((StudentGroup) studentGroup);

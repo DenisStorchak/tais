@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.core.mvp;
 
 import com.vaadin.navigator.View;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
 
 import static com.vaadin.navigator.Navigator.ClassBasedViewProvider;
@@ -25,7 +25,7 @@ public class FactoryBasedViewProvider extends ClassBasedViewProvider {
 
     @Override
     public View getView(String viewName) {
-        ComponentFactory componentFactory = UIFactoryAccessor.getCurrent();
+        ComponentFactory componentFactory = UIFactory.getCurrent();
         componentFactory.getHelpManager().closeAll();
         return componentFactory.getView(getViewClass());
     }

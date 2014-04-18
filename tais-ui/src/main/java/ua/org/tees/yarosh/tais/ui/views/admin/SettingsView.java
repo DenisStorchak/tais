@@ -11,7 +11,7 @@ import ua.org.tees.yarosh.tais.core.common.properties.*;
 import ua.org.tees.yarosh.tais.ui.RoleTranslator;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.components.layouts.DashboardView;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.SettingsTaisView;
@@ -42,7 +42,7 @@ public class SettingsView extends DashboardView implements SettingsTaisView {
     @Override
     public void update() {
         dash.removeAllComponents();
-        SettingsPresenter presenter = UIFactoryAccessor.getCurrent().getRelativePresenter(this, SettingsPresenter.class);
+        SettingsPresenter presenter = UIFactory.getCurrent().getRelativePresenter(this, SettingsPresenter.class);
         addDashPanel(null, null, createPropertiesTable(presenter.getCacheProperties()));
         addDashPanel(null, null, createPropertiesTable(presenter.getHibernateProperties()));
         addDashPanel(null, null, createPropertiesTable(presenter.getDefaultUserProperties()));

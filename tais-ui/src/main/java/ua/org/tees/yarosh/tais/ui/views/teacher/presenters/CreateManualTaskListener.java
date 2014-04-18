@@ -7,7 +7,7 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.PayloadReceiver;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -51,7 +51,7 @@ public class CreateManualTaskListener extends AbstractPresenter implements Creat
         getView(CreateManualTaskTaisView.class).setGroups(registrantService.findAllStudentGroups());
         getView(CreateManualTaskTaisView.class).setPayloadReceiver(new PayloadReceiver(
                 TASK_PAYLOAD_DIR,
-                e -> UIFactoryAccessor.getCurrent().getView(CreateManualTaskView.class).setPayloadPath(e.getFilename())
+                e -> UIFactory.getCurrent().getView(CreateManualTaskView.class).setPayloadPath(e.getFilename())
         ));
     }
 

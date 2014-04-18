@@ -7,7 +7,7 @@ import com.vaadin.ui.*;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
@@ -52,7 +52,7 @@ public class CreateRegistrationWindow extends Window {
                     login.focus();
                     setUpValidators();
 
-                    UserRegistrationPresenter presenter = UIFactoryAccessor.getCurrent()
+                    UserRegistrationPresenter presenter = UIFactory.getCurrent()
                             .getPresenter(UserRegistrationPresenter.class);
                     presenter.listStudentGroups().forEach(studentGroupComboBox::addItem);
                     position.removeAllItems();
@@ -94,7 +94,7 @@ public class CreateRegistrationWindow extends Window {
                         try {
                             if (isValid(login, password, repeatPassword, name, surname,
                                     patronymic, email, position, studentGroupComboBox)) {
-                                boolean success = UIFactoryAccessor.getCurrent()
+                                boolean success = UIFactory.getCurrent()
                                         .getPresenter(UserRegistrationPresenter.class)
                                         .createRegistration(login, password, name, surname,
                                                 patronymic, email, position, studentGroupComboBox);

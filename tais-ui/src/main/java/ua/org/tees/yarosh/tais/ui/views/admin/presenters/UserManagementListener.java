@@ -14,7 +14,7 @@ import ua.org.tees.yarosh.tais.ui.components.windows.CreateClassroomWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateDisciplineWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateGroupWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateRegistrationWindow;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
+import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -78,28 +78,28 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     @Override
     public void onCreateRegistration() {
 //        UI.getCurrent().getNavigator().navigateTo(USER_REGISTRATION);
-        UI.getCurrent().addWindow(UIFactoryAccessor.getCurrent().getWindow(CreateRegistrationWindow.class));
+        UI.getCurrent().addWindow(UIFactory.getCurrent().getWindow(CreateRegistrationWindow.class));
     }
 
     @Override
     public void onCreateGroup() {
-        UI.getCurrent().addWindow(UIFactoryAccessor.getCurrent().getWindow(CreateGroupWindow.class));
+        UI.getCurrent().addWindow(UIFactory.getCurrent().getWindow(CreateGroupWindow.class));
     }
 
     @Override
     public void onCreateClassroom() {
-        UI.getCurrent().addWindow(UIFactoryAccessor.getCurrent().getWindow(CreateClassroomWindow.class));
+        UI.getCurrent().addWindow(UIFactory.getCurrent().getWindow(CreateClassroomWindow.class));
     }
 
     @Override
     public void onCreateDiscipline() {
-        UI.getCurrent().addWindow(UIFactoryAccessor.getCurrent().getWindow(CreateDisciplineWindow.class));
+        UI.getCurrent().addWindow(UIFactory.getCurrent().getWindow(CreateDisciplineWindow.class));
     }
 
     private Button.ClickListener createListener(String login) {
         return event -> {
             TAISUI.navigateTo(EDIT_PROFILE);
-            EditProfileTais.EditProfilePresenter presenter = UIFactoryAccessor.getCurrent()
+            EditProfileTais.EditProfilePresenter presenter = UIFactory.getCurrent()
                     .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfileTais.EditProfilePresenter.class);
             presenter.setRegistrantId(login);
             presenter.allowAdminRights(true);

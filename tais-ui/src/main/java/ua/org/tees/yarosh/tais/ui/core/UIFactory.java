@@ -1,11 +1,14 @@
 package ua.org.tees.yarosh.tais.ui.core;
 
 import com.vaadin.navigator.View;
+import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Window;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
 import ua.org.tees.yarosh.tais.ui.core.api.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
+
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 public class UIFactory implements ComponentFactory {
     private ViewFactory viewFactory;
@@ -69,5 +72,9 @@ public class UIFactory implements ComponentFactory {
     @Override
     public SidebarManager getSidebarManager() {
         return sidebarManagerFactory.getSidebarManager();
+    }
+
+    public static ComponentFactory getCurrent() {
+        return (ComponentFactory) VaadinSession.getCurrent().getAttribute(COMPONENT_FACTORY);
     }
 }
