@@ -3,11 +3,9 @@ package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.auth.events.LoginEvent;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.properties.DefaultUserProperties;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
-import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -52,7 +50,6 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
                 registration.setLogin(defaultUserProperties.getLogin());
                 registration.setRole(defaultUserProperties.getRole());
             }
-            UIFactoryAccessor.getCurrent().getEventBus().post(new LoginEvent(registration));
             return registration;
         }
         return null;

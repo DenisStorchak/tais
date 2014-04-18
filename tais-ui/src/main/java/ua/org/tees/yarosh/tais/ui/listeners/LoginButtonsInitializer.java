@@ -9,8 +9,10 @@ import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
+import ua.org.tees.yarosh.tais.auth.api.LoginListener;
 import ua.org.tees.yarosh.tais.auth.events.LoginEvent;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
@@ -24,13 +26,15 @@ import java.util.List;
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 
-public class LoginListener implements ua.org.tees.yarosh.tais.ui.core.api.LoginListener {
+public class LoginButtonsInitializer implements LoginListener {
 
-    public static final Logger log = LoggerFactory.getLogger(LoginListener.class);
+    public static final Logger log = LoggerFactory.getLogger(LoginButtonsInitializer.class);
     private UI ui;
+    private RegistrantService registrantService;
 
-    public LoginListener(UI ui) {
+    public LoginButtonsInitializer(UI ui, RegistrantService registrantService) {
         this.ui = ui;
+        this.registrantService = registrantService;
     }
 
     @Override
@@ -39,13 +43,13 @@ public class LoginListener implements ua.org.tees.yarosh.tais.ui.core.api.LoginL
     public void onLogin(LoginEvent event) {
         ui.access(() -> {
             log.debug("LoginEvent handler invoked");
-            Registrant registrant = event.getUserDetails();
+            Registrant registrant = registrantService.getRegistration(event.getUserDetails().getUsername());
             if (registrant.getRole().equals(STUDENT)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
-                setUpUnresolvedTasksButton(event);
+                setUpUnresolvedTasksButton(registrant);
             } else if (registrant.getRole().equals(TEACHER)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
-                setUpTeacherDashboardViewButton(event);
+                setUpTeacherDashboardViewButton(registrant);
             } else if (registrant.getRole().equals(ADMIN)) {
                 log.debug("Registrant [{}] session affected", registrant.toString());
                 log.warn("Nothing to do");
@@ -55,13 +59,13 @@ public class LoginListener implements ua.org.tees.yarosh.tais.ui.core.api.LoginL
         });
     }
 
-    private void setUpTeacherDashboardViewButton(LoginEvent event) {
+    private void setUpTeacherDashboardViewButton(Registrant registrant) {
         WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
         HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
         DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
 
         List<ManualTaskReport> reports = new ArrayList<>();
-        disciplineService.findDisciplinesByTeacher(event.getUserDetails().getLogin())
+        disciplineService.findDisciplinesByTeacher(registrant.getLogin())
                 .forEach(d -> reports.addAll(homeworkManager.findUnratedManualTaskReports(d)));
 
         Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()
@@ -69,12 +73,12 @@ public class LoginListener implements ua.org.tees.yarosh.tais.ui.core.api.LoginL
         updateCaption(reports.size(), button);
     }
 
-    private void setUpUnresolvedTasksButton(LoginEvent event) {
+    private void setUpUnresolvedTasksButton(Registrant registrant) {
         WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
         HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
 
-        int unresolvedManual = homeworkManager.findUnresolvedActualManualTasks(event.getUserDetails()).size();
-        int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(event.getUserDetails()).size();
+        int unresolvedManual = homeworkManager.findUnresolvedActualManualTasks(registrant).size();
+        int unresolvedSuites = homeworkManager.findUnresolvedActualQuestionsSuite(registrant).size();
         int tasks = unresolvedManual + unresolvedSuites;
 
         Button button = UIFactoryAccessor.getCurrent().getSidebarManager().getSidebar()

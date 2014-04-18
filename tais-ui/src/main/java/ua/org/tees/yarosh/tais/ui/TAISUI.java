@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
+import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
@@ -57,8 +58,13 @@ public class TAISUI extends UI {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
 
+    public TAISUI() {
+        log.debug("UI constructed");
+    }
+
     @Override
     protected void init(VaadinRequest vaadinRequest) {
+
         log.debug("UI initialization");
 
         CssLayout content = new CssLayout();
@@ -80,16 +86,27 @@ public class TAISUI extends UI {
     }
 
     private void setUpListeners(Navigator nav, CommonComponent commonComponent) {
+        setUpUIListeners(nav, commonComponent);
+        setUpBackendListeners();
+    }
+
+    private void setUpBackendListeners() {
+        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
+        HomeworkManager homeworkManager = ctx.getBean(HomeworkManager.class);
+        homeworkManager.addManualTaskEnabledListener(new TaskEnabledListener(this));
+
+        RegistrantService registrantService = ctx.getBean(RegistrantService.class);
+        AuthManager authManager = ctx.getBean(AuthManager.class);
+        authManager.addLoginListener(new LoginButtonsInitializer(this, registrantService));
+    }
+
+    private void setUpUIListeners(Navigator nav, CommonComponent commonComponent) {
         nav.addViewChangeListener(new AuthListener());
         nav.addViewChangeListener(new LastViewSaver());
         nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 
         SidebarManager sidebarManager = UIFactoryAccessor.getCurrent().getSidebarManager();
         nav.addViewChangeListener(configureSidebarManager(sidebarManager, commonComponent));
-
-        WebApplicationContext ctx = getRequiredWebApplicationContext(VaadinServlet.getCurrent().getServletContext());
-        ctx.getBean(HomeworkManager.class).addManualTaskEnabledListener(new TaskEnabledListener(this));
-        UIFactoryAccessor.getCurrent().getEventBus().register(new LoginListener(this));
     }
 
     private void setUpViews(Navigator nav) {

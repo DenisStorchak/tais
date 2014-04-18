@@ -29,4 +29,9 @@ public class UserDetails {
     public void setRole(String role) {
         this.role = role;
     }
+
+    @Override
+    public String toString() {
+        return username;
+    }
 }
