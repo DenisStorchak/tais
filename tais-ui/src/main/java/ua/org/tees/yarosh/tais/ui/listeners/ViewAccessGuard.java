@@ -8,7 +8,7 @@ import ua.org.tees.yarosh.tais.auth.AuthManager;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ACCESS_DENIED;
 
-public class AuthListener implements ViewChangeListener {
+public class ViewAccessGuard implements ViewChangeListener {
 
     @Override
     public boolean beforeViewChange(ViewChangeEvent viewChangeEvent) {

@@ -26,7 +26,12 @@ import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
-import ua.org.tees.yarosh.tais.ui.listeners.*;
+import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
+import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
+import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
+import ua.org.tees.yarosh.tais.ui.listeners.ViewAccessGuard;
+import ua.org.tees.yarosh.tais.ui.listeners.backend.LoginButtonsInitializer;
+import ua.org.tees.yarosh.tais.ui.listeners.backend.TaskEnabledListener;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
@@ -101,7 +106,7 @@ public class TAISUI extends UI {
     }
 
     private void setUpUIListeners(Navigator nav, CommonComponent commonComponent) {
-        nav.addViewChangeListener(new AuthListener());
+        nav.addViewChangeListener(new ViewAccessGuard());
         nav.addViewChangeListener(new LastViewSaver());
         nav.addViewChangeListener(new RootToDefaultViewSwitcher());
 

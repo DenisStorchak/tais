@@ -1,4 +1,4 @@
-package ua.org.tees.yarosh.tais.ui.listeners;
+package ua.org.tees.yarosh.tais.ui.listeners.backend;
 
 import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
