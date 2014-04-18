@@ -1,8 +1,10 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt.api.service;
 
+import ua.org.tees.yarosh.tais.core.common.api.Listener;
 import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.core.user.mgmt.UserRegisteredEvent;
 
 import java.util.List;
 
@@ -13,6 +15,8 @@ import java.util.List;
  */
 public interface RegistrantService {
     Registrant createRegistration(Registrant registrant);
+
+    void addRegistrationListener(RegistrationListener listener);
 
     Registrant getRegistration(String login);
 
@@ -35,4 +39,8 @@ public interface RegistrantService {
     StudentGroup findStudentGroup(String id);
 
     List<Registrant> findRegistrantsByStudentGroup(String id);
+
+    interface RegistrationListener extends Listener {
+        void onRegistered(UserRegisteredEvent event);
+    }
 }

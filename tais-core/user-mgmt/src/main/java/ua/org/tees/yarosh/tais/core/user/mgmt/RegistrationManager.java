@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt;
 
+import com.google.common.eventbus.AsyncEventBus;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,10 +30,24 @@ import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
 public class RegistrationManager implements RegistrantService {
 
     private static final Logger log = LoggerFactory.getLogger(RegistrationManager.class);
-    @Autowired
     private RegistrantRepository registrantRepository;
-    @Autowired
     private StudentGroupRepository studentGroupRepository;
+    private AsyncEventBus eventBus;
+
+    @Autowired
+    public void setRegistrantRepository(RegistrantRepository registrantRepository) {
+        this.registrantRepository = registrantRepository;
+    }
+
+    @Autowired
+    public void setStudentGroupRepository(StudentGroupRepository studentGroupRepository) {
+        this.studentGroupRepository = studentGroupRepository;
+    }
+
+    @Autowired
+    public void setEventBus(AsyncEventBus eventBus) {
+        this.eventBus = eventBus;
+    }
 
     @Override
     @CacheEvict(value = REGISTRANTS, allEntries = true)
@@ -45,7 +60,13 @@ public class RegistrationManager implements RegistrantService {
 
         Registrant persistedRegistrant = registrantRepository.save(registrant);
         log.info("[login: {}] registered successfully", registrant.getLogin());
+        eventBus.post(new UserRegisteredEvent(persistedRegistrant));
         return persistedRegistrant;
+    }
+
+    @Override
+    public void addRegistrationListener(RegistrationListener listener) {
+        eventBus.register(listener);
     }
 
     @Override
