@@ -70,7 +70,10 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
         for (ManualTask manualTask : manualTasks) {
             Button detailsButton = new Button();
             transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onManualTaskRequested(manualTask), detailsButton);
-            HorizontalLayout controls = new HorizontalLayout(detailsButton);
+            Button reportButton = new Button();
+            transformToIconOnlyButton("Загрузить отчет", "icon-doc-new", e -> p.onManualTaskReported(manualTask), reportButton);
+
+            HorizontalLayout controls = new HorizontalLayout(detailsButton, reportButton);
 
             Item item = unresolvedTasks.addItem(manualTask.getId());
             item.getItemProperty(PROPERTY_DISCIPLINE).setValue(manualTask.getDiscipline().toString());
@@ -88,7 +91,10 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
         for (QuestionsSuite questionsSuite : questionsSuites) {
             Button details = new Button();
             transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onQuestionsSuiteRequested(questionsSuite), details);
-            HorizontalLayout controls = new HorizontalLayout(details);
+            Button run = new Button();
+            transformToIconOnlyButton("Сдать тест", "icon-doc-new", e -> p.onQuestionsSuiteRun(questionsSuite), run);
+
+            HorizontalLayout controls = new HorizontalLayout(details, run);
 
             Item item = unresolvedTasks.addItem(questionsSuite.getId());
             item.getItemProperty(PROPERTY_DISCIPLINE).setValue(questionsSuite.getDiscipline().toString());
