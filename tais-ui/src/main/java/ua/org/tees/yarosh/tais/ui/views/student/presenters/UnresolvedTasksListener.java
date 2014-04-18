@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.QuestionsSuite;
+import ua.org.tees.yarosh.tais.ui.components.windows.UploadReportWindow;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
@@ -48,7 +49,12 @@ public class UnresolvedTasksListener extends AbstractPresenter implements Unreso
     }
 
     @Override
-    public void onQuestionsSuite(QuestionsSuite questionsSuite) {
+    public void onQuestionsSuiteRequested(QuestionsSuite questionsSuite) {
+        //todo show q suite details
+    }
+
+    @Override
+    public void onQuestionsSuiteRun(QuestionsSuite questionsSuite) {
         UI.getCurrent().getNavigator().navigateTo(QUESTIONS_RUNNER);
         View runner = getCurrent().getView(ViewResolver.resolveView(QUESTIONS_RUNNER));
         QuestionsSuiteRunnerPresenter p = getCurrent().getRelativePresenter(runner, QuestionsSuiteRunnerPresenter.class);
@@ -56,7 +62,15 @@ public class UnresolvedTasksListener extends AbstractPresenter implements Unreso
     }
 
     @Override
-    public void onManualTask(ManualTask manualTask) {
+    public void onManualTaskRequested(ManualTask manualTask) {
+        //todo show task details
+    }
 
+    @Override
+    public void onManualTaskReported(ManualTask manualTask) {
+        UploadReportWindow window = getCurrent().getWindow(UploadReportWindow.class);
+        window.setManualTask(manualTask);
+        window.afterPropertiesSet();
+        UI.getCurrent().addWindow(window);
     }
 }

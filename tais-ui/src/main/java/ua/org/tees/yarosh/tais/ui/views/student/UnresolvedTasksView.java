@@ -69,7 +69,7 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
         removeTasks(VALUE_MANUAL_TASK);
         for (ManualTask manualTask : manualTasks) {
             Button detailsButton = new Button();
-            transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onManualTask(manualTask), detailsButton);
+            transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onManualTaskRequested(manualTask), detailsButton);
             HorizontalLayout controls = new HorizontalLayout(detailsButton);
 
             Item item = unresolvedTasks.addItem(manualTask.getId());
@@ -87,7 +87,7 @@ public class UnresolvedTasksView extends DashboardView implements UnresolvedTask
         removeTasks(VALUE_QUESTIONS_SUITE);
         for (QuestionsSuite questionsSuite : questionsSuites) {
             Button details = new Button();
-            transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onQuestionsSuite(questionsSuite), details);
+            transformToIconOnlyButton("Подробнее", "icon-doc-new", e -> p.onQuestionsSuiteRequested(questionsSuite), details);
             HorizontalLayout controls = new HorizontalLayout(details);
 
             Item item = unresolvedTasks.addItem(questionsSuite.getId());

@@ -6,12 +6,15 @@ import ua.org.tees.yarosh.tais.homework.api.HomeworkResolver;
 import ua.org.tees.yarosh.tais.homework.models.ManualTask;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.ui.components.PayloadReceiver;
+import ua.org.tees.yarosh.tais.ui.core.UIFactoryAccessor;
 import ua.org.tees.yarosh.tais.ui.core.api.AbstractWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
+import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
 
 import static com.vaadin.ui.Button.ClickEvent;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.REPORT_PAYLOAD_DIR;
+import static ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView.UnresolvedTasksPresenter;
 
 @TaisWindow("Загрузка отчета")
 public class UploadReportWindow extends AbstractWindow {
@@ -65,6 +68,9 @@ public class UploadReportWindow extends AbstractWindow {
             manualTaskReport.setOwner(Registrants.getCurrent());
             manualTaskReport.setTask(manualTask);
             homeworkResolver.resolve(manualTaskReport);
+            UIFactoryAccessor.getCurrent()
+                    .getRelativePresenter(UnresolvedTasksTaisView.class, UnresolvedTasksPresenter.class)
+                    .onRefresh();
             close();
         } else {
             Notification.show(PAYLOAD_NOT_UPLOADED);
