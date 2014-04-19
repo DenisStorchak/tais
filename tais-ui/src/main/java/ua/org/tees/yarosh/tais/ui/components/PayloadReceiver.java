@@ -13,7 +13,6 @@ import java.util.function.Consumer;
 
 import static com.vaadin.ui.Upload.*;
 import static org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.HOME_DIR;
 
 public class PayloadReceiver implements Receiver, SucceededListener, FailedListener {
 
@@ -27,7 +26,6 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
     private static final String ERROR_PAYLOAD_UPLOADING_FAILURE_REASON = "Payload uploading failure. [REASON: {}]";
     private static final String SUCCESS_MESSAGE = "Загружено";
     private static final String FAILURE_MESSAGE = "Загрузка не удалась";
-    private String payloadPath;
     private Consumer<SucceededEvent> successConsumer;
 
     private String pathPrefix;
@@ -44,8 +42,8 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
             log.error(ERROR_FILENAME_IS_NULL);
             return null;
         }
-        File parent = FileSystems.getDefault().getPath(HOME_DIR, pathPrefix).toFile();
-        if (!parent.exists() && !parent.mkdir()) {
+        File parent = FileSystems.getDefault().getPath(pathPrefix).toFile();
+        if (!parent.exists() && !parent.mkdirs()) {
             log.error(ERROR_CANT_CREATE_DIRECTORY, parent.getPath());
         }
         File storingFile = createPayloadFile(filename);
@@ -53,7 +51,6 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
             if (!storingFile.createNewFile()) {
                 storingFile = createPayloadFile(filename);
             }
-            payloadPath = storingFile.getPath();
             return new FileOutputStream(storingFile);
         } catch (IOException e) {
             log.error(ERROR_CANT_STORE_PAYLOAD_REASON, e);
@@ -63,7 +60,7 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
 
     private File createPayloadFile(String filename) {
         File storingFile;
-        storingFile = FileSystems.getDefault().getPath(HOME_DIR, pathPrefix,
+        storingFile = FileSystems.getDefault().getPath(pathPrefix,
                 randomAlphanumeric(6).concat(RANDOM_PREFIX_SEPARATOR).concat(filename)).toFile();
         log.debug(DEBUG_GENERATED_PATH, storingFile);
         return storingFile;

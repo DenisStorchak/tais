@@ -80,6 +80,19 @@ public class VaadinUtils {
         return layout;
     }
 
+    public static VerticalLayout createSingleFormVerticalLayout(Component leftComponent, Component rightComponent) {
+        VerticalLayout layout = new VerticalLayout() {
+            {
+                setWidth(100, Unit.PERCENTAGE);
+                setSpacing(true);
+            }
+        };
+        if (leftComponent != null) layout.addComponent(leftComponent);
+        if (rightComponent != null) layout.addComponent(rightComponent);
+        layout.setComponentAlignment(rightComponent, Alignment.TOP_RIGHT);
+        return layout;
+    }
+
     public static void storeToSession(String key, Object object) {
         VaadinSession.getCurrent().setAttribute(key, object);
     }

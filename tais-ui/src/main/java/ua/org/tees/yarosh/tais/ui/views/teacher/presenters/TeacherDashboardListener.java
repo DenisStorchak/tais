@@ -7,6 +7,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
+import ua.org.tees.yarosh.tais.ui.components.windows.CreateManualTaskWindow;
 import ua.org.tees.yarosh.tais.ui.components.windows.ManualReportDetailsWindow;
 import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
@@ -18,7 +19,8 @@ import ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.CREATE_QUESTIONS_SUITE;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.TEACHER_DASHBOARD;
 import static ua.org.tees.yarosh.tais.ui.views.teacher.api.TeacherDashboardTaisView.TeacherDashboardPresenter;
 
 /**
@@ -72,7 +74,8 @@ public class TeacherDashboardListener extends AbstractPresenter implements Teach
 
     @Override
     public void onCreateManualTask() {
-        UI.getCurrent().getNavigator().navigateTo(ADD_MANUAL);
+        CreateManualTaskWindow window = UIFactory.getCurrent().getWindow(CreateManualTaskWindow.class);
+        UI.getCurrent().addWindow(window);
     }
 
     @Override
