@@ -10,8 +10,10 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
@@ -30,30 +32,25 @@ import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
+import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
 import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 import ua.org.tees.yarosh.tais.ui.listeners.ViewAccessGuard;
 import ua.org.tees.yarosh.tais.ui.listeners.backend.LoginButtonsInitializer;
 import ua.org.tees.yarosh.tais.ui.listeners.backend.TaskEnabledListener;
-import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
-import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
-import ua.org.tees.yarosh.tais.ui.views.admin.UserRegistrationView;
-import ua.org.tees.yarosh.tais.ui.views.common.*;
-import ua.org.tees.yarosh.tais.ui.views.student.QuestionsSuiteRunnerView;
+import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
-import ua.org.tees.yarosh.tais.ui.views.teacher.*;
+import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
+
+import java.util.Set;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.PREVIOUS_VIEW;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.*;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.*;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.QUESTIONS_RUNNER;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Student.UNRESOLVED;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher.*;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
 
 /**
  * @author Timur Yarosh
@@ -66,6 +63,7 @@ import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Teacher
 public class TAISUI extends UI {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
+    private static final String VIEWS_PACKAGE = "ua.org.tees.yarosh.tais.ui.views";
 
     public TAISUI() {
         log.debug("UI constructed");
@@ -125,21 +123,11 @@ public class TAISUI extends UI {
     }
 
     private void setUpViews(Navigator nav) {
-        nav.addProvider(new FactoryBasedViewProvider(TEACHER_DASHBOARD, TeacherDashboardView.class));
-        nav.addProvider(new FactoryBasedViewProvider(USER_REGISTRATION, UserRegistrationView.class));
-        nav.addProvider(new FactoryBasedViewProvider(USER_MANAGEMENT, UserManagementView.class));
-        nav.addProvider(new FactoryBasedViewProvider(AUTH, LoginView.class));
-        nav.addProvider(new FactoryBasedViewProvider(MANAGED_SCHEDULE, ScheduleView.class));
-        nav.addProvider(new FactoryBasedViewProvider(SETTINGS, SettingsView.class));
-        nav.addProvider(new FactoryBasedViewProvider(ME, Profile.class));
-        nav.addProvider(new FactoryBasedViewProvider(EDIT_PROFILE, EditProfile.class));
-        nav.addProvider(new FactoryBasedViewProvider(CREATE_QUESTIONS_SUITE, CreateQuestionsSuiteView.class));
-        nav.addProvider(new FactoryBasedViewProvider(ENABLED_QUESTIONS, EnabledQuestionsSuitesView.class));
-        nav.addProvider(new FactoryBasedViewProvider(STUDENTS, StudentsView.class));
-        nav.addProvider(new FactoryBasedViewProvider(ADD_MANUAL, CreateManualTaskView.class));
-        nav.addProvider(new FactoryBasedViewProvider(UNRESOLVED, UnresolvedTasksView.class));
-        nav.addProvider(new FactoryBasedViewProvider(QUESTIONS_RUNNER, QuestionsSuiteRunnerView.class));
-        nav.addView(ACCESS_DENIED, new AccessDeniedView());
+        Set<Class<?>> views = new Reflections(VIEWS_PACKAGE).getTypesAnnotatedWith(TaisView.class);
+        for (Class<?> view : views) {
+            String name = view.getAnnotation(Qualifier.class).value();
+            nav.addProvider(new FactoryBasedViewProvider(name, (Class<? extends View>) view));
+        }
         nav.setErrorView(new PageNotFoundView());
     }
 

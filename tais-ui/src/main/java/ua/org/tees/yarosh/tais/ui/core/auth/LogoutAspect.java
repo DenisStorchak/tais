@@ -23,7 +23,6 @@ public class LogoutAspect {
     public void logLoggingOut(JoinPoint joinPoint, boolean result) {
         if (result) {
             VaadinUtils.storeToSession(AUTH, null);
-            log.info("Auth cookie for [{}] removed", joinPoint.getArgs()[0]);
         }
     }
 }

@@ -80,7 +80,7 @@
             <artifactId>vaadin-push</artifactId>
         </dependency>
         <dependency>
-        <groupId>org.aspectj</groupId>
+            <groupId>org.aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
         </dependency>
         <dependency>
@@ -94,6 +94,14 @@
         <dependency>
             <groupId>commons-io</groupId>
             <artifactId>commons-io</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.javassist</groupId>
+            <artifactId>javassist</artifactId>
         </dependency>
     </dependencies>
 

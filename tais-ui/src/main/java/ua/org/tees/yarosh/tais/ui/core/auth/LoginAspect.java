@@ -28,7 +28,6 @@ public class LoginAspect {
         if (result) {
             String auth = (String) joinPoint.getArgs()[0];
             VaadinUtils.storeToSession(AUTH, auth);
-            log.info("Auth cookie for [{}] stored", auth);
         }
     }
 }
