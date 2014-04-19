@@ -123,7 +123,7 @@ public class TAISUI extends UI {
     }
 
     private void setUpViews(Navigator nav) {
-        Set<Class<?>> views = new Reflections(VIEWS_PACKAGE).getTypesAnnotatedWith(TaisView.class);
+        Set<Class<?>> views = new Reflections(VIEWS_PACKAGE).getTypesAnnotatedWith(TaisView.class); //todo reflections to singleton
         for (Class<?> view : views) {
             String name = view.getAnnotation(Qualifier.class).value();
             nav.addProvider(new FactoryBasedViewProvider(name, (Class<? extends View>) view));
