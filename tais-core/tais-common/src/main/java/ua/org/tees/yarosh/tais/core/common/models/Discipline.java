@@ -1,7 +1,7 @@
 package ua.org.tees.yarosh.tais.core.common.models;
 
 import javax.persistence.*;
-import java.util.List;
+import java.util.Set;
 
 /**
  * @author Timur Yarosh
@@ -16,7 +16,7 @@ public class Discipline {
     private String name;
     @JoinColumn
     @OneToMany
-    private List<Registrant> teachers;
+    private Set<Registrant> teachers;
 
     public Discipline(String discipline) {
         name = discipline;
@@ -57,11 +57,11 @@ public class Discipline {
         return name;
     }
 
-    public List<Registrant> getTeachers() {
+    public Set<Registrant> getTeachers() {
         return teachers;
     }
 
-    public void setTeachers(List<Registrant> teachers) {
+    public void setTeachers(Set<Registrant> teachers) {
         this.teachers = teachers;
     }
 }

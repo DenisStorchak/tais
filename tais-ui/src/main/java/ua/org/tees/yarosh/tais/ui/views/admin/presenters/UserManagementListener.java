@@ -77,7 +77,6 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
 
     @Override
     public void onCreateRegistration() {
-//        UI.getCurrent().getNavigator().navigateTo(USER_REGISTRATION);
         UI.getCurrent().addWindow(UIFactory.getCurrent().getWindow(CreateRegistrationWindow.class));
     }
 

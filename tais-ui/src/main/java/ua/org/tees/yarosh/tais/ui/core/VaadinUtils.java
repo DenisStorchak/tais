@@ -61,6 +61,16 @@ public class VaadinUtils {
         return true;
     }
 
+    public static boolean validOrThrow(Validatable... validatables) {
+        for (Validatable validatable : validatables) {
+            if (!validatable.isValid()) {
+                ((Component.Focusable) validatable).focus();
+                throw new IllegalArgumentException("Value isn't valid");
+            }
+        }
+        return true;
+    }
+
     public static void clearFields(AbstractTextField... fields) {
         for (AbstractTextField field : fields) {
             field.setValue("");
