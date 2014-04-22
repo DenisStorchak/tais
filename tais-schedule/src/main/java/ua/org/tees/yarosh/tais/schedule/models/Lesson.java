@@ -42,7 +42,6 @@ public class Lesson {
         this.teacher = lesson.getTeacher();
         this.classroom = lesson.getClassroom();
         this.lessonType = lesson.getLessonType();
-        // don't copy visitors to new lesson
     }
 
     public Discipline getDiscipline() {
