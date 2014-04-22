@@ -10,9 +10,11 @@ import ua.org.tees.yarosh.tais.ui.core.api.*;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 
+import java.io.Serializable;
+
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
-public class UIFactory implements ComponentFactory {
+public class UIFactory implements ComponentFactory, Serializable {
     private ViewFactory viewFactory;
     private WindowFactory windowFactory;
     private PresenterFactory presenterFactory;

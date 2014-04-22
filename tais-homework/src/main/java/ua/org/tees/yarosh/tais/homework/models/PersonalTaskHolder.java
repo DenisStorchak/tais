@@ -23,9 +23,11 @@ public class PersonalTaskHolder {
     private Registrant owner;
     @Cascade(ALL)
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
     private List<ManualTask> manualTaskList;
     @Cascade(ALL)
     @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable
     private List<QuestionsSuite> questionsSuiteList;
 
     public Registrant getOwner() {

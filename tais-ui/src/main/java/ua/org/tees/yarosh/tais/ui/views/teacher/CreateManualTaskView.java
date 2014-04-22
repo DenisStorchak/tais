@@ -29,6 +29,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisV
 @PresentedBy(CreateManualTaskPresenter.class)
 @Qualifier(ADD_MANUAL)
 @TaisView("Создать задание")
+@Deprecated
 public class CreateManualTaskView extends DashboardView implements CreateManualTaskTaisView {
 
     private ComboBox groups = new ComboBox();

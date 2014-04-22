@@ -6,7 +6,6 @@ import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 /**
  * @author Timur Yarosh
@@ -35,8 +34,6 @@ public class ManualTask {
     @JoinColumn(name = "examinerId")
     @ManyToOne
     private Registrant examiner;
-    @ManyToMany
-    private List<PersonalTaskHolder> personalTaskHolders;
 
     public Long getId() {
         return id;
@@ -116,13 +113,5 @@ public class ManualTask {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public List<PersonalTaskHolder> getPersonalTaskHolders() {
-        return personalTaskHolders;
-    }
-
-    public void setPersonalTaskHolders(List<PersonalTaskHolder> personalTaskHolders) {
-        this.personalTaskHolders = personalTaskHolders;
     }
 }

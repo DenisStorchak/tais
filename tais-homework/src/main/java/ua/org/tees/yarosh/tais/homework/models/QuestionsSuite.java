@@ -36,8 +36,6 @@ public class QuestionsSuite {
     @JoinColumn(name = "examinerId")
     @ManyToOne
     private Registrant examiner;
-    @ManyToMany
-    private List<PersonalTaskHolder> personalTaskHolders;
 
     public Long getId() {
         return id;
@@ -109,13 +107,5 @@ public class QuestionsSuite {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
-    }
-
-    public List<PersonalTaskHolder> getPersonalTaskHolders() {
-        return personalTaskHolders;
-    }
-
-    public void setPersonalTaskHolders(List<PersonalTaskHolder> personalTaskHolders) {
-        this.personalTaskHolders = personalTaskHolders;
     }
 }
