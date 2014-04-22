@@ -7,7 +7,6 @@ import ua.org.tees.yarosh.tais.schedule.LessonType;
 
 import javax.persistence.*;
 import java.util.Date;
-import java.util.List;
 
 @Entity
 public class Lesson {
@@ -22,9 +21,6 @@ public class Lesson {
     @ManyToOne
     @JoinColumn(name = "studentGroupId")
     private StudentGroup studentGroup;
-    @OneToMany
-    @JoinColumn(name = "visitorsId")  //fixme
-    private List<Registrant> visitors;
     @ManyToOne
     @JoinColumn(name = "teacherId")
     private Registrant teacher;
@@ -71,14 +67,6 @@ public class Lesson {
 
     public void setStudentGroup(StudentGroup studentGroup) {
         this.studentGroup = studentGroup;
-    }
-
-    public List<Registrant> getVisitors() {
-        return visitors;
-    }
-
-    public void setVisitors(List<Registrant> visitors) {
-        this.visitors = visitors;
     }
 
     public Registrant getTeacher() {
