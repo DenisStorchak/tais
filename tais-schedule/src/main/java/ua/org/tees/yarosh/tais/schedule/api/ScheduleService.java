@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.schedule.api;
 
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
+import ua.org.tees.yarosh.tais.schedule.LessonsNotFoundException;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 
 import java.util.Date;
@@ -17,4 +18,6 @@ public interface ScheduleService {
     void saveOrReplaceSchedule(List<Lesson> lessonList);
 
     List<Lesson> findSchedule(Date periodFrom, Date periodTo, StudentGroup studentGroup);
+
+    Lesson findCurrentOrNextLesson(String studentGroup) throws LessonsNotFoundException;
 }

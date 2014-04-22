@@ -11,10 +11,6 @@ import java.util.Date;
 import java.util.List;
 
 public interface LessonRepository extends JpaRepository<Lesson, Long> {
-    /**
-     * Something bad with jpa query — always returns empty list
-     */
-    @Deprecated
     @Query("select l from Lesson l where l.studentGroup = :studentGroup and l.date between :periodFrom and :periodTo")
     List<Lesson> findLessonsInPeriod(@Param("periodFrom") Date periodFrom,
                                      @Param("periodTo") Date periodTo,
