@@ -41,7 +41,11 @@
             <artifactId>dbunit</artifactId>
         </dependency>
         <dependency>
-        <groupId>org.mockito</groupId>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
         </dependency>
         <dependency>
@@ -56,6 +60,11 @@
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>ua.org.tees.yarosh</groupId>
+            <artifactId>test-utils</artifactId>
+            <version>${project.version}</version>
         </dependency>
     </dependencies>
 
