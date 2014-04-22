@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.homework.models;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class ManualAchievement {
@@ -17,6 +18,8 @@ public class ManualAchievement {
     @JoinColumn(name = "examinerId")
     private Registrant examiner;
     private String note;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public Long getId() {
         return id;
@@ -56,5 +59,13 @@ public class ManualAchievement {
 
     public void setNote(String note) {
         this.note = note;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

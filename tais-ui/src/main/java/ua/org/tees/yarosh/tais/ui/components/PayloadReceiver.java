@@ -26,11 +26,12 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
     private static final String ERROR_PAYLOAD_UPLOADING_FAILURE_REASON = "Payload uploading failure. [REASON: {}]";
     private static final String SUCCESS_MESSAGE = "Загружено";
     private static final String FAILURE_MESSAGE = "Загрузка не удалась";
-    private Consumer<SucceededEvent> successConsumer;
+    private Consumer<File> successConsumer;
 
     private String pathPrefix;
+    private File storingFile;
 
-    public PayloadReceiver(String pathPrefix, Consumer<SucceededEvent> successConsumer) {
+    public PayloadReceiver(String pathPrefix, Consumer<File> successConsumer) {
         this.pathPrefix = pathPrefix;
         this.successConsumer = successConsumer;
     }
@@ -46,7 +47,7 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
         if (!parent.exists() && !parent.mkdirs()) {
             log.error(ERROR_CANT_CREATE_DIRECTORY, parent.getPath());
         }
-        File storingFile = createPayloadFile(filename);
+        storingFile = createPayloadFile(filename);
         try {
             if (!storingFile.createNewFile()) {
                 storingFile = createPayloadFile(filename);
@@ -69,7 +70,7 @@ public class PayloadReceiver implements Receiver, SucceededListener, FailedListe
     @Override
     public void uploadSucceeded(SucceededEvent event) {
         if (successConsumer != null) {
-            successConsumer.accept(event);
+            successConsumer.accept(storingFile);
         }
         Notification.show(SUCCESS_MESSAGE, Notification.Type.HUMANIZED_MESSAGE);
     }

@@ -8,7 +8,8 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.UserRegisteredEvent;
 import ua.org.tees.yarosh.tais.homework.api.persistence.PersonalTaskHolderRepository;
 import ua.org.tees.yarosh.tais.homework.models.PersonalTaskHolder;
 
-import static com.google.common.collect.Lists.newArrayList;
+import java.util.ArrayList;
+
 import static ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService.RegistrationListener;
 
 public class PersonalTaskHolderReceptionist implements RegistrationListener {
@@ -27,8 +28,8 @@ public class PersonalTaskHolderReceptionist implements RegistrationListener {
         log.debug("PersonalTaskHolder will be created for new registrant [{}]", event.getRegistrant().getLogin());
         PersonalTaskHolder personalTaskHolder = new PersonalTaskHolder();
         personalTaskHolder.setOwner(event.getRegistrant());
-        personalTaskHolder.setManualTaskList(newArrayList());
-        personalTaskHolder.setQuestionsSuiteList(newArrayList());
+        personalTaskHolder.setManualTaskList(new ArrayList<>());
+        personalTaskHolder.setQuestionsSuiteList(new ArrayList<>());
         personalTaskHolderRepository.saveAndFlush(personalTaskHolder);
     }
 }

@@ -15,6 +15,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.api.CreateManualTaskTaisView;
 
+import java.util.Date;
 import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.TEACHER;
@@ -60,6 +61,7 @@ public class CreateManualTaskView extends DashboardView implements CreateManualT
                 manualTask.setExaminer(Registrants.getCurrent());
                 manualTask.setPayloadPath(payloadPath);
                 manualTask.setTheme(theme.getValue());
+                manualTask.setTimestamp(new Date());
                 p.onCreate(manualTask);
             }
         });

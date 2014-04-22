@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 public class AutoAchievement {
@@ -11,6 +12,8 @@ public class AutoAchievement {
     @JoinColumn(name = "questionSuiteId")
     private QuestionsSuite questionsSuite;
     private Integer grade;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public Long getId() {
         return id;
@@ -34,5 +37,13 @@ public class AutoAchievement {
 
     public void setGrade(Integer grade) {
         this.grade = grade;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

@@ -12,6 +12,8 @@ import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
 import ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView;
 
+import java.util.Date;
+
 import static com.vaadin.ui.Button.ClickEvent;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.REPORT_PAYLOAD_DIR;
 import static ua.org.tees.yarosh.tais.ui.views.student.api.UnresolvedTasksTaisView.UnresolvedTasksPresenter;
@@ -53,7 +55,7 @@ public class UploadReportWindow extends AbstractWindow {
     public void init() {
         super.init();
 
-        PayloadReceiver receiver = new PayloadReceiver(REPORT_PAYLOAD_DIR, e -> filepath = e.getFilename());
+        PayloadReceiver receiver = new PayloadReceiver(REPORT_PAYLOAD_DIR, f -> filepath = f.getPath());
         payloadUploader.setReceiver(receiver);
         payloadUploader.addSucceededListener(receiver);
         payloadUploader.addFailedListener(receiver);
@@ -67,6 +69,7 @@ public class UploadReportWindow extends AbstractWindow {
             manualTaskReport.setFilePath(filepath);
             manualTaskReport.setOwner(Registrants.getCurrent());
             manualTaskReport.setTask(manualTask);
+            manualTaskReport.setTimestamp(new Date());
             homeworkResolver.resolve(manualTaskReport);
             UIFactory.getCurrent()
                     .getRelativePresenter(UnresolvedTasksTaisView.class, UnresolvedTasksPresenter.class)

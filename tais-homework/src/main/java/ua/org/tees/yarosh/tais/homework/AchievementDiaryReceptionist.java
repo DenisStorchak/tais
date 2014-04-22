@@ -8,7 +8,8 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.UserRegisteredEvent;
 import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryRepository;
 import ua.org.tees.yarosh.tais.homework.models.AchievementDiary;
 
-import static com.google.common.collect.Lists.newArrayList;
+import java.util.ArrayList;
+
 import static ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService.RegistrationListener;
 
 public class AchievementDiaryReceptionist implements RegistrationListener {
@@ -26,8 +27,8 @@ public class AchievementDiaryReceptionist implements RegistrationListener {
     public void onRegistered(UserRegisteredEvent event) {
         log.debug("AchievementDiary will be created for new registrant [{}]", event.getRegistrant().getLogin());
         AchievementDiary achievementDiary = new AchievementDiary();
-        achievementDiary.setAutoAchievements(newArrayList());
-        achievementDiary.setManualAchievements(newArrayList());
+        achievementDiary.setAutoAchievements(new ArrayList<>());
+        achievementDiary.setManualAchievements(new ArrayList<>());
         achievementDiary.setOwner(event.getRegistrant());
         achievementDiaryRepository.saveAndFlush(achievementDiary);
     }

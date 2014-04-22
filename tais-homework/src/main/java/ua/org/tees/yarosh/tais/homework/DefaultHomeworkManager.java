@@ -143,6 +143,7 @@ public class DefaultHomeworkManager implements HomeworkManager {
     @Override
     @Cacheable(MANUAL_TASKS)
     public List<ManualTask> findManualTasks(StudentGroup studentGroup) {
+//        return manualTaskRepository.findAll(); //fixme
         return manualTaskRepository.findByStudentGroup(studentGroup);
     }
 

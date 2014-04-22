@@ -31,10 +31,14 @@ public class QuestionsSuite {
     private List<Question> questions;
     @Temporal(DATE)
     private Date deadline;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
     private Boolean enabled;
     @JoinColumn(name = "examinerId")
     @ManyToOne
     private Registrant examiner;
+    @ManyToMany
+    private List<PersonalTaskHolder> personalTaskHolders;
 
     public Long getId() {
         return id;
@@ -98,5 +102,21 @@ public class QuestionsSuite {
 
     public void setExaminer(Registrant examiner) {
         this.examiner = examiner;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
+    }
+
+    public List<PersonalTaskHolder> getPersonalTaskHolders() {
+        return personalTaskHolders;
+    }
+
+    public void setPersonalTaskHolders(List<PersonalTaskHolder> personalTaskHolders) {
+        this.personalTaskHolders = personalTaskHolders;
     }
 }

@@ -13,6 +13,8 @@ import ua.org.tees.yarosh.tais.ui.core.api.AbstractWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
 
+import java.util.Date;
+
 import static com.vaadin.server.Sizeable.Unit.PIXELS;
 import static com.vaadin.ui.Button.ClickEvent;
 import static com.vaadin.ui.Notification.Type.WARNING_MESSAGE;
@@ -67,7 +69,7 @@ public class CreateManualTaskWindow extends AbstractWindow {
     public void init() {
         super.init();
 
-        PayloadReceiver payloadReceiver = new PayloadReceiver(TASK_PAYLOAD_DIR, e -> filePath = e.getFilename());
+        PayloadReceiver payloadReceiver = new PayloadReceiver(TASK_PAYLOAD_DIR, f -> filePath = f.getPath());
         payload.setReceiver(payloadReceiver);
         payload.addSucceededListener(payloadReceiver);
         payload.addFailedListener(payloadReceiver);
@@ -91,6 +93,7 @@ public class CreateManualTaskWindow extends AbstractWindow {
             manualTask.setPayloadPath(filePath);
             manualTask.setDeadline(deadline.getValue());
             manualTask.setExaminer(Registrants.getCurrent());
+            manualTask.setTimestamp(new Date());
 
             homeworkManager.createManualTask(manualTask);
             close();

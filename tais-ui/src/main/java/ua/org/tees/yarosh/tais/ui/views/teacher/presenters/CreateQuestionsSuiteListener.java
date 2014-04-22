@@ -18,6 +18,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.teacher.CreateQuestionsSuiteView;
 
+import java.util.Date;
 import java.util.List;
 
 import static com.vaadin.ui.Notification.Type.ERROR_MESSAGE;
@@ -72,6 +73,7 @@ public class CreateQuestionsSuiteListener extends AbstractPresenter implements C
             suite.setDeadline(deadline.getValue());
             suite.setEnabled(enabled.getValue().equals("Включен"));
             suite.setExaminer(Registrants.getCurrent());
+            suite.setTimestamp(new Date());
 
             homeworkManager.createQuestionsSuite(suite);
             return true;

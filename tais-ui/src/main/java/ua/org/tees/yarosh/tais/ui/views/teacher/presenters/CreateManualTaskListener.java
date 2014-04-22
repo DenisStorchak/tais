@@ -51,7 +51,7 @@ public class CreateManualTaskListener extends AbstractPresenter implements Creat
         getView(CreateManualTaskTaisView.class).setGroups(registrantService.findAllStudentGroups());
         getView(CreateManualTaskTaisView.class).setPayloadReceiver(new PayloadReceiver(
                 TASK_PAYLOAD_DIR,
-                e -> UIFactory.getCurrent().getView(CreateManualTaskView.class).setPayloadPath(e.getFilename())
+                f -> UIFactory.getCurrent().getView(CreateManualTaskView.class).setPayloadPath(f.getPath())
         ));
     }
 

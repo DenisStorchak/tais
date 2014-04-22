@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.homework.models;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 import javax.persistence.*;
+import java.util.Date;
 
 @Entity
 @Table(uniqueConstraints = {@UniqueConstraint(columnNames = "taskId")})
@@ -17,6 +18,8 @@ public class ManualTaskReport {
     @ManyToOne
     @JoinColumn(name = "ownerId")
     private Registrant owner;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date timestamp;
 
     public Long getId() {
         return id;
@@ -48,5 +51,13 @@ public class ManualTaskReport {
 
     public void setOwner(Registrant owner) {
         this.owner = owner;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
