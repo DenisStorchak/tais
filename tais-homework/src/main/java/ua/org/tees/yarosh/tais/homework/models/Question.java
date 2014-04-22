@@ -3,10 +3,7 @@ package ua.org.tees.yarosh.tais.homework.models;
 import org.hibernate.annotations.Cascade;
 import org.hibernate.annotations.CascadeType;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 import static javax.persistence.FetchType.EAGER;
@@ -21,6 +18,9 @@ public class Question {
     @Cascade(CascadeType.ALL)
     @OneToMany(fetch = EAGER)
     private List<Answer> answers;
+    @ManyToOne
+    @JoinColumn(name = "suite_id")
+    private QuestionsSuite questionsSuite;
 
     public Long getId() {
         return id;

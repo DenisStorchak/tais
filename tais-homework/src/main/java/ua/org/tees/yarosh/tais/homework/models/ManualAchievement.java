@@ -20,6 +20,9 @@ public class ManualAchievement {
     private String note;
     @Temporal(TemporalType.TIMESTAMP)
     private Date timestamp;
+    @ManyToOne
+    @JoinColumn(name = "diary_id")
+    private AchievementDiary achievementDiary;
 
     public Long getId() {
         return id;
@@ -67,5 +70,13 @@ public class ManualAchievement {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public AchievementDiary getAchievementDiary() {
+        return achievementDiary;
+    }
+
+    public void setAchievementDiary(AchievementDiary achievementDiary) {
+        this.achievementDiary = achievementDiary;
     }
 }

@@ -1,9 +1,12 @@
 package ua.org.tees.yarosh.tais.homework.models;
 
+import org.hibernate.annotations.Cascade;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 
 import javax.persistence.*;
 import java.util.List;
+
+import static org.hibernate.annotations.CascadeType.ALL;
 
 /**
  * @author Timur Yarosh
@@ -18,13 +21,11 @@ public class PersonalTaskHolder {
     @OneToOne
     @JoinColumn(name = "ownerId")
     private Registrant owner;
-    //    @Cascade(ALL)
+    @Cascade(ALL)
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "manualTask")
     private List<ManualTask> manualTaskList;
-    //    @Cascade(ALL)
+    @Cascade(ALL)
     @ManyToMany(fetch = FetchType.EAGER)
-//    @JoinColumn(name = "questionsSuites")
     private List<QuestionsSuite> questionsSuiteList;
 
     public Registrant getOwner() {

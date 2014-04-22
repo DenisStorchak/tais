@@ -18,11 +18,9 @@ public class AchievementDiary {
     private Registrant owner;
     @Cascade(ALL)
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "autoAchievementsID")
     private List<AutoAchievement> autoAchievements;
     @Cascade(ALL)
     @OneToMany(fetch = FetchType.EAGER)
-    @JoinColumn(name = "manualAchievementsID")
     private List<ManualAchievement> manualAchievements;
 
     public Long getId() {

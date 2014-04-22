@@ -11,6 +11,7 @@ import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.validators.FieldEqualsValidator;
 import ua.org.tees.yarosh.tais.ui.core.validators.NotBlankValidator;
 
+import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static com.vaadin.event.ShortcutAction.KeyCode.ESCAPE;
 import static ua.org.tees.yarosh.tais.ui.views.admin.api.UserRegistrationTaisView.UserRegistrationPresenter;
 
@@ -90,6 +91,8 @@ public class CreateRegistrationWindow extends Window {
                     };
 
                     Button signUpButton = new Button("Зарегистрировать");
+                    signUpButton.addStyleName("default");
+                    signUpButton.setClickShortcut(ENTER);
                     signUpButton.addClickListener(event -> {
                         try {
                             if (isValid(login, password, repeatPassword, name, surname,

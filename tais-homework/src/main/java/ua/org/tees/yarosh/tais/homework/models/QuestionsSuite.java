@@ -27,7 +27,6 @@ public class QuestionsSuite {
     private Discipline discipline;
     @OneToMany(fetch = EAGER)
     @Cascade(ALL)
-    @JoinColumn(name = "questionsId")
     private List<Question> questions;
     @Temporal(DATE)
     private Date deadline;

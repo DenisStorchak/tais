@@ -23,7 +23,7 @@ public class Lesson {
     @JoinColumn(name = "studentGroupId")
     private StudentGroup studentGroup;
     @OneToMany
-    @JoinColumn(name = "visitorsId")
+    @JoinColumn(name = "visitorsId")  //fixme
     private List<Registrant> visitors;
     @ManyToOne
     @JoinColumn(name = "teacherId")

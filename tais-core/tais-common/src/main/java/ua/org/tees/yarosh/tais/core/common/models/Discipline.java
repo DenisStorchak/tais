@@ -1,6 +1,9 @@
 package ua.org.tees.yarosh.tais.core.common.models;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import java.util.Set;
 
 /**
@@ -14,8 +17,7 @@ public class Discipline {
     @GeneratedValue
     private Long id;
     private String name;
-    @JoinColumn
-    @OneToMany
+    @ManyToMany
     private Set<Registrant> teachers;
 
     public Discipline(String discipline) {

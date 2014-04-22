@@ -1,6 +1,8 @@
 package ua.org.tees.yarosh.tais.ui.components.windows;
 
 import com.vaadin.ui.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import ua.org.tees.yarosh.tais.core.common.models.Discipline;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
@@ -13,10 +15,11 @@ import ua.org.tees.yarosh.tais.ui.core.api.AbstractWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
 
+import java.io.File;
 import java.util.Date;
 
 import static com.vaadin.server.Sizeable.Unit.PIXELS;
-import static com.vaadin.ui.Button.ClickEvent;
+import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
 import static com.vaadin.ui.Notification.Type.WARNING_MESSAGE;
 import static com.vaadin.ui.Notification.show;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.*;
@@ -30,21 +33,22 @@ import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.FS.TASK_PAYLOAD_DIR;
 @TaisWindow("Новое задание")
 public class CreateManualTaskWindow extends AbstractWindow {
 
+    public static final Logger log = LoggerFactory.getLogger(CreateManualTaskWindow.class);
+
     private static final String DISCIPLINE_TITLE = "Дисциплина";
     private static final String STUDENT_GROUP_TITLE = "Группа";
     private static final String DEADLINE_TITLE = "Дедлайн";
     private static final String DESCRIPTION_TITLE = "Описание";
     private static final String THEME_TITLE = "Тема";
     private static final String ERR_MESSAGE = "Заполните все поля";
+    private static final String ADD_TASK_CAPTION = "Добавить задание";
+    private static final String SAVING_MESSAGE = "Сохранение...";
     private TextArea description = new TextArea();
     private TextField theme = new TextField();
     private ComboBox disciplines = new ComboBox();
     private ComboBox studentGroups = new ComboBox();
     private Upload payload = new Upload();
     private DateField deadline = new DateField();
-    private Button save = new Button("Сохранить");
-
-    private String filePath;
 
     private RegistrantService registrantService;
     private HomeworkManager homeworkManager;
@@ -69,12 +73,13 @@ public class CreateManualTaskWindow extends AbstractWindow {
     public void init() {
         super.init();
 
-        PayloadReceiver payloadReceiver = new PayloadReceiver(TASK_PAYLOAD_DIR, f -> filePath = f.getPath());
+        PayloadReceiver payloadReceiver = new PayloadReceiver(TASK_PAYLOAD_DIR, this::saveManualTask);
         payload.setReceiver(payloadReceiver);
         payload.addSucceededListener(payloadReceiver);
         payload.addFailedListener(payloadReceiver);
-
-        save.addClickListener(this::saveManualTask);
+        payload.setImmediate(true);
+        payload.setButtonCaption(ADD_TASK_CAPTION);
+        payload.addStyleName("default");
 
         disciplineService.findAllDisciplines().forEach(disciplines::addItem);
         registrantService.findAllStudentGroups().forEach(studentGroups::addItem);
@@ -82,15 +87,17 @@ public class CreateManualTaskWindow extends AbstractWindow {
         description.setWidth(500, PIXELS);
     }
 
-    public void saveManualTask(ClickEvent event) {
-        if (isValid(description, theme, disciplines, studentGroups, deadline) && filePath != null) {
+    public void saveManualTask(File payload) {
+        if (isValid(description, theme, disciplines, studentGroups, deadline) && payload.exists()) {
+            log.info("new manual task saving...");
+            show(SAVING_MESSAGE, TRAY_NOTIFICATION);
             ManualTask manualTask = new ManualTask();
             manualTask.setDescription(description.getValue());
             manualTask.setTheme(theme.getValue());
             manualTask.setDiscipline((Discipline) disciplines.getValue());
             manualTask.setStudentGroup((StudentGroup) studentGroups.getValue());
             manualTask.setEnabled(true);
-            manualTask.setPayloadPath(filePath);
+            manualTask.setPayloadPath(payload.getPath());
             manualTask.setDeadline(deadline.getValue());
             manualTask.setExaminer(Registrants.getCurrent());
             manualTask.setTimestamp(new Date());
@@ -109,6 +116,7 @@ public class CreateManualTaskWindow extends AbstractWindow {
         contentLayout.addComponent(createSingleFormLayout(new Label(DEADLINE_TITLE), deadline));
         contentLayout.addComponent(createSingleFormLayout(new Label(THEME_TITLE), theme));
         contentLayout.addComponent(createSingleFormVerticalLayout(new Label(DESCRIPTION_TITLE), description));
-        contentLayout.addComponent(createSingleFormLayout(payload, save));
+        contentLayout.addComponent(payload);
+        contentLayout.setComponentAlignment(payload, Alignment.MIDDLE_RIGHT);
     }
 }
