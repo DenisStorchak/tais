@@ -86,11 +86,6 @@ public class LessonsService implements ScheduleService, TeacherService, Discipli
         return lessons.get(0);
     }
 
-    private List<Lesson> selectAllThenFilter(Date periodFrom, Date periodTo, StudentGroup studentGroup) {
-        return lessonRepository.findLessonsByStudentGroup(studentGroup).stream()
-                .filter(l -> l.getDate().after(periodFrom) && l.getDate().before(periodTo)).collect(toList());
-    }
-
     @Override
     public List<Discipline> findDisciplinesByTeacher(Registrant teacher) {
         return lessonRepository.findLessonsByTeacher(teacher).stream().map(Lesson::getDiscipline).collect(toList());
