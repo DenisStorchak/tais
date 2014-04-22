@@ -4,10 +4,12 @@ import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
-import javax.persistence.*;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
-import java.util.Set;
 
 /**
  * @author Timur Yarosh
@@ -39,8 +41,6 @@ public class Registrant implements Serializable {
     private StudentGroup group;
     @NotNull
     private String role;
-    @ManyToMany
-    private Set<Discipline> disciplines;
 
     @Override
     public boolean equals(Object o) {
@@ -141,13 +141,5 @@ public class Registrant implements Serializable {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public Set<Discipline> getDisciplines() {
-        return disciplines;
-    }
-
-    public void setDisciplines(Set<Discipline> disciplines) {
-        this.disciplines = disciplines;
     }
 }
