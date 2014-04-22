@@ -75,8 +75,8 @@ public class CreateRegistrationWindow extends Window {
                     patronymic.setValidationVisible(false);
                     email.addValidator(new BeanValidator(Registrant.class, "email"));
                     email.setValidationVisible(false);
-                    studentGroupComboBox.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
-                    studentGroupComboBox.setValidationVisible(false);
+//                    studentGroupComboBox.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
+//                    studentGroupComboBox.setValidationVisible(false);
                     position.addValidator(new NotBlankValidator("Некорректно заполнено поле"));
                     position.setValidationVisible(false);
                 }
