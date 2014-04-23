@@ -1,11 +1,11 @@
 package ua.org.tees.yarosh.tais.core.common.api;
 
-public interface Message {
-    String getMessage();
+import java.util.Date;
 
-    void setMessage(String message);
+public interface Message<T> {
+    T getMessage();
 
-    void setMessage(byte[] bytes);
+    void setMessage(T message);
 
     String getFrom();
 
@@ -14,4 +14,8 @@ public interface Message {
     String getTo();
 
     void setTo(String to);
+
+    void setTimestamp(Date date);
+
+    Date getTimestamp();
 }

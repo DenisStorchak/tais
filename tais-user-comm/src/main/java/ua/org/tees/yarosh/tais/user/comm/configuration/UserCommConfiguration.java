@@ -4,6 +4,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
 
 @Configuration
-@Import({MailConfiguration.class})
+@Import({MailConfiguration.class, JmsConfiguration.class})
 public class UserCommConfiguration {
 }
