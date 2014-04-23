@@ -11,7 +11,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 @TaisPresenter
 public class LoginListener extends AbstractPresenter implements LoginPresenter {

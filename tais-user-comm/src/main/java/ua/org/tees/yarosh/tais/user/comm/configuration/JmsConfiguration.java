@@ -34,6 +34,8 @@ public class JmsConfiguration {
 
     @Bean
     public Topic chatTopic() {
-        return new ActiveMQTopic(); //fixme
+        ActiveMQTopic activeMQTopic = new ActiveMQTopic();
+        activeMQTopic.setPhysicalName("chatTopic");
+        return activeMQTopic; //fixme
     }
 }

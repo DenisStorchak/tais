@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.ui.listeners.backend;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.Button;
@@ -39,7 +38,6 @@ public class LoginButtonsInitializer implements LoginListener {
 
     @Override
     @Subscribe
-    @AllowConcurrentEvents
     public void onLogin(LoginEvent event) {
         ui.access(() -> {
             log.debug("LoginEvent handler invoked");

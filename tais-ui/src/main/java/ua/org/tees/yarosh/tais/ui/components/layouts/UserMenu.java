@@ -11,7 +11,7 @@ import static com.vaadin.server.VaadinSession.getCurrent;
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.*;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais.EditProfilePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView.EditProfilePresenter;
 
 
 /**

@@ -13,7 +13,7 @@ import java.util.List;
  *         Date: 06.04.14
  *         Time: 12:42
  */
-public interface EditProfileTais extends View, Updateable {
+public interface EditProfileTaisView extends View, Updateable {
 
     interface EditProfilePresenter extends Presenter {
         void setRegistrantId(String login);

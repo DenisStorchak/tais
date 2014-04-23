@@ -15,7 +15,7 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ME;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTais.ProfilePresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.ProfileTaisView.ProfilePresenter;
 
 @TaisPresenter
 @SuppressWarnings("unchecked")

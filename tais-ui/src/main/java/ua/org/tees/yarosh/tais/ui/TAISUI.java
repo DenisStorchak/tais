@@ -10,6 +10,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
+import org.apache.activemq.ActiveMQConnectionFactory;
 import org.reflections.Reflections;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -37,6 +38,7 @@ import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
 import ua.org.tees.yarosh.tais.ui.listeners.RootToDefaultViewSwitcher;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 import ua.org.tees.yarosh.tais.ui.listeners.ViewAccessGuard;
+import ua.org.tees.yarosh.tais.ui.listeners.backend.ChatListener;
 import ua.org.tees.yarosh.tais.ui.listeners.backend.LoginButtonsInitializer;
 import ua.org.tees.yarosh.tais.ui.listeners.backend.TaskEnabledListener;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
@@ -44,6 +46,8 @@ import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
+import javax.jms.IllegalStateException;
+import javax.jms.*;
 import java.util.Set;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
@@ -111,6 +115,20 @@ public class TAISUI extends UI {
 
         AuthManager authManager = ctx.getBean(AuthManager.class);
         authManager.addLoginListener(new LoginButtonsInitializer(this, registrantService));
+
+        ActiveMQConnectionFactory connectionFactory = ctx.getBean(ActiveMQConnectionFactory.class);
+        try {
+            TopicConnection topicConnection = connectionFactory.createTopicConnection();
+            TopicSession topicSession = topicConnection.createTopicSession(false, TopicSession.AUTO_ACKNOWLEDGE);
+            Topic chatTopic = topicSession.createTopic("chatTopic");
+            TopicSubscriber subscriber = topicSession.createSubscriber(chatTopic);
+            subscriber.setMessageListener(ChatListener.createListener(VaadinSession.getCurrent()));
+            topicConnection.start();
+        } catch (IllegalStateException e) {
+            log.error("Can't create chat listener — VaadinSession is null");
+        } catch (JMSException e) {
+            log.error("Can't create chat listener — topic setup failed");
+        }
     }
 
     private void setUpUIListeners(Navigator nav, CommonComponent commonComponent) {

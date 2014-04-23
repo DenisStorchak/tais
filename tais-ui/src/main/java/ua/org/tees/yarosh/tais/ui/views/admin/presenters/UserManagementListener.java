@@ -19,7 +19,7 @@ import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.admin.api.UserManagementTaisView;
-import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTais;
+import ua.org.tees.yarosh.tais.ui.views.common.api.EditProfileTaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.resolveView;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.USER_MANAGEMENT;
@@ -98,8 +98,8 @@ public class UserManagementListener extends AbstractPresenter implements UserMan
     private Button.ClickListener createListener(String login) {
         return event -> {
             TAISUI.navigateTo(EDIT_PROFILE);
-            EditProfileTais.EditProfilePresenter presenter = UIFactory.getCurrent()
-                    .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfileTais.EditProfilePresenter.class);
+            EditProfileTaisView.EditProfilePresenter presenter = UIFactory.getCurrent()
+                    .getRelativePresenter(resolveView(EDIT_PROFILE), EditProfileTaisView.EditProfilePresenter.class);
             presenter.setRegistrantId(login);
             presenter.allowAdminRights(true);
             presenter.update();

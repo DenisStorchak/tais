@@ -73,6 +73,7 @@ public abstract class DataBinds {
         public static final String LISTENER_FACTORY = "listenerFactory";
         public static final String PRESENTER_FACTORY = "presenterFactory";
         public static final String HELP_MANAGER_FACTORY = "helpManagerFactory";
+        public static final String MESSAGER = "messager";
     }
 
     public static abstract class Cookies {

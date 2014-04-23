@@ -12,13 +12,13 @@ import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.mvp.PresentedBy;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
-import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais;
+import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Messages.*;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
-import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresenter;
+import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
 /**
  * @author Timur Yarosh
@@ -29,13 +29,13 @@ import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTais.LoginPresent
 @TaisView
 @Qualifier(AUTH)
 @PermitAll
-public class LoginView extends VerticalLayout implements LoginTais {
+public class LoginViewView extends VerticalLayout implements LoginTaisView {
 
     private TextField username;
     private PasswordField password;
-    private LoginView instance;
+    private LoginViewView instance;
 
-    public LoginView() {
+    public LoginViewView() {
         instance = this;
         setSizeFull();
         addStyleName("login-layout");

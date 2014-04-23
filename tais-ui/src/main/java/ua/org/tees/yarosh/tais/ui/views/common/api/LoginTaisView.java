@@ -5,7 +5,7 @@ import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.Presenter;
 
-public interface LoginTais extends View, Updateable {
+public interface LoginTaisView extends View, Updateable {
 
     interface LoginPresenter extends Presenter {
         /**
