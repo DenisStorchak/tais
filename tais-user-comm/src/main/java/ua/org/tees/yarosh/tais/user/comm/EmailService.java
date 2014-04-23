@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.user.comm;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
@@ -13,7 +14,9 @@ import ua.org.tees.yarosh.tais.user.comm.api.Communicator;
  *         Time: 22:32
  */
 @Service
-public class EmailCommunicator implements Communicator {
+@Qualifier(EmailService.QUALIFIER)
+public class EmailService implements Communicator {
+    public static final String QUALIFIER = "emailService";
     @Autowired
     private MailSender mailSender;
     @Autowired
