@@ -1,6 +1,5 @@
 package ua.org.tees.yarosh.tais.homework;
 
-import com.google.common.eventbus.AllowConcurrentEvents;
 import com.google.common.eventbus.Subscribe;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -22,7 +21,6 @@ public class PersonalTaskHolderReceptionist implements RegistrationListener {
     }
 
     @Subscribe
-    @AllowConcurrentEvents
     @Override
     public void onRegistered(UserRegisteredEvent event) {
         log.debug("PersonalTaskHolder will be created for new registrant [{}]", event.getRegistrant().getLogin());
