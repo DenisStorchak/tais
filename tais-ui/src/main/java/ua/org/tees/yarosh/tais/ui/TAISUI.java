@@ -23,6 +23,7 @@ import ua.org.tees.yarosh.tais.homework.PersonalTaskHolderReceptionist;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.api.persistence.AchievementDiaryRepository;
 import ua.org.tees.yarosh.tais.homework.api.persistence.PersonalTaskHolderRepository;
+import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
 import ua.org.tees.yarosh.tais.ui.components.layouts.CommonComponent;
 import ua.org.tees.yarosh.tais.ui.components.layouts.RootLayout;
 import ua.org.tees.yarosh.tais.ui.core.SidebarFactory;
@@ -112,9 +113,11 @@ public class TAISUI extends UI {
         registrantService.addRegistrationListener(new PersonalTaskHolderReceptionist(personalTaskHolderRepository));
 
         AuthManager authManager = ctx.getBean(AuthManager.class);
-        authManager.addLoginListener(new LoginButtonsInitializer(this, registrantService));
+        DisciplineService disciplineService = ctx.getBean(DisciplineService.class);
+        authManager.addLoginListener(new LoginButtonsInitializer(this,
+                registrantService, homeworkManager, disciplineService));
 
-        ctx.getBean(JmsBroadcaster.class).subscribe(ChatListener.createListener(VaadinSession.getCurrent()));
+        ctx.getBean(JmsBroadcaster.class).subscribe(ChatListener.createListener(VaadinSession.getCurrent(), ctx));
     }
 
     private void setUpUIListeners(Navigator nav, CommonComponent commonComponent) {

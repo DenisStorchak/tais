@@ -7,23 +7,26 @@ import ua.org.tees.yarosh.tais.user.comm.api.JmsBroadcaster;
 
 import javax.jms.Message;
 import javax.jms.MessageListener;
-import java.util.Vector;
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class JmsBroadcastService implements JmsBroadcaster {
 
     public static final Logger log = LoggerFactory.getLogger(JmsBroadcastService.class);
-    private Vector<MessageListener> subscribers = new Vector<>();
+    private List<MessageListener> subscribers = new ArrayList<>();
 
     @Override
     public void onMessage(Message message) {
         log.debug("JMS Message received, broadcasting started");
-        subscribers.forEach(l -> l.onMessage(message));
+        for (MessageListener subscriber : subscribers) {
+            subscriber.onMessage(message);
+        }
         log.debug("broadcasting finished");
     }
 
     @Override
-    public void subscribe(MessageListener listener) {
+    public synchronized void subscribe(MessageListener listener) {
         log.debug("subscriber added");
         subscribers.add(listener);
     }

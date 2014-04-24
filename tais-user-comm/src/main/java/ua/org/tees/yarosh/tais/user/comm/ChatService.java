@@ -1,5 +1,7 @@
 package ua.org.tees.yarosh.tais.user.comm;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +24,7 @@ public class ChatService implements Communicator {
     private static final String MESSAGE_SENT_LOG_TEMPLATE = "Message [%s] from [%s] sent to [%s]";
     private JmsTemplate jmsTemplate;
     private Topic chatTopic;
+    private ObjectMapper objectMapper;
 
     @Autowired
     public void setJmsTemplate(JmsTemplate jmsTemplate) {
@@ -33,13 +36,22 @@ public class ChatService implements Communicator {
         this.chatTopic = chatTopic;
     }
 
+    @Autowired
+    public void setObjectMapper(ObjectMapper objectMapper) {
+        this.objectMapper = objectMapper;
+    }
+
     @Override
     public void sendMessage(Message message) {
         ChatMessage chatMessage = (ChatMessage) message;
-        jmsTemplate.convertAndSend(chatTopic, chatMessage);
-        log.info(format(MESSAGE_SENT_LOG_TEMPLATE,
-                chatMessage.getMessage(),
-                chatMessage.getFrom(),
-                chatMessage.getTo()));
+        try {
+            jmsTemplate.convertAndSend(chatTopic, objectMapper.writeValueAsString(chatMessage));
+            log.info(format(MESSAGE_SENT_LOG_TEMPLATE,
+                    chatMessage.getMessage(),
+                    chatMessage.getFrom(),
+                    chatMessage.getTo()));
+        } catch (JsonProcessingException e) {
+            log.error(e.getMessage());
+        }
     }
 }
