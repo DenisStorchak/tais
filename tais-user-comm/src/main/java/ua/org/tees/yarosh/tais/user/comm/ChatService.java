@@ -45,7 +45,8 @@ public class ChatService implements Communicator {
     public void sendMessage(Message message) {
         ChatMessage chatMessage = (ChatMessage) message;
         try {
-            jmsTemplate.convertAndSend(chatTopic, objectMapper.writeValueAsString(chatMessage));
+            String serializedMessage = objectMapper.writeValueAsString(chatMessage);
+            jmsTemplate.send(chatTopic, session -> session.createTextMessage(serializedMessage));
             log.info(format(MESSAGE_SENT_LOG_TEMPLATE,
                     chatMessage.getMessage(),
                     chatMessage.getFrom(),

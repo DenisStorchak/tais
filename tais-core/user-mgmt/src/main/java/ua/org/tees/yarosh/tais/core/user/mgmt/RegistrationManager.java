@@ -72,7 +72,7 @@ public class RegistrationManager implements RegistrantService {
     @Override
     @Cacheable(REGISTRANTS)
     public Registrant getRegistration(String login) {
-        log.info("Profile [login: {}] requested", login);
+        log.debug("Profile [login: {}] requested", login);
         return registrantRepository.findOne(login);
     }
 

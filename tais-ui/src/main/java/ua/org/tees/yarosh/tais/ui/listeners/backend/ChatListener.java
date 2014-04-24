@@ -1,7 +1,5 @@
 package ua.org.tees.yarosh.tais.ui.listeners.backend;
 
-import com.fasterxml.jackson.core.JsonParseException;
-import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
@@ -16,6 +14,7 @@ import ua.org.tees.yarosh.tais.user.comm.ChatMessage;
 import javax.jms.JMSException;
 import javax.jms.Message;
 import javax.jms.MessageListener;
+import javax.jms.TextMessage;
 import java.io.IOException;
 
 /**
@@ -43,24 +42,26 @@ public class ChatListener implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        try {
-            ChatMessage chatMessage = ctx.getBean(ObjectMapper.class).readValue(message.getBody(String.class), ChatMessage.class); //todo why freezes?
-            if (forMe(chatMessage)) {
-                ChatWindow window = UIFactory.getCurrent().getWindow(ChatWindow.class);
-                window.setDestination(chatMessage.getFrom());
-                window.addCompanionMessage((ChatMessage) message);
+        if (message instanceof TextMessage) {
+            try {
+                TextMessage textMessage = (TextMessage) message;
+                ChatMessage chatMessage = new ObjectMapper().readValue(textMessage.getText(), ChatMessage.class); //todo freezes //fixme OM
 
-                UI ui = UI.getCurrent();
-                ui.access(() -> ui.addWindow(window));
+                if (forMe(chatMessage)) {
+                    ChatWindow window = UIFactory.getCurrent().getWindow(ChatWindow.class);
+                    window.setDestination(chatMessage.getFrom());
+                    window.addCompanionMessage((ChatMessage) message);
+
+                    UI ui = UI.getCurrent();
+                    ui.access(() -> ui.addWindow(window));
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JMSException e) {
+                e.printStackTrace();
             }
-        } catch (JMSException e) {
-            log.error("Can't get ChatMessage from Message. REASON [{}]", e.getMessage());
-        } catch (JsonMappingException e) {
-            e.printStackTrace();
-        } catch (JsonParseException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            throw new IllegalArgumentException(String.format("[%s] required", TextMessage.class.getName()));
         }
     }
 
