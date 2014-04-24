@@ -45,8 +45,8 @@ public class LoginButtonsInitializer implements LoginListener {
     @Subscribe
     public void onLogin(LoginEvent event) {
         ui.access(() -> {
-            log.debug("LoginEvent handler invoked");
-            if (Registrants.getCurrent() == null) { //todo make thread safe
+            Registrant current = Registrants.getCurrent();
+            if (current != null && current.getLogin().equals(event.getUserDetails().getUsername())) {
                 Registrant registrant = registrantService.getRegistration(event.getUserDetails().getUsername());
                 if (registrant == null) {
                     log.warn("Registrant not found");
