@@ -81,8 +81,9 @@ public class UserRegistrationListener extends AbstractPresenter implements UserR
         registrant.setEmail(email.getValue());
         registrant.setPatronymic(patronymic.getValue());
         registrant.setRole(translate((String) position.getValue()));
-        StudentGroup group = registrantService.findStudentGroup(studentGroup.getValue().toString());
-        registrant.setGroup(group);
+        if (studentGroup.getValue() != null) {
+            registrant.setGroup(registrantService.findStudentGroup(studentGroup.getValue().toString()));
+        }
         return registrantService.createRegistration(registrant) != null;
     }
 

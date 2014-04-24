@@ -31,7 +31,7 @@ public class ChatListener implements MessageListener {
 
     @Override
     public void onMessage(Message message) {
-        if (message instanceof ChatMessage && forMe((ChatMessage) message)) {
+        if (forMe((ChatMessage) message)) {
             ChatMessage chatMessage = (ChatMessage) message;
 
             ChatWindow window = UIFactory.getCurrent().getWindow(ChatWindow.class);
