@@ -44,7 +44,7 @@ public class ChatListener implements MessageListener {
     @Override
     public void onMessage(Message message) {
         try {
-            ChatMessage chatMessage = ctx.getBean(ObjectMapper.class).readValue(message.getBody(String.class), ChatMessage.class);
+            ChatMessage chatMessage = ctx.getBean(ObjectMapper.class).readValue(message.getBody(String.class), ChatMessage.class); //todo wtf
             if (forMe(chatMessage)) {
                 ChatWindow window = UIFactory.getCurrent().getWindow(ChatWindow.class);
                 window.setDestination(chatMessage.getFrom());
