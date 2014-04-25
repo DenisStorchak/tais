@@ -43,8 +43,7 @@ public class ChatListener implements ChatMessageReceivedListener {
     }
 
     private void showMessage(ChatMessageReceivedEvent event, ChatWindow window) {
-        window.setDestination(event.getChatMessage().getFrom());
-        window.addCompanionMessage(event.getChatMessage());
+        window.receiveMessage(event.getChatMessage());
 
         if (!ui.getWindows().contains(window)) {
             ui.addWindow(window);
