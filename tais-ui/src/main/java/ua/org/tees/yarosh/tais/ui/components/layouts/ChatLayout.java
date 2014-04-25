@@ -19,7 +19,7 @@ import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.transformToIconOnlyButton;
 
 @SuppressWarnings("unchecked")
-public class ChatLayout extends VerticalLayout {
+public class ChatLayout extends DashboardLayout {
 
     private static final String METADATA_CAPTION = "";
     private static final String MESSAGE_CAPTION = " ";
@@ -39,7 +39,6 @@ public class ChatLayout extends VerticalLayout {
     private static final int SHORT_DISTANCE = 50;
 
     private Table dialog = new PlainBorderlessTable("");
-    private DashPanel dialogPanel = new DashPanel();
     private TextArea inputArea = new TextArea();
     private Button sendButton = new Button();
 
@@ -65,6 +64,7 @@ public class ChatLayout extends VerticalLayout {
         dialog.setHeight(MESSAGES_HEIGHT, PIXELS);
         dialog.setHeight(MESSAGES_HEIGHT, PIXELS);
 
+        DashPanel dialogPanel = addDashPanel(null, null, dialog);
         dialogPanel.addComponent(dialog);
         dialogPanel.setHeight(MESSAGES_HEIGHT, PIXELS);
 
