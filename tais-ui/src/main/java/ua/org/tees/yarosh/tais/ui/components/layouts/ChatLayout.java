@@ -18,6 +18,7 @@ import static java.lang.String.format;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.transformToIconOnlyButton;
 
+@SuppressWarnings("unchecked")
 public class ChatLayout extends VerticalLayout {
 
     private static final String METADATA_CAPTION = "";
@@ -62,6 +63,7 @@ public class ChatLayout extends VerticalLayout {
         dialog.setColumnWidth(METADATA_CAPTION, METADATA_WIDTH);
         dialog.setColumnWidth(MESSAGE_CAPTION, MESSAGES_WIDTH - METADATA_WIDTH);
         dialog.setHeight(MESSAGES_HEIGHT, PIXELS);
+        dialog.setHeight(MESSAGES_HEIGHT, PIXELS);
 
         dialogPanel.addComponent(dialog);
         dialogPanel.setHeight(MESSAGES_HEIGHT, PIXELS);
@@ -69,18 +71,18 @@ public class ChatLayout extends VerticalLayout {
         transformToIconOnlyButton(SEND_BUTTON_DESCRIPTION, SEND_BUTTON_STYLE, this::sendMessage, sendButton);
         sendButton.setClickShortcut(ENTER);
 
-        addComponent(dialogPanel);
-        addComponent(createSingleFormLayout(inputArea, sendButton));
-
         inputArea.setWidth(MESSAGES_WIDTH, PIXELS);
 
-        setWidth(MESSAGES_WIDTH + SHORT_DISTANCE, PIXELS);
-        setHeight(MESSAGES_HEIGHT + SHORT_DISTANCE, PIXELS);
+        setWidth(MESSAGES_WIDTH, PIXELS);
+        setHeight(MESSAGES_HEIGHT, PIXELS);
+
+        addComponent(dialogPanel);
+        addComponent(createSingleFormLayout(inputArea, sendButton));
     }
 
     private void sendMessage(Button.ClickEvent event) {
         if (destination == null) {
-            throw new IllegalStateException("Destination is null");
+            throw new IllegalStateException(NO_DESTINATION_ERROR);
         }
         ChatMessage chatMessage = new ChatMessage();
         chatMessage.setFrom(Registrants.getCurrent().getLogin());
