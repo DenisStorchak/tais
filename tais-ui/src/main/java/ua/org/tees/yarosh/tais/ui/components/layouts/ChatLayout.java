@@ -76,7 +76,7 @@ public class ChatLayout extends VerticalLayout {
         setWidth(MESSAGES_WIDTH, PIXELS);
         setHeight(MESSAGES_HEIGHT, PIXELS);
 
-        addComponent(dialogPanel);
+        addComponent(new HorizontalLayout(dialogPanel));
         addComponent(createSingleFormLayout(inputArea, sendButton));
     }
 
