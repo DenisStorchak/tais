@@ -3,7 +3,7 @@ package ua.org.tees.yarosh.tais.ui.core.mvp;
 import com.vaadin.navigator.View;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
+import org.springframework.web.context.WebApplicationContext;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -16,9 +16,9 @@ public class ContextPresenterFactory implements PresenterFactory {
     private static final Logger log = LoggerFactory.getLogger(ContextViewFactory.class);
     private static final String PRESENTER_NOT_RELATED = "Presenter [%s] isn't relative with view [%s]";
     private Map<Class<? extends Presenter>, Presenter> presenterPool = new HashMap<>();
-    private UIContext ctx;
+    private WebApplicationContext ctx;
 
-    public ContextPresenterFactory(UIContext ctx) {
+    public ContextPresenterFactory(WebApplicationContext ctx) {
         this.ctx = ctx;
     }
 

@@ -10,7 +10,7 @@ import com.vaadin.ui.Table;
 public class PlainBorderlessTable extends Table {
     public PlainBorderlessTable(String caption) {
         setCaption(caption);
-        setWidth("100%");
+//        setWidth("100%");
         setPageLength(0);
         addStyleName("plain");
         addStyleName("borderless");

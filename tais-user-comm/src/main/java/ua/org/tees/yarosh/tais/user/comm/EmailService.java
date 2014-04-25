@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.core.common.api.Listener;
 import ua.org.tees.yarosh.tais.core.common.api.Message;
 import ua.org.tees.yarosh.tais.user.comm.api.Communicator;
 
@@ -28,6 +29,11 @@ public class EmailService implements Communicator {
         simpleMailMessage.setTo(message.getTo());
         simpleMailMessage.setText(formatMessage(message));
         mailSender.send(simpleMailMessage);
+    }
+
+    @Override
+    public void addListener(Listener listener) {
+        //todo post event to eventbus
     }
 
     private String formatMessage(Message message) {

@@ -4,9 +4,15 @@ import com.vaadin.navigator.View;
 import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.Window;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.WebApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 import ua.org.tees.yarosh.tais.ui.components.HelpManager;
-import ua.org.tees.yarosh.tais.ui.core.api.*;
+import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.HelpManagerFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.SidebarManagerFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.WindowFactory;
 import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 
@@ -15,6 +21,9 @@ import java.io.Serializable;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 public class UIFactory implements ComponentFactory, Serializable {
+
+    public static final Logger log = LoggerFactory.getLogger(UIFactory.class);
+
     private ViewFactory viewFactory;
     private WindowFactory windowFactory;
     private PresenterFactory presenterFactory;
@@ -40,6 +49,7 @@ public class UIFactory implements ComponentFactory, Serializable {
 
     @Override
     public <W extends Window> W getWindow(Class<W> windowType) {
+        log.debug("Window [{}] requested", windowType);
         return windowFactory.getWindow(windowType);
     }
 
@@ -74,10 +84,26 @@ public class UIFactory implements ComponentFactory, Serializable {
      * @return factory
      */
     public static ComponentFactory getCurrent() {
-        ComponentFactory instance = (ComponentFactory) VaadinSession.getCurrent().getAttribute(COMPONENT_FACTORY);
+        return getCurrent(VaadinSession.getCurrent());
+    }
+
+    public static ComponentFactory getCurrent(VaadinSession session) {
+        ComponentFactory instance = (ComponentFactory) session.getAttribute(COMPONENT_FACTORY);
         if (instance == null) {
+            log.debug("instance is null, new instance will be created now");
             instance = createAndSaveFactory();
         }
+        log.debug("instance returning");
+        return instance;
+    }
+
+    public static ComponentFactory getCurrent(VaadinSession session, VaadinServlet servlet) {
+        ComponentFactory instance = (ComponentFactory) session.getAttribute(COMPONENT_FACTORY);
+        if (instance == null) {
+            log.debug("instance is null, new instance will be created now");
+            instance = createAndSaveFactory(servlet, session);
+        }
+        log.debug("instance returning");
         return instance;
     }
 
@@ -85,8 +111,16 @@ public class UIFactory implements ComponentFactory, Serializable {
      * Create factory and save it to current vaadin session
      */
     private static ComponentFactory createAndSaveFactory() {
-        UIContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(
-                VaadinServlet.getCurrent().getServletContext()).getBean(UIContext.class);
+        return createAndSaveFactory(VaadinServlet.getCurrent(), VaadinSession.getCurrent());
+    }
+
+    /**
+     * Create factory and save it to vaadin session
+     */
+    private static ComponentFactory createAndSaveFactory(VaadinServlet vaadinServlet, VaadinSession vaadinSession) {
+        log.debug("creating new factory instance");
+        WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(
+                vaadinServlet.getServletContext());
         ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
         ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
         ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
@@ -94,7 +128,9 @@ public class UIFactory implements ComponentFactory, Serializable {
         SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();
         UIFactory uiFactory = new UIFactory(presenterFactory, viewFactory, windowFactory,
                 helpManagerFactory, sidebarManagerFactory);
-        VaadinSession.getCurrent().setAttribute(COMPONENT_FACTORY, uiFactory);
+        log.debug("storing..");
+        vaadinSession.setAttribute(COMPONENT_FACTORY, uiFactory);
+        log.debug("instance will be returned");
         return uiFactory;
     }
 }

@@ -9,7 +9,7 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.jms.listener.SimpleMessageListenerContainer;
-import ua.org.tees.yarosh.tais.user.comm.api.JmsBroadcaster;
+import ua.org.tees.yarosh.tais.user.comm.api.JmsBroadcastService;
 
 import javax.jms.Topic;
 
@@ -46,7 +46,7 @@ public class JmsConfiguration {
 
     @Bean
     @Autowired
-    public SimpleMessageListenerContainer simpleMessageListenerContainer(JmsBroadcaster JmsDispatcher) {
+    public SimpleMessageListenerContainer simpleMessageListenerContainer(JmsBroadcastService JmsDispatcher) {
         SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer();
         simpleMessageListenerContainer.setConnectionFactory(jmsFactory());
         simpleMessageListenerContainer.setDestination(chatTopic());

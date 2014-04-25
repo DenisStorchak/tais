@@ -8,7 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jms.core.JmsTemplate;
 import org.springframework.stereotype.Service;
+import ua.org.tees.yarosh.tais.core.common.api.Listener;
 import ua.org.tees.yarosh.tais.core.common.api.Message;
+import ua.org.tees.yarosh.tais.user.comm.api.ChatMessageReceivedListener;
 import ua.org.tees.yarosh.tais.user.comm.api.Communicator;
 
 import javax.jms.Topic;
@@ -25,6 +27,7 @@ public class ChatService implements Communicator {
     private JmsTemplate jmsTemplate;
     private Topic chatTopic;
     private ObjectMapper objectMapper;
+    private JmsBroadcaster broadcastService;
 
     @Autowired
     public void setJmsTemplate(JmsTemplate jmsTemplate) {
@@ -41,6 +44,11 @@ public class ChatService implements Communicator {
         this.objectMapper = objectMapper;
     }
 
+    @Autowired
+    public void setBroadcastService(JmsBroadcaster broadcastService) {
+        this.broadcastService = broadcastService;
+    }
+
     @Override
     public void sendMessage(Message message) {
         ChatMessage chatMessage = (ChatMessage) message;
@@ -53,6 +61,15 @@ public class ChatService implements Communicator {
                     chatMessage.getTo()));
         } catch (JsonProcessingException e) {
             log.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void addListener(Listener listener) {
+        if (listener instanceof ChatMessageReceivedListener) {
+            broadcastService.addListener((ChatMessageReceivedListener) listener);
+        } else {
+            log.warn("Can't add listener. This communicator support only [{}]", ChatMessageReceivedListener.class.getName());
         }
     }
 }

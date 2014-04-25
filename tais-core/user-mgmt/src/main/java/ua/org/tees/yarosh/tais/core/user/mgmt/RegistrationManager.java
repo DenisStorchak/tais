@@ -73,7 +73,8 @@ public class RegistrationManager implements RegistrantService {
     @Cacheable(REGISTRANTS)
     public Registrant getRegistration(String login) {
         log.debug("Profile [login: {}] requested", login);
-        return registrantRepository.findOne(login);
+        boolean exists = registrantRepository.exists(login);
+        return exists ? registrantRepository.findOne(login) : null;
     }
 
     @Override

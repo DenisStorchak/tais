@@ -1,72 +1,58 @@
 package ua.org.tees.yarosh.tais.ui.listeners.backend;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.common.eventbus.Subscribe;
+import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import com.vaadin.ui.UI;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.web.context.WebApplicationContext;
+import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.ui.components.windows.ChatWindow;
 import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.user.comm.ChatMessage;
-
-import javax.jms.JMSException;
-import javax.jms.Message;
-import javax.jms.MessageListener;
-import javax.jms.TextMessage;
-import java.io.IOException;
+import ua.org.tees.yarosh.tais.user.comm.ChatMessageReceivedEvent;
+import ua.org.tees.yarosh.tais.user.comm.api.ChatMessageReceivedListener;
 
 /**
  * @author Timur Yarosh
  *         Date: 23.04.14
  *         Time: 20:04
  */
-public class ChatListener implements MessageListener {
+public class ChatListener implements ChatMessageReceivedListener {
 
     public static final Logger log = LoggerFactory.getLogger(ChatListener.class);
     private VaadinSession vaadinSession;
-    private WebApplicationContext ctx;
+    private VaadinServlet vaadinServlet;
+    private UI ui;
 
-    private ChatListener(VaadinSession vaadinSession, WebApplicationContext ctx) {
+    public ChatListener(VaadinSession vaadinSession, VaadinServlet vaadinServlet, UI ui) {
         this.vaadinSession = vaadinSession;
-        this.ctx = ctx;
-    }
-
-    public static ChatListener createListener(VaadinSession vaadinSession, WebApplicationContext ctx) {
-        if (vaadinSession == null) {
-            throw new IllegalArgumentException("VaadinSession can't be null");
-        }
-        return new ChatListener(vaadinSession, ctx);
+        this.vaadinServlet = vaadinServlet;
+        this.ui = ui;
     }
 
     @Override
-    public void onMessage(Message message) {
-        if (message instanceof TextMessage) {
-            try {
-                TextMessage textMessage = (TextMessage) message;
-                ChatMessage chatMessage = new ObjectMapper().readValue(textMessage.getText(), ChatMessage.class); //todo freezes //fixme OM
+    @Subscribe
+    public void onReceived(ChatMessageReceivedEvent event) {
+        if (forMe(event.getChatMessage())) {
+            log.info("Try to catch chat message");
+            ChatWindow window = UIFactory.getCurrent(vaadinSession, vaadinServlet).getWindow(ChatWindow.class);
+            ui.access(() -> showMessage(event, window));
+        }
+    }
 
-                if (forMe(chatMessage)) {
-                    ChatWindow window = UIFactory.getCurrent().getWindow(ChatWindow.class);
-                    window.setDestination(chatMessage.getFrom());
-                    window.addCompanionMessage((ChatMessage) message);
+    private void showMessage(ChatMessageReceivedEvent event, ChatWindow window) {
+        window.setDestination(event.getChatMessage().getFrom());
+        window.addCompanionMessage(event.getChatMessage());
 
-                    UI ui = UI.getCurrent();
-                    ui.access(() -> ui.addWindow(window));
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JMSException e) {
-                e.printStackTrace();
-            }
-        } else {
-            throw new IllegalArgumentException(String.format("[%s] required", TextMessage.class.getName()));
+        if (!ui.getWindows().contains(window)) {
+            ui.addWindow(window);
         }
     }
 
     private boolean forMe(ChatMessage message) {
-        String login = Registrants.getCurrent(vaadinSession).getLogin();
-        return message.getTo().equals(login);
+        Registrant current = Registrants.getCurrent(vaadinSession);
+        return current != null && message.getTo().equals(current.getLogin());
     }
 }
