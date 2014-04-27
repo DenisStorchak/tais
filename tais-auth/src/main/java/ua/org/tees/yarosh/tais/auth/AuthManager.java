@@ -75,22 +75,24 @@ public class AuthManager {
 
     public static boolean isAuthorized(String username, Class<?> clazz) {
         if (enabled) {
-            if (username == null || clazz == null) {
-                log.warn("null username or clazz taken, null returns");
-                return false;
-            } else if (clazz.getAnnotation(PermitAll.class) != null) {
-                return true;
-            } else if (AUTHORIZATIONS.containsKey(username)) {
-                PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
-                UserDetails auth = AUTHORIZATIONS.get(username);
-                if (auth != null && permitRoles != null) {
-                    for (String s : permitRoles.value()) {
-                        if (s.equals(auth.getRole())) return true;
-                    }
+            if (clazz != null) {
+                if (clazz.isAnnotationPresent(PermitAll.class)) {
+                    return true;
+                } else if (username == null) {
+                    log.warn("null username");
                     return false;
+                } else if (AUTHORIZATIONS.containsKey(username)) {
+                    PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
+                    UserDetails auth = AUTHORIZATIONS.get(username);
+                    if (auth != null && permitRoles != null) {
+                        for (String s : permitRoles.value()) {
+                            if (s.equals(auth.getRole())) return true;
+                        }
+                        return false;
+                    }
                 }
+                return false;
             }
-            return false;
         }
         throw new AuthException("AuthManager disabled");
     }
