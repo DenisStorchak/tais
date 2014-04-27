@@ -4,10 +4,13 @@ import com.vaadin.data.Container;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.IndexedContainer;
 import com.vaadin.server.VaadinSession;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.components.windows.RegistrantNotFoundWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.UIContext;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -38,24 +41,30 @@ public class ProfileListener extends AbstractPresenter implements ProfilePresent
     @Override
     public Container createProfileContainer() {
         String login = (String) VaadinSession.getCurrent().getAttribute(REGISTRANT_ID);
-        Registrant registrant = ctx.getBean(RegistrantService.class).getRegistration(login);
+        try {
+            Registrant registrant = ctx.getBean(RegistrantService.class).getRegistration(login);
 
-        if (registrant == null) {
-            return null;
+            if (registrant == null) {
+                return null;
+            }
+
+            IndexedContainer container = new IndexedContainer();
+            container.addContainerProperty(KEY_PROPERTY, String.class, null);
+            container.addContainerProperty(VALUE_PROPERTY, String.class, null);
+
+            addItem(container, "Логин", registrant.getLogin());
+            addItem(container, "Фамилия", registrant.getSurname());
+            addItem(container, "Имя", registrant.getName());
+            addItem(container, "Отчество", registrant.getPatronymic());
+            addItem(container, "Email", registrant.getEmail());
+            addItem(container, "Группа", registrant.getGroup().toString());
+            addItem(container, "Роль", registrant.getRole());
+            return container;
+        } catch (RegistrantNotFoundException e) {
+            log.warn("No such registrant [{}]", login);
+            UI.getCurrent().addWindow(new RegistrantNotFoundWindow());
         }
-
-        IndexedContainer container = new IndexedContainer();
-        container.addContainerProperty(KEY_PROPERTY, String.class, null);
-        container.addContainerProperty(VALUE_PROPERTY, String.class, null);
-
-        addItem(container, "Логин", registrant.getLogin());
-        addItem(container, "Фамилия", registrant.getSurname());
-        addItem(container, "Имя", registrant.getName());
-        addItem(container, "Отчество", registrant.getPatronymic());
-        addItem(container, "Email", registrant.getEmail());
-        addItem(container, "Группа", registrant.getGroup().toString());
-        addItem(container, "Роль", registrant.getRole());
-        return container;
+        return new IndexedContainer();
     }
 
     private void addItem(IndexedContainer container, String key, String value) {

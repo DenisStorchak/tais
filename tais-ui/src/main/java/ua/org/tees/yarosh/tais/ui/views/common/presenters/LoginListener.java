@@ -3,6 +3,7 @@ package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
+import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.properties.DefaultUserProperties;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
@@ -44,8 +45,10 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
     public Registrant login(String username, String password) {
         if (authManager.login(username, password)) {
 
-            Registrant registration = registrantService.getRegistration(username);
-            if (registration == null) { // user in memory
+            Registrant registration;
+            try {
+                registration = registrantService.getRegistration(username);
+            } catch (RegistrantNotFoundException e) {
                 registration = new Registrant();
                 registration.setLogin(defaultUserProperties.getLogin());
                 registration.setRole(defaultUserProperties.getRole());

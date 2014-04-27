@@ -4,6 +4,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.server.VaadinSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 
@@ -31,7 +32,11 @@ public abstract class Registrants {
         if (attribute != null) {
             String login = (String) attribute;
             log.debug("login [{}] found in session", login);
-            return registrantService.getRegistration(login);
+            try {
+                return registrantService.getRegistration(login);
+            } catch (RegistrantNotFoundException e) {
+                return null;
+            }
         } else {
             log.debug("login not found in session");
             return null;

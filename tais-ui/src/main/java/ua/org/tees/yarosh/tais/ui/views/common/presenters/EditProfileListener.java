@@ -1,6 +1,7 @@
 package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 
 import com.vaadin.ui.Notification;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
@@ -8,6 +9,7 @@ import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundExceptio
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
+import ua.org.tees.yarosh.tais.ui.components.windows.RegistrantNotFoundWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
@@ -49,8 +51,13 @@ public class EditProfileListener extends AbstractPresenter implements EditProfil
 
     @Override
     public Registrant getRegistrant() {
-        if (registrantId != null) return registrantService.getRegistration(registrantId);
-        else return null;
+        if (registrantId != null) try {
+            return registrantService.getRegistration(registrantId);
+        } catch (RegistrantNotFoundException e) {
+            log.warn("No such registrant [{}]", registrantId);
+            UI.getCurrent().addWindow(new RegistrantNotFoundWindow());
+        }
+        return new Registrant();
     }
 
     @Override

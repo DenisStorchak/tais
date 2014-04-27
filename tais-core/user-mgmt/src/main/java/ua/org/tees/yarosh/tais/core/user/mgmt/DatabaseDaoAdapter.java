@@ -1,10 +1,13 @@
 package ua.org.tees.yarosh.tais.core.user.mgmt;
 
 import org.apache.commons.codec.digest.DigestUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.org.tees.yarosh.tais.auth.UserDetails;
 import ua.org.tees.yarosh.tais.auth.UserRepositoryAdapter;
+import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 
@@ -16,6 +19,7 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 @Service
 public class DatabaseDaoAdapter implements UserRepositoryAdapter {
 
+    public static final Logger log = LoggerFactory.getLogger(DatabaseDaoAdapter.class);
     private RegistrantService registrantService;
 
     @Autowired
@@ -26,12 +30,14 @@ public class DatabaseDaoAdapter implements UserRepositoryAdapter {
     @Override
     public UserDetails getUserDetails(String login) {
         UserDetails userDetails = null;
-        Registrant registration = registrantService.getRegistration(login);
-        if (registration != null) {
+        try {
+            Registrant registration = registrantService.getRegistration(login);
             userDetails = new UserDetails();
             userDetails.setUsername(registration.getLogin());
             userDetails.setPassword(registration.getPassword());
             userDetails.setRole(registration.getRole());
+        } catch (RegistrantNotFoundException e) {
+            log.warn("No such login [{}]", login);
         }
         return userDetails;
     }

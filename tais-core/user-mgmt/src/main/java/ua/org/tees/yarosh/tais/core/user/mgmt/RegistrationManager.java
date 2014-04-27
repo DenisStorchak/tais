@@ -71,10 +71,12 @@ public class RegistrationManager implements RegistrantService {
 
     @Override
     @Cacheable(REGISTRANTS)
-    public Registrant getRegistration(String login) {
+    public Registrant getRegistration(String login) throws RegistrantNotFoundException {
         log.debug("Profile [login: {}] requested", login);
-        boolean exists = registrantRepository.exists(login);
-        return exists ? registrantRepository.findOne(login) : null;
+        if (registrantRepository.exists(login)) {
+            return registrantRepository.findOne(login);
+        }
+        throw new RegistrantNotFoundException(login);
     }
 
     @Override

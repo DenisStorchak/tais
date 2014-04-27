@@ -38,7 +38,6 @@
             <groupId>org.springframework.integration</groupId>
             <artifactId>spring-integration-mail</artifactId>
         </dependency>
-        <!--activemq start-->
         <dependency>
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-all</artifactId>
@@ -47,7 +46,6 @@
             <groupId>org.apache.activemq</groupId>
             <artifactId>activemq-pool</artifactId>
         </dependency>
-        <!--activemq end-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jms</artifactId>

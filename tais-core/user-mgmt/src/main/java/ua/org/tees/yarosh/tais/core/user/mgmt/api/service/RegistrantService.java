@@ -18,7 +18,7 @@ public interface RegistrantService {
 
     void addRegistrationListener(RegistrationListener listener);
 
-    Registrant getRegistration(String login);
+    Registrant getRegistration(String login) throws RegistrantNotFoundException;
 
     Registrant updateRegistration(Registrant registrant) throws RegistrantNotFoundException;
 

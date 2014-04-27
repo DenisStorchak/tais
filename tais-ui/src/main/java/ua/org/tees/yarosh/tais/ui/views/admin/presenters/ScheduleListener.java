@@ -1,14 +1,17 @@
 package ua.org.tees.yarosh.tais.ui.views.admin.presenters;
 
 import com.vaadin.data.Container;
+import com.vaadin.ui.UI;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import ua.org.tees.yarosh.tais.core.common.exceptions.RegistrantNotFoundException;
 import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.common.models.StudentGroup;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.schedule.api.ScheduleService;
 import ua.org.tees.yarosh.tais.schedule.models.Lesson;
 import ua.org.tees.yarosh.tais.ui.components.windows.CreateScheduleWindow;
+import ua.org.tees.yarosh.tais.ui.components.windows.RegistrantNotFoundWindow;
 import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Updateable;
 import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
@@ -56,9 +59,14 @@ public class ScheduleListener extends AbstractPresenter implements ScheduleTaisV
             List<Lesson> schedule = scheduleService.findSchedule(periodFrom, periodTo, studentGroup);
             return createLessonsDateMap(schedule);
         } else if (owner instanceof Registrant) {
-            Registrant registration = registrantService.getRegistration(((Registrant) owner).getLogin());
-            List<Lesson> schedule = scheduleService.findSchedule(periodFrom, periodTo, registration.getGroup());
-            return createLessonsDateMap(schedule);
+            try {
+                Registrant registration = registrantService.getRegistration(((Registrant) owner).getLogin());
+                List<Lesson> schedule = scheduleService.findSchedule(periodFrom, periodTo, registration.getGroup());
+                return createLessonsDateMap(schedule);
+            } catch (RegistrantNotFoundException e) {
+                log.warn("No such registration [{}]", ((Registrant) owner).getLogin());
+                UI.getCurrent().addWindow(new RegistrantNotFoundWindow());
+            }
         }
         throw new IllegalArgumentException("Owner must be instance of StudentGroup or Registrant");
     }
