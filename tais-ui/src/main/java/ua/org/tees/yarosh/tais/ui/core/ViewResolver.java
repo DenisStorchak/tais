@@ -55,7 +55,7 @@ public class ViewResolver {
         return roleViews.get(registrant.getRole());
     }
 
-    public static void mapDefaultView(Class<? extends View> clazz, String role) {
+    public static void bindDefaultView(Class<? extends View> clazz, String role) {
         roleViews.put(role, resolveUnregistered(clazz));
     }
 

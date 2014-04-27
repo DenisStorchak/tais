@@ -51,7 +51,7 @@ import java.util.Set;
 
 import static org.springframework.web.context.support.WebApplicationContextUtils.getRequiredWebApplicationContext;
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.*;
-import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.mapDefaultView;
+import static ua.org.tees.yarosh.tais.ui.core.ViewResolver.bindDefaultView;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.PREVIOUS_VIEW;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
 
@@ -83,16 +83,16 @@ public class TAISUI extends UI {
 
         Navigator nav = new TaisNavigator(this, content);
 
-        mapRoleViews();
+        bindRoleViews();
         setUpViews(nav);
         setUpListeners(nav, commonComponent);
         authenticate(nav);
     }
 
-    private void mapRoleViews() {
-        mapDefaultView(UserManagementView.class, ADMIN);
-        mapDefaultView(TeacherDashboardView.class, TEACHER);
-        mapDefaultView(UnresolvedTasksView.class, STUDENT);
+    private void bindRoleViews() {
+        bindDefaultView(UserManagementView.class, ADMIN);
+        bindDefaultView(TeacherDashboardView.class, TEACHER);
+        bindDefaultView(UnresolvedTasksView.class, STUDENT);
     }
 
     private void setUpListeners(Navigator nav, CommonComponent commonComponent) {

@@ -8,6 +8,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.api.annotations.PermitAll;
+import ua.org.tees.yarosh.tais.ui.core.api.PresenterUnnecessary;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ACCESS_DENIED;
@@ -15,6 +16,7 @@ import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.ACCESS_
 @PermitAll
 @TaisView
 @Qualifier(ACCESS_DENIED)
+@PresenterUnnecessary
 public class AccessDeniedView extends VerticalLayout implements View {
     public AccessDeniedView() {
         setSizeFull();

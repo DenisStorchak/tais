@@ -2,7 +2,6 @@ package ua.org.tees.yarosh.tais.ui.views.common;
 
 import com.vaadin.event.ShortcutListener;
 import com.vaadin.navigator.ViewChangeListener;
-import com.vaadin.server.VaadinSession;
 import com.vaadin.shared.ui.label.ContentMode;
 import com.vaadin.ui.*;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -16,7 +15,6 @@ import ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView;
 
 import static com.vaadin.event.ShortcutAction.KeyCode.ENTER;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Messages.*;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.REGISTRANT_ID;
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.AUTH;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.LoginTaisView.LoginPresenter;
 
@@ -116,18 +114,11 @@ public class LoginView extends VerticalLayout implements LoginTaisView {
             );
 
             signIn.addClickListener(event -> {
-                Registrant login = UIFactory.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
+                Registrant auth = UIFactory.getCurrent().getRelativePresenter(instance, LoginPresenter.class)
                         .login(username.getValue(), password.getValue());
-                if (username.getValue() != null
-                        && password.getValue() != null
-                        && login != null) {
+                if (auth != null) {
                     removeComponent(error);
-
-                    // save user to session
-                    // todo remove line (use cookie instead)
-                    VaadinSession.getCurrent().setAttribute(REGISTRANT_ID, username.getValue());
-
-                    getUI().getNavigator().navigateTo(ViewResolver.resolveDefaultView(login));
+                    getUI().getNavigator().navigateTo(ViewResolver.resolveDefaultView(auth));
                 } else {
                     if (getComponentCount() > 2) {
                         removeComponent(getComponent(2));
