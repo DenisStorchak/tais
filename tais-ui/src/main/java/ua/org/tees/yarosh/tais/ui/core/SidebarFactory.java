@@ -10,6 +10,7 @@ import ua.org.tees.yarosh.tais.core.common.dto.Roles;
 import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
 import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.components.layouts.UserMenu;
+import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
 import ua.org.tees.yarosh.tais.ui.views.admin.ScheduleView;
 import ua.org.tees.yarosh.tais.ui.views.admin.SettingsView;
 import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
@@ -58,6 +59,11 @@ public class SidebarFactory {
         unresolvedTasks.addClickListener(event -> ui.getNavigator().navigateTo(UNRESOLVED));
         studentMenu.addMenuButton(UnresolvedTasksView.class, unresolvedTasks);
 
+        NativeButton showSchedule = new NativeButton("Расписание");
+        showSchedule.addStyleName("icon-users");
+        showSchedule.addClickListener(event -> ui.getNavigator().navigateTo(DataBinds.UriFragments.Student.SCHEDULE));
+        studentMenu.addMenuButton(ua.org.tees.yarosh.tais.ui.views.student.ScheduleView.class, showSchedule);
+
         return studentMenu;
     }
 
@@ -91,6 +97,11 @@ public class SidebarFactory {
         showAllStudents.addStyleName("icon-users");
         showAllStudents.addClickListener(event -> ui.getNavigator().navigateTo(STUDENTS));
         teacherMenu.addMenuButton(StudentsView.class, showAllStudents);
+
+        NativeButton showSchedule = new NativeButton("Расписание");
+        showSchedule.addStyleName("icon-users");
+        showSchedule.addClickListener(event -> ui.getNavigator().navigateTo(SCHEDULE));
+        teacherMenu.addMenuButton(ua.org.tees.yarosh.tais.ui.views.teacher.ScheduleView.class, showSchedule);
 
         return teacherMenu;
     }

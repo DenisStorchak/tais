@@ -65,7 +65,6 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
     private PopupDateField periodFrom = new PopupDateField();
     private PopupDateField periodTo = new PopupDateField();
     private Button searchLessonsButton = new Button("Поиск");
-    private Button addScheduleButton = new Button("Добавить расписание");
 
     @Override
     public void update() {
@@ -98,12 +97,6 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
         scheduleOwners.focus();
 
         VaadinUtils.setSizeUndefined(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
-
-        addScheduleButton.addClickListener(event -> getUI().addWindow(
-                UIFactory.getCurrent()
-                        .getRelativePresenter(this, SchedulePresenter.class)
-                        .getCreateScheduleWindow(scheduleOwners.getValue(), null, periodTo.getValue())
-        ));
 
         scheduleTable = new PlainBorderlessTable("Расписание");
         scheduleTable.addContainerProperty("", DashPanel.class, null);
@@ -139,7 +132,7 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
     private HorizontalLayout createControlsLayout() {
         HorizontalLayout controls = new HorizontalLayout();
         controls.setSizeUndefined();
-        controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton, addScheduleButton);
+        controls.addComponents(scheduleOwners, periodFrom, periodTo, searchLessonsButton);
         controls.setSpacing(true);
         return controls;
     }
