@@ -23,9 +23,9 @@ public class LogoutAspect {
     )
     public void logLoggingOut(boolean result) {
         if (result) {
-            VaadinUtils.storeToSession(AUTH, null);
-            VaadinUtils.storeToSession(COMPONENT_FACTORY, null);
-            VaadinUtils.storeToSession(PREVIOUS_VIEW, null);
+            VaadinUtils.store(AUTH, null);
+            VaadinUtils.store(COMPONENT_FACTORY, null);
+            VaadinUtils.store(PREVIOUS_VIEW, null);
         }
     }
 }

@@ -25,7 +25,7 @@ public class LoginAspect {
     public void storeAuth(JoinPoint joinPoint) {
         String auth = (String) joinPoint.getArgs()[0];
         log.info("Store [{}] auth to session", auth);
-        VaadinUtils.storeToSession(AUTH, auth);
+        VaadinUtils.store(AUTH, auth);
     }
 
     /**
@@ -34,7 +34,7 @@ public class LoginAspect {
     @AfterReturning(pointcut = "execution(* ua.org.tees.yarosh.tais.auth.AuthManager.login(..))", returning = "result")
     public void deleteAuth(boolean result) {
         if (!result) {
-            VaadinUtils.storeToSession(AUTH, null);
+            VaadinUtils.store(AUTH, null);
             log.info("Login failure, auth removed");
         }
     }

@@ -18,6 +18,7 @@ import java.io.InputStream;
  *         Date: 29.03.14
  *         Time: 19:19
  */
+@SuppressWarnings("unchecked")
 public class VaadinUtils {
 
     private UI ui;
@@ -103,11 +104,11 @@ public class VaadinUtils {
         return layout;
     }
 
-    public static void storeToSession(String key, Object object) {
+    public static void store(String key, Object object) {
         VaadinSession.getCurrent().setAttribute(key, object);
     }
 
-    public static <E> E getFromSession(String key, Class<? extends E> clazz) {
+    public static <E> E get(String key, Class<? extends E> clazz) {
         return (E) VaadinSession.getCurrent().getAttribute(key);
     }
 

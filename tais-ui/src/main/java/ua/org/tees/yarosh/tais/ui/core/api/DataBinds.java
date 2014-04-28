@@ -57,12 +57,14 @@ public abstract class DataBinds {
             public static final String ENABLED_QUESTIONS = PREFIX + "questions";
             public static final String STUDENTS = PREFIX + "students";
             public static final String ADD_MANUAL = PREFIX + "manual/add";
+            public static final String SCHEDULE = PREFIX + "schedule";
         }
 
         public abstract class Student {
             public static final String PREFIX = "student/";
             public static final String UNRESOLVED = PREFIX + "unresolved";
             public static final String QUESTIONS_RUNNER = PREFIX + "qsuite";
+            public static final String SCHEDULE = PREFIX + "schedule";
         }
     }
 
