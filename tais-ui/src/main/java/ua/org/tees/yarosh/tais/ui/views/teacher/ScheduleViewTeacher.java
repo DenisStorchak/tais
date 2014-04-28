@@ -38,7 +38,7 @@ import static ua.org.tees.yarosh.tais.ui.views.teacher.api.ScheduleTaisView.Sche
 @Qualifier(SCHEDULE)
 @PermitRoles(TEACHER)
 @SuppressWarnings("unchecked")
-public class ScheduleView extends DashboardView implements ScheduleTaisView {
+public class ScheduleViewTeacher extends DashboardView implements ScheduleTaisView {
 
     private static final String KEY_DISCIPLINE = "Дисциплина";
     private static final String KEY_LESSON_TYPE = "Тип занятия";
@@ -87,7 +87,7 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
         }
     }
 
-    public ScheduleView() {
+    public ScheduleViewTeacher() {
         super();
         periodFrom.setValue(new Date());
         periodTo.setValue(new Date());
@@ -105,11 +105,9 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
             scheduleTable.removeAllItems();
             updateLessons();
             for (String date : lessons.keySet()) {
-                Button editScheduleButton = createEditScheduleButton();
                 Table dayContent = new Table(date);
                 dayContent.setContainerDataSource(createDataSource(lessons.get(date)));
-                configureEditScheduleButton(editScheduleButton, dayContent);
-                DashPanel dayPanel = createPanel(dayContent, editScheduleButton);
+                DashPanel dayPanel = createPanel(dayContent, null);
                 Item item = scheduleTable.addItem(RandomStringUtils.random(10));
                 item.getItemProperty("").setValue(dayPanel);
             }
@@ -119,14 +117,6 @@ public class ScheduleView extends DashboardView implements ScheduleTaisView {
         top.addComponent(createControlsLayout());
 
         addDashPanel(null, null, scheduleTable);
-    }
-
-    private void configureEditScheduleButton(Button editScheduleButton, Table scheduleContent) {
-        editScheduleButton.addClickListener(event -> getUI().addWindow(
-                UIFactory.getCurrent()
-                        .getRelativePresenter(this, SchedulePresenter.class)
-                        .getCreateScheduleWindow(scheduleOwners.getValue(), scheduleContent, periodTo.getValue())
-        ));
     }
 
     private HorizontalLayout createControlsLayout() {

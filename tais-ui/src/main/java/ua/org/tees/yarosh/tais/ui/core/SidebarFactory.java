@@ -62,7 +62,7 @@ public class SidebarFactory {
         NativeButton showSchedule = new NativeButton("Расписание");
         showSchedule.addStyleName("icon-users");
         showSchedule.addClickListener(event -> ui.getNavigator().navigateTo(DataBinds.UriFragments.Student.SCHEDULE));
-        studentMenu.addMenuButton(ua.org.tees.yarosh.tais.ui.views.student.ScheduleView.class, showSchedule);
+        studentMenu.addMenuButton(ua.org.tees.yarosh.tais.ui.views.student.ScheduleViewStudent.class, showSchedule);
 
         return studentMenu;
     }
@@ -101,7 +101,7 @@ public class SidebarFactory {
         NativeButton showSchedule = new NativeButton("Расписание");
         showSchedule.addStyleName("icon-users");
         showSchedule.addClickListener(event -> ui.getNavigator().navigateTo(SCHEDULE));
-        teacherMenu.addMenuButton(ua.org.tees.yarosh.tais.ui.views.teacher.ScheduleView.class, showSchedule);
+        teacherMenu.addMenuButton(ua.org.tees.yarosh.tais.ui.views.teacher.ScheduleViewTeacher.class, showSchedule);
 
         return teacherMenu;
     }

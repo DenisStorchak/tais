@@ -13,8 +13,12 @@ import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.api.HomeworkManager;
 import ua.org.tees.yarosh.tais.homework.models.ManualTaskReport;
 import ua.org.tees.yarosh.tais.schedule.api.DisciplineService;
+import ua.org.tees.yarosh.tais.ui.components.layouts.Sidebar;
+import ua.org.tees.yarosh.tais.ui.components.layouts.SidebarMenu;
 import ua.org.tees.yarosh.tais.ui.core.UIFactory;
+import ua.org.tees.yarosh.tais.ui.core.api.ComponentFactory;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
+import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
 
@@ -71,8 +75,11 @@ public class LoginButtonsInitializer implements LoginListener {
         disciplineService.findDisciplinesByTeacher(registrant.getLogin())
                 .forEach(d -> reports.addAll(homeworkManager.findUnratedManualTaskReports(d)));
 
-        Button button = UIFactory.getCurrent().getSidebarManager().getSidebar()
-                .getSidebarMenu().getButton(TeacherDashboardView.class);
+        ComponentFactory componentFactory = UIFactory.getCurrent();
+        SidebarManager sidebarManager = componentFactory.getSidebarManager();
+        Sidebar sidebar = sidebarManager.getSidebar();
+        SidebarMenu sidebarMenu = sidebar.getSidebarMenu();
+        Button button = sidebarMenu.getButton(TeacherDashboardView.class);
         updateCaption(reports.size(), button);
     }
 
