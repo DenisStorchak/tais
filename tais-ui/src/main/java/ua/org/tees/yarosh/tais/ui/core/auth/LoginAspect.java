@@ -7,13 +7,12 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 import ua.org.tees.yarosh.tais.ui.core.VaadinUtils;
 
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Cookies.AUTH;
 
 @Aspect
-@Component
+//@Component
 public class LoginAspect {
 
     private static final Logger log = LoggerFactory.getLogger(LoginAspect.class);

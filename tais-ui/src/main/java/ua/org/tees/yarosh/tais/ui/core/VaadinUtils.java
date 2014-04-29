@@ -21,6 +21,8 @@ import java.io.InputStream;
 @SuppressWarnings("unchecked")
 public class VaadinUtils {
 
+    public static final Logger log = LoggerFactory.getLogger(VaadinUtils.class);
+    private static final int COOKIES_EXPIRY = 15552000;
     private UI ui;
 
     private VaadinUtils(UI ui) {
@@ -109,7 +111,7 @@ public class VaadinUtils {
     }
 
     public static <E> E get(String key, Class<? extends E> clazz) {
-        return (E) VaadinSession.getCurrent().getAttribute(key);
+        return clazz.cast(VaadinSession.getCurrent().getAttribute(key));
     }
 
     public static void transformToIconOnlyButton(String description,
@@ -137,7 +139,6 @@ public class VaadinUtils {
         }
 
         @Override
-
         public InputStream getStream() {
             try {
                 return new FileInputStream(source);

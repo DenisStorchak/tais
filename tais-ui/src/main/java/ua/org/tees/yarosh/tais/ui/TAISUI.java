@@ -5,9 +5,7 @@ import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.Title;
 import com.vaadin.navigator.Navigator;
 import com.vaadin.navigator.View;
-import com.vaadin.server.VaadinRequest;
-import com.vaadin.server.VaadinServlet;
-import com.vaadin.server.VaadinSession;
+import com.vaadin.server.*;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UI;
 import org.reflections.Reflections;
@@ -16,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.context.WebApplicationContext;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
-import ua.org.tees.yarosh.tais.core.common.models.Registrant;
 import ua.org.tees.yarosh.tais.core.user.mgmt.api.service.RegistrantService;
 import ua.org.tees.yarosh.tais.homework.AchievementDiaryReceptionist;
 import ua.org.tees.yarosh.tais.homework.PersonalTaskHolderReceptionist;
@@ -31,7 +28,6 @@ import ua.org.tees.yarosh.tais.ui.core.TaisNavigator;
 import ua.org.tees.yarosh.tais.ui.core.UIFactory;
 import ua.org.tees.yarosh.tais.ui.core.ViewResolver;
 import ua.org.tees.yarosh.tais.ui.core.api.DataBinds;
-import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
 import ua.org.tees.yarosh.tais.ui.core.mvp.FactoryBasedViewProvider;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisView;
 import ua.org.tees.yarosh.tais.ui.listeners.LastViewSaver;
@@ -67,6 +63,16 @@ public class TAISUI extends UI {
 
     public static final Logger log = LoggerFactory.getLogger(TAISUI.class);
     private static final String VIEWS_PACKAGE = "ua.org.tees.yarosh.tais.ui.views";
+    private VaadinRequest vaadinRequest;
+    private VaadinResponse vaadinResponse;
+
+    public VaadinRequest getVaadinRequest() {
+        return vaadinRequest;
+    }
+
+    public VaadinResponse getVaadinResponse() {
+        return vaadinResponse;
+    }
 
     public TAISUI() {
         log.debug("UI constructed");
@@ -76,6 +82,8 @@ public class TAISUI extends UI {
     protected void init(VaadinRequest vaadinRequest) {
 
         log.debug("UI initialization");
+        vaadinResponse = VaadinService.getCurrentResponse();
+        this.vaadinRequest = vaadinRequest;
 
         CssLayout content = new CssLayout();
         CommonComponent commonComponent = new CommonComponent(content);
@@ -140,8 +148,7 @@ public class TAISUI extends UI {
     }
 
     private void authenticate(Navigator nav) {
-        Registrant auth = Registrants.getCurrent(getSession());
-        if (auth == null || !AuthManager.loggedIn(auth.getLogin())) {
+        if (!AuthManager.loggedIn(VaadinSession.getCurrent().getSession().getId())) {
             nav.navigateTo(AUTH);
         }
     }

@@ -122,7 +122,7 @@ public class UIFactory implements ComponentFactory, Serializable {
         WebApplicationContext ctx = WebApplicationContextUtils.getRequiredWebApplicationContext(
                 vaadinServlet.getServletContext());
         ContextPresenterFactory presenterFactory = new ContextPresenterFactory(ctx);
-        ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory);
+        ContextViewFactory viewFactory = new ContextViewFactory(presenterFactory, ctx);
         ContextWindowFactory windowFactory = new ContextWindowFactory(ctx);
         LazyHelpManagerFactory helpManagerFactory = new LazyHelpManagerFactory();
         SidebarManagerFactory sidebarManagerFactory = new LazySidebarManagerFactory();

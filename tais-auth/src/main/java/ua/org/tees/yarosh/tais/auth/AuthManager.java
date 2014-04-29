@@ -44,10 +44,10 @@ public class AuthManager {
         DAO_ADAPTERS.add(userRepositoryAdapter);
     }
 
-    public boolean login(String username, String password) {
+    public boolean login(String username, String password, String id) {
         if (enabled) {
             if ((username.isEmpty() || password.isEmpty()) && !acceptsEmptyStrings()) {
-                log.info("Can't login with username [{}] and password [{}]. Empty string aren't allowed.",
+                log.info("Can't login with id [{}] and password [{}]. Empty string aren't allowed.",
                         username, password);
                 return false;
             }
@@ -55,7 +55,7 @@ public class AuthManager {
             if (dao.isPresent()) {
                 UserDetails userDetails = dao.get().getUserDetails(username);
                 if (userDetails != null && assertPasswords(password, userDetails.getPassword(), dao.get())) {
-                    AUTHORIZATIONS.put(username, userDetails);
+                    AUTHORIZATIONS.put(id, userDetails);
                     log.info("Registrant [{}] logged in", username);
                     eventBus.post(new LoginEvent(userDetails));
                     return true;
@@ -73,16 +73,20 @@ public class AuthManager {
         return userRepositoryAdapter.normalizePassword(candidate).equals(original);
     }
 
-    public static boolean isAuthorized(String username, Class<?> clazz) {
+    public static UserDetails getUserDetails(String sessionId) {
+        return AUTHORIZATIONS.get(sessionId);
+    }
+
+    public static boolean isAuthorized(String id, Class<?> clazz) {
         if (enabled) {
             if (clazz.getAnnotation(PermitAll.class) != null) {
                 return true;
-            } else if (username == null || clazz == null) {
-                log.warn("null username or clazz taken, null returns");
+            } else if (id == null || clazz == null) {
+                log.warn("null id or clazz taken, null returns");
                 return false;
-            } else if (AUTHORIZATIONS.containsKey(username)) {
+            } else if (AUTHORIZATIONS.containsKey(id)) {
                 PermitRoles permitRoles = clazz.getAnnotation(PermitRoles.class);
-                UserDetails auth = AUTHORIZATIONS.get(username);
+                UserDetails auth = AUTHORIZATIONS.get(id);
                 if (auth != null && permitRoles != null) {
                     for (String s : permitRoles.value()) {
                         if (s.equals(auth.getRole())) return true;
@@ -95,12 +99,12 @@ public class AuthManager {
         throw new AuthException("AuthManager disabled");
     }
 
-    public boolean logout(String username) {
+    public boolean logout(String id) {
         if (enabled) {
-            if (AUTHORIZATIONS.containsKey(username)) {
-                AUTHORIZATIONS.remove(username);
-                log.info("Registrant [{}] logged out", username);
-                eventBus.post(new LogoutEvent(AUTHORIZATIONS.get(username)));
+            if (AUTHORIZATIONS.containsKey(id)) {
+                AUTHORIZATIONS.remove(id);
+                log.info("Registrant [{}] logged out", id);
+                eventBus.post(new LogoutEvent(AUTHORIZATIONS.get(id)));
                 return true;
             }
             return false;

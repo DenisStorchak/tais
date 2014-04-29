@@ -1,5 +1,6 @@
 package ua.org.tees.yarosh.tais.ui.views.common.presenters;
 
+import com.vaadin.server.VaadinSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import ua.org.tees.yarosh.tais.auth.AuthManager;
@@ -42,7 +43,7 @@ public class LoginListener extends AbstractPresenter implements LoginPresenter {
 
     @Override
     public Registrant login(String username, String password) {
-        if (authManager.login(username, password)) {
+        if (authManager.login(username, password, VaadinSession.getCurrent().getSession().getId())) {
 
             Registrant registration = registrantService.getRegistration(username);
             if (registration == null) { // user in memory
