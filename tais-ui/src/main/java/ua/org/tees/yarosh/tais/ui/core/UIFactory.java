@@ -17,12 +17,15 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.*;
 import ua.org.tees.yarosh.tais.ui.listeners.SidebarManager;
 
 import java.io.Serializable;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
 
 public class UIFactory implements ComponentFactory, Serializable {
 
     public static final Logger log = LoggerFactory.getLogger(UIFactory.class);
+    private static final Map<String, ComponentFactory> INSTANCES = new ConcurrentHashMap<>();
 
     private ViewFactory viewFactory;
     private WindowFactory windowFactory;
@@ -98,13 +101,13 @@ public class UIFactory implements ComponentFactory, Serializable {
     }
 
     public static ComponentFactory getCurrent(VaadinSession session, VaadinServlet servlet) {
-        ComponentFactory instance = (ComponentFactory) session.getAttribute(COMPONENT_FACTORY);
-        if (instance == null) {
+        if (!INSTANCES.containsKey(session.getSession().getId())) {
             log.debug("instance is null, new instance will be created now");
-            instance = createAndSaveFactory(servlet, session);
+            return createAndSaveFactory(servlet, session);
         }
+
         log.debug("instance returning");
-        return instance;
+        return INSTANCES.get(session.getSession().getId());
     }
 
     /**
@@ -129,8 +132,14 @@ public class UIFactory implements ComponentFactory, Serializable {
         UIFactory uiFactory = new UIFactory(presenterFactory, viewFactory, windowFactory,
                 helpManagerFactory, sidebarManagerFactory);
         log.debug("storing..");
-        vaadinSession.setAttribute(COMPONENT_FACTORY, uiFactory);
+        INSTANCES.put(vaadinSession.getSession().getId(), uiFactory);
         log.debug("instance will be returned");
         return uiFactory;
+    }
+
+    public static void free(VaadinSession vaadinSession) {
+        if (INSTANCES.containsKey(vaadinSession.getSession().getId())) {
+            INSTANCES.remove(vaadinSession.getSession().getId());
+        }
     }
 }
