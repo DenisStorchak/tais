@@ -94,7 +94,7 @@ public class UIFactory implements ComponentFactory, Serializable {
         ComponentFactory instance = (ComponentFactory) session.getAttribute(COMPONENT_FACTORY);
         if (instance == null) {
             log.debug("instance is null, new instance will be created now");
-            instance = createAndSaveFactory();
+            instance = createAndSaveFactory(session);
         }
         log.debug("instance returning");
         return instance;
@@ -113,8 +113,8 @@ public class UIFactory implements ComponentFactory, Serializable {
     /**
      * Create factory and save it to current vaadin session
      */
-    private static ComponentFactory createAndSaveFactory() {
-        return createAndSaveFactory(VaadinServlet.getCurrent(), VaadinSession.getCurrent());
+    private static ComponentFactory createAndSaveFactory(VaadinSession vaadinSession) {
+        return createAndSaveFactory(VaadinServlet.getCurrent(), vaadinSession);
     }
 
     /**
@@ -138,9 +138,12 @@ public class UIFactory implements ComponentFactory, Serializable {
     }
 
     public static void free(VaadinSession vaadinSession) {
+        log.debug("Try to free factory for session [{}]", vaadinSession.getSession().getId());
         if (INSTANCES.containsKey(vaadinSession.getSession().getId())) {
             log.debug("Free factory for [{}] session", vaadinSession.getSession().getId());
             INSTANCES.remove(vaadinSession.getSession().getId());
+        } else {
+            log.error("No factory linked with session [{}]", vaadinSession.getSession().getId());
         }
     }
 }
