@@ -137,7 +137,7 @@ public class UIFactory implements ComponentFactory, Serializable {
         return uiFactory;
     }
 
-    public static void free(VaadinSession vaadinSession) {
+    public static void invalidate(VaadinSession vaadinSession) {
         log.debug("Try to free factory for session [{}]", vaadinSession.getSession().getId());
         if (INSTANCES.containsKey(vaadinSession.getSession().getId())) {
             log.debug("Free factory for [{}] session", vaadinSession.getSession().getId());

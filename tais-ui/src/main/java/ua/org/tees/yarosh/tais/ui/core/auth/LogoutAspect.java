@@ -21,7 +21,7 @@ public class LogoutAspect {
     )
     public void logLoggingOut(boolean result) {
         if (result) {
-            UIFactory.free(VaadinSession.getCurrent());
+            UIFactory.invalidate(VaadinSession.getCurrent());
             VaadinSession.getCurrent().close();
             Page.getCurrent().reload();
         }
