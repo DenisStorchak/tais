@@ -20,8 +20,6 @@ import java.io.Serializable;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.SessionKeys.COMPONENT_FACTORY;
-
 public class UIFactory implements ComponentFactory, Serializable {
 
     public static final Logger log = LoggerFactory.getLogger(UIFactory.class);
@@ -91,13 +89,7 @@ public class UIFactory implements ComponentFactory, Serializable {
     }
 
     public static ComponentFactory getCurrent(VaadinSession session) {
-        ComponentFactory instance = (ComponentFactory) session.getAttribute(COMPONENT_FACTORY);
-        if (instance == null) {
-            log.debug("instance is null, new instance will be created now");
-            instance = createAndSaveFactory(session);
-        }
-        log.debug("instance returning");
-        return instance;
+        return getCurrent(session, VaadinServlet.getCurrent());
     }
 
     public static ComponentFactory getCurrent(VaadinSession session, VaadinServlet servlet) {
@@ -108,13 +100,6 @@ public class UIFactory implements ComponentFactory, Serializable {
 
         log.debug("instance returning");
         return INSTANCES.get(session.getSession().getId());
-    }
-
-    /**
-     * Create factory and save it to current vaadin session
-     */
-    private static ComponentFactory createAndSaveFactory(VaadinSession vaadinSession) {
-        return createAndSaveFactory(VaadinServlet.getCurrent(), vaadinSession);
     }
 
     /**
