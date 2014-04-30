@@ -2,7 +2,10 @@ package ua.org.tees.yarosh.tais.ui.components.layouts;
 
 import com.vaadin.data.Item;
 import com.vaadin.shared.ui.label.ContentMode;
-import com.vaadin.ui.*;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.TextArea;
 import org.apache.commons.lang3.RandomStringUtils;
 import ua.org.tees.yarosh.tais.ui.components.PlainBorderlessTable;
 import ua.org.tees.yarosh.tais.ui.core.api.Registrants;
@@ -30,13 +33,7 @@ public class ChatLayout extends DashboardLayout {
     private static final SimpleDateFormat SDF = new SimpleDateFormat("hh:mm:ss");
     private static final String OWN_COLOR = "4d7198";
     private static final String COMPANION_COLOR = "00b9ff";
-    private static final int MESSAGES_WIDTH = 500;
     private static final String NO_DESTINATION_ERROR = "Destination is null";
-    private static final int METADATA_WIDTH = 100;
-    private static final String WINDOW_CAPTION_TEMPLATE = "Чат с %s";
-    private static final int MESSAGES_HEIGHT = 500;
-    private static final String BR = "<br/>";
-    private static final int SHORT_DISTANCE = 50;
 
     private Table dialog = new PlainBorderlessTable("");
     private TextArea inputArea = new TextArea();
@@ -59,24 +56,20 @@ public class ChatLayout extends DashboardLayout {
 
         dialog.addContainerProperty(METADATA_CAPTION, Label.class, null);
         dialog.addContainerProperty(MESSAGE_CAPTION, TextArea.class, null);
-        dialog.setColumnWidth(METADATA_CAPTION, METADATA_WIDTH);
-        dialog.setColumnWidth(MESSAGE_CAPTION, MESSAGES_WIDTH - METADATA_WIDTH);
-        dialog.setHeight(MESSAGES_HEIGHT, PIXELS);
-        dialog.setHeight(MESSAGES_HEIGHT, PIXELS);
-
-        DashPanel dialogPanel = addDashPanel(null, null, dialog);
-        dialogPanel.addComponent(dialog);
-        dialogPanel.setHeight(MESSAGES_HEIGHT, PIXELS);
+        dialog.setColumnWidth(METADATA_CAPTION, 50);
+        dialog.setColumnWidth(MESSAGE_CAPTION, 500);
+        dialog.setHeight(400, PIXELS);
+        dialog.setWidth(550, PIXELS);
 
         transformToIconOnlyButton(SEND_BUTTON_DESCRIPTION, SEND_BUTTON_STYLE, this::sendMessage, sendButton);
         sendButton.setClickShortcut(ENTER);
 
-        inputArea.setWidth(MESSAGES_WIDTH, PIXELS);
+        inputArea.setWidth(550, PIXELS);
 
-        setWidth(MESSAGES_WIDTH, PIXELS);
-        setHeight(MESSAGES_HEIGHT, PIXELS);
+        setWidth(600, PIXELS);
+        setHeight(500, PIXELS);
 
-        addComponent(new HorizontalLayout(dialogPanel));
+        addComponent(dialog);
         addComponent(createSingleFormLayout(inputArea, sendButton));
     }
 
@@ -119,7 +112,6 @@ public class ChatLayout extends DashboardLayout {
 
     private Label createMetadataLabel(ChatMessage message, String color, String author) {
         return new Label(
-                format(METADATA_HTML_TEMPLATE, color, SDF.format(message.getTimestamp()), author).replace("\n", BR),
-                ContentMode.HTML);
+                format(METADATA_HTML_TEMPLATE, color, SDF.format(message.getTimestamp()), author), ContentMode.HTML);
     }
 }

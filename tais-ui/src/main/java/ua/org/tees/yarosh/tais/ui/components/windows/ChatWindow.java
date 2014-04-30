@@ -19,7 +19,7 @@ import static com.vaadin.server.Sizeable.Unit.PIXELS;
 import static com.vaadin.ui.Notification.Type.TRAY_NOTIFICATION;
 import static java.lang.String.format;
 
-@TaisWindow
+@TaisWindow("Чат")
 public class ChatWindow extends AbstractWindow {
 
     private static final int WIDTH = 550;
