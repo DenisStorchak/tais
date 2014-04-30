@@ -32,8 +32,13 @@ public class EmailService implements Communicator {
     }
 
     @Override
-    public void addListener(Listener listener) {
+    public void addSentListener(Listener listener) {
         //todo post event to eventbus
+    }
+
+    @Override
+    public void markDelivered(Message message) {
+
     }
 
     private String formatMessage(Message message) {

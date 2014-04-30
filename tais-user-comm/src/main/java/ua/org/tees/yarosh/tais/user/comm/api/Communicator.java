@@ -11,5 +11,7 @@ import ua.org.tees.yarosh.tais.core.common.api.Message;
 public interface Communicator {
     void sendMessage(Message message);
 
-    void addListener(Listener listener);
+    void addSentListener(Listener listener);
+
+    void markDelivered(Message message);
 }

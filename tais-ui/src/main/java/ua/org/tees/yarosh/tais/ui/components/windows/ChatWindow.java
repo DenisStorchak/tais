@@ -9,7 +9,7 @@ import ua.org.tees.yarosh.tais.ui.components.layouts.ChatLayout;
 import ua.org.tees.yarosh.tais.ui.core.api.AbstractWindow;
 import ua.org.tees.yarosh.tais.ui.core.api.TaisWindow;
 import ua.org.tees.yarosh.tais.user.comm.ChatMessage;
-import ua.org.tees.yarosh.tais.user.comm.ChatService;
+import ua.org.tees.yarosh.tais.user.comm.SimpleChatService;
 import ua.org.tees.yarosh.tais.user.comm.api.Communicator;
 
 import java.util.Map;
@@ -32,7 +32,7 @@ public class ChatWindow extends AbstractWindow {
     private Communicator communicator;
 
     @Autowired
-    public void setCommunicator(@Qualifier(ChatService.QUALIFIER) Communicator communicator) {
+    public void setCommunicator(@Qualifier(SimpleChatService.QUALIFIER) Communicator communicator) {
         this.communicator = communicator;
     }
 

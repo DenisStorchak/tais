@@ -20,7 +20,7 @@ import java.util.List;
 
 import static ua.org.tees.yarosh.tais.core.common.dto.Roles.ADMIN;
 import static ua.org.tees.yarosh.tais.ui.core.VaadinUtils.createSingleFormLayout;
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Qualifiers.MESSAGER;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.MESSAGER;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.MessagerTaisView.MessagerPresenter;
 
 /**

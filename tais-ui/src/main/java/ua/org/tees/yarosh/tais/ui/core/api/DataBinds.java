@@ -46,10 +46,11 @@ public abstract class DataBinds {
             public static final String MANAGED_SCHEDULE = PREFIX + "schedule";
             public static final String CREATE_SCHEDULE = PREFIX + "schedule/create";
             public static final String SETTINGS = PREFIX + "settings";
+            public static final String MESSAGER = PREFIX + "messager";
+
         }
 
         public abstract class Teacher {
-
             public static final String PREFIX = "teacher/";
             public static final String TEACHER_DASHBOARD = PREFIX + "dashboard";
             public static final String CREATE_QUESTIONS_SUITE = PREFIX + "questions/create";
@@ -58,6 +59,7 @@ public abstract class DataBinds {
             public static final String STUDENTS = PREFIX + "students";
             public static final String ADD_MANUAL = PREFIX + "manual/add";
             public static final String SCHEDULE = PREFIX + "schedule";
+
         }
 
         public abstract class Student {
@@ -66,6 +68,7 @@ public abstract class DataBinds {
             public static final String QUESTIONS_RUNNER = PREFIX + "qsuite";
             public static final String SCHEDULE = PREFIX + "schedule";
         }
+
     }
 
     public static abstract class Qualifiers {
@@ -75,7 +78,6 @@ public abstract class DataBinds {
         public static final String LISTENER_FACTORY = "listenerFactory";
         public static final String PRESENTER_FACTORY = "presenterFactory";
         public static final String HELP_MANAGER_FACTORY = "helpManagerFactory";
-        public static final String MESSAGER = "messager";
     }
 
     public static abstract class Cookies {

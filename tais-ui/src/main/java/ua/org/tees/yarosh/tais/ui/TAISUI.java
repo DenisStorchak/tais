@@ -41,7 +41,7 @@ import ua.org.tees.yarosh.tais.ui.views.admin.UserManagementView;
 import ua.org.tees.yarosh.tais.ui.views.common.PageNotFoundView;
 import ua.org.tees.yarosh.tais.ui.views.student.UnresolvedTasksView;
 import ua.org.tees.yarosh.tais.ui.views.teacher.TeacherDashboardView;
-import ua.org.tees.yarosh.tais.user.comm.ChatService;
+import ua.org.tees.yarosh.tais.user.comm.SimpleChatService;
 
 import java.util.Set;
 
@@ -126,7 +126,7 @@ public class TAISUI extends UI {
                 registrantService, homeworkManager, disciplineService));
 
         ChatListener chatListener = new ChatListener(VaadinSession.getCurrent(), VaadinServlet.getCurrent(), this);
-        ctx.getBean(ChatService.class).addListener(chatListener);
+        ctx.getBean(SimpleChatService.class).addSentListener(chatListener);
     }
 
     private void setUpUIListeners(Navigator nav, CommonComponent commonComponent) {

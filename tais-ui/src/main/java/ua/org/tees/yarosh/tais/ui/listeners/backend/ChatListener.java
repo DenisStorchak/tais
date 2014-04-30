@@ -39,6 +39,7 @@ public class ChatListener implements ChatMessageReceivedListener {
             log.info("Try to catch chat message");
             ChatWindow window = UIFactory.getCurrent(vaadinSession, vaadinServlet).getWindow(ChatWindow.class);
             ui.access(() -> showMessage(event, window));
+            event.getCommunicator().markDelivered(event.getChatMessage());
         }
     }
 

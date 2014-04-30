@@ -8,10 +8,10 @@ import ua.org.tees.yarosh.tais.ui.core.mvp.AbstractPresenter;
 import ua.org.tees.yarosh.tais.ui.core.mvp.TaisPresenter;
 import ua.org.tees.yarosh.tais.ui.views.common.api.MessagerTaisView;
 import ua.org.tees.yarosh.tais.user.comm.ChatMessage;
-import ua.org.tees.yarosh.tais.user.comm.ChatService;
+import ua.org.tees.yarosh.tais.user.comm.SimpleChatService;
 import ua.org.tees.yarosh.tais.user.comm.api.Communicator;
 
-import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.Qualifiers.MESSAGER;
+import static ua.org.tees.yarosh.tais.ui.core.api.DataBinds.UriFragments.Admin.MESSAGER;
 import static ua.org.tees.yarosh.tais.ui.views.common.api.MessagerTaisView.MessagerPresenter;
 
 /**
@@ -26,7 +26,7 @@ public class MessagerListener extends AbstractPresenter implements MessagerPrese
     private RegistrantService registrantService;
 
     @Autowired
-    public void setCommunicator(@Qualifier(ChatService.QUALIFIER) Communicator communicator) {
+    public void setCommunicator(@Qualifier(SimpleChatService.QUALIFIER) Communicator communicator) {
         this.communicator = communicator;
     }
 
